@@ -1,3 +1,7 @@
+---
+title: Home
+---
+
 # Poseidon Framework - Draft
 
 ## Introduction
