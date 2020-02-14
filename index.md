@@ -27,9 +27,7 @@ It consists of three main components:
 2. A set of __tools and APIs__ to join, subset and analyze poseidon-formatted datasets
 3. (longer term) A __reference catalogue__ of all publicly available poseidon datasets.
 
-:::info
-In the following, we use the term _archaeogenetic_ to refer not just to genetic data, but also to isotope, Radio-Carbon and ancient proteomic data. In short, all _individual-based_ (human or non-human) data that Science can contribute to archaeological remains. 
-:::
+> In the following, we use the term _archaeogenetic_ to refer not just to genetic data, but also to isotope, Radio-Carbon and ancient proteomic data. In short, all _individual-based_ (human or non-human) data that Science can contribute to archaeological remains. [Stephan]
 
 ## Multi-file format
 ### Data Model
