@@ -1,4 +1,4 @@
----
+<!-- ---
 title: Home
 ---
 
@@ -101,4 +101,4 @@ We can then annotate according to CSVW by adding a file called `metadata.json`, 
     }]
 }
 ```
- -->
+ --> -->
