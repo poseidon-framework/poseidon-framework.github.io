@@ -15,7 +15,7 @@ print("This is a R code block")
 
 ## Using an image
 
-![An image](media/mpi_shh_logo.png)  
+![An image](img/reldb-sketch.png)  
 Fig 1: An image
 
 ## Docsify tabs
