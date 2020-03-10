@@ -13,6 +13,22 @@ print("This is a python code block")
 print("This is a R code block")
 ```
 
+## Link to file
+
+<!-- tabs:start -->
+
+#### **Rendered markdown**
+
+[terms.rdf.json](terms.rdf.json ':ignore')
+
+#### **Raw markdown**
+
+`[terms.rdf.json](terms.rdf.json ':ignore')`
+
+?> Note the `':ignore'` tag to make sure that you link to a file directly.
+
+<!-- tabs:end -->
+
 ## Using an image
 
 ![An image](img/reldb-sketch.png)  
