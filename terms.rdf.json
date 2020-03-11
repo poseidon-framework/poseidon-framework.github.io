@@ -36,7 +36,7 @@
         "@type" : "rdfs:Property",
         "rdfs:comment" : "Identifier for the individual if the sample. Used to mark if two samples come from the same individual",
         "rdfs:range" : "xsd:string"
-    }{
+    }, {
         "@id" : "#collectionID",
         "@type" : "rdfs:Property",
         "rdfs:comment" : "The class denoting an Identifier for a sample used in the museum or archaeological/anthropological collection that the sample is from.",
