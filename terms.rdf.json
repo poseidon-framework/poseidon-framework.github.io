@@ -23,38 +23,33 @@
         "rdfs:comment" : "BibTEX key(s) for bibliographical source(s)",
         "rdfs:range" : "xsd:string"
     }, {
-        "@id" : "#SamplesTableInfo",
+        "@id" : "#IndividualsTableInfo",
         "@type" : "rdfs:Class",
-        "rdfs:comment" : "The class denoting the Poseidon Sample Table description object"
+        "rdfs:comment" : "The class denoting the Poseidon Individual Table description object"
     }, {
         "@id" : "#siteReference",
         "@type" : "rdfs:Property",
         "rdfs:comment" : "A foreign key into the Sites table",
         "rdfs:range" : "xsd:string"
     }, {
-        "@id" : "#individualID",
-        "@type" : "rdfs:Property",
-        "rdfs:comment" : "Identifier for the individual if the sample. Used to mark if two samples come from the same individual",
-        "rdfs:range" : "xsd:string"
-    }, {
         "@id" : "#collectionID",
         "@type" : "rdfs:Property",
-        "rdfs:comment" : "The class denoting an Identifier for a sample used in the museum or archaeological/anthropological collection that the sample is from.",
+        "rdfs:comment" : "The class denoting an Identifier for a individual used in the museum or archaeological/anthropological collection that the individual is from.",
         "rdfs:range" : "xsd:string"
     }, {
         "@id" : "#tissueType",
         "@type" : "rdfs:Property",
-        "rdfs:comment" : "Name of the tissue used for analysing the sample.",
+        "rdfs:comment" : "Name of the tissue used for analysing the individual.",
         "rdfs:range" : "xsd:string"
     }, {
         "@id" : "#contextualDateLower",
         "@type" : "rdfs:Property",
-        "rdfs:comment" : "Lower bound of contextual date of the sample, in BP",
+        "rdfs:comment" : "Lower bound of contextual date of the individual, in BP",
         "rdfs:range" : "xsd:nonNegativeInteger"
     }, {
         "@id" : "#contextualDateUpper",
         "@type" : "rdfs:Property",
-        "rdfs:comment" : "Upper bound of contextual date of the sample, in BP",
+        "rdfs:comment" : "Upper bound of contextual date of the individual, in BP",
         "rdfs:range" : "xsd:nonNegativeInteger"
     }, {
         "@id" : "#archaeologicalCulture",
@@ -64,21 +59,21 @@
     }, {
         "@id" : "#groupLabel",
         "@type" : "rdfs:Property",
-        "rdfs:comment" : "A label used to group this sample with other samples",
+        "rdfs:comment" : "A label used to group this individual with other individuals",
         "rdfs:range" : "xsd:string"
     }, {
-        "@id" : "#sampleNote",
+        "@id" : "#individualNote",
         "@type" : "rdfs:Property",
-        "rdfs:comment" : "(Optional) note for the sample",
+        "rdfs:comment" : "(Optional) note for the individual",
         "rdfs:range" : "xsd:string"
     }, {
         "@id" : "#DateTableInfo",
         "@type" : "rdfs:Class",
         "rdfs:comment" : "The class denoting the Poseidon C14 Table description object"
     }, {
-        "@id" : "#sampleReference",
+        "@id" : "#individualReference",
         "@type" : "rdfs:Property",
-        "rdfs:comment" : "A foreign key into the Samples table",
+        "rdfs:comment" : "A foreign key into the Individuals table",
         "rdfs:range" : "xsd:string"
     }, {
         "@id" : "#C14labName",
@@ -256,7 +251,7 @@
     }, {
         "@id" : "#genotypingColumnPosition",
         "@type" : "rdfs:Property",
-        "rdfs:comment" : "1-based Column position of the sample in the genotype matrix.",
+        "rdfs:comment" : "1-based Column position of the individual in the genotype matrix.",
         "rdfs:range": "xsd:string"
     }, {
         "@id" : "#genotypingMethod",
