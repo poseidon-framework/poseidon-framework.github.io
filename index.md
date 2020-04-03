@@ -1,8 +1,10 @@
-This page is under development
-
-<!-- ---
+---
 title: Home
 ---
+
+:::info
+_Disclaimer: This project is under development and currently used for internal documentation only_.
+:::
 
 # Poseidon Framework - Draft
 
@@ -47,60 +49,10 @@ This hierarchical scheme lends itself to a classical relational data model with 
 
 ### Metadata files
 
-<!-- How can we express such a system of relationships between tables? The standard answer would be "with an sqlite database" or something like that. However, that brings along its own problems. First, it's difficult to check for us whether the format of that db exactly conforms with our schemas. Second, it would be a closed file format that is difficult to edit for humans.
+### Customziation
+TODO:
+- Using different CSV dialects
+- using different column titles and adapting the schema.
 
-There is a better way. We already have a become accustomed for sharing tabular data: CSV, i.e. comma-separated value files. We already use that file format quite a lot, and it's also, for example, used by David Reich in his "anno" files.
-
-However, while being very simple, CSV is also very poorly formatted. There is no way to enforce a given schema, the datatypes are arbitrary, and there is no standard way to define relationships between tables.
-
-CSV on the web (CSVW) is a convention recommended by the World Wide Web Consortium (W3C), for how to share tabular data across the web ([here](https://www.w3.org/TR/tabular-data-primer/) is a primer and [here](https://www.w3.org/TR/tabular-metadata/) the full definitions). The basic idea is to supplement a CSV file with a metadata file that describes its schema and stores critical meta-information about the data, such as its publisher, a last-modified-date, and most importantly the column names and datatypes.
-
-Let's say we have two CSV files. First, a file called `sites.csv`:
-
-```csv
-site_id,name,country,latitude,longitude
-SUT,Sutherland,South Africa,-32.40,20.67
-FAR,Faraoskop,South Africa,-32.13,18.62
-```
-and a second file called `individuals.csv`:
-
-```csv
-ind_id,name,organism,tissue,site_id
-SUT001,"Burial 1, Sk 1",human,tooth,SUT
-SUT002,"Burial 2, Sk 1",human,"petrous bone",SUT
-FAR001,"Burial 10, Sk 7",human,femur,FAR
-```
-
-We can then annotate according to CSVW by adding a file called `metadata.json`, or, as I would suggest in our case perhaps `poseidon-metadata.json`:
-
-```json=
-{
-    "@context": "http://www.w3.org/ns/csvw",
-    "tables": [
-        {
-            "url": "sites.csv"
-            "tableSchema" : {
-                "columns": [
-                    {
-                        "name" : "site_id"
-                    },
-                    {
-                        "name" : "country",
-                    },
-                    {
-                        "name" : "latitude",
-                        "datatype" : "number"
-                    },
-                    {
-                        "name" : "longitude",
-                        "datatype" : "number"
-                    }
-                ],
-                "primaryKey" : "site_id"
-            }
-      }, {
-        "url": "individuals.csv"
-    }]
-}
-```
- -->
+## Poseidon tools
+Stub where to put documentation for Poseidon-Tools.
