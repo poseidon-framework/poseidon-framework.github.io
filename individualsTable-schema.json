@@ -1,0 +1,84 @@
+{
+    "@context" : ["http://www.w3.org/ns/csvw"],
+    "dc:conformsTo" : "http://w3id.org/poseidon/terms.rdf.jsonld#IndividualsTableInfo",
+    "columns" : [{
+        "name" : "IndividualID",
+        "titles" : "IndividualID",
+        "dc:description" : "Unique identifier for an individual. Can be alphanumeric and include - and _",
+        "datatype" : {
+            "base" : "xsd:string",
+            "format" : "[a-zA-Z0-9_\\-]+"
+        },
+        "propertyUrl" : "dc:identifier",
+        "required" : true    
+    }, {
+        "name" : "SiteID",
+        "titles" : "SiteID",
+        "dc:description" : "Foreign Key into the Sites-Table. Gives the ID of the site from which the individual is.",
+        "datatype" : {
+            "base" : "xsd:string",
+            "format" : "[a-zA-Z0-9_\\-]+"
+        },
+        "propertyUrl" : "http://w3id.org/poseidon/terms.rdf.jsonld#siteReference",
+        "required" : true
+    }, {
+        "name" : "CollectionID",
+        "titles" : "CollectionID",
+        "dc:description" : "Identifier for the individual used in the museum or archaeological/anthropological collection. This is usually different from the ID which is set by the laboratory analysing the individual.",
+        "datatype" : "string",
+        "propertyUrl" : "http://w3id.org/poseidon/terms.rdf.jsonld#collectionID",
+        "required" : true
+    }, {
+        "name" : "ContextualDateLower",
+        "titles" : "ContextualDateLower",
+        "dc:description" : "Lower bound of contextual date of the individual, in BP",
+        "datatype" : "nonNegativeInteger",
+        "propertyUrl" : "http://w3id.org/poseidon/terms.rdf.jsonld#contextualDateLower"
+    }, {
+        "name" : "ContextualDateUpper",
+        "titles" : "ContextualDateUpper",
+        "dc:description" : "Upper bound of contextual date of the individual, in BP",
+        "datatype" : "nonNegativeInteger",
+        "propertyUrl" : "http://w3id.org/poseidon/terms.rdf.jsonld#contextualDateUpper"
+    }, {
+        "name" : "ArchaeologicalCulture",
+        "titles" : "ArchaeologicalCulture",
+        "dc:description" : "Terms that describe the archaeological culture",
+        "datatype" : "string",
+        "separator" : ";",
+        "propertyUrl" : "http://w3id.org/poseidon/terms.rdf.jsonld#archaeologicalCulture"
+    }, {
+        "name" : "GroupLabel",
+        "titles" : "GroupLabel",
+        "dc:description" : "A label used to group this individual with other individuals",
+        "datatype" : {
+            "base" : "string",
+            "format" : "[a-zA-Z0-9_\\-]+"
+        },
+        "propertyUrl" : "http://w3id.org/poseidon/terms.rdf.jsonld#groupLabel"
+    }, {
+        "name" : "IndividualNote",
+        "titles" : "IndividualNote",
+        "dc:description" : "(Optional) note for the individual",
+        "datatype" : "string",
+        "propertyUrl" : "http://w3id.org/poseidon/terms.rdf.jsonld#individualNote"
+    }, {
+        "name" : "Source",
+        "titles" : "Source",
+        "dc:description" : "BibTEX key(s) for bibliographical source(s)",
+        "separator" : ";",
+        "datatype" : {
+            "base" : "string",
+            "format" : "[a-zA-Z0-9_\\-]+"
+        },
+        "propertyUrl" : "http://w3id.org/poseidon/terms.rdf.jsonld#source"
+    }],
+    "primaryKey" : "IndividualID",
+    "foreignKeys": [{
+        "columnReference": "IndividualID",
+        "reference": {
+            "resource": "sites.csv",
+            "columnReference": "SiteID"
+        }
+    }]
+}

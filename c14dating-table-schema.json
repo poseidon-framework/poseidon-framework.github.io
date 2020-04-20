@@ -1,0 +1,94 @@
+{
+    "@context" : ["http://www.w3.org/ns/csvw"],
+    "dc:conformsTo" : "http://w3id.org/poseidon/terms.rdf.jsonld#DateTableInfo",
+    "columns" : [{
+        "name" : "C14LabID",
+        "titles" : "C14LabID",
+        "dc:description" : "Lab ID of the date",
+        "datatype" : {
+            "base" : "xsd:string",
+            "format" : "[a-zA-Z0-9_\\-]+"
+        },
+        "propertyUrl" : "dc:identifier"
+    }, {
+        "name" : "IndividualID",
+        "titles" : "IndividualID",
+        "dc:description" : "Foreign Key into the Individuals-Table. Gives the ID of the individual for which the date holds",
+        "datatype" : {
+            "base" : "xsd:string",
+            "format" : "[a-zA-Z0-9_\\-]+"
+        },
+        "propertyUrl" : "http://w3id.org/poseidon/terms.rdf.jsonld#individualReference"
+    }, {
+        "name" : "C14labName",
+        "titles" : "C14labName",
+        "dc:description" : "Name of the lab performing the C14 dating",
+        "datatype" : "string",
+        "propertyUrl" : "http://w3id.org/poseidon/terms.rdf.jsonld#C14labName"
+    }, {
+        "name" : "C14uncalDateBP",
+        "titles" : "C14uncalDateBP",
+        "datatype" : "nonNegativeInteger",
+        "dc:description" : "uncalibrated date measurement from C14",
+        "propertyUrl" : "http://w3id.org/poseidon/terms.rdf.jsonld#C14uncalDateBP",
+        "required" : true
+    }, {
+        "name" : "C14uncalDateErrBP",
+        "titles" : "C14uncalDateErrBP",
+        "datatype" : "nonNegativeInteger",
+        "dc:description" : "uncalibrated date measurement error from C14",
+        "propertyUrl" : "http://w3id.org/poseidon/terms.rdf.jsonld#C14uncalDateErrBP",
+        "required" : true
+    }, {
+        "name" : "C14calDateMedianBP",
+        "titles" : "C14calDateMedianBP",
+        "dc:description" : "(Optional) median calibrated date in BP",
+        "datatype" : "nonNegativeInteger",
+        "propertyUrl": "http://w3id.org/poseidon/terms.rdf.jsonld#C14calDateMedianBP"
+    }, {
+        "name" : "C14calDateLower2SigmaBP",
+        "titles" : "calDateLower2SigmaBP",
+        "dc:description" : "(Optional) lower end of 2sigma range of calibrated date in BP",
+        "datatype" : "nonNegativeInteger",
+        "propertyUrl": "http://w3id.org/poseidon/terms.rdf.jsonld#C14calDateLower2SigmaBP"
+    }, {
+        "name" : "C14calDateUpper2SigmaBP",
+        "titles" : "calDateUpper2SigmaBP",
+        "dc:description" : "(Optional) upper end of 2sigma range of calibrated date in BP",
+        "datatype" : "nonNegativeInteger",
+        "propertyUrl": "http://w3id.org/poseidon/terms.rdf.jsonld#C14calDateUpper2SigmaBP"
+    }, {
+        "name" : "C14dateType",
+        "titles" : "C14dateType",
+        "dc:description" : "Can be either \"direct\" or \"indirect\" (e.g. through charcoal at the site)",
+        "datatype" : {
+            "base" : "string",
+            "format" : "direct|indirect"
+        },
+        "propertyUrl" : "http://w3id.org/poseidon/terms.rdf.jsonld#C14dateType"
+    }, {
+        "name" : "C14note",
+        "titles" : "C14note",
+        "dc:description" : "Optional note for the C14 date",
+        "datatype" : "string",
+        "propertyUrl" : "http://w3id.org/poseidon/terms.rdf.jsonld#C14note"
+    }, {
+        "name" : "Source",
+        "titles" : "Source",
+        "dc:description" : "BibTEX key(s) for bibliographical source(s)",
+        "separator" : ";",
+        "datatype" : {
+            "base" : "string",
+            "format" : "[a-zA-Z0-9_\\-]+"
+        },
+        "propertyUrl" : "http://w3id.org/poseidon/terms.rdf.jsonld#source"
+    }],
+    "primaryKey" : "C14LabID",
+    "foreignKeys": [{
+        "columnReference": "IndividualID",
+        "reference": {
+            "resource": "individuals.csv",
+            "columnReference": "IndividualID"
+        }
+    }]
+}
