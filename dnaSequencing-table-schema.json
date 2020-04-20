@@ -6,7 +6,7 @@
         "titles" : "SequencingLabID",
         "dc:description" : "ID of the lab generating the sequencing data",
         "datatype" : {
-            "base" : "xsd:string",
+            "base" : "string",
             "format" : "[a-zA-Z0-9_\\-]+"
         },
         "propertyUrl" : "dc:identifier",
@@ -16,7 +16,7 @@
         "titles" : "IndividualID",
         "dc:description" : "Foreign Key into the Individuals-Table. Gives the ID of the individual that is analysed.",
         "datatype" : {
-            "base" : "xsd:string",
+            "base" : "string",
             "format" : "[a-zA-Z0-9_\\-]+"
         },
         "propertyUrl" : "http://w3id.org/poseidon/terms.rdf.jsonld#individualReference",
@@ -33,7 +33,7 @@
         "titles" : "SkeletalElement",
         "dc:description" : "Name of the skeletal element analysed",
         "datatype" : {
-            "base" : "xsd:string",
+            "base" : "string",
             "format" : "[Tooth|Petrous|OtherBone|OtherTissue]"
         },
         "propertyUrl" : "http://w3id.org/poseidon/terms.rdf.jsonld#tissueType",

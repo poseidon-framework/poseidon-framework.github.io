@@ -6,7 +6,7 @@
         "titles" : "GenotypingID",
         "dc:description" : "ID of a particular genotyping pulldown for a specific sample",
         "datatype" : {
-            "base" : "xsd:string",
+            "base" : "string",
             "format" : "[a-zA-Z0-9_\\-]+"
         },
         "propertyUrl" : "dc:identifier",
@@ -16,7 +16,7 @@
         "titles" : "SequencingLabID",
         "dc:description" : "Foreign Key into the sequencing table",
         "datatype" : {
-            "base" : "xsd:string",
+            "base" : "string",
             "format" : "[a-zA-Z0-9_\\-]+"
         },
         "propertyUrl" : "http://w3id.org/poseidon/terms.rdf.jsonld#seqReference",
@@ -26,7 +26,7 @@
         "titles" : "GenotypingSnpSetName",
         "dc:description" : "Standardized Name of the SNP set (can be \"1240K\", \"1000_Genomes\" or \"Other\"",
         "datatype" : {
-            "base" : "xsd:string",
+            "base" : "string",
             "format" : "1240K|1000_Genomes|Other"
         },
         "propertyUrl" : "http://w3id.org/poseidon/terms.rdf.jsonld#genotypingSnpSetName",
@@ -35,14 +35,14 @@
         "name" : "GenotypingPositionsFile",
         "titles" : "GenotypingPositionsFile",
         "dc:description" : "URL or filename of the positions file",
-        "datatype" : "xsd:anyURI",
+        "datatype" : "anyURI",
         "propertyUrl" : "http://w3id.org/poseidon/terms.rdf.jsonld#genotypingPositionsFile",
         "required" : true
     }, {
         "name" : "GenotypingGenotypeFile",
         "titles" : "GenotypingGenotypeFile",
         "dc:description" : "URL or filename of the genotype matrix file",
-        "datatype" : "xsd:anyURI",
+        "datatype" : "anyURI",
         "propertyUrl" : "http://w3id.org/poseidon/terms.rdf.jsonld#genotypingGenotypeFile",
         "required" : true
     }, {
@@ -50,7 +50,7 @@
         "titles" : "GenotypingFileFormat",
         "dc:description" : "Format of the genotyping file. Can be \"EIGENSTRAT\" or \"PLINK\"",
         "datatype" : {
-            "base" : "xsd:string",
+            "base" : "string",
             "format" : "EIGENSTRAT|PLINK"
         },
         "propertyUrl" : "http://w3id.org/poseidon/terms.rdf.jsonld#genotypingFileFormat",
@@ -59,7 +59,7 @@
         "name" : "GenotypingColumnPosition",
         "titles" : "GenotypingColumnPosition",
         "dc:description" : "1-based Column position of the sample in the genotype matrix.",
-        "datatype" : "xsd:nonNegativeInteger",
+        "datatype" : "nonNegativeInteger",
         "propertyUrl" : "http://w3id.org/poseidon/terms.rdf.jsonld#genotypingColumnPosition",
         "required" : true
     }, {
@@ -67,7 +67,7 @@
         "titles" : "GenotypingMethod",
         "dc:description" : "Method of the genotyping. Can be \"RandomReadSampling\", \"MajorityReadSampling\", \"DiploidModelBased\" or \"Other\"",
         "datatype" : {
-            "base" : "xsd:string",
+            "base" : "string",
             "format" : "RandomReadSampling|MajorityReadSampling|DiploidModelBased|Other"
         },
         "propertyUrl" : "http://w3id.org/poseidon/terms.rdf.jsonld#genotypingMethod",
@@ -76,25 +76,25 @@
         "name" : "GenotypingTool",
         "titles" : "GenotypingTool",
         "dc:description" : "Tool used for genotyping, such as \"pileupCaller\" or \"GATK\"",
-        "datatype" : "xsd:string",
+        "datatype" : "string",
         "propertyUrl" : "http://w3id.org/poseidon/terms.rdf.jsonld#genotypingTool"
     }, {
         "name" : "NrSnpsTotal",
         "titles": "NrSnpsTotal",
         "dc:description": "Total nr of SNPs attempted to call (= nr of SNPs in the file specified under GenotypingPositionsFile)",
-        "datatype" : "xsd:nonNegativeInteger",
+        "datatype" : "nonNegativeInteger",
         "propertyUrl" : "http://w3id.org/poseidon/terms.rdf.jsonld#nrSnpsTotal"
     }, {
         "name" : "NrSnpsCalled",
         "titles": "NrSnpsCalled",
         "dc:description": "Total nr of SNPs called (=non-missing) for this individual",
-        "datatype" : "xsd:nonNegativeInteger",
+        "datatype" : "nonNegativeInteger",
         "propertyUrl" : "http://w3id.org/poseidon/terms.rdf.jsonld#nrSnpsCalled"
     }, {
         "name" : "GenotypingNote",
         "titles" : "GenotypingNote",
         "dc:description" : "Optional Note for genotyping",
-        "datatype" : "xsd:string",
+        "datatype" : "string",
         "propertyUrl" : "http://w3id.org/poseidon/terms.rdf.jsonld#genotypingNote"
     }, {
         "name" : "Source",

@@ -6,7 +6,7 @@
         "titles" : "C14LabID",
         "dc:description" : "Lab ID of the date",
         "datatype" : {
-            "base" : "xsd:string",
+            "base" : "string",
             "format" : "[a-zA-Z0-9_\\-]+"
         },
         "propertyUrl" : "dc:identifier"
@@ -15,7 +15,7 @@
         "titles" : "IndividualID",
         "dc:description" : "Foreign Key into the Individuals-Table. Gives the ID of the individual for which the date holds",
         "datatype" : {
-            "base" : "xsd:string",
+            "base" : "string",
             "format" : "[a-zA-Z0-9_\\-]+"
         },
         "propertyUrl" : "http://w3id.org/poseidon/terms.rdf.jsonld#individualReference"
