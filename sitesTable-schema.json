@@ -76,5 +76,5 @@
         },
         "propertyUrl" : "http://w3id.org/poseidon/terms.rdf.jsonld#source"
     }],
-    "primaryKey": "ID"
+    "primaryKey": "SiteID"
 }

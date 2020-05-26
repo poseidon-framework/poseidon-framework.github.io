@@ -75,7 +75,7 @@
     }],
     "primaryKey" : "IndividualID",
     "foreignKeys": [{
-        "columnReference": "IndividualID",
+        "columnReference": "SiteID",
         "reference": {
             "resource": "sites.csv",
             "columnReference": "SiteID"
