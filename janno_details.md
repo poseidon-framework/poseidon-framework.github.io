@@ -1,4 +1,6 @@
-# The `.janno` file 
+!> This project is under development, and this documentation page is for internal development at this point.
+
+# The .janno file
 
 This documentation includes some more background about some of the columns in the `.janno` file beyond the general remarks [here](https://github.com/poseidon-framework/poseidon2-schema#the-xjanno-file-mandatory) and the overview table [here](https://github.com/poseidon-framework/poseidon2-schema/blob/master/janno_columns.tsv). This should make it more easy to compile the necessary information for both published and unpublished data.
 
