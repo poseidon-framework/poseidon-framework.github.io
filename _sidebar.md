@@ -1,4 +1,6 @@
 <!-- docs/_sidebar.md -->
 
-* [Home](home.md "Poseidon Framework")
-* [Trident](trident.md "Trident CLI software")
+* [Home](home.md)
+* [The Poseidon Standard](standard.md)
+* [Trident CLI software](trident.md)
+* [poseidonR R package](poseidonR.md)
