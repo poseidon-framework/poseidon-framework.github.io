@@ -10,7 +10,7 @@ The way data is currently shared and published via academic papers, at least fro
 
 1. Intermediate data such as genotypes or metagenomic profiles are often not released at all, making it hard for others to reproduce analyses. 
 2. The connection between individuals, contextual information, and genetic data becomes hard to maintain, bridging between very different repositories and sources (Excel vs. personal homepages vs. public repositories)
-4. Meta-analyses spanning datasets require enormous amounts of work on data collection and curation (the Reich team has done an [admirable job](https://reich.hms.harvard.edu/downloadable-genotypes-present-day-and-ancient-dna-data-compiled-published-papers) on that front, but it's hard to maintain this in such a centralized way within one lab.
+4. Meta-analyses spanning datasets require enormous amounts of work on data collection and curation.
 5. Studies that combine data from different technologies (isotopes, C14 dating, genetics) have no clear way to release such complex relationships in a concise way.
 6. Incrementally produced data, for example by adding new data to  previously published individuals, cannot be easily connected to the same individuals.
 
