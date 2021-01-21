@@ -3,6 +3,7 @@
 * [Home](home.md)
 * The Poseidon Standard
 	* [Standard definition](standard.md)
+	* [.janno file details](janno_details.md)
 * The Poseidon Software
 	* [Trident CLI software](trident.md)
 	* [poseidonR R package](poseidonR.md)

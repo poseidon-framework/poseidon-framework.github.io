@@ -20,6 +20,6 @@ All in all, data in the field certainly doesn't -- even remotely -- satisfy the 
 
 Poseidon is a framework that seeks to provide standardized ways to store and share archaeogenetic genotype datasets. It is built on three pillars:
 
-1. A package standard for genotype and context data: [**The Poseidon Standard**](standard)
-2. Software tools to work with Poseidon packages: **The Poseidon Software** tools [trident](trident) and [poseidonR](poseidonR)
-3. A public repository of published data: [**The Poseidon Repositories**](repos) (not available yet)
+1. A package standard for genotype and context data: [The Poseidon Standard](standard) with the [.janno file](janno_details) for context information
+2. Software tools to work with Poseidon packages: The Poseidon Software tools [trident](trident) and [poseidonR](poseidonR)
+3. A public repository of published data: [The Poseidon Repositories](repos) (not available yet)
