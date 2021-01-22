@@ -27,7 +27,7 @@ So you can download/fork/clone the package context data from Github, but where c
 
 The Poseidon framework has a strongly decentralized philosophy and relies very much on a community of users willing to prepare and improve the data in the repositories. We are glad that you are considering this step and we will try to make this as smooth and convenient as possible. To ensure a professional and welcoming atmosphere we would first of all like to ask you to respect our [Contributor Code of Conduct](conduct.md) in all interactions with the Poseidon team and other users on Github and beyond.
 
-If you want to prepare a Poseidon dataset for one of the repositories or fix mistakes in the data, you should follow the procedures outlined here.
+If you want to prepare a Poseidon dataset for one of the repositories or fix mistakes in the data, you should follow the procedures outlined here. We assume you have some basic knowledge about using a command line software like `trident`, and how to handle Git and Github. If not, then you can become knowledgable quickly at least about the latter, for example [here](https://lab.github.com/githubtraining/introduction-to-github).
 
 !> Just thought experiments so far.
 
@@ -46,15 +46,19 @@ Now your local package is complete and can be submitted to our repository.
 
 7. Fork and clone the Github repository where you would like to submit the package. ([data_ancient](https://github.com/poseidon-framework/data_ancient) or [data_modern](https://github.com/poseidon-framework/data_modern))
 8. Copy your new package into your local clone, commit and push. Make sure not to commit any private files or any large genotype data files. Our `.gitignore` settings should usually prevent this automatically.
-9. Submit a Pull Request to merge your updates with our repository. We will inspect this Pull Request and contact you on Github about necessary changes and finally how you can sent us the prepared genotype data, which can not be part of the Pull Request (for an explanation see the introduction above).
+9. Submit a pull request to merge your updates with our repository. We will inspect your submission and contact you on Github about necessary changes - and finally how you can send us the prepared genotype data.
 
-### Modifying the context data (individual or group names, .janno, .bib) of a package in one of the public repositories
+### Modifying the context data of a package in one of the public repositories (individual or group names in .fam, context information in .janno or .bib) 
 
-- ...
-- ...
+This is rather simple, because no large files have to be moved.
+
+1. Fork and clone the Github repository that contains the package you want to improve.
+2. Modify the files you want to change. Remember to also update the md5 checksums in the POSEIDON.yml file after you are done. This can be triggered with `trident update`.
+3. Commit and push your changes.
+4. Submit a pull request to merge your updates with our repository. We will contact you about this submission as soon as possible.
 
 ### Modifying the genotype data of a package in one of the public repositories
 
-- ...
-- ...
+Please open an issue in the relevant Github repository that contains the package you want to improve. Explain which changes you want to apply. We will contact you there and discuss if and how you can send us the improved genotype data.
+
 
