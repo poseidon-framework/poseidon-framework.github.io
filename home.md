@@ -1,8 +1,23 @@
 !> This project is under development, and this documentation page is for internal development at this point.
 
-# Development page for the Poseidon framework documentation
+# The Poseidon Framework documentation page
 
-## Context
+## What is Poseidon?
+
+Poseidon is a framework to provide a standardized way to store and share archaeogenetic genotype datasets with context information in a decentralized way. It is built on three pillars:
+
+1. A package standard for genotype and context data:
+	- The Poseidon [Standard](standard)
+	- The [.janno file](janno_details)
+2. Software tools to work with Poseidon packages:
+	- The [trident](trident) CLI software
+	- The [poseidonR](poseidonR) R package
+3. Public repositories of published data
+	- The Poseidon [Repositories](repos) (not online yet)
+
+Poseidon is an initiative of the [Department of Archaeogenetics](https://www.eva.mpg.de/archaeogenetics/index.html) at the Max Planck Institute for Evolutionary Anthropology in Leipzig.
+
+## And why?
 
 Archaeogenetics has become a fast accelerating field, with new data coming out faster than people can co-analyze. Together with samples currently being processed in the world's largest laboratories, we're now approaching genome-wide data for 10,000 ancient individuals. In addition, emergent fields such as ancient metagenomics and paleo-proteomics are adding complexity to a scene that already hosts data from long-established non-genetic technologies like radiocarbon dating and stable isotope analyses.
 
@@ -16,10 +31,3 @@ The way data is currently shared and published via academic papers, at least fro
 
 All in all, data in the field certainly doesn't -- even remotely -- satisfy the [FAIR principles](https://en.wikipedia.org/wiki/FAIR_data) of open data: Findability, Accessibility, Interoperability, Reproducibility.
 
-## What is Poseidon?
-
-Poseidon is a framework that seeks to provide standardized ways to store and share archaeogenetic genotype datasets. It is built on three pillars:
-
-1. A package standard for genotype and context data: [The Poseidon Standard](standard) with the [.janno file](janno_details) for context information
-2. Software tools to work with Poseidon packages: The Poseidon Software tools [trident](trident) and [poseidonR](poseidonR)
-3. A public repository of published data: [The Poseidon Repositories](repos) (not available yet)
