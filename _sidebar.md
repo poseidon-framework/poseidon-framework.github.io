@@ -7,6 +7,7 @@
 * [Home](home.md)
 * **The Poseidon Standard**
 	* [Standard definition](standard.md)
+	* [Genotype data details](genotype_data.md)
 	* [.janno file details](janno_details.md)
 * **The Poseidon Software**
 	* [trident CLI software](trident.md)
