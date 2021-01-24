@@ -53,13 +53,13 @@ All SNPs listed in the SNP file must adhere to the Reference SNP cluster ID nami
 
 ### Individual IDs
 
-The individual IDs in the individual file of a Poseidon package must be identical to the respective IDs in the `.janno` file. This ID together with identical ordering is what allows seamless linkage of genotype and context data.
+The individual IDs in the individual file of a Poseidon package must be identical to the respective IDs in the `.janno` file (column `Individual_ID`). This ID together with identical ordering is what allows seamless linkage of genotype and context data.
 
 To our knowledge there is unfortunately no established authority for systematically naming human individuals for which (ancient) DNA analysis was performed. Nevertheless Poseidon requires the individual IDs within a set of Poseidon packages to be unique. Contrary to the usually decentralised philosophy of the framework we would very much like to establish unique identifiers for individuals. Unambiguous IDs would be a tremendous advantage for all fields working with ancient genomic data, including archaeology, which often collects substantially more context information about prehistoric human individuals.
 
 ### Group IDs
 
-...
+Just as the individual IDs, the group/family/population IDs across the individual file and the `.janno` file (column `Group_Name`) must be identical. We are aware that group identification and meaningful classification is a major discussion point in the humanities and a core subject of archaeology research. That's why the `Group_Name` variable in the `.janno` file is a list column that can hold many different names. Only the first entry has to be identical to the one in the genotype data individual file, which can only hold one value.
 
 ## Generating Poseidon-compatible genotype data from raw sequencing data
 
