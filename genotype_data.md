@@ -1,6 +1,11 @@
-!> This project is under development, and this documentation page is for internal development at this point.
-
 # The genotype data in a Poseidon package
+
+* [File formats](#file-formats)
+* [Typical SNP panels](#typical-snp-panels)
+* [Naming of SNPs, individuals and groups](#naming-of-snps--individuals-and-groups)
+  + [SNP IDs](#snp-ids)
+  + [Individual IDs](#individual-ids)
+  + [Group IDs](#group-ids)
 
 ## File formats
 
@@ -45,6 +50,10 @@ genotypeData:
 </tr>
 </table>
 
+## Typical SNP panels
+
+Poseidon is not limited to a specific panel of single nucleotide polymorphism (SNPs) that should be available for each sample. But as of today (25.01.2021) most ancient genomic data is pulled down to the Affymetrix Human Origins SNP array ([Patterson et al. 2012](https://dx.doi.org/10.1534%2Fgenetics.112.145037)) or the 1240k SNP array ([Mathieson et al. 2015](https://dx.doi.org/10.1038%2Fnature16152)), because of their specific design focus on population genetic research questions. These are the panels we are relying on for our public Poseidon [repositories](repos).
+
 ## Naming of SNPs, individuals and groups
 
 ### SNP IDs
@@ -60,8 +69,4 @@ To our knowledge there is unfortunately no established authority for systematica
 ### Group IDs
 
 Just as the individual IDs, the group/family/population IDs across the individual file and the `.janno` file (column `Group_Name`) must be identical. We are aware that group identification and meaningful classification is a major discussion point in the humanities and a core subject of archaeology research. That's why the `Group_Name` variable in the `.janno` file is a list column that can hold many different names. Only the first entry has to be identical to the one in the genotype data individual file, which can only hold one value.
-
-## Generating Poseidon-compatible genotype data from raw sequencing data
-
-BAM ... FASTQ ... [pileupCaller](https://github.com/stschiff/sequenceTools)
 

@@ -8,7 +8,7 @@ Poseidon is a framework to provide a standardized way to store and share archaeo
 
 1. A package standard for genotype and context data:
 	- The Poseidon [Standard](standard)
-	- The [genotype data](genotype_date) in Poseidon
+	- The [genotype data](genotype_data) in Poseidon
 	- The [.janno file](janno_details)
 2. Software tools to work with Poseidon packages:
 	- The [trident](trident) CLI software
