@@ -57,7 +57,7 @@ The columns `Date_BC_AD_Median`, `Date_BC_AD_Start`, `Date_BC_AD_Stop` store a s
 
 The `Genetic_Sex` column should encode the biological sex as determined from the DNA read distribution on the X and Y chromosome. It only allows for the entries `F` (female), `M` (male) and `U` (unknown), just as the genotype data formats by Plink and the Eigensoft software package. Edge cases (e.g. XXY, XYY, X0, ...) can not be expressed with this format and should be reported as `U` with an additional comment in the free text `Note` field. Genetic sex determination for ancient DNA can be performed for example with [Sex.DetERRmine](https://github.com/TCLamnidis/Sex.DetERRmine).
 
-`MT_Haplogroup`
+The `MT_Haplogroup` column is meant to store the human mitochondrial DNA haplogroup for the respective individual in a simple string. The entry can be aritrarily precise. A software tool to determine the MT haplogroup is for example [Haplogrep](https://haplogrep.i-med.ac.at).
 
 `Y_Haplogroup`
 
