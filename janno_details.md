@@ -110,15 +110,15 @@ The `Coverage_1240k` column should report the mean SNP coverage on the 1240k SNP
 
 ## Data quality
 
-The `Damage` column: % damage on 5' end for the main shotgun library used for sequencing and/or capture, in case of multiple libraries report a value from the merged read alignment
+The `Damage` column contains the % damage on the 5' end for the main Shotgun library used for sequencing or capture. In case of multiple libraries you should report a value from the merged read alignment.
 
-The `Xcontam` column: if male for captured library, in case of multiple libraries report a value from the merged read alignment
+The `Xcontam` column can only be filled for male individuals, as it contains a X chromosome base DNA contamination measure. In case of multiple libraries you should report a value from the merged read alignment. X contamination can be calculated for example with [ANGSD](http://www.popgen.dk/angsd/index.php/ANGSD).
 
-The `Xcontam_stderr` column: standard error of ANGSD X contamination estimate, in case of multiple libraries report a value from the merged read alignment
+The `Xcontam_stderr` column adds a standard error term for the X contamination estimate (ANGSD returns that as well). Again: In case of multiple libraries report a value from the merged read alignment.
 
-The `mtContam` column: mitochondrial contamination rate as estimated by ContamMix and/or Schmutzi, in case of multiple libraries report a value from the merged read alignment
+The `mtContam` column is intended for a mitochondrial DNA based contamination rate. For multiple libraries a value from the merged read alignment should be reported. This measure can stimated for example with ContamMix (no homepage, please contact [Philip Johnson](plfj@umd.edu)) or [Schmutzi](http://grenaud.github.io/schmutzi).
 
-The `mtContam_stderr` column: Standard error of ContamMix/Schmutzi estimate, in case of multiple libraries report a value from the merged read alignment
+The `mtContam_stderr` column adds a standard error term for the mtDNA based contamination estimate, just as `Xcontam_stderr` for `Xcontam`.
 
 # Context information
 
