@@ -89,11 +89,11 @@ The `UDG` column documents if the libraries for the respective individual went t
 - `plus`: A protocol with UDG-full treatment (e.g. [Aaron/Neumann/Brandt et al. 2020c](https://dx.doi.org/10.17504/protocols.io.bqbpmsmn))
 - `mixed`: Multiple later merged libraries went through different UDG treatment approaches
 
-The `Library_Built` column: “ds” for double stranded, “ss” for single stranded, “mixed” in case multiple libraries with different protocols were merged
+The `Library_Built` column describes the library preparation method regarding single- or double-stranded protocols. See e.g. [Gansauge/Meyer 2013](https://doi.org/10.1038/nprot.2013.038) for more information.
 
-- `ds`:
-- `ss`:
-- `other`:
+- `ds`: Double-stranded library preparation
+- `ss`: Single-stranded library preparation
+- `other`: Other library preparion method or merged data from differently prepared libraries
 
 The `Genotype_Ploidy` column: ploidy of the genotypes
 
