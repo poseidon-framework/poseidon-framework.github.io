@@ -70,11 +70,9 @@ This limitation stems from the genotype data formats by Plink and the Eigensoft 
 
 The `MT_Haplogroup` column is meant to store the human mitochondrial DNA haplogroup for the respective individual in a simple string. The entry can be arbitrarily precise. A software tool to determine the MT haplogroup is for example [Haplogrep](https://haplogrep.i-med.ac.at).
 
-The `Y_Haplogroup` column holds the respective human Y-chromosome DNA haplogroup in a simple string. Arbitrary precision applies here as well.
+The `Y_Haplogroup` column holds the respective human Y-chromosome DNA haplogroup in a simple string. The notation should follow a syntax with the main branch + the most terminal derived Y-SNP separated with a minus symbol (e.g. R1b-P312).
 
 ## Library properties
-
-In case of multiple libraries: merge.
 
 The `Source_Tissue` column documents the skeletal, soft tissue or other elements from which source material for DNA library preparation have been extracted. If multiple libraries have been taken from different elements, these can be listed separated by `;`. Specific bone names should be reported with an underscore (e.g. bone_phalanx, tooth_molar).
 
@@ -82,7 +80,7 @@ The `No_of_Libraries` column holds a simple integer value of the number of libra
 
 The `Data_Type` column specifies the general pre-sequencing preparation methods that have been applied to the library. See [Knapp/Hofreiter 2010](https://dx.doi.org/10.3390%2Fgenes1020227) for a review of the different techniques. This field can hold one of four different values, but also multiple of these separated by `;` if different methods have been applied for different libraries.
 
-- `Shotgun`: Reconstructing the genome from random DNA fragments
+- `Shotgun`: Sequencing without any enrichment (whole genome sequencing, screening etc.)
 - `1240k`: Target enrichment with hybridization capture optimised for sequences covering the 1240k SNP array
 - `OtherCapture`: Target enrichment with hybridization capture for any other set of sequences
 - `ReferenceGenome`: Modern reference genomes where aDNA fragmentation is not an issue and other sample preparation techniques apply
@@ -100,7 +98,7 @@ The `Library_Built` column describes the library preparation method regarding si
 - `ss`: Single-stranded library preparation
 - `other`: Other library preparion method or merged data from differently prepared libraries
 
-The `Genotype_Ploidy` column stores a characteristic of the aDNA data treatment. Humans have two complete sets of chromosomes in their cells and hence are diploid organisms. For many compuational aDNA applications it is more practical, though, to work with pseudo-haploid data, so data were only one read per position is selected by a random sampling process.
+The `Genotype_Ploidy` column stores a characteristic of the aDNA data treatment. Humans have two complete sets of chromosomes in their cells and hence are diploid organisms. For many computational aDNA applications it is more practical, though, to work with pseudo-haploid data, so data were only one read per position is selected by a random sampling process.
 
 - `diploid`: No random read selection
 - `haploid`: Random read selection to produce pseudo-haploid data
@@ -115,15 +113,15 @@ The `Coverage_1240k` column should report the mean SNP coverage on the 1240k SNP
 
 ## Data quality
 
-The `Damage` column contains the % damage on the 5' end for the main Shotgun library used for sequencing or capture. In case of multiple libraries you should report a value from the merged read alignment.
+The `Damage` column contains the % damage on the first position of the 5' end for the main Shotgun library used for sequencing or capture. In case of multiple libraries you should report a value from the merged read alignment.
 
-The `Xcontam` column can only be filled for male individuals, as it contains a X chromosome base DNA contamination measure. In case of multiple libraries you should report a value from the merged read alignment. X contamination can be calculated for example with [ANGSD](http://www.popgen.dk/angsd/index.php/ANGSD).
+The `Xcontam` column stores the mean of a X chromosome based contamination measure. It can only be filled for male individuals, as it contains a X chromosome base DNA contamination measure. In case of multiple libraries you should report a value from the merged read alignment. X contamination can be calculated for example with [ANGSD](http://www.popgen.dk/angsd/index.php/ANGSD).
 
-The `Xcontam_stderr` column adds a standard error term for the X contamination estimate (ANGSD returns that as well). Again: In case of multiple libraries report a value from the merged read alignment.
+The `Xcontam_stderr` column adds an uncertainty term to the mean contamination measure reported in `Xcontam`. It should be one standard error.
 
-The `mtContam` column is intended for a mitochondrial DNA based contamination rate. For multiple libraries a value from the merged read alignment should be reported. This measure can stimated for example with ContamMix (no homepage, please contact [Philip Johnson](plfj@umd.edu)) or [Schmutzi](http://grenaud.github.io/schmutzi).
+The `mtContam` column is intended for a mean mitochondrial DNA based contamination rate. For multiple libraries a value from the merged read alignment should be reported. This measure can be estimated for example with ContamMix (no homepage, please contact [Philip Johnson](plfj@umd.edu)) or [Schmutzi](http://grenaud.github.io/schmutzi).
 
-The `mtContam_stderr` column adds a standard error term for the mtDNA based contamination estimate, just as `Xcontam_stderr` for `Xcontam`.
+The `mtContam_stderr` column adds an error term with the size of one standard error to the mean mtDNA based contamination estimate, just as `Xcontam_stderr` for `Xcontam`.
 
 # Context information
 

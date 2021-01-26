@@ -1,7 +1,7 @@
 # The genotype data in a Poseidon package
 
 * [File formats](#file-formats)
-* [Typical SNP panels](#typical-snp-panels)
+* [Typical setup and SNP panels](#typical-setup-and-snp-panels)
 * [Naming of SNPs, individuals and groups](#naming-of-snps--individuals-and-groups)
   + [SNP IDs](#snp-ids)
   + [Individual IDs](#individual-ids)
@@ -50,9 +50,11 @@ genotypeData:
 </tr>
 </table>
 
-## Typical SNP panels
+## Typical setup and SNP panels
 
-Poseidon is not limited to a specific panel of single nucleotide polymorphism (SNPs) that should be available for each sample. But as of today (25.01.2021) most ancient genomic data is pulled down to the Affymetrix Human Origins SNP array ([Patterson et al. 2012](https://dx.doi.org/10.1534%2Fgenetics.112.145037)) or the 1240k SNP array ([Mathieson et al. 2015](https://dx.doi.org/10.1038%2Fnature16152)). These are the panels we are relying on for our public Poseidon [repositories](repos) because of their specific design focus on population genetic research questions. The 1240k SNP array includes "nearly all SNPs on the Affymetrix Human Origins and Illumina 610-Quad arrays, 49,711 SNPs on chromosome X and 32,681 on chromosome Y, and 47,384 SNPs with evidence of functional importance" -- [Mathieson et al. 2015](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4918750/).
+Poseidon is not limited to a specific panel of single nucleotide polymorphism (SNPs) that should be available for each sample. All known SNPs for an individual derived from one or multiple libraries can be merged and stored in the genotype data accompanying a Poseidon package.
+
+As of today (25.01.2021) most ancient genomic data is pulled down to the Affymetrix Human Origins SNP array ([Patterson et al. 2012](https://dx.doi.org/10.1534%2Fgenetics.112.145037)) or the 1240k SNP array ([Mathieson et al. 2015](https://dx.doi.org/10.1038%2Fnature16152)). These are the panels we are relying on for our public Poseidon [repositories](repos) because of their specific design focus on population genetic research questions. The 1240k SNP array includes "nearly all SNPs on the Affymetrix Human Origins and Illumina 610-Quad arrays, 49,711 SNPs on chromosome X and 32,681 on chromosome Y, and 47,384 SNPs with evidence of functional importance" -- [Mathieson et al. 2015](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4918750/).
 
 ## Naming of SNPs, individuals and groups
 
