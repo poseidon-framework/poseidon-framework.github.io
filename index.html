@@ -8,8 +8,14 @@
   <meta charset="UTF-8">
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify/themes/vue.css">
   <style>
+    header {
+      text-align: center;
+      font-size: 16px !important;
+      background-color: #42b983;
+      color: white;
+    }
     footer {
-      font-size: 12px !important;
+      font-size: 13px !important;
     }
   </style>
 </head>
@@ -26,6 +32,12 @@
       },
       plugins: [
         function(hook) {
+          var header = [
+            '<header>',
+            'Poseidon <b>v.2.0.1</b>',
+            '</header>',
+            '<br>'
+          ].join('');
           var footer = [
             '<hr/>',
             '<footer>',
@@ -34,7 +46,7 @@
             '</footer>'
           ].join('');
           hook.afterEach(function(html) {
-            return html + footer;
+            return header + html + footer;
           });
         }
       ]
