@@ -55,7 +55,13 @@ The columns `Date_BC_AD_Median`, `Date_BC_AD_Start`, `Date_BC_AD_Stop` store a s
 
 ## Individual properties
 
-The `Genetic_Sex` column should encode the biological sex as determined from the DNA read distribution on the X and Y chromosome. It only allows for the entries `F` (female), `M` (male) and `U` (unknown), just as the genotype data formats by Plink and the Eigensoft software package. Edge cases (e.g. XXY, XYY, X0, ...) can not be expressed with this format and should be reported as `U` with an additional comment in the free text `Note` field. Genetic sex determination for ancient DNA can be performed for example with [Sex.DetERRmine](https://github.com/TCLamnidis/Sex.DetERRmine).
+The `Genetic_Sex` column should encode the biological sex as determined from the DNA read distribution on the X and Y chromosome. It only allows for the entries 
+
+- `F`: female
+- `M`: male
+- `U` unknown 
+
+This limitation stems from the genotype data formats by Plink and the Eigensoft software package. Edge cases (e.g. XXY, XYY, X0, ...) can not be expressed with this format and should be reported as `U` with an additional comment in the free text `Note` field. Genetic sex determination for ancient DNA can be performed for example with [Sex.DetERRmine](https://github.com/TCLamnidis/Sex.DetERRmine).
 
 The `MT_Haplogroup` column is meant to store the human mitochondrial DNA haplogroup for the respective individual in a simple string. The entry can be arbitrarily precise. A software tool to determine the MT haplogroup is for example [Haplogrep](https://haplogrep.i-med.ac.at).
 
@@ -65,17 +71,34 @@ The `Y_Haplogroup` column holds the respective human Y-chromosome DNA haplogroup
 
 In case of multiple libraries: merge.
 
-The `Source_Tissue` column: skeletal/tissue/source elements, specific bone name should be reported with an underscore (e.g. bone_phalanx), multiple values separated by ; in case of multiple libraries
+The `Source_Tissue` column documents the skeletal, soft tissue or other elements from which source material for DNA library preparation have been extracted. If multiple libraries have been taken from different elements, these can be listed separated by `;`. Specific bone names should be reported with an underscore (e.g. bone_phalanx, tooth_molar).
 
-The `No_of_Libraries` column: number of libraries
+The `No_of_Libraries` column holds a simple integer value of the number of libraries that have been prepared for an individual.
 
-The `Data_Type` column:	specifics of data generation method, multiple values separated by ;
+The `Data_Type` column specifies the general pre-sequencing preparation methods that have been applied to the library. This field can hold one of four different values, but also multiple of these separated by `;` if different methods have been applied.
 
-The `UDG` column: ploidy of the genotypes
+- `Shotgun`:
+- `1240K`:
+- `OtherCapture`:
+- `ReferenceGenome`:
+
+The `UDG` column documents if the libraries for the respective individual went through UDG (USER enzyme) treatment. This lab protocol step removes molecular damage in the form of deaminated cytosines characteristic of ancient DNA.
+
+- `minus`: A protocol without UDG treatment (e.g. [Aaron/Neumann/Brandt et al. 2020a](https://dx.doi.org/10.17504/protocols.io.bakricv6))
+- `half`: A protocol with UDG-half treatment (e.g. [Aaron/Neumann/Brandt et al. 2020b](https://dx.doi.org/10.17504/protocols.io.bmh6k39e))
+- `plus`: A protocol with UDG-full treatment (e.g. [Aaron/Neumann/Brandt et al. 2020c](https://dx.doi.org/10.17504/protocols.io.bqbpmsmn))
+- `mixed`: Multiple later merged libraries went through different UDG treatment approaches
 
 The `Library_Built` column: “ds” for double stranded, “ss” for single stranded, “mixed” in case multiple libraries with different protocols were merged
 
+- `ds`:
+- `ss`:
+- `other`:
+
 The `Genotype_Ploidy` column: ploidy of the genotypes
+
+- `diploid`:
+- `haploid`:
 
 ## Data yield
 
