@@ -102,9 +102,9 @@ The `Genotype_Ploidy` column stores a characteristic of the aDNA data treatment.
 
 ## Data yield
 
-The `Endogenous` column: % endogenous DNA as estimated from SG libraries (before capture), as for example estimated by EAGER, not on target and no quality filter, in case of multiple libraries report only the highest value
+The `Endogenous` column holds the percentage of mapped reads over the total amount of reads that went into the mapping pipeline. That boils down to the DNA percentage of the library that matches the (human) reference. It should be determined from Shotgun libraries (so before any hybridization capture), not on target and without any quality filtering. In case of multiple libraries only the highest value should be reported. The % endogenous DNA can be calculated for example with the [endorS.py](https://github.com/aidaanva/endorS.py) script.
 
-The `Nr_autosomal_SNPs` column should report the number of SNPs on the 1240k SNP array covered at least once in any of the libraries from this sample.
+The `Nr_autosomal_SNPs` column should give the number of SNPs on the 1240k SNP array covered at least once in any of the libraries from this sample.
 
 The `Coverage_1240k` column should report the mean SNP coverage on the 1240k SNP array for the merged libraries of this sample. To calculate the coverage it's necessary to determine which 1240k SNPs are covered how many times by the mapped reads. Individual SNPs might be covered multiple times, whereas others may not be covered at all by the highly deteriorated ancient DNA. The coverage for each SNP is therefore a number between 0 and n and the mean coverage for a complete sample can be calculated as a mean of the SNP-wise coverage distribution for all its libraries combined. The coverage can be calculated for example with the [QualiMap](http://qualimap.conesalab.org/) software package.
 
