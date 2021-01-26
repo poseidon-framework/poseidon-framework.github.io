@@ -8,7 +8,7 @@ This documentation includes some more background about some of the columns in th
 - [Genetic summary data](#genetic-summary-data)
     - [Individual properties (`Genetic_Sex`, `MT_Haplogroup`, `Y_Haplogroup`)](#individual-properties)
     - [Library properties (`Source_Tissue`, `No_of_Libraries`, `Data_Type`, `UDG`, `Library_Built`, `Genotype_Ploidy`)](#library-properties)
-    - [Data yield (`Endogenous`, `Nr_autosomal_SNPs`, `Coverage_1240K`)](#data-yield)
+    - [Data yield (`Endogenous`, `Nr_autosomal_SNPs`, `Coverage_1240k`)](#data-yield)
     - [Data quality (`Damage`, `Xcontam`, `Xcontam_stderr`, `mtContam`, `mtContam_stderr`)](#data-quality)
 - [Context information (`Primary_Contact`, `Publication_Status`, `Note`, `Keywords`)](#context-information)
 
@@ -78,7 +78,7 @@ The `No_of_Libraries` column holds a simple integer value of the number of libra
 The `Data_Type` column specifies the general pre-sequencing preparation methods that have been applied to the library. See [Knapp/Hofreiter 2010](https://dx.doi.org/10.3390%2Fgenes1020227) for a review of the different techniques. This field can hold one of four different values, but also multiple of these separated by `;` if different methods have been applied for different libraries.
 
 - `Shotgun`: Reconstructing the genome from random DNA fragments
-- `1240K`: Target enrichment with hybridization capture optimised for sequences covering the 1240k SNP array
+- `1240k`: Target enrichment with hybridization capture optimised for sequences covering the 1240k SNP array
 - `OtherCapture`: Target enrichment with hybridization capture for any other set of sequences
 - `ReferenceGenome`: Modern reference genomes where aDNA fragmentation is not an issue and other sample preparation techniques apply
 
@@ -104,9 +104,9 @@ The `Genotype_Ploidy` column stores a characteristic of the aDNA data treatment.
 
 The `Endogenous` column: % endogenous DNA as estimated from SG libraries (before capture), as for example estimated by EAGER, not on target and no quality filter, in case of multiple libraries report only the highest value
 
-The `Nr_autosomal_SNPs` column should report the number of SNPs on the 1240K SNP array covered at least once in any of the libraries from this sample. The 1240K SNP array was specifically designed for ancient human population genetics research and includes "nearly all SNPs on the Affymetrix Human Origins and Illumina 610-Quad arrays, 49,711 SNPs on chromosome X and 32,681 on chromosome Y, and 47,384 SNPs with evidence of functional importance" -- [Mathieson et al. 2015](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4918750/). This can be calculated for example with ...
+The `Nr_autosomal_SNPs` column should report the number of SNPs on the 1240k SNP array covered at least once in any of the libraries from this sample.
 
-The `Coverage_1240K` column should report the mean SNP *coverage* on the 1240K SNP array for the merged libraries of this sample. To calculate the coverage it's necessary to determine which 1240K SNPs are covered how many times by the mapped reads. Individual SNPs might be covered multiple times, whereas others may not be covered at all by the highly deteriorated ancient DNA. The coverage for each SNP is therefore a number between 0 and n and the mean coverage for a complete sample can be calculated as a mean of the SNP-wise coverage distribution for all its libraries combined. The coverage can be determined with ...
+The `Coverage_1240k` column should report the mean SNP coverage on the 1240k SNP array for the merged libraries of this sample. To calculate the coverage it's necessary to determine which 1240k SNPs are covered how many times by the mapped reads. Individual SNPs might be covered multiple times, whereas others may not be covered at all by the highly deteriorated ancient DNA. The coverage for each SNP is therefore a number between 0 and n and the mean coverage for a complete sample can be calculated as a mean of the SNP-wise coverage distribution for all its libraries combined. The coverage can be calculated for example with the [QualiMap](http://qualimap.conesalab.org/) software package.
 
 ## Data quality
 
