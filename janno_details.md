@@ -75,12 +75,12 @@ The `Source_Tissue` column documents the skeletal, soft tissue or other elements
 
 The `No_of_Libraries` column holds a simple integer value of the number of libraries that have been prepared for an individual.
 
-The `Data_Type` column specifies the general pre-sequencing preparation methods that have been applied to the library. This field can hold one of four different values, but also multiple of these separated by `;` if different methods have been applied.
+The `Data_Type` column specifies the general pre-sequencing preparation methods that have been applied to the library. See [Knapp/Hofreiter 2010](https://dx.doi.org/10.3390%2Fgenes1020227) for a review of the different techniques. This field can hold one of four different values, but also multiple of these separated by `;` if different methods have been applied for different libraries.
 
-- `Shotgun`:
-- `1240K`:
-- `OtherCapture`:
-- `ReferenceGenome`:
+- `Shotgun`: Reconstructing the genome from random DNA fragments
+- `1240K`: Target enrichment with hybridization capture optimised for sequences covering the 1240k SNP array
+- `OtherCapture`: Target enrichment with hybridization capture for any other set of sequences
+- `ReferenceGenome`: Modern reference genomes where aDNA fragmentation is not an issue and other sample preparation techniques apply
 
 The `UDG` column documents if the libraries for the respective individual went through UDG (USER enzyme) treatment. This lab protocol step removes molecular damage in the form of deaminated cytosines characteristic of ancient DNA.
 
