@@ -82,7 +82,7 @@ The `Data_Type` column specifies the general pre-sequencing preparation methods 
 - `OtherCapture`: Target enrichment with hybridization capture for any other set of sequences
 - `ReferenceGenome`: Modern reference genomes where aDNA fragmentation is not an issue and other sample preparation techniques apply
 
-The `UDG` column documents if the libraries for the respective individual went through UDG (USER enzyme) treatment. This lab protocol step removes molecular damage in the form of deaminated cytosines characteristic of ancient DNA.
+The `UDG` column documents if the libraries for the respective individual went through UDG (USER enzyme) treatment. This wet lab protocol step removes molecular damage in the form of deaminated cytosines characteristic of ancient DNA.
 
 - `minus`: A protocol without UDG treatment (e.g. [Aaron/Neumann/Brandt et al. 2020a](https://dx.doi.org/10.17504/protocols.io.bakricv6))
 - `half`: A protocol with UDG-half treatment (e.g. [Aaron/Neumann/Brandt et al. 2020b](https://dx.doi.org/10.17504/protocols.io.bmh6k39e))
@@ -95,10 +95,10 @@ The `Library_Built` column describes the library preparation method regarding si
 - `ss`: Single-stranded library preparation
 - `other`: Other library preparion method or merged data from differently prepared libraries
 
-The `Genotype_Ploidy` column: ploidy of the genotypes
+The `Genotype_Ploidy` column stores a characteristic of the aDNA data treatment. Humans have two complete sets of chromosomes in their cells and hence are diploid organisms. For many compuational aDNA applications it is more practical, though, to work with pseudo-haploid data, so data were only one read per position is selected by a random sampling process.
 
-- `diploid`:
-- `haploid`:
+- `diploid`: No random read selection
+- `haploid`: Random read selection to produce pseudo-haploid data
 
 ## Data yield
 
