@@ -7,6 +7,11 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta charset="UTF-8">
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify/themes/vue.css">
+  <style>
+    footer {
+      font-size: 12px !important;
+    }
+  </style>
 </head>
 <body>
   <div id="app"></div>
@@ -18,7 +23,21 @@
       subMaxLevel: 3,
       alias: {
         '/.*/_sidebar.md': '/_sidebar.md'
-      }
+      },
+      plugins: [
+        function(hook) {
+          var footer = [
+            '<hr/>',
+            '<footer>',
+            '&copy;2021 Poseidon is an initiative of the <a href="https://www.eva.mpg.de/archaeogenetics/index.html">Department of Archaeogenetics</a> at the Max Planck Institute for Evolutionary Anthropology in Leipzig.<br>',
+            'This website was built with <a href="https://github.com/docsifyjs/docsify" target="_blank">docsify</a>.',
+            '</footer>'
+          ].join('');
+          hook.afterEach(function(html) {
+            return html + footer;
+          });
+        }
+      ]
     }
   </script>
   <script src="//cdn.jsdelivr.net/npm/docsify/lib/docsify.min.js"></script>
