@@ -65,21 +65,21 @@ The `Y_Haplogroup` column holds the respective human Y-chromosome DNA haplogroup
 
 In case of multiple libraries: merge.
 
-`Source_Tissue`
+The `Source_Tissue` column: skeletal/tissue/source elements, specific bone name should be reported with an underscore (e.g. bone_phalanx), multiple values separated by ; in case of multiple libraries
 
-`No_of_Libraries`
+The `No_of_Libraries` column: number of libraries
 
-`Data_Type`
+The `Data_Type` column:	specifics of data generation method, multiple values separated by ;
 
-`UDG`
+The `UDG` column: ploidy of the genotypes
 
-`Library_Built`
+The `Library_Built` column: “ds” for double stranded, “ss” for single stranded, “mixed” in case multiple libraries with different protocols were merged
 
-`Genotype_Ploidy`
+The `Genotype_Ploidy` column: ploidy of the genotypes
 
 ## Data yield
 
-`Endogenous`
+The `Endogenous` column: % endogenous DNA as estimated from SG libraries (before capture), as for example estimated by EAGER, not on target and no quality filter, in case of multiple libraries report only the highest value
 
 The `Nr_autosomal_SNPs` column should report the number of SNPs on the 1240K SNP array covered at least once in any of the libraries from this sample. The 1240K SNP array was specifically designed for ancient human population genetics research and includes "nearly all SNPs on the Affymetrix Human Origins and Illumina 610-Quad arrays, 49,711 SNPs on chromosome X and 32,681 on chromosome Y, and 47,384 SNPs with evidence of functional importance" -- [Mathieson et al. 2015](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4918750/). This can be calculated for example with ...
 
@@ -87,21 +87,21 @@ The `Coverage_1240K` column should report the mean SNP *coverage* on the 1240K S
 
 ## Data quality
 
-`Damage`
+The `Damage` column: % damage on 5' end for the main shotgun library used for sequencing and/or capture, in case of multiple libraries report a value from the merged read alignment
 
-`Xcontam`
+The `Xcontam` column: if male for captured library, in case of multiple libraries report a value from the merged read alignment
 
-`Xcontam_stderr`
+The `Xcontam_stderr` column: standard error of ANGSD X contamination estimate, in case of multiple libraries report a value from the merged read alignment
 
-`mtContam`
+The `mtContam` column: mitochondrial contamination rate as estimated by ContamMix and/or Schmutzi, in case of multiple libraries report a value from the merged read alignment
 
-`mtContam_stderr`
+The `mtContam_stderr` column: Standard error of ContamMix/Schmutzi estimate, in case of multiple libraries report a value from the merged read alignment
 
 # Context information
 
 The `Primary_Contact` column is a free form text field that stores the name of the main or the corresponding author of the respective paper for published data.
 
-The `Publication_Status` column holds either the value `unpublished` for (yet) unpublished samples or -- for published data -- a citation-key of the form `AuthorJournalYear` without any spaces or special characters. This key has to be identical to the [BibTeX](http://www.bibtex.org/) citation-key identifying the respective entry in the `LITERATURE.bib` file of the package. BibTeX is a file format to store bibliographic information, where each entry (article, book, website, ...) is defined by a series of parameters (authors, year of publication, journal, ...). Here's an example `LITERATURE.bib` file with two entries:
+The `Publication_Status` column holds either the value `unpublished` for (yet) unpublished samples or -- for published data -- a citation-key of the form `AuthorJournalYear` without any spaces or special characters. This key has to be identical to the [BibTeX](http://www.bibtex.org/) citation-key identifying the respective entry in the `.bib` file of the package. BibTeX is a file format to store bibliographic information, where each entry (article, book, website, ...) is defined by a series of parameters (authors, year of publication, journal, ...). Here's an example `.bib` file with two entries:
 
 ```
 @article{CassidyPNAS2015,
@@ -133,7 +133,7 @@ The `Publication_Status` column holds either the value `unpublished` for (yet) u
 }
 ```
 
-The string `CassidyPNAS2015` is the citation-key of the first entry. When creating a new Poseidon package the `LITERATURE.bib` file should be filled together with the `Publication_Status` column. One of the most simple ways to obtain the BibTeX entries may be to request them with the doi from https://doi2bib.org/. Some times it may be necessary to adjust the outcome manually, though. The citation-key for example has to be replaced by the one used in the `Publication_Status` column.
+The string `CassidyPNAS2015` is the citation-key of the first entry. When creating a new Poseidon package the `.bib` file should be filled together with the `Publication_Status` column. One of the most simple ways to obtain the BibTeX entries may be to request them with the doi from https://doi2bib.org/. Some times it may be necessary to adjust the outcome manually, though. The citation-key for example has to be replaced by the one used in the `Publication_Status` column.
 
 The `Note` column is a free form text field that can contain small amounts of additional information that is not yet expressed in a more systematic form in the the other `.janno` file columns.
 
