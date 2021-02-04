@@ -9,7 +9,7 @@
 
 ## File formats
 
-Genotype data in `.janno` files can be stored in either of two (multi)file formats: PLINK (binary) and EIGENSTRAT.
+Genotype data in Poseidon packages can be stored in either of two (multi)file formats: PLINK (binary) and EIGENSTRAT.
 
 |   | PLINK (binary) | EIGENSTRAT |
 |---|---|---|
