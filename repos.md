@@ -69,3 +69,45 @@ This is rather simple, because no large files have to be moved.
 
 Please open an issue in the Github repository that contains the package you want to improve. Explain which changes you want to apply. We will contact you there and discuss if and how you can send us the improved genotype data.
 
+## Naming Poseidon v.2 `package`s
+
+The naming of packages should follow a simple scheme:
+
+Ancient published: YEAR_NAME_IDENTIFIER
+
+```
+2018_Lamnidis_Fennoscandia  
+2019_Wang_Caucasus  
+2019_Flegontov_PaleoEskimo  
+```
+
+Ancient unpublished: IDENTIFIER_NAME
+
+```
+Switzerland_LNBA_Roswita  
+Italy_Mesolithic_Paul  
+SouthEastAsia_Simon  
+```
+
+Modern published: YEAR_(NAME)_IDENTIFIER
+
+```
+2015_1000_Genomes-1240K_haploid_pulldown
+2016_Mallick_SGDP1240K_diploid_pulldown
+2014_Lazaridis_HOmodern
+2016_Lazaridis_HOmodern
+2019_Flegontov_HO_NewSiberian
+2018_Lipson_SEA
+```
+
+Modern unpublished: IDENTIFIER_NAME
+
+```
+Eurasia_newHO_Paul
+Afrika_newHO_Andrea
+```
+
+Identifiers can be somewhat informal as long as the project is ongoing, they just need to be unique. As soon as a project gets published, we create a final version of the respective package with the YEAR_NAME_IDENTIFIER label.
+
+External projects can be integrated similarly by using their publication name, or by temporary internal identifiers such as `Iron_Age_Boston_Share`.
+
