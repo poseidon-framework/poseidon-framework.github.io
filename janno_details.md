@@ -115,7 +115,7 @@ The `Coverage_1240k` column should report the mean SNP coverage on the 1240k SNP
 
 The `Damage` column contains the % damage on the first position of the 5' end for the main Shotgun library used for sequencing or capture. In case of multiple libraries you should report a value from the merged read alignment.
 
-The `Xcontam` column stores the mean of a X chromosome based contamination measure. It can only be filled for male individuals, as it contains a X chromosome base DNA contamination measure. In case of multiple libraries you should report a value from the merged read alignment. X contamination can be calculated for example with [ANGSD](http://www.popgen.dk/angsd/index.php/ANGSD).
+The `Xcontam` column stores the mean of an X chromosome based contamination measure. It can only be filled for male individuals. In case of multiple libraries you should report a value from the merged read alignment. X contamination can be calculated for example with [ANGSD](http://www.popgen.dk/angsd/index.php/ANGSD). ANGSD can possibly yield a negative contamination value; in this case the result should be reported as 0.
 
 The `Xcontam_stderr` column adds an uncertainty term to the mean contamination measure reported in `Xcontam`. It should be one standard error.
 
