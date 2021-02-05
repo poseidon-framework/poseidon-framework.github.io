@@ -48,13 +48,14 @@ Before you start keep in mind to separate modern reference samples from ancient 
 3. Fill out the newly created [`POSEIDON.yml`](standard?id=the-poseidonyml-file-mandatory) file.
 4. Fill out the newly created [`.janno`](standard?id=the-xjanno-file-mandatory) file. More information about the many columns and how to fill them can be found in the extensive documentation [here](janno_details). You do not necessarily have to fill out all columns - we may consider incomplete submissions, as they can be completed later.
 5. Fill out the [`.bib`](standard?id=the-literaturebib-file-optional) file with the relevant sources. Some more information on how to do this can be found [here](janno_details?id=context-information).
-6. Check if your new Poseidon package passes the validation with `trident validate`. This is mandatory.
+6. Add/update the file checksums in the `POSEIDON.yml` file with [`trident update`](trident?id=update-command)
+7. Check if your new Poseidon package passes the validation with `trident validate`. This is mandatory.
 
 Now your local package is complete and can be submitted to our repository.
 
-7. Fork and clone the Github repository where you would like to submit the package. ([data_ancient](https://github.com/poseidon-framework/data_ancient) or [data_modern](https://github.com/poseidon-framework/data_modern))
-8. Copy your new package into your local clone, commit and push. Make sure not to commit any private files or any large genotype data files. Our `.gitignore` settings should usually prevent this automatically.
-9. Submit a pull request to merge your updates with our repository. We will inspect your submission and contact you on Github about necessary changes - and finally how you can send us the prepared genotype data.
+8. Fork and clone the Github repository where you would like to submit the package. ([data_ancient](https://github.com/poseidon-framework/data_ancient) or [data_modern](https://github.com/poseidon-framework/data_modern))
+9. Copy your new package into your local clone, commit and push. Make sure not to commit any private files or any large genotype data files. Our `.gitignore` settings should usually prevent this automatically.
+10. Submit a pull request to merge your updates with our repository. We will inspect your submission and contact you on Github about necessary changes - and finally how you can send us the prepared genotype data.
 
 ### Modifying the context data of a package in one of the public repositories (individual or group names in .fam, context information in .janno or .bib) 
 
