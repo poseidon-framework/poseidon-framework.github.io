@@ -49,7 +49,7 @@ Before you start keep in mind to separate modern reference samples from ancient 
 4. Fill out the newly created [`.janno`](standard?id=the-xjanno-file-mandatory) file. More information about the many columns and how to fill them can be found in the extensive documentation [here](janno_details). You do not necessarily have to fill out all columns - we may consider incomplete submissions, as they can be completed later.
 5. Fill out the [`.bib`](standard?id=the-literaturebib-file-optional) file with the relevant sources. Some more information on how to do this can be found [here](janno_details?id=context-information).
 6. Add/update the file checksums in the `POSEIDON.yml` file with [`trident update`](trident?id=update-command)
-7. Check if your new Poseidon package passes the validation with `trident validate`. This is mandatory.
+7. Check if your new Poseidon package passes the validation with [`trident validate`](trident?id=validate-command). This is mandatory.
 
 Now your local package is complete and can be submitted to our repository.
 
@@ -62,7 +62,7 @@ Now your local package is complete and can be submitted to our repository.
 This is rather simple, because no large files have to be moved.
 
 1. Fork and clone the Github repository that contains the package you want to improve.
-2. Modify the files you want to change. Remember to also update the md5 checksums in the POSEIDON.yml file after you are done. This can be triggered with `trident update`.
+2. Modify the files you want to change. Remember to also update the md5 checksums in the POSEIDON.yml file after you are done. This can be triggered with [`trident update`](trident?id=update-command).
 3. Commit and push your changes.
 4. Submit a pull request to merge your updates with our repository. We will contact you about this submission as soon as possible.
 
