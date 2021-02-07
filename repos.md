@@ -26,9 +26,12 @@ So you can download/fork/clone the package context data from Github, but where c
 
 ## The DAG-Poseidon Webserver
 
-!> Not running yet.
+We have a (preliminary) webserver running, which currently has two possible APIs implemented:
 
-... Website ... API ...
+1. Under [http://c107-224.cloud.gwdg.de:3000/packages](http://c107-224.cloud.gwdg.de:3000/packages), one receives a JSON-list of packages available at the server. Each JSON entry has a title, a description, a last-modified date and a package version.
+2. Under [http://c107-224.cloud.gwdg.de:3000/\<package_name\>/zip_file](http://c107-224.cloud.gwdg.de:3000/<package_name>/zip_file), a zip-file for the given package can be downloaded, which contains the package content.
+
+The webserver is powered by an HTTP server program called `poseidon-http-server`, whose source-code can be reviewed at the [same repository](https://github.com/poseidon-framework/poseidon-hs) as `trident` is sourced. For those interested to run their own instance of this webserver, for example under `localhost`, the server comes with a short command line help. It gets installed via `stack install`, similarly to `trident`. The program first scans the given directories for Poseidon packages, then creates zip-files for them, and then starts a HTTP server listening - by default - to port 3000, and providing the two APIs listed above.
 
 
 ## Contributing to our central repositories
