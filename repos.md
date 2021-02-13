@@ -36,7 +36,7 @@ The webserver is powered by an HTTP server program called `poseidon-http-server`
 
 Here is an embed of the `package_table` API:
 
-[Package Table](http://c107-224.cloud.gwdg.de:3000/package_table ':include :type=iframe width=100% height=400px')
+[Package Table](http://c107-224.cloud.gwdg.de:3000/package_table_md.md ':include')
 
 
 ## Contributing to our central repositories
