@@ -34,11 +34,9 @@ We have a (preliminary) webserver running, which currently has two possible APIs
 
 The webserver is powered by an HTTP server program called `poseidon-http-server`, whose source-code can be reviewed at the [same repository](https://github.com/poseidon-framework/poseidon-hs) as `trident` is sourced. For those interested to run their own instance of this webserver, for example under `localhost`, the server comes with a short command line help. It gets installed via `stack install`, similarly to `trident`. The program first scans the given directories for Poseidon packages, then creates zip-files for them, and then starts a HTTP server listening - by default - to port 3000, and providing the two APIs listed above.
 
-<!-- Here is an embed of the `package_table` API:
+Here is an embed of the `package_table` API:
 
-[Package Table](http://c107-224.cloud.gwdg.de:3000/package_table ':include :type=iframe width=100% height=400px') -->
-
-<!-- [Package Table](http://c107-224.cloud.gwdg.de:3000/package_table_md.md ':include') -->
+[Package Table](https://c107-224.cloud.gwdg.de:3000/package_table_md.md ':include')
 
 
 ## Contributing to our central repositories
