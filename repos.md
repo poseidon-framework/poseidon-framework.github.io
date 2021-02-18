@@ -1,15 +1,6 @@
-!> This project is under development, and this documentation page is for internal development at this point.
-
 # Repository guide
 
 A Poseidon repository is nothing more but a collection of Poseidon packages. That means you can easily set up your own repository for your own needs and purposes. You could even share this repository and the packages within it online to make them available to a wider community. Sharing and maintaining public data is one of the main goals of our initiative.
-
-* [Our public repositories](#our-public-repositories)
-* [The DAG-Poseidon Webserver](#the-dag-poseidon-webserver)
-* [Contributing to our central repositories](#contributing-to-our-central-repositories)
-  + [Preparing a new Poseidon package for one of the public repositories](#preparing-a-new-poseidon-package-for-one-of-the-public-repositories)
-  + [Modifying the context data of a package in one of the public repositories (individual or group names in .fam, context information in .janno or .bib)](#modifying-the-context-data-of-a-package-in-one-of-the-public-repositories--individual-or-group-names-in-fam--context-information-in-janno-or-bib-)
-  + [Modifying the genotype data of a package in one of the public repositories](#modifying-the-genotype-data-of-a-package-in-one-of-the-public-repositories)
 
 ## Our public repositories
 

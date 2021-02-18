@@ -1,12 +1,5 @@
 # Genotype data details
 
-* [File formats](#file-formats)
-* [Typical setup and SNP panels](#typical-setup-and-snp-panels)
-* [Naming of SNPs, individuals and groups](#naming-of-snps--individuals-and-groups)
-  + [SNP IDs](#snp-ids)
-  + [Individual IDs](#individual-ids)
-  + [Group IDs](#group-ids)
-
 ## File formats
 
 Genotype data in Poseidon packages can be stored in either of two (multi)file formats: PLINK (binary) and EIGENSTRAT.

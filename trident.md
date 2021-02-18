@@ -1,22 +1,6 @@
-[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/poseidon-framework/poseidon-hs/CI)](https://github.com/poseidon-framework/poseidon-hs/actions?query=workflow%3ACI)
-[![Coverage Status](https://img.shields.io/codecov/c/github/poseidon-framework/poseidon-hs/master.svg)](https://codecov.io/github/poseidon-framework/poseidon-hs?branch=master)
-[![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/poseidon-framework/poseidon-hs?include_prereleases) ![GitHub all releases](https://img.shields.io/github/downloads/poseidon-framework/poseidon-hs/total)](https://github.com/poseidon-framework/poseidon-hs/releases)
-
 # trident CLI software
-A toolset to work with modular genotype databases formatted using Poseidon. The main executable within this package is called `trident`.
 
-* [Installation Quickstart](#installation-quickstart)
-* [Guide for the command line utility](#guide-for-the-command-line-utility)
-  + [Poseidon package repositories](#poseidon-package-repositories)
-  + [Analysing your own dataset outside of the main repository](#analysing-your-own-dataset-outside-of-the-main-repository)
-  + [Package creation and manipulation commands](#package-creation-and-manipulation-commands): [`init`](#init-command), [`fetch`](#fetch-command), [`forge`](#forge-command), [`update`](#update-command)
-  + [Inspection commands](#inspection-commands): [`list`](#list-command), [`summarise`](#summarise-command), [`survey`](#survey-command), [`validate`](#validate-command)
-  + [Analysis commands](#analysis-commands): [`fstats`](#fstats-command)
-  + [Getting help](#getting-help)
-- [Developers Guide](#developers-guide)
-  * [Development Quickstart](#development-quickstart)
-  * [Preparing a new stable release](#preparing-a-new-stable-release)
-  * [The Poseidon HTTP Server](#the-poseidon-http-server)
+Trident is a toolset to work with Poseidon packages. The main executable within this package is called `trident`.
 
 ## Installation Quickstart
 

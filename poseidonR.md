@@ -1,19 +1,6 @@
-[![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
-![GitHub R package version](https://img.shields.io/github/r-package/v/poseidon-framework/poseidonR)
-[![Travis-CI Build Status](https://travis-ci.com/poseidon-framework/poseidonR.svg?branch=master)](https://travis-ci.com/poseidon-framework/poseidonR)
-[![Coverage Status](https://img.shields.io/codecov/c/github/poseidon-framework/poseidonR/master.svg)](https://codecov.io/github/poseidon-framework/poseidonR?branch=master)
-
 # poseidonR R package
 
 poseidonR is an R package to simplify the interaction with Poseidon packages. So far it mostly focusses on `.janno` files and provides a dedicated R S3 class `janno` that inherits from `tibble` and allows to tidily read and manipulate the context information stored in them.
-
-* [Installation](#installation)
-* [Quickstart](#quickstart)
-  + [Read janno files](#read-janno-files)
-  + [Validate janno files](#validate-janno-files)
-  + [Process age information in janno objects](#process-age-information-in-janno-objects)
-  + [General helper functions](#general-helper-functions)
-* [For developers](#for-developers)
 
 ## Installation
 

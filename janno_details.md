@@ -2,16 +2,6 @@
 
 This documentation includes background information about some of the columns in the `.janno` file beyond the general remarks in the [standard](standard) definition and the overview table [here](https://github.com/poseidon-framework/poseidon2-schema/blob/master/janno_columns.tsv). This should make it more easy to compile the necessary information for both published and unpublished data.
 
-- [Identifiers](#identifiers)
-- [Spatial position (`Country`, `Location`, `Site`, `Latitude`, `Longitude`)](#spatial-position)
-- [Temporal position (`Date_C14_Labnr`, `Date_C14_Uncal_BP`, `Date_C14_Uncal_BP_Err`, `Date_BC_AD_Median`, `Date_BC_AD_Start`, `Date_BC_AD_Stop`, `Date_Type`)](#temporal-position)
-- [Genetic summary data](#genetic-summary-data)
-    - [Individual properties (`Genetic_Sex`, `MT_Haplogroup`, `Y_Haplogroup`)](#individual-properties)
-    - [Library properties (`Source_Tissue`, `No_of_Libraries`, `Data_Type`, `UDG`, `Library_Built`, `Genotype_Ploidy`)](#library-properties)
-    - [Data yield (`Endogenous`, `Nr_autosomal_SNPs`, `Coverage_1240k`)](#data-yield)
-    - [Data quality (`Damage`, `Xcontam`, `Xcontam_stderr`, `mtContam`, `mtContam_stderr`)](#data-quality)
-- [Context information (`Primary_Contact`, `Publication_Status`, `Note`, `Keywords`)](#context-information)
-
 # Identifiers
 
 The `Individual_ID` column has to represent each sample with a world-wide unique identifier string equal to the identifier used in the respective accompanying publication. There is no central authority to issue these identifiers, so it remains in the hand of the authors to avoid duplication. The `Individual_ID`s are also employed in the [genetic data files](genotype_data?id=individual-ids) and therefore have to adhere to certain constraints. If there are multiple samples from one individual, then they have to be clearly distinguished with relevant suffixes added to the `Individual_ID`.

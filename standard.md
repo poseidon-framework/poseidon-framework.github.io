@@ -1,18 +1,10 @@
 # Standard Definition
 
-Poseidon is a solution for genotype data organisation established within the Department of Archaeogenetics at the Max Planck Institute for the Science of Human History (MPI-SHH) in Jena.
-
-* [Poseidon Package Structure](#structure)
-* [The `POSEIDON.yml` file](#the-poseidonyml-file)
-* [Genotype data](#genotype-data)
-* [The `.janno` file](#the-janno-file)
-* [The `.bib` file](#the-bib-file)
-* [The `README.txt` file](#the-readmetxt-file)
-* [The `CHANGELOG.txt` file](#the-changelogtxt-file)
+Poseidon is a solution for genotype data organisation established within the Department of Archaeogenetics at the Max Planck Institute for the Science of Human History (MPI-SHH) in Jena. Here we describe the standard that defines what a valid Poseidon package is.
 
 ## The Poseidon package structure
 
-All ancient and modern data are distributed into so-called packages, which are directories containing a dedicated set of files. Packages correspond to published sets of genomes, or in case of unpublished projects, ongoing (and growing) sets of samples currently analysed. All text files in the package are UTF-8 encoded.
+All ancient and modern data in Poseidon are distributed into so-called packages, which are directories containing a dedicated set of files. Packages correspond to published sets of genomes, or in case of unpublished projects, ongoing (and growing) sets of samples currently analysed. All text files in the package are UTF-8 encoded.
 
 Every package should have the following files: 
 
