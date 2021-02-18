@@ -11,6 +11,7 @@
 	* [.janno file details](janno_details.md)
 * **The Poseidon Software**
 	* [trident CLI software](trident.md)
+	* [poseidon-http-server](server.md)
 	* [poseidonR R package](poseidonR.md)
 * **The Poseidon Repositories**
 	* [Repository guide](repos.md)
