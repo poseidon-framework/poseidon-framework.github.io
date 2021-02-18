@@ -1,6 +1,6 @@
 !> This project is under development, and this documentation page is for internal development at this point.
 
-# Poseidon Repositories
+# Repository guide
 
 A Poseidon repository is nothing more but a collection of Poseidon packages. That means you can easily set up your own repository for your own needs and purposes. You could even share this repository and the packages within it online to make them available to a wider community. Sharing and maintaining public data is one of the main goals of our initiative.
 

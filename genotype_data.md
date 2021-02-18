@@ -1,4 +1,4 @@
-# The genotype data in a Poseidon package
+# Genotype data details
 
 * [File formats](#file-formats)
 * [Typical setup and SNP panels](#typical-setup-and-snp-panels)

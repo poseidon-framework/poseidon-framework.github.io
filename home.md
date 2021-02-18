@@ -1,4 +1,4 @@
-!> This project is under development, and this documentation page is for internal development at this point.
+!> This project is under development, and this documentation page is still evolving.
 
 # The Poseidon Framework documentation page
 

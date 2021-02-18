@@ -1,4 +1,4 @@
-# The .janno file
+# .janno file details
 
 This documentation includes background information about some of the columns in the `.janno` file beyond the general remarks in the [standard](standard) definition and the overview table [here](https://github.com/poseidon-framework/poseidon2-schema/blob/master/janno_columns.tsv). This should make it more easy to compile the necessary information for both published and unpublished data.
 
