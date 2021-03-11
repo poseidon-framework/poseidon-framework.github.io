@@ -95,7 +95,7 @@ The command
 
 ```
 trident init \
-  --inFormat genotype_data_format \
+  --inFormat EIGENSTRAT/PLINK \
   --genoFile path/to/geno_file \
   --snpFile path/to/snp_file \
   --indFile path/to/ind_file \
@@ -169,6 +169,21 @@ group_id
 ```
 
 Just as for `init` the output package of `forge` is created as a new directory `-o` and gets the name defined in `-n`.
+
+#### Genoconvert command
+`genoconvert` converts the genotype data in a Poseidon package to a different file format. The respective entries in the POSEIDON.yml file are changed accordingly. 
+
+With the default setting
+
+```
+trident genoconvert -d ... -d ... --outFormat EIGENSTRAT/PLINK
+```
+
+all packages in `-d` will be converted to the desired `--outFormat` (either `EIGENSTRAT` or `PLINK`), if the data is not already in this format. 
+
+The "old" data is not deleted, but kept around. That means conversion will result in a package with both PLINK and EIGENSTRAT data, but only one is linked in the POSEIDON.yml file, and that is what will be used by trident. To delete the old data in the conversion you can add the `--removeOld` flag.
+
+Remember that the POSEIDON.yml file can also be edited by hand if you want to replace the genotype data in a package.
 
 #### Update command
 `update` adds or updates the [md5 checksums](https://en.wikipedia.org/wiki/Md5sum) in the POSEIDON.yml field `checksums` for one or multiple packages.
