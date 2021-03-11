@@ -120,7 +120,7 @@ It works with
 
 ```
 trident fetch -d ... -d ... \
-  -f "*package_title_1*, *package_title_2*, *package_title_3*" \
+  -f "*package_title_1*,*package_title_2*,*package_title_3*" \
   --fetchFile path/to/forgeFile
 ```
 
@@ -137,7 +137,7 @@ To overwrite outdated package versions with `fetch`, the `-u`/`--upgrade` flag h
 
 ```
 trident forge -d ... -d ... \
-  -f "*package_name*, group_id, <individual_id>" \
+  -f "*package_name*,group_id,<individual_id>" \
   --forgeFile path/to/forgeFile \
   -n new_package_name \
   -o path/to/new_package_name
@@ -149,14 +149,16 @@ where the entities (packages, groups/populations, individuals/samples) you want 
 - Groups/populations are not specially marked. So to get all individuals of the group `Swiss_Roman_period`, you would simply add `Swiss_Roman_period`.
 - Individuals/samples are surrounded by `<` and `>`, so `ALA026` becomes `<ALA026>`.
 
+Do not forget to wrap the forgeString in quotes and do not add spaces after the commas. 
+
 You can either use `-f` or `--forgeFile` or even combine them. In the file each line is treated as a separate forge string, so the following files will yield identical results:
 
 ```
-*package_name*, group_id, <individual_id>
+*package_name*,group_id,<individual_id>
 ```
 
 ```
-*package_name*, group_id
+*package_name*,group_id
 <individual_id>
 ```
 
