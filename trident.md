@@ -4,9 +4,11 @@ Trident is a toolset to work with Poseidon packages. The main executable within 
 
 ## Installation Quickstart
 
-Binaries for stable release versions can be downloaded [here](https://github.com/poseidon-framework/poseidon-hs/releases).
+The code for trident is available on [Github](https://github.com/poseidon-framework/poseidon-hs). For stable release versions we automatically prepare binaries that can be downloaded and run.
 
-To install the latest development version you can follow these steps:
+To download the latest release version click here: [ [Linux 📥](https://github.com/poseidon-framework/poseidon-hs/releases/latest/download/trident-Linux) | [macOS 📥](https://github.com/poseidon-framework/poseidon-hs/releases/latest/download/trident-macOS) | [Windows 📥](https://github.com/poseidon-framework/poseidon-hs/releases/latest/download/trident-Windows.exe) ]. Older release versions are available [here](https://github.com/poseidon-framework/poseidon-hs/releases).
+
+To instead install the latest development version you can follow these steps:
 
 1. Install the Haskell build tool [Stack](https://docs.haskellstack.org/en/stable/README/)
 2. Clone the repository
