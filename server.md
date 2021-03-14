@@ -43,4 +43,5 @@ The server software - similarly to most `trident` commands - looks for posiedon 
 * `/packages` provides a JSON-list of packages available at the server. Each JSON entry has a title, a description, a last-modified date and a package version.
 * `/package_table` provides a HTML table of packages with download links, available at the server.
 * `/zip_file/\<package_name\>` provides a zip-file for downloading the given package.
-* `/individuals_all` provides a JSON-list, with each entry having a name of the individual, the group of the individual, and the package name
+* `/individuals_all` provides a JSON-list, with each entry having a name of the individual, the group of the individual, and the package name. This API is kept only for backwards-compatibility. `/janno_all` is mean as a more powerful alternative.
+* `/janno_all` provides a list of pairs of package name and Janno-entries.
