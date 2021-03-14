@@ -4,9 +4,11 @@ Trident is a toolset to work with Poseidon packages. The main executable within 
 
 ## Installation Quickstart
 
-Binaries for stable release versions can be downloaded [here](https://github.com/poseidon-framework/poseidon-hs/releases).
+The code for trident is available on [Github](https://github.com/poseidon-framework/poseidon-hs). For stable release versions we automatically prepare binaries that can be downloaded and run.
 
-To install the latest development version you can follow these steps:
+To download the latest release version click here: [ [Linux 📥](https://github.com/poseidon-framework/poseidon-hs/releases/latest/download/trident-Linux) | [macOS 📥](https://github.com/poseidon-framework/poseidon-hs/releases/latest/download/trident-macOS) | [Windows 📥](https://github.com/poseidon-framework/poseidon-hs/releases/latest/download/trident-Windows.exe) ]. Older release versions are available [here](https://github.com/poseidon-framework/poseidon-hs/releases).
+
+To instead install the latest development version you can follow these steps:
 
 1. Install the Haskell build tool [Stack](https://docs.haskellstack.org/en/stable/README/)
 2. Clone the repository
@@ -95,7 +97,7 @@ The command
 
 ```
 trident init \
-  --inFormat genotype_data_format \
+  --inFormat EIGENSTRAT/PLINK \
   --genoFile path/to/geno_file \
   --snpFile path/to/snp_file \
   --indFile path/to/ind_file \
@@ -120,7 +122,7 @@ It works with
 
 ```
 trident fetch -d ... -d ... \
-  -f "*package_title_1*, *package_title_2*, *package_title_3*" \
+  -f "*package_title_1*,*package_title_2*,*package_title_3*" \
   --fetchFile path/to/forgeFile
 ```
 
@@ -137,7 +139,7 @@ To overwrite outdated package versions with `fetch`, the `-u`/`--upgrade` flag h
 
 ```
 trident forge -d ... -d ... \
-  -f "*package_name*, group_id, <individual_id>" \
+  -f "*package_name*,group_id,<individual_id>" \
   --forgeFile path/to/forgeFile \
   -n new_package_name \
   -o path/to/new_package_name
@@ -149,14 +151,16 @@ where the entities (packages, groups/populations, individuals/samples) you want 
 - Groups/populations are not specially marked. So to get all individuals of the group `Swiss_Roman_period`, you would simply add `Swiss_Roman_period`.
 - Individuals/samples are surrounded by `<` and `>`, so `ALA026` becomes `<ALA026>`.
 
+Do not forget to wrap the forgeString in quotes and do not add spaces after the commas. 
+
 You can either use `-f` or `--forgeFile` or even combine them. In the file each line is treated as a separate forge string, so the following files will yield identical results:
 
 ```
-*package_name*, group_id, <individual_id>
+*package_name*,group_id,<individual_id>
 ```
 
 ```
-*package_name*, group_id
+*package_name*,group_id
 <individual_id>
 ```
 
@@ -167,6 +171,21 @@ group_id
 ```
 
 Just as for `init` the output package of `forge` is created as a new directory `-o` and gets the name defined in `-n`.
+
+#### Genoconvert command
+`genoconvert` converts the genotype data in a Poseidon package to a different file format. The respective entries in the POSEIDON.yml file are changed accordingly. 
+
+With the default setting
+
+```
+trident genoconvert -d ... -d ... --outFormat EIGENSTRAT/PLINK
+```
+
+all packages in `-d` will be converted to the desired `--outFormat` (either `EIGENSTRAT` or `PLINK`), if the data is not already in this format. 
+
+The "old" data is not deleted, but kept around. That means conversion will result in a package with both PLINK and EIGENSTRAT data, but only one is linked in the POSEIDON.yml file, and that is what will be used by trident. To delete the old data in the conversion you can add the `--removeOld` flag.
+
+Remember that the POSEIDON.yml file can also be edited by hand if you want to replace the genotype data in a package.
 
 #### Update command
 `update` adds or updates the [md5 checksums](https://en.wikipedia.org/wiki/Md5sum) in the POSEIDON.yml field `checksums` for one or multiple packages.
