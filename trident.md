@@ -187,16 +187,16 @@ The "old" data is not deleted, but kept around. That means conversion will resul
 
 Remember that the POSEIDON.yml file can also be edited by hand if you want to replace the genotype data in a package.
 
-#### Update command
-`update` adds or updates the [md5 checksums](https://en.wikipedia.org/wiki/Md5sum) in the POSEIDON.yml field `checksums` for one or multiple packages.
+#### Checksumupdate command
+`checksumupdate` adds or updates the [md5 checksums](https://en.wikipedia.org/wiki/Md5sum) in the POSEIDON.yml field `checksums` for one or multiple packages.
 
 It can be called simply with
 
 ```
-trident update -d ... -d ...
+trident checksumupdate -d ... -d ...
 ```
 
-:heavy_exclamation_mark: As `update` reads and rewrites POSEIDON.yml files, it may change their inner order, layout or even content (e.g. if they have fields which are not in the [Poseidon package definition](https://github.com/poseidon-framework/poseidon2-schema)). Create a backup of the POSEIDON.yml file before running `update` if you are uncertain.
+:heavy_exclamation_mark: As `checksumupdate` reads and rewrites POSEIDON.yml files, it may change their inner order, layout or even content (e.g. if they have fields which are not in the [Poseidon package definition](https://github.com/poseidon-framework/poseidon2-schema)). Create a backup of the POSEIDON.yml file before running `checksumupdate` if you are uncertain.
 
 ### Inspection commands
 
