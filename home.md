@@ -4,17 +4,17 @@
 
 ## What is Poseidon?
 
-Poseidon is a framework to provide a standardized way to store and share archaeogenetic genotype datasets with context information in a decentralized way. It is built on three pillars:
+Poseidon is a framework to provide a standardized way to store and share archaeogenetic genotype datasets with context information. It consists of three elements:
 
-1. A package standard for genotype and context data:
-	- The Poseidon [Standard](standard)
-	- The [genotype data](genotype_data) in Poseidon
-	- The [.janno file](janno_details)
+1. A standardized package format for genotype and context data, including
+	- The Poseidon [package definition standard](standard)
+	- [Genotype data](genotype_data)
+	- A metadata table, called [.janno file](janno_details)
 2. Software tools to work with Poseidon packages:
 	- The [trident](trident) CLI software
 	- The [poseidonR](poseidonR) R package
-3. Public repositories of published data
-	- The Poseidon [Repositories](repos) (not online yet)
+3. A publicly hosted and curated package repository of published data
+	- The Poseidon [Repositoru](repos)
 
 Poseidon is an initiative of the [Department of Archaeogenetics](https://www.eva.mpg.de/archaeogenetics/index.html) at the Max Planck Institute for Evolutionary Anthropology in Leipzig.
 
