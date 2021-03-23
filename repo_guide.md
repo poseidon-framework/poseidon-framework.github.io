@@ -17,13 +17,12 @@ We generally do _not_ recommend to use the github repositories for end-user-leve
 
 ## The DAG-Poseidon Webserver
 
-We have a webserver running, which currently has two possible APIs implemented:
+We have a webserver running, which currently has several APIs implemented (see [server](server)), including
 
-1. Under [https://c107-224.cloud.gwdg.de/packages](https://c107-224.cloud.gwdg.de/packages), one receives a JSON-list of packages available at the server. Each JSON entry has a title, a description, a last-modified date and a package version.
-2. Under [https://c107-224.cloud.gwdg.de/package_table](https://c107-224.cloud.gwdg.de/package_table), one receives a HTML table of packages with download links, available at the server.
-3. Under [https://c107-224.cloud.gwdg.de/zip_file/\<package_name\>](https://c107-224.cloud.gwdg.de/zip_file/<package_name>), a zip-file for the given package can be downloaded, which contains the package content.
+1. `/packages`: Using [https://c107-224.cloud.gwdg.de/packages](https://c107-224.cloud.gwdg.de/packages), one receives a JSON-list of packages available at the server. Each JSON entry has a title, a description, a last-modified date and a package version.
+2. Under `<package_name>/zip_file`, one can download a package as a zip-file, for example [https://c107-224.cloud.gwdg.de/zip_file/2020_Yu_NorthRussia](https://c107-224.cloud.gwdg.de/zip_file/2020_Yu_NorthRussia).
 
-The webserver is powered by an HTTP server program called `poseidon-http-server`, whose source-code can be reviewed at the [same repository](https://github.com/poseidon-framework/poseidon-hs) as `trident` is sourced. For those interested to run their own instance of this webserver, for example under `localhost`, the server comes with a short command line help. It gets installed via `stack install`, similarly to `trident`. The program first scans the given directories for Poseidon packages, then creates zip-files for them, and then starts a HTTP server listening - by default - to port 3000, and providing the two APIs listed above.
+The webserver is powered by an HTTP server program called `poseidon-http-server` (see also [server](server)), whose source-code can be reviewed at the [same repository](https://github.com/poseidon-framework/poseidon-hs) as `trident` is sourced. For those interested to run their own instance of this webserver, for example under `localhost`, the server comes with a short command line help. It gets installed via `stack install`, similarly to `trident`. The program first scans the given directories for Poseidon packages, then creates zip-files for them, and then starts a HTTP server listening - by default - to port 3000, and providing the two APIs listed above.
 
 ## Contributing to our central repositories
 
@@ -31,16 +30,16 @@ The Poseidon framework has a strongly decentralized philosophy and relies very m
 
 There are two basic ways you can contribute to Poseidon:
 
-1) If you identify a mistake in any package metadata, be it context data (`.janno`-files), package-meta-data (`POSEIDON.yml`) or bibliographic information (`.bib` files), we welcome contributions to correct or extend that data. This goes most easily through our github-package, which you can fork, commit changes and ask for Pull requests. You can also use the issue tracker on github (for which you can find some help [here](https://lab.github.com/githubtraining/introduction-to-github)). See below for more details on this.
+1) If you identify a mistake in any package metadata, be it context data (`.janno`-files), package-meta-data (`POSEIDON.yml`) or bibliographic information (`.bib` files), we welcome contributions to correct or extend that data. This goes most easily through our github-package, which you can fork, commit changes and ask for Pull requests. You can also use the [issue tracker](https://github.com/poseidon-framework/published_data/issues) on github (for which you can find some help [here](https://lab.github.com/githubtraining/introduction-to-github)). See below for more details on this.
 
-2) If you have new genetic data to share with us, we would like to process that data ourselves, to ensure maximum compatibility with the existing database and to minimise batch effects. So if you want us to add an entirely new package with genetic data, please share with us the raw data, such as BAM or fastq-files, so that we can generate the data and include it into a new Poseidon package.
+2) If you would like to provide a new package, we would welcome you preparing the meta-data for that new package as far as you can and commiting this package - without the genotype data - as a pull request to our [github-repo](https://github.com/poseidon-framework/published_data). The genetic data we would like to process ourselves, to ensure maximum compatibility with the existing database and to minimise batch effects. So if you want us to add an entirely new package with genetic data, please share with us the raw data, such as BAM or fastq-files, so that we can generate the data and include it into a new Poseidon package.
 
 If you want to prepare a Poseidon dataset for one of the repositories or fix mistakes in the data, you should follow the procedures outlined here. We assume you have some basic knowledge about using a command line software like `trident`, and how to handle Git and Github. If not, then you can become knowledgable quickly at least about the latter, for example [here](https://lab.github.com/githubtraining/introduction-to-github).
 
 
 ### Modifying the context data of a package in one of the public repositories (individual or group names in .fam, context information in .janno or .bib) 
 
-1. Fork and clone the Github repository that contains the package you want to improve.
-2. Modify the files you want to change. Remember to also update the md5 checksums in the POSEIDON.yml file after you are done. This can be triggered with [`trident update`](trident?id=update-command).
+1. Fork and clone our central [github repository](https://github.com/poseidon-framework/published_data).
+2. Add the new package (without genotype data), or modify an existing package's metadata.
 3. Commit and push your changes.
 4. Submit a pull request to merge your updates with our repository. We will contact you about this submission as soon as possible.
