@@ -6,17 +6,17 @@
 
 * [Home](home.md)
 * **The Poseidon Standard**
-	* [Standard definition](standard.md)
+	* [Package definition](standard.md)
 	* [Genotype data details](genotype_data.md)
 	* [.janno file details](janno_details.md)
 * **The Poseidon Software**
 	* [trident CLI software](trident.md)
 	* [poseidon-http-server](server.md)
 	* [poseidonR R package](poseidonR.md)
-* **The Poseidon Repositories**
-	* [Repository guide](repos.md)
+* **The Poseidon Repository**
+	* [Public Repository Guide](repo_guide.md)
+	* [Public Repository Package List](public_repo.md)
 * **Context**
 	* [Code of Conduct](conduct.md)
 	* [Licensing](licenses.md)
 	* [This page on Github](https://github.com/poseidon-framework/poseidon-framework.github.io)
-
