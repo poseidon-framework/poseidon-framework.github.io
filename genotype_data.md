@@ -10,7 +10,7 @@ Genotype data in Poseidon packages can be stored in either of two (multi)file fo
 | SNP file  | [`.bim` (extended MAP file)](https://www.cog-genomics.org/plink/1.9/formats#bim) | [`.snp` (snp file)](https://github.com/DReichLab/EIG/blob/fb4fb59065055d3622e0f97f0149588eae630a3e/CONVERTF/README#L67) |
 | individual file  | [`.fam` (sample information)](https://www.cog-genomics.org/plink/1.9/formats#fam) | [`.ind` (indiv file)](https://github.com/DReichLab/EIG/blob/fb4fb59065055d3622e0f97f0149588eae630a3e/CONVERTF/README#L67) |
 
-The PLINK file format is a well specified, storage efficient data type compatible with many bioinformatic software tools, which made it an obvious choice for Poseidon. The EIGENSTRAT format is also common within archaeogenetics, compatible with many of the important tools developed by the Reich Lab, e.g. the ones in the [EIGENSOFT](https://github.com/DReichLab/EIG) and [ADMIXTOOLS](https://github.com/DReichLab/AdmixTools) and - unlike PLINK - is human-readable. In the future even more formats might be supported.
+The PLINK file format is a well specified, storage efficient data type compatible with many bioinformatic software tools, which made it an obvious choice for Poseidon. The EIGENSTRAT format is also common within archaeogenetics, compatible with many of the important tools developed by the Reich Lab, e.g. the ones in the [EIGENSOFT](https://github.com/DReichLab/EIG) and [ADMIXTOOLS](https://github.com/DReichLab/AdmixTools). In the future even more formats might be supported.
 
 The `genotypeData` field in the `POSEIDON.yml` file documents in which format the data for a package is stored and the relative paths to the respective files.
 
@@ -64,4 +64,3 @@ Poseidon requires the individual IDs within a set of Poseidon packages to be uni
 ### Group IDs
 
 Just as the individual IDs, the group/family/population IDs across the individual file and the `.janno` file (column `Group_Name`) must be identical. We are aware that group identification and meaningful classification is a major discussion point in the humanities and a core subject of archaeology research. That's why the `Group_Name` variable in the `.janno` file is a list column that can hold many different names. Only the first entry has to be identical to the one in the genotype data individual file, which can only hold one value.
-
