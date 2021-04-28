@@ -201,9 +201,9 @@ trident checksumupdate -d ... -d ...
 ### Inspection commands
 
 #### List command
-`list` lists packages, groups and individuals of the datasets you use.
+`list` lists packages, groups and individuals of the datasets you use, or of the packages available on the server.
 
-To list packages, as seen above you run
+To list packages from your local repositories, as seen above you run
 
 ```
 trident list -d ... -d ... --packages
@@ -222,6 +222,12 @@ Example for the final output:
 '-----------------------------------------'------------'----------------'
 ```
 so a nicely formatted table of all packages, their last update and the number of individuals in it.
+
+To view packages on the remote server, instead of using directories to specify the locations of repositories on your system, you can use `--remote` to show packages on the remote server. For example
+```
+trident list --packages --remote
+```
+will result in a view of all published packages so far.
 
 You can also list groups, as defined in the third column of Eigenstrat Ind files (or the first column of a PLINK fam file):
 
@@ -245,6 +251,8 @@ which lists all groups, the packages those groups are in, the total number of in
 
 Note that if you want a less fancy table, for example because you want to load this into Excel, or pipe into another command that cannot deal with the fancy layout, you can use the `--raw` option to output that table as a simple tab-delimited file.
 
+Again, you can use `--remote` instead of `-d` to list groups on the remote server.
+
 Finally, you can query for individuals, using the `--individual` option:
 ```
 trident list -d ... -d ... --individuals
@@ -264,6 +272,12 @@ Example output:
 ```
 
 which lists all individuals with their package, group and individual name.
+
+And again, use `--remote` to view individuals from the remote server.
+
+The `--individuals` option also provides an option to add more information from the metadata files. For example `--jannoColum Country --jannoColumn Date_C14_Uncal_BP` add these two specified columns to the output table.
+
+Finally, you can use `--raw` to output the table unformatted, which is useful if you want to further process it using tools like `grep` or `awk`.
 
 #### Summarise command
 `summarise` prints some general summary statistics for a given poseidon dataset taken from the .janno files.
