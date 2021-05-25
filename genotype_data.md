@@ -28,6 +28,7 @@ genotypeData:
   genoFile: X.bed
   snpFile: X.bim
   indFile: X.fam
+  snpSet: 1240K
 ```
 </td>
 <td>
@@ -38,6 +39,7 @@ genotypeData:
   genoFile: X.geno
   snpFile: X.snp
   indFile: X.indiv
+  snpSet: 1240K
 ```
 </td>
 </tr>
@@ -45,7 +47,7 @@ genotypeData:
 
 ## Typical setup and SNP panels
 
-Poseidon is not limited to a specific panel of single nucleotide polymorphism (SNPs) that should be available for each sample. All known SNPs for an individual derived from one or multiple libraries can be merged and stored in the genotype data accompanying a Poseidon package.
+Poseidon is not limited to a specific panel of single nucleotide polymorphism (SNPs) that should be available for each sample. All known SNPs for an individual derived from one or multiple libraries can be merged and stored in the genotype data accompanying a Poseidon package. The `snpSet` subfield in the `POSEIDON.yml` file documents the shape of the genotype file in the respective package, with the possible entries `HumanOrigins`, `1240K`, and `Other`.
 
 As of today (25.01.2021) most ancient genomic data is pulled down to the Affymetrix Human Origins SNP array ([Patterson et al. 2012](https://dx.doi.org/10.1534%2Fgenetics.112.145037)) or the 1240k SNP array ([Mathieson et al. 2015](https://dx.doi.org/10.1038%2Fnature16152)). These are the panels we are relying on for our public Poseidon [repositories](repos) because of their ubiquitous use in public datasets such as the [Allen Ancient DNA Resource](https://reich.hms.harvard.edu/allen-ancient-dna-resource-aadr-downloadable-genotypes-present-day-and-ancient-dna-data) and their design for population genetic research questions. The 1240k SNP array includes "nearly all SNPs on the Affymetrix Human Origins and Illumina 610-Quad arrays, 49,711 SNPs on chromosome X and 32,681 on chromosome Y, and 47,384 SNPs with evidence of functional importance" -- [Mathieson et al. 2015](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4918750/).
 
