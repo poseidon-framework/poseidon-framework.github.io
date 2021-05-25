@@ -115,6 +115,8 @@ The `mtContam_stderr` column adds an error term with the size of one standard er
 
 # Context information
 
+The `Genetic_Source_Accession_IDs` column was introduced to link the derived genotype data in Poseidon with the raw sequencing data typically uploaded to archives like the [ENA](https://www.ebi.ac.uk/ena/browser/home) or [SRA](https://www.ncbi.nlm.nih.gov/sra). There projects or even individual samples are given clear identifiers: Accession IDs. This janno column is supposed to store one or multiple of these Accessions IDs for each individual/sample in Poseidon. If multiple are entered, then they should be arranged by descending specificity from left to right (e.g. project id > sample id > sequencing run id).
+
 The `Primary_Contact` column is a free form text field that stores the name of the main or the corresponding author of the respective paper for published data.
 
 The `Publication_Status` column holds either the value `unpublished` for (yet) unpublished samples or -- for published data -- a citation-key of the form `AuthorJournalYear` without any spaces or special characters. This key has to be identical to the [BibTeX](http://www.bibtex.org/) citation-key identifying the respective entry in the `.bib` file of the package. BibTeX is a file format to store bibliographic information, where each entry (article, book, website, ...) is defined by a series of parameters (authors, year of publication, journal, ...). Here's an example `.bib` file with two entries:
