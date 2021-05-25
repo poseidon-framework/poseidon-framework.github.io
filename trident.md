@@ -101,11 +101,12 @@ trident init \
   --genoFile path/to/geno_file \
   --snpFile path/to/snp_file \
   --indFile path/to/ind_file \
+  --snpSet 1240K|HumanOrigins|Other \
   -n new_package_name \
   -o path/to/new_package_name
 ```
 
-requires the format (`--inFormat`) of your input data (either `EIGENSTRAT` or `PLINK`) and the paths to the respective files in `--genoFile`, `--snpFile` and `--indFile`.
+requires the format (`--inFormat`) of your input data (either `EIGENSTRAT` or `PLINK`), the paths to the respective files in `--genoFile`, `--snpFile`, and `--indFile`, and the "shape" of these files (`--snpSet`), so if they cover the `1240K`, the `HumanOrigins` or an `Other` SNP set.
 
 |          | EIGENSTRAT | PLINK |
 |----------|------------|-------|
@@ -171,6 +172,16 @@ group_id
 ```
 
 Just as for `init` the output package of `forge` is created as a new directory `-o` and gets the name defined in `-n`.
+
+`forge` has a an optional flag `--intersect`, that defines, if the genotype data from different packages should be merged with an **union** or an **intersect** operation. The default (if this option is not set) is to output the union of all SNPs, with genotypes defined as missing in samples from packages which do not have a SNP that is present in another package. With this option set, on the other hand, the forged dataset will typically have fewer SNPs, but less missingness.
+
+`--intersect` also influences the automatic determination of the `snpSet` field in the POSEIDON.yml file for the resulting package. If the `snpSet`s of all input packages are identical, then the resulting package will just inherit this configuration. Otherwise `forge` applies the following pairwise merging logic:
+
+| Input snpSet A | Input snpSet B | `--intersect` | Ouput snpSet |
+|----------------|----------------|---------------|--------------|
+| Other          | *              | *             | Other        |
+| 1240K          | HumanOrigins   | True          | HumanOrigins |
+| 1240K          | HumanOrigins   | False         | 1240K        |
 
 #### Genoconvert command
 `genoconvert` converts the genotype data in a Poseidon package to a different file format. The respective entries in the POSEIDON.yml file are changed accordingly. 
