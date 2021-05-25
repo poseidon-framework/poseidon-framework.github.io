@@ -119,7 +119,7 @@ The `Genetic_Source_Accession_IDs` column was introduced to link the derived gen
 
 The `Primary_Contact` column is a free form text field that stores the name of the main or the corresponding author of the respective paper for published data.
 
-The `Publication_Status` column holds either the value `unpublished` for (yet) unpublished samples or -- for published data -- a citation-key of the form `AuthorJournalYear` without any spaces or special characters. This key has to be identical to the [BibTeX](http://www.bibtex.org/) citation-key identifying the respective entry in the `.bib` file of the package. BibTeX is a file format to store bibliographic information, where each entry (article, book, website, ...) is defined by a series of parameters (authors, year of publication, journal, ...). Here's an example `.bib` file with two entries:
+The `Publication_Status` column holds either the value `unpublished` for (yet) unpublished samples or -- for published data -- one or multiple citation-keys of the form `AuthorJournalYear` without any spaces or special characters. These keys have to be identical to the [BibTeX](http://www.bibtex.org/) citation-keys identifying the respective entries in the `.bib` file of the package. BibTeX is a file format to store bibliographic information, where each entry (article, book, website, ...) is defined by a series of parameters (authors, year of publication, journal, ...). Here's an example `.bib` file with two entries:
 
 ```
 @article{CassidyPNAS2015,
@@ -151,7 +151,9 @@ The `Publication_Status` column holds either the value `unpublished` for (yet) u
 }
 ```
 
-The string `CassidyPNAS2015` is the citation-key of the first entry. When creating a new Poseidon package the `.bib` file should be filled together with the `Publication_Status` column. One of the most simple ways to obtain the BibTeX entries may be to request them with the doi from [here](https://doi2bib.org). It could be necessary to adjust the outcome manually, though. The citation-key for example has to be replaced by the one used in the `Publication_Status` column.
+The string `CassidyPNAS2015` is the citation-key of the first entry. To cite both publications in the `Publication_Status` column, one would enter `CassidyPNAS2015;FeldmanScienceAdvances2019`. 
+
+When creating a new Poseidon package the `.bib` file should be filled together with the `Publication_Status` column. One of the most simple ways to obtain the BibTeX entries may be to request them with the doi from [here](https://doi2bib.org). It could be necessary to adjust the result manually, though. The citation-key, for example, has to be replaced by the one used in the `Publication_Status` column.
 
 The `Note` column is a free form text field that can contain small amounts of additional information that is not yet expressed in a more systematic form in the the other `.janno` file columns.
 
