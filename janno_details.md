@@ -93,6 +93,8 @@ The `Genotype_Ploidy` column stores a characteristic of the aDNA data treatment.
 - `diploid`: No random read selection
 - `haploid`: Random read selection to produce pseudo-haploid data
 
+The column `Data_Preparation_Pipeline_URL` should finally store an URL that links to a complete and human-readable description of the computational pipeline (for example a specific configuration for [nf-core/eager](https://nf-co.re/eager)) by which the sample data was processed. One solution to document and publish a computational workflow like this might be through [protocols.io](https://www.protocols.io/).
+
 ## Data yield
 
 The `Endogenous` column holds the percentage of mapped reads over the total amount of reads that went into the mapping pipeline. That boils down to the DNA percentage of the library that matches the (human) reference. It should be determined from Shotgun libraries (so before any hybridization capture), not on target and without any quality filtering. In case of multiple libraries only the highest value should be reported. The % endogenous DNA can be calculated for example with the [endorS.py](https://github.com/aidaanva/endorS.py) script.
