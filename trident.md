@@ -198,16 +198,38 @@ The "old" data is not deleted, but kept around. That means conversion will resul
 
 Remember that the POSEIDON.yml file can also be edited by hand if you want to replace the genotype data in a package.
 
-#### Checksumupdate command
-`checksumupdate` adds or updates the [md5 checksums](https://en.wikipedia.org/wiki/Md5sum) in the POSEIDON.yml field `checksums` for one or multiple packages.
+#### Update command
+`update` automatically updates POSEIDON.yml files of one or multiple packages if the packages were changed.
 
-It can be called simply with
+It can be called with a lot of optional arguments
 
 ```
-trident checksumupdate -d ... -d ...
+trident update -d ... -d ... \
+  --poseidonVersion "X.X.X" \
+  --versionComponent Major/Minor/Patch \
+  --noChecksumUpdate
+  --ignoreGeno
+  --newContributors "[Firstname Lastname](Email address);..."
+  --logText "short description of the update"
+  --force
 ```
 
-:heavy_exclamation_mark: As `checksumupdate` reads and rewrites POSEIDON.yml files, it may change their inner order, layout or even content (e.g. if they have fields which are not in the [Poseidon package definition](https://github.com/poseidon-framework/poseidon2-schema)). Create a backup of the POSEIDON.yml file before running `checksumupdate` if you are uncertain.
+By default `update` will not edit a package's POSEIDON.yml file, even when arguments like `--versionComponent`, `--newContributors` or `--logText` are explicitly set. This default exists to run the function on a large set of packages where only few of them were edited and need an active update. A package will only be modified by `update` if either
+
+1. any of the files with checksums (e.g. the genotype data) in it were modified,
+2. the `--poseidonVersion` argument differs from the `poseidonVersion` in the package's POSEIDON.yml file
+3. or the `--force` flag was set in `update`.
+
+If any of these applies to a package in the search directory (`--baseDir`/`-d`), it will be updated. This includes the following steps:
+
+- If `--poseidonVersion` is different from the `poseidonVersion` field in the package, then that will be updated.
+- The `packageVersion` will be incremented. If `--versionComponent` is not set, then it falls back to `Patch`, so a change in the last position of the three digit version number. `Minor` increments the middle, and `Major` the first position (see [semantic versioning](https://semver.org)).
+- The `lastModified` field will be updated to the current day (based on your computer's system time).
+- The contributors in `--newContributors` will be added to the `contributor` field if they're not there already.
+- If any checksums changed, then they will be updated. If certain checksums are not set yet, then they will be added. The checksum update can be skipped with `--noChecksumUpdate` or partially skipped for the genotype data with `--ignoreGeno`.
+- The CHANGELOG.md file will be updated with a new row for the new version and the text in `--logText` (default: "not specified"), which will be appended as the first line of the file. If no CHANGELOG.md file exists, then it will be created and referenced in the POSEIDON.yml file.
+
+:heavy_exclamation_mark: As `update` reads and rewrites POSEIDON.yml files, it may change their inner order, layout or even content (e.g. if they have fields which are not in the [Poseidon package definition](https://github.com/poseidon-framework/poseidon2-schema)). Create a backup of the POSEIDON.yml file before running `update` if you are uncertain.
 
 ### Inspection commands
 
