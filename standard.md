@@ -34,9 +34,9 @@ title: Switzerland_LNBA_Roswita
 description: LNBA Switzerland genetic data not yet published # optional
 contributor:
   - name: Roswita Malone
-    email: roswita.malone@institute.org
+    email: roswita.malone@example.org
   - name: Paul Panther
-    email: paul.panther@next-institute.com
+    email: paul.panther@example.edu
 packageVersion: 1.1.2
 lastModified: 2021-04-28
 genotypeData:
