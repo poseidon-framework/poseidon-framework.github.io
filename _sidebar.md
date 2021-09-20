@@ -7,6 +7,7 @@
 * [Home](home.md)
 * **The Poseidon Standard**
 	* [Package definition](standard.md)
+	* [Changelog](changelog.md)
 	* [Genotype data details](genotype_data.md)
 	* [.janno file details](janno_details.md)
 * **The Poseidon Software**
