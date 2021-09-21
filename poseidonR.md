@@ -31,7 +31,7 @@ Before loading the `.janno` files are validated with `poseidonR::validate_janno(
 
 Usually the `.janno` files are loaded as normal `.tsv` files with every column type set to `character` and then the columns are transformed to the intended types. This transformation can be turned off with `to_janno = FALSE`.
 
-`read_janno()` returns an object of class `janno`.
+`read_janno()` returns an object of class `janno`. `janno` objects are derived tibbles, so all tidyverse operations can be applied to them. As long as the data layout does not change, they will remain `janno` objects and not be transformed to default tibbles.
 
 ### Validate janno files
 
@@ -42,6 +42,17 @@ my_janno_issues <- poseidonR::validate_janno("path/to/my/janno_file.janno")
 ```
 
 `validate_janno` returns a tibble with issues in the respective `.janno` files.
+
+### Write janno objects back to .janno files
+
+`janno` objects usually contain list columns, that can not directly be written to a flat text file like the `.janno` file. The function `write_janno` solves that. It employs a helper function `flatten_janno`, which translates list columns to the string list format in `.janno` files (so: multiple values for one cell separated by `;`). This only works for vector list columns, so when each cell contains a vector of values. If a list column cotains other data structures, e.g. `data.frame`s, they will be dropped and replaced with the NULL value `n/a` in the resulting `.janno` file.
+
+```
+poseidonR::write_janno(
+  my_janno_object,
+  path = "path/to/my/new/janno_file.janno"
+)
+```
 
 ### Process age information in janno objects
 
