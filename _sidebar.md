@@ -7,9 +7,11 @@
 * [Home](home.md)
 * **The Poseidon Standard**
 	* [Package definition](standard.md)
+	* [Changelog](changelog.md)
 	* [Genotype data details](genotype_data.md)
 	* [.janno file details](janno_details.md)
 * **The Poseidon Software**
+	* [Version overview table](version_table.md)
 	* [trident CLI software](trident.md)
 	* [poseidon-http-server](server.md)
 	* [poseidonR R package](poseidonR.md)
