@@ -1,19 +1,27 @@
 # trident CLI software
 
-Trident is a toolset to work with Poseidon packages. The main executable within this package is called `trident`.
+`trident` is a command line software tool to work with Poseidon packages.
 
-## Installation Quickstart
+## Installation
 
-The code for trident is available on [Github](https://github.com/poseidon-framework/poseidon-hs). For stable release versions we automatically prepare binaries that can be downloaded and run.
+To download the latest stable release version of `trident` click here:
 
-To download the latest release version click here: [ [Linux 📥](https://github.com/poseidon-framework/poseidon-hs/releases/latest/download/trident-Linux) | [macOS 📥](https://github.com/poseidon-framework/poseidon-hs/releases/latest/download/trident-macOS) | [Windows 📥](https://github.com/poseidon-framework/poseidon-hs/releases/latest/download/trident-Windows.exe) ]. Older release versions are available [here](https://github.com/poseidon-framework/poseidon-hs/releases).
+- [📥 Linux](https://github.com/poseidon-framework/poseidon-hs/releases/latest/download/trident-Linux) 
+- [📥 macOS](https://github.com/poseidon-framework/poseidon-hs/releases/latest/download/trident-macOS) 
+- [📥 Windows](https://github.com/poseidon-framework/poseidon-hs/releases/latest/download/trident-Windows.exe). 
 
-To instead install the latest development version you can follow these steps:
+So in Linux you can run the following commands to get started:
 
-1. Install the Haskell build tool [Stack](https://docs.haskellstack.org/en/stable/README/)
-2. Clone the repository
-3. Execute `stack install` inside the repository to build the tool and copy the executables to `~/.local/bin` (which you may want to add to your path). This will install the compiler and all dependencies into folders that won't interfere with any installation you might already have.
-4. If you're a developer and would like to run the tests, execute `stack test` inside the repository to build and run tests.
+```bash
+# download the current stable release binary
+wget https://github.com/poseidon-framework/poseidon-hs/releases/latest/download/trident-Linux
+# make it executable
+chmod +x trident-Linux
+# run it
+./trident-Linux -h
+```
+
+The code for trident is available on [Github](https://github.com/poseidon-framework/poseidon-hs). There you will also find [older release versions](https://github.com/poseidon-framework/poseidon-hs/releases) and [instructions to build trident from source](https://github.com/poseidon-framework/poseidon-hs#for-haskell-developers).
 
 ## Guide for trident
 
