@@ -394,7 +394,7 @@ The final output of the `fstats` command looks like this:
 ```
 which lists each statistic, the genome-wide estimate, its standard error and its Z-score.
 
-### Getting help
+## Getting help
 
 You can use `trident --help` and `trident <subcommand> --help` to get information about each parameter, including some which we haven't covered in this guide.
 

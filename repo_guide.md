@@ -1,19 +1,17 @@
 # The Public Poseidon Repository
 
-We, so the [Department of Archaeogenetics](https://www.eva.mpg.de/archaeogenetics/index.html) at the Max Planck Institute for Evolutionary Anthropology and many affiliated colleagues around the world, maintain two main public repositories that serve as a central hub for most data we use, produce and publish.
+We, so the [Department of Archaeogenetics](https://www.eva.mpg.de/archaeogenetics/index.html) at the Max Planck Institute for Evolutionary Anthropology and many affiliated colleagues around the world, maintain a public repository that serves as a central hub for most data we use, produce and publish.
 
-While we're planning a more interactive web interface to explore the available data, at this point you can reach it i) through [this](public_repo.md) very simple table, ii) through our [Web-API](see below), or iii) through [`trident`](trident.md) command line software. 
+While we're planning a more interactive web interface to explore the available data, at this point you can reach it i) through [this](public_repo.md) very simple table, ii) through our [Web-API](#the-dag-poseidon-webserver), or iii) through the [`trident`](trident#fetch-command) command line software.
 
 ## Our git repositories
 
-We opted to follow a hybrid system to keep track of our central repository. First, we have all packages - without their genotype data - available as package directories on github. Second, we provide packages to be used for end-users on our package-server.
+We opted to monitor our repositories with [Git](https://git-scm.com) to ensure clean version management on the file level. The context data in a Poseidon package is text data that can be stored and maintained easily with line-wise version control. Unfortuntaly that does not hold true for the large genotype data files. They are not suitable to be handled in Git directly. Instead we rely on Github's [large file storage system](https://docs.github.com/en/repositories/working-with-files/managing-large-files/about-large-files-on-github), which works, but comes with a number of technical hurdles and drawbacks both for us and the user.
 
-!> This is not public yet.
-Here is our central github repository for our publicly available packages: https://github.com/poseidon-framework/data_published.
+We generally do _not_ recommend to use the github repositories for end-user-level access to our packages, so to download the data. We do recommend that you work through Github, though, if you would like to submit an issue or suggest changes to the data (e.g. via a 
+Pull Request).
 
-We opted to monitor our repositories with [Git](https://git-scm.com) to ensure clean version management on the file level. The context data in a Poseidon package is text data that can be stored and maintained easily with line-wise version control. Unfortuntaly that does not hold true for the large genotype data files. They are not suitable to be handled in Git, and even less in code sharing platforms like Github. Our solution to this issue is to keep the genotype data separate from the context data. To maintain referential integrity across context data and genotype data files, we introduced (optional) md5 checksums and package version numbers in the `POSEIDON.yml` file.
-
-We generally do _not_ recommend to use the github repositories for end-user-level access to our package data. We do recommend that you work through github, though, if you would like to submit an issue or suggest changes to the meta-data. 
+The relevant Github repository is available [here](https://github.com/poseidon-framework/published_data).
 
 ## The DAG-Poseidon Webserver
 
