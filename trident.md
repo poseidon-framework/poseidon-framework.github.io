@@ -165,7 +165,7 @@ You can either use `-f` or `--forgeFile` or even combine them. In the file each 
 # Packages
 *package1*, *package2*
 
-# Groups and indivuals from other packages beyond package1 and package2
+# Groups and individuals from other packages beyond package1 and package2
 group1, <individual1>, group2, <individual2>, <individual3>
 
 # group2 has two outlier individuals that should be ignored
