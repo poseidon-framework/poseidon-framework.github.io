@@ -30,7 +30,7 @@ Switzerland_LNBA_Roswita/CHANGELOG.txt
 And here a fitting `POSEIDON.yml` file. It lists relative file paths and metainformation in a standardized, machine-readable format.
 
 ```
-poseidonVersion: 2.4.0
+poseidonVersion: 2.5.0
 title: Switzerland_LNBA_Roswita
 description: LNBA Switzerland genetic data not yet published
 contributor:
