@@ -4,11 +4,21 @@ The Janno file format is specified [here](https://github.com/poseidon-framework/
 
 # Identifiers
 
-The `Individual_ID` column has to represent each sample with a world-wide unique identifier string equal to the identifier used in the respective accompanying publication. There is no central authority to issue these identifiers, so it remains in the hand of the authors to avoid duplication. The `Individual_ID`s are also employed in the [genetic data files](genotype_data?id=individual-ids) and therefore have to adhere to certain constraints. If there are multiple samples from one individual, then they have to be clearly distinguished with relevant suffixes added to the `Individual_ID`.
+The `Poseidon_ID` column has to represent each sample with a world-wide unique identifier string ideally equal to the identifier used in the respective accompanying publication. There is no central authority to issue these identifiers, so it remains in the hand of the authors to avoid duplication. We're aware of this inconsistency and hope the aDNA community will come together to establish a mechanism to ensure uniqueness of identifiers.
+
+Here in Poseidon `Poseidon_ID`s are also employed in the [genetic data files](genotype_data?id=individual-ids) and therefore have to adhere to certain constraints. If there are multiple samples from one individual, then they have to be clearly distinguished with relevant suffixes added to the `Poseidon_ID`.
+
+`Alternative_IDs` **TODO**
 
 The `Collection_ID` column stores an additional, secondary identifier as it is often provided by collaboration partners (archaeologists, museums, collections) that provide specimen for archaeogenetic research. These identifiers might have a very heterogenous structure and may not be unique across different projects or institutions. The `Collection_ID` column is therefore a free form text field.
 
 The `Group_Name` column contains one or multiple group or population names for each individual, separated by `;`. The first entry must be identical to the one used in the [genotype data](genotype_data?id=group-ids) for the respective sample. Assigning group and population names is a hard problem in archeogenetics, so that's why the `.janno` file allows for more than one identifier.
+
+# Relations among samples/individuals
+
+**TODO**
+
+`Relation_To`, `Relation_Degree`, `Relation_Type`, `Relation_Note`
 
 # Spatial position
 
@@ -46,6 +56,8 @@ The columns `Date_BC_AD_Median`, `Date_BC_AD_Start`, `Date_BC_AD_Stop` store a s
 - If only contextual (e.g. from archaeological typology) age information is available (`Date_Type = contextual`): `Date_BC_AD_Start` and `Date_BC_AD_Stop` should simply report the approximate starting and end date determined by the respective source of scientific authority (e.g. an archaeologist knowledgable about the relevant typological sequences). In this case `Date_BC_AD_Median` should be calculated as the mean of `Date_BC_AD_Start` and `Date_BC_AD_Stop` rounded to an integer value.
 - If the sample is a modern reference sample (`Date_Type = modern`): `Date_BC_AD_Median`, `Date_BC_AD_Start`, `Date_BC_AD_Stop` should all be set to the value 2000, for 2000AD.
 
+`Date_Note` **TODO**
+
 # Genetic summary data
 
 ## Individual properties
@@ -66,9 +78,9 @@ The `Y_Haplogroup` column holds the respective human Y-chromosome DNA haplogroup
 
 The `Source_Tissue` column documents the skeletal, soft tissue or other elements from which source material for DNA library preparation have been extracted. If multiple libraries have been taken from different elements, these can be listed separated by `;`. Specific bone names should be reported with an underscore (e.g. bone_phalanx, tooth_molar).
 
-The `No_of_Libraries` column holds a simple integer value of the number of libraries that have been prepared for an individual.
+The `Nr_Libraries` column holds a simple integer value of the number of libraries that have been prepared for an individual.
 
-The `Data_Type` column specifies the general pre-sequencing preparation methods that have been applied to the library. See [Knapp/Hofreiter 2010](https://dx.doi.org/10.3390%2Fgenes1020227) for a review of the different techniques. This field can hold one of four different values, but also multiple of these separated by `;` if different methods have been applied for different libraries.
+The `Capture_Type` column specifies the general pre-sequencing preparation methods that have been applied to the library. See [Knapp/Hofreiter 2010](https://dx.doi.org/10.3390%2Fgenes1020227) for a review of the different techniques. This field can hold one of four different values, but also multiple of these separated by `;` if different methods have been applied for different libraries.
 
 - `Shotgun`: Sequencing without any enrichment (whole genome sequencing, screening etc.)
 - `1240k`: Target enrichment with hybridization capture optimised for sequences covering the 1240k SNP array
@@ -99,13 +111,15 @@ The column `Data_Preparation_Pipeline_URL` should finally store an URL that link
 
 The `Endogenous` column holds the percentage of mapped reads over the total amount of reads that went into the mapping pipeline. That boils down to the DNA percentage of the library that matches the (human) reference. It should be determined from Shotgun libraries (so before any hybridization capture), not on target and without any quality filtering. In case of multiple libraries only the highest value should be reported. The % endogenous DNA can be calculated for example with the [endorS.py](https://github.com/aidaanva/endorS.py) script.
 
-The `Nr_autosomal_SNPs` column should give the number of SNPs on the 1240k SNP array covered at least once in any of the libraries from this sample.
+The `Nr_SNPs` **TODO** column should give the number of SNPs on the 1240k SNP array covered at least once in any of the libraries from this sample.
 
-The `Coverage_1240k` column should report the mean SNP coverage on the 1240k SNP array for the merged libraries of this sample. To calculate the coverage it's necessary to determine which 1240k SNPs are covered how many times by the mapped reads. Individual SNPs might be covered multiple times, whereas others may not be covered at all by the highly deteriorated ancient DNA. The coverage for each SNP is therefore a number between 0 and n and the mean coverage for a complete sample can be calculated as a mean of the SNP-wise coverage distribution for all its libraries combined. The coverage can be calculated for example with the [QualiMap](http://qualimap.conesalab.org/) software package.
+The `Coverage_on_Target_SNPs` **TODO** column should report the mean SNP coverage on the 1240k SNP array for the merged libraries of this sample. To calculate the coverage it's necessary to determine which 1240k SNPs are covered how many times by the mapped reads. Individual SNPs might be covered multiple times, whereas others may not be covered at all by the highly deteriorated ancient DNA. The coverage for each SNP is therefore a number between 0 and n and the mean coverage for a complete sample can be calculated as a mean of the SNP-wise coverage distribution for all its libraries combined. The coverage can be calculated for example with the [QualiMap](http://qualimap.conesalab.org/) software package.
 
-## Data quality
+## Data quality & Contamination
 
 The `Damage` column contains the % damage on the first position of the 5' end for the main Shotgun library used for sequencing or capture. In case of multiple libraries you should report a value from the merged read alignment.
+
+`Contamination`, `Contamination_Err`, `Contamination_Meas`, `Contamination_Note` **TODO**
 
 The `Xcontam` column stores the mean of an X chromosome based contamination measure. It can only be filled for male individuals. In case of multiple libraries you should report a value from the merged read alignment. X contamination can be calculated for example with [ANGSD](http://www.popgen.dk/angsd/index.php/ANGSD). ANGSD can possibly yield a negative contamination value; in this case the result should be reported as 0.
 
@@ -121,7 +135,7 @@ The `Genetic_Source_Accession_IDs` column was introduced to link the derived gen
 
 The `Primary_Contact` column is a free form text field that stores the name of the main or the corresponding author of the respective paper for published data.
 
-The `Publication_Status` column holds either the value `unpublished` for (yet) unpublished samples or -- for published data -- one or multiple citation-keys of the form `AuthorJournalYear` without any spaces or special characters. These keys have to be identical to the [BibTeX](http://www.bibtex.org/) citation-keys identifying the respective entries in the `.bib` file of the package. BibTeX is a file format to store bibliographic information, where each entry (article, book, website, ...) is defined by a series of parameters (authors, year of publication, journal, ...). Here's an example `.bib` file with two entries:
+The `Publication` column holds either the value `unpublished` for (yet) unpublished samples or -- for published data -- one or multiple citation-keys of the form `AuthorJournalYear` without any spaces or special characters. These keys have to be identical to the [BibTeX](http://www.bibtex.org/) citation-keys identifying the respective entries in the `.bib` file of the package. BibTeX is a file format to store bibliographic information, where each entry (article, book, website, ...) is defined by a series of parameters (authors, year of publication, journal, ...). Here's an example `.bib` file with two entries:
 
 ```
 @article{CassidyPNAS2015,
@@ -153,9 +167,9 @@ The `Publication_Status` column holds either the value `unpublished` for (yet) u
 }
 ```
 
-The string `CassidyPNAS2015` is the citation-key of the first entry. To cite both publications in the `Publication_Status` column, one would enter `CassidyPNAS2015;FeldmanScienceAdvances2019`. 
+The string `CassidyPNAS2015` is the citation-key of the first entry. To cite both publications in the `Publication` column, one would enter `CassidyPNAS2015;FeldmanScienceAdvances2019`. 
 
-When creating a new Poseidon package the `.bib` file should be filled together with the `Publication_Status` column. One of the most simple ways to obtain the BibTeX entries may be to request them with the doi from [here](https://doi2bib.org). It could be necessary to adjust the result manually, though. The citation-key, for example, has to be replaced by the one used in the `Publication_Status` column.
+When creating a new Poseidon package the `.bib` file should be filled together with the `Publication` column. One of the most simple ways to obtain the BibTeX entries may be to request them with the doi from [here](https://doi2bib.org). It could be necessary to adjust the result manually, though. The citation-key, for example, has to be replaced by the one used in the `Publication` column.
 
 The `Note` column is a free form text field that can contain small amounts of additional information that is not yet expressed in a more systematic form in the the other `.janno` file columns.
 
