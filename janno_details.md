@@ -8,7 +8,7 @@ The `Poseidon_ID` column has to represent each sample with a world-wide unique i
 
 Here in Poseidon `Poseidon_ID`s are also employed in the [genetic data files](genotype_data?id=individual-ids) and therefore have to adhere to certain constraints. If there are multiple samples from one individual, then they have to be clearly distinguished with relevant suffixes added to the `Poseidon_ID`.
 
-`Alternative_IDs` **TODO**
+The column `Alternative_IDs` provides a way to list other IDs used for the respective individual. These might for example be names used in different publications or popular names like "Iceman", "Ötzi", "Girl of the Uchter Moor", "Tollund Man", etc.. See also [Relations among samples/individuals](#relations-among-samplesindividuals): The `Relation_*` columns allow to express the relationship type "identical" among samples in a Poseidon package.
 
 The `Collection_ID` column stores an additional, secondary identifier as it is often provided by collaboration partners (archaeologists, museums, collections) that provide specimen for archaeogenetic research. These identifiers might have a very heterogenous structure and may not be unique across different projects or institutions. The `Collection_ID` column is therefore a free form text field.
 
@@ -56,7 +56,7 @@ The columns `Date_BC_AD_Median`, `Date_BC_AD_Start`, `Date_BC_AD_Stop` store a s
 - If only contextual (e.g. from archaeological typology) age information is available (`Date_Type = contextual`): `Date_BC_AD_Start` and `Date_BC_AD_Stop` should simply report the approximate starting and end date determined by the respective source of scientific authority (e.g. an archaeologist knowledgable about the relevant typological sequences). In this case `Date_BC_AD_Median` should be calculated as the mean of `Date_BC_AD_Start` and `Date_BC_AD_Stop` rounded to an integer value.
 - If the sample is a modern reference sample (`Date_Type = modern`): `Date_BC_AD_Median`, `Date_BC_AD_Start`, `Date_BC_AD_Stop` should all be set to the value 2000, for 2000AD.
 
-`Date_Note` **TODO**
+The column `Date_Note` allows to add arbitrary free-text information about the dating of a sample.
 
 # Genetic summary data
 
