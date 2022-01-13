@@ -1,6 +1,9 @@
-# trident CLI software
+# trident CLI software 
 
-`trident` is a command line software tool to work with Poseidon packages.
+`trident` is a command line software tool to work with Poseidon packages and handle various data management tasks. It is written in Haskell and openly available on Github.
+
+<a class="github-button" href="https://github.com/poseidon-framework/poseidon-hs/issues" data-icon="octicon-issue-opened" data-show-count="true" aria-label="Issue poseidon-framework/poseidon-hs on GitHub">Report an issue</a>
+<a class="github-button" href="https://github.com/poseidon-framework/poseidon-hs" data-icon="octicon-star" data-show-count="true" aria-label="Star poseidon-framework/poseidon-hs on GitHub">Star this project</a>
 
 ## Installation
 

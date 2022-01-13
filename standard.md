@@ -11,6 +11,9 @@ A Poseidon package is defined as a directory with specific files:
 
 The precise definitions of each of these files is detailed in our [schema-repository](https://github.com/poseidon-framework/poseidon2-schema).
 
+<a class="github-button" href="https://github.com/poseidon-framework/poseidon2-schema/issues" data-icon="octicon-issue-opened" data-show-count="true" aria-label="Issue poseidon-framework/poseidon2-schema on GitHub">Report an issue</a>
+<a class="github-button" href="https://github.com/poseidon-framework/poseidon2-schema" data-icon="octicon-star" data-show-count="true" aria-label="Star poseidon-framework/poseidon2-schema on GitHub">Star this project</a>
+
 Here is an example of the files in a typical package:
 
 ```
