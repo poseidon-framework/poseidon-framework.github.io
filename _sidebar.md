@@ -17,7 +17,7 @@
 	* [poseidonR R package](poseidonR.md)
 * **The Poseidon Repository**
 	* [Public Repository Guide](repo_guide.md)
-	* [Public Repository Package List](public_repo.md)
+	* [Public Repository List](public_repo.md)
 * **Context**
 	* [Code of Conduct](conduct.md)
 	* [Licensing](licenses.md)
