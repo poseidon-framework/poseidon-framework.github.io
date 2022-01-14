@@ -16,9 +16,32 @@ The `Group_Name` column contains one or multiple group or population names for e
 
 # Relations among samples/individuals
 
-**TODO**
+To systematically document biological relationships uncovered among samples/individuals in one or multiple Poseidon datasets (e.g. with software like [READ or lcMLkin](https://open-archaeo.info/tags/adna-kinship/)), the `.janno` file can be fit with a set of columns featuring the `Relation_*` prefix. They together should be capable to encode all kinds of pairwise, biological relationships an individual might have.
 
-`Relation_To`, `Relation_Degree`, `Relation_Type`, `Relation_Note`
+`Relation_To` is a string list column (so: multiple values are possible if separated by `;`) that stores the `Poseidon_ID`s of other samples/individuals to which the current individual has some relationship. 
+
+`Relation_Degree` stores a formal description of the closeness of this relationship as measured purely from aDNA data. It is therefore also a list column that can hold the following values for each relationship:
+
+- `identical`: The two samples are from the same individual or from identical twins
+- `first`: The two individuals are closely related -- a first degree relationship (e.g. siblings, parent-offspring)
+- `second`: A second degree relationship (e.g. cousins, grandparent to grandchild)
+- `thirdToFifth`: A third to fifth degree relationship (e.g. great-grandparent to great-grandchild)
+- `sixthToTenth`: A sixth to tenth degree relationship
+- `unrelated`: Unrelated -- this is the default state among all individuals, which does not have to be expressed explicitly. This category will therefore probably never be used
+- `other`: Any other kind of relationship not covered by the aforementioned categories
+
+For each entry in `Relation_To` there must (!) be a corresponding entry in `Relation_Degree`.
+
+`Relation_Type` allows to add more verbose details about the relationship type, if it was possible to reconstruct that from the archaeological or historical context. Because there are too many possible permutations, there is no pre-defined set of values for what can and cannot be entered here. It is advisable, though, to stick to a general scheme like the following, which describes a given relationship from the point of view of the current individual:
+
+- `father_of`: This individual is likely the father of the partner individual
+- `grandchild_of`: This individual is likely the grandchild of the partner individual
+- `mother_or_daughter_of`: This individual is likely either the mother or daughter of the partner individual (which might be unclear, in case of imprecise archaeological dating)
+- `...`
+
+Unlike `Relation_Degree`, `Relation_Type` can be left empty even if there are entries in `Relation_To`. But if it is filled, then the number of values must be equal to the number of entries in both `Relation_To` and `Relation_Degree`.
+
+The `Relation_Note` column allows to add free-text information about the relationships of this individual. This might also include information about the method used to infer the degree and type.
 
 # Spatial position
 
@@ -66,7 +89,7 @@ The `Genetic_Sex` column should encode the biological sex as determined from the
 
 - `F`: female
 - `M`: male
-- `U` unknown 
+- `U`: unknown 
 
 This limitation stems from the genotype data formats by Plink and the Eigensoft software package. Edge cases (e.g. XXY, XYY, X0, ...) can not be expressed with this format and should be reported as `U` with an additional comment in the free text `Note` field. Genetic sex determination for ancient DNA can be performed for example with [Sex.DetERRmine](https://github.com/TCLamnidis/Sex.DetERRmine).
 
