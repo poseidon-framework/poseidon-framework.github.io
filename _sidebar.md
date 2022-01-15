@@ -5,6 +5,7 @@
 </p>
 
 * [Home](home.md)
+* [Background](background.md)
 * **The Poseidon Standard**
 	* [Package definition](standard.md)
 	* [Changelog](changelog.md)
