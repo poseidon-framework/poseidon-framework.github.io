@@ -1,4 +1,4 @@
-![](_media/Poseidon-Logo-WaterGraphicLrg.png)
+![poseidon banner with logo](_media/Poseidon-Logo-WaterGraphicLrg.png)
 
 **Poseidon is a framework offering a standardized way to store and share archaeogenetic genotype datasets with archaeological context information.** It aims to [fill a desideratum](background.md) in the current handling of research data. This website features the documentation for all its elements, including:
 

@@ -138,19 +138,27 @@ The `Nr_SNPs` **TODO** column should give the number of SNPs on the 1240k SNP ar
 
 The `Coverage_on_Target_SNPs` **TODO** column should report the mean SNP coverage on the 1240k SNP array for the merged libraries of this sample. To calculate the coverage it's necessary to determine which 1240k SNPs are covered how many times by the mapped reads. Individual SNPs might be covered multiple times, whereas others may not be covered at all by the highly deteriorated ancient DNA. The coverage for each SNP is therefore a number between 0 and n and the mean coverage for a complete sample can be calculated as a mean of the SNP-wise coverage distribution for all its libraries combined. The coverage can be calculated for example with the [QualiMap](http://qualimap.conesalab.org/) software package.
 
-## Data quality & Contamination
+## Data quality
 
-The `Damage` column contains the % damage on the first position of the 5' end for the main Shotgun library used for sequencing or capture. In case of multiple libraries you should report a value from the merged read alignment.
+The `Damage` column contains the % damage on the first position of the 5' end for the main Shotgun library used for sequencing or capture. This is an important statistic to verify the age of ancient DNA. In case of multiple libraries you should report a value from the merged read alignment.
 
-`Contamination`, `Contamination_Err`, `Contamination_Meas`, `Contamination_Note` **TODO**
+### Contamination
 
-The `Xcontam` column stores the mean of an X chromosome based contamination measure. It can only be filled for male individuals. In case of multiple libraries you should report a value from the merged read alignment. X contamination can be calculated for example with [ANGSD](http://www.popgen.dk/angsd/index.php/ANGSD). ANGSD can possibly yield a negative contamination value; in this case the result should be reported as 0.
+Contamination of ancient DNA with foreign reads is a major challenge for archaeogenetics. There exist multiple competing ideas, algorithms and software tools to estimate the degree of contamination for individual samples (e.g. [ANGSD](https://github.com/ANGSD/angsd), [contamLD](https://github.com/nathan-nakatsuka/ContamLD) or [hapCon](https://github.com/hyl317/hapROH)), with some methods only applicable under certain circumstances (e.g. popular X-chromosome based approaches only work on male individuals). Also the results of different methods tend to differ both in the degree of contamination they estimate and in the way the output is usually encoded. To cover the multitude of methods in this domain, and to make the results representable in the `.janno` file, we offer the `Contamination_*` column family.
 
-The `Xcontam_stderr` column adds an uncertainty term to the mean contamination measure reported in `Xcontam`. It should be one standard error.
+`Contamination` is a list column to represent the different contamination values estimated for a sample with one or multiple software tools. As usual multiple values are separated by `;`.
 
-The `mtContam` column is intended for a mean mitochondrial DNA based contamination rate. For multiple libraries a value from the merged read alignment should be reported. This measure can be estimated for example with ContamMix (no homepage, please contact [Philip Johnson](plfj@umd.edu)) or [Schmutzi](http://grenaud.github.io/schmutzi).
+`Contamination_Err` is another list column to store the respective error term for the values in `Contamination`.
 
-The `mtContam_stderr` column adds an error term with the size of one standard error to the mean mtDNA based contamination estimate, just as `Xcontam_stderr` for `Xcontam`.
+`Contamination_Meas` finally is the third necessary list column, which contextualizes the values in `Contamination` and `Contamination_Err`. Each measure in these columns has to be accompanied by the software and software version used to calculate it. The individual entries might e.g. look like this:
+
+- `ANGSD v0.935`
+- `hapCon v0.4a1`
+- `custom script`
+
+This setup has the consequence that the columns `Contamination`, `Contamination_Err`, `Contamination_Meas` alsways have to have the same number of `;`-separated values.
+
+The `Contamination_Note` column is a free text field to add additional information about the contamination estimates, e.g. which parameters where used with the respective software tools.
 
 # Context information
 
