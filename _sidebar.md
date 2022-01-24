@@ -14,6 +14,7 @@
 * **The Poseidon Software**
 	* [Version overview table](version_table.md)
 	* [trident CLI software](trident.md)
+	* [xerxes CLI software](xerxes.md)
 	* [poseidon-http-server](server.md)
 	* [poseidonR R package](poseidonR.md)
 * **The Poseidon Repository**
