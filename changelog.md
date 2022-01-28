@@ -26,6 +26,7 @@ Only adds changes to the .janno file -- these are pretty significant, though. Pl
   - *Contamination_Err*
   - *Contamination_Meas*
   - *Contamination_Note*
+- Changed the column order to increase human readability
 
 ### 2.3.1 -> 2.4.0 [not breaking]
 
