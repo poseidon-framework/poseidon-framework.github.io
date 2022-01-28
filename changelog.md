@@ -4,7 +4,9 @@ Here we document changes in the Poseidon standard, so that packages can be manua
 
 ### 2.4.0 -> 2.5.0 [breaking]
 
-Only adds changes to the .janno file -- these are pretty significant, though. Please check [the documentation](janno_details.md) on how to use the new columns.
+Only adds changes to the .janno file -- these are pretty significant, though. Please check [the documentation](janno_details.md) for details on how to use the new columns. 
+
+**The function `upgrade_janno()` in [poseidonR](poseidonR) automates the transformation from the old to the new `.janno` file format.**
 
 - Renamed multiple columns
   - *Individual_ID* -> *Poseidon_ID*
