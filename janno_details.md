@@ -4,11 +4,44 @@ The Janno file format is specified [here](https://github.com/poseidon-framework/
 
 # Identifiers
 
-The `Individual_ID` column has to represent each sample with a world-wide unique identifier string equal to the identifier used in the respective accompanying publication. There is no central authority to issue these identifiers, so it remains in the hand of the authors to avoid duplication. The `Individual_ID`s are also employed in the [genetic data files](genotype_data?id=individual-ids) and therefore have to adhere to certain constraints. If there are multiple samples from one individual, then they have to be clearly distinguished with relevant suffixes added to the `Individual_ID`.
+The `Poseidon_ID` column has to represent each sample with a world-wide unique identifier string ideally equal to the identifier used in the respective accompanying publication. There is no central authority to issue these identifiers, so it remains in the hand of the authors to avoid duplication. We're aware of this inconsistency and hope the aDNA community will come together to establish a mechanism to ensure uniqueness of identifiers.
+
+Here in Poseidon `Poseidon_ID`s are also employed in the [genetic data files](genotype_data?id=individual-ids) and therefore have to adhere to certain constraints. If there are multiple samples from one individual, then they have to be clearly distinguished with relevant suffixes added to the `Poseidon_ID`.
+
+The column `Alternative_IDs` provides a way to list other IDs used for the respective individual. These might for example be names used in different publications or popular names like "Iceman", "Ötzi", "Girl of the Uchter Moor", "Tollund Man", etc.. See also [Relations among samples/individuals](#relations-among-samplesindividuals): The `Relation_*` columns allow to express the relationship type "identical" among samples in a Poseidon package.
 
 The `Collection_ID` column stores an additional, secondary identifier as it is often provided by collaboration partners (archaeologists, museums, collections) that provide specimen for archaeogenetic research. These identifiers might have a very heterogenous structure and may not be unique across different projects or institutions. The `Collection_ID` column is therefore a free form text field.
 
 The `Group_Name` column contains one or multiple group or population names for each individual, separated by `;`. The first entry must be identical to the one used in the [genotype data](genotype_data?id=group-ids) for the respective sample. Assigning group and population names is a hard problem in archeogenetics, so that's why the `.janno` file allows for more than one identifier.
+
+# Relations among samples/individuals
+
+To systematically document biological relationships uncovered among samples/individuals in one or multiple Poseidon datasets (e.g. with software like [READ or lcMLkin](https://open-archaeo.info/tags/adna-kinship/)), the `.janno` file can be fit with a set of columns featuring the `Relation_*` prefix. They together should be capable to encode all kinds of pairwise, biological relationships an individual might have.
+
+`Relation_To` is a string list column (so: multiple values are possible if separated by `;`) that stores the `Poseidon_ID`s of other samples/individuals to which the current individual has some relationship. 
+
+`Relation_Degree` stores a formal description of the closeness of this relationship as measured purely from aDNA data. It is therefore also a list column that can hold the following values for each relationship:
+
+- `identical`: The two samples are from the same individual or from identical twins
+- `first`: The two individuals are closely related -- a first degree relationship (e.g. siblings, parent-offspring)
+- `second`: A second degree relationship (e.g. cousins, grandparent to grandchild)
+- `thirdToFifth`: A third to fifth degree relationship (e.g. great-grandparent to great-grandchild)
+- `sixthToTenth`: A sixth to tenth degree relationship
+- `unrelated`: Unrelated -- this is the default state among all individuals, which does not have to be expressed explicitly. This category will therefore probably never be used
+- `other`: Any other kind of relationship not covered by the aforementioned categories
+
+For each entry in `Relation_To` there must (!) be a corresponding entry in `Relation_Degree`.
+
+`Relation_Type` allows to add more verbose details about the relationship type, if it was possible to reconstruct that from the archaeological or historical context. Because there are too many possible permutations, there is no pre-defined set of values for what can and cannot be entered here. It is advisable, though, to stick to a general scheme like the following, which describes a given relationship from the point of view of the current individual:
+
+- `father_of`: This individual is likely the father of the partner individual
+- `grandchild_of`: This individual is likely the grandchild of the partner individual
+- `mother_or_daughter_of`: This individual is likely either the mother or daughter of the partner individual (which might be unclear, in case of imprecise archaeological dating)
+- `...`
+
+Unlike `Relation_Degree`, `Relation_Type` can be left empty even if there are entries in `Relation_To`. But if it is filled, then the number of values must be equal to the number of entries in both `Relation_To` and `Relation_Degree`.
+
+The `Relation_Note` column allows to add free-text information about the relationships of this individual. This might also include information about the method used to infer the degree and type.
 
 # Spatial position
 
@@ -46,6 +79,8 @@ The columns `Date_BC_AD_Median`, `Date_BC_AD_Start`, `Date_BC_AD_Stop` store a s
 - If only contextual (e.g. from archaeological typology) age information is available (`Date_Type = contextual`): `Date_BC_AD_Start` and `Date_BC_AD_Stop` should simply report the approximate starting and end date determined by the respective source of scientific authority (e.g. an archaeologist knowledgable about the relevant typological sequences). In this case `Date_BC_AD_Median` should be calculated as the mean of `Date_BC_AD_Start` and `Date_BC_AD_Stop` rounded to an integer value.
 - If the sample is a modern reference sample (`Date_Type = modern`): `Date_BC_AD_Median`, `Date_BC_AD_Start`, `Date_BC_AD_Stop` should all be set to the value 2000, for 2000AD.
 
+The column `Date_Note` allows to add arbitrary free-text information about the dating of a sample.
+
 # Genetic summary data
 
 ## Individual properties
@@ -54,7 +89,7 @@ The `Genetic_Sex` column should encode the biological sex as determined from the
 
 - `F`: female
 - `M`: male
-- `U` unknown 
+- `U`: unknown 
 
 This limitation stems from the genotype data formats by Plink and the Eigensoft software package. Edge cases (e.g. XXY, XYY, X0, ...) can not be expressed with this format and should be reported as `U` with an additional comment in the free text `Note` field. Genetic sex determination for ancient DNA can be performed for example with [Sex.DetERRmine](https://github.com/TCLamnidis/Sex.DetERRmine).
 
@@ -66,9 +101,9 @@ The `Y_Haplogroup` column holds the respective human Y-chromosome DNA haplogroup
 
 The `Source_Tissue` column documents the skeletal, soft tissue or other elements from which source material for DNA library preparation have been extracted. If multiple libraries have been taken from different elements, these can be listed separated by `;`. Specific bone names should be reported with an underscore (e.g. bone_phalanx, tooth_molar).
 
-The `No_of_Libraries` column holds a simple integer value of the number of libraries that have been prepared for an individual.
+The `Nr_Libraries` column holds a simple integer value of the number of libraries that have been prepared for an individual.
 
-The `Data_Type` column specifies the general pre-sequencing preparation methods that have been applied to the library. See [Knapp/Hofreiter 2010](https://dx.doi.org/10.3390%2Fgenes1020227) for a review of the different techniques. This field can hold one of four different values, but also multiple of these separated by `;` if different methods have been applied for different libraries.
+The `Capture_Type` column specifies the general pre-sequencing preparation methods that have been applied to the library. See [Knapp/Hofreiter 2010](https://dx.doi.org/10.3390%2Fgenes1020227) for a review of the different techniques. This field can hold one of four different values, but also multiple of these separated by `;` if different methods have been applied for different libraries.
 
 - `Shotgun`: Sequencing without any enrichment (whole genome sequencing, screening etc.)
 - `1240k`: Target enrichment with hybridization capture optimised for sequences covering the 1240k SNP array
@@ -99,21 +134,31 @@ The column `Data_Preparation_Pipeline_URL` should finally store an URL that link
 
 The `Endogenous` column holds the percentage of mapped reads over the total amount of reads that went into the mapping pipeline. That boils down to the DNA percentage of the library that matches the (human) reference. It should be determined from Shotgun libraries (so before any hybridization capture), not on target and without any quality filtering. In case of multiple libraries only the highest value should be reported. The % endogenous DNA can be calculated for example with the [endorS.py](https://github.com/aidaanva/endorS.py) script.
 
-The `Nr_autosomal_SNPs` column should give the number of SNPs on the 1240k SNP array covered at least once in any of the libraries from this sample.
+The `Nr_SNPs` column gives the number of SNPs reported in the genotype data files for this individual. This number is automatically updated by [`trident forge`](trident#forge-command) under certain circumstances.
 
-The `Coverage_1240k` column should report the mean SNP coverage on the 1240k SNP array for the merged libraries of this sample. To calculate the coverage it's necessary to determine which 1240k SNPs are covered how many times by the mapped reads. Individual SNPs might be covered multiple times, whereas others may not be covered at all by the highly deteriorated ancient DNA. The coverage for each SNP is therefore a number between 0 and n and the mean coverage for a complete sample can be calculated as a mean of the SNP-wise coverage distribution for all its libraries combined. The coverage can be calculated for example with the [QualiMap](http://qualimap.conesalab.org/) software package.
+The `Coverage_on_Target_SNPs` column reports the mean SNP coverage on the target SNP array (e.g. 1240K) for the merged libraries of this sample. To calculate the coverage it is necessary to determine which SNPs are covered how many times by the mapped reads. Individual SNPs might be covered multiple times, whereas others may not be covered at all by the highly deteriorated ancient DNA. The coverage for each SNP is therefore a number between 0 and n. The statistic can be determined for example with the [QualiMap](http://qualimap.conesalab.org/) software package. In case of multiple libraries, the coverage can be given as a mean across all of them.
 
 ## Data quality
 
-The `Damage` column contains the % damage on the first position of the 5' end for the main Shotgun library used for sequencing or capture. In case of multiple libraries you should report a value from the merged read alignment.
+The `Damage` column contains the % damage on the first position of the 5' end for the main Shotgun library used for sequencing or capture. This is an important statistic to verify the age of ancient DNA. In case of multiple libraries you should report a value from the merged read alignment.
 
-The `Xcontam` column stores the mean of an X chromosome based contamination measure. It can only be filled for male individuals. In case of multiple libraries you should report a value from the merged read alignment. X contamination can be calculated for example with [ANGSD](http://www.popgen.dk/angsd/index.php/ANGSD). ANGSD can possibly yield a negative contamination value; in this case the result should be reported as 0.
+### Contamination
 
-The `Xcontam_stderr` column adds an uncertainty term to the mean contamination measure reported in `Xcontam`. It should be one standard error.
+Contamination of ancient DNA with foreign reads is a major challenge for archaeogenetics. There exist multiple competing ideas, algorithms and software tools to estimate the degree of contamination for individual samples (e.g. [ANGSD](https://github.com/ANGSD/angsd), [contamLD](https://github.com/nathan-nakatsuka/ContamLD) or [hapCon](https://github.com/hyl317/hapROH)), with some methods only applicable under certain circumstances (e.g. popular X-chromosome based approaches only work on male individuals). Also the results of different methods tend to differ both in the degree of contamination they estimate and in the way the output is usually encoded. To cover the multitude of methods in this domain, and to make the results representable in the `.janno` file, we offer the `Contamination_*` column family.
 
-The `mtContam` column is intended for a mean mitochondrial DNA based contamination rate. For multiple libraries a value from the merged read alignment should be reported. This measure can be estimated for example with ContamMix (no homepage, please contact [Philip Johnson](plfj@umd.edu)) or [Schmutzi](http://grenaud.github.io/schmutzi).
+`Contamination` is a list column to represent the different contamination values estimated for a sample with one or multiple software tools. As usual multiple values are separated by `;`.
 
-The `mtContam_stderr` column adds an error term with the size of one standard error to the mean mtDNA based contamination estimate, just as `Xcontam_stderr` for `Xcontam`.
+`Contamination_Err` is another list column to store the respective error term for the values in `Contamination`.
+
+`Contamination_Meas` finally is the third necessary list column, which contextualizes the values in `Contamination` and `Contamination_Err`. Each measure in these columns has to be accompanied by the software and software version used to calculate it. The individual entries might e.g. look like this:
+
+- `ANGSD v0.935`
+- `hapCon v0.4a1`
+- `custom script`
+
+This setup has the consequence that the columns `Contamination`, `Contamination_Err`, `Contamination_Meas` alsways have to have the same number of `;`-separated values.
+
+The `Contamination_Note` column is a free text field to add additional information about the contamination estimates, e.g. which parameters where used with the respective software tools.
 
 # Context information
 
@@ -121,7 +166,7 @@ The `Genetic_Source_Accession_IDs` column was introduced to link the derived gen
 
 The `Primary_Contact` column is a free form text field that stores the name of the main or the corresponding author of the respective paper for published data.
 
-The `Publication_Status` column holds either the value `unpublished` for (yet) unpublished samples or -- for published data -- one or multiple citation-keys of the form `AuthorJournalYear` without any spaces or special characters. These keys have to be identical to the [BibTeX](http://www.bibtex.org/) citation-keys identifying the respective entries in the `.bib` file of the package. BibTeX is a file format to store bibliographic information, where each entry (article, book, website, ...) is defined by a series of parameters (authors, year of publication, journal, ...). Here's an example `.bib` file with two entries:
+The `Publication` column holds either the value `unpublished` for (yet) unpublished samples or -- for published data -- one or multiple citation-keys of the form `AuthorJournalYear` without any spaces or special characters. These keys have to be identical to the [BibTeX](http://www.bibtex.org/) citation-keys identifying the respective entries in the `.bib` file of the package. BibTeX is a file format to store bibliographic information, where each entry (article, book, website, ...) is defined by a series of parameters (authors, year of publication, journal, ...). Here's an example `.bib` file with two entries:
 
 ```
 @article{CassidyPNAS2015,
@@ -153,9 +198,9 @@ The `Publication_Status` column holds either the value `unpublished` for (yet) u
 }
 ```
 
-The string `CassidyPNAS2015` is the citation-key of the first entry. To cite both publications in the `Publication_Status` column, one would enter `CassidyPNAS2015;FeldmanScienceAdvances2019`. 
+The string `CassidyPNAS2015` is the citation-key of the first entry. To cite both publications in the `Publication` column, one would enter `CassidyPNAS2015;FeldmanScienceAdvances2019`. 
 
-When creating a new Poseidon package the `.bib` file should be filled together with the `Publication_Status` column. One of the most simple ways to obtain the BibTeX entries may be to request them with the doi from [here](https://doi2bib.org). It could be necessary to adjust the result manually, though. The citation-key, for example, has to be replaced by the one used in the `Publication_Status` column.
+When creating a new Poseidon package the `.bib` file should be filled together with the `Publication` column. One of the most simple ways to obtain the BibTeX entries may be to request them with the doi from [here](https://doi2bib.org). It could be necessary to adjust the result manually, though. The citation-key, for example, has to be replaced by the one used in the `Publication` column.
 
 The `Note` column is a free form text field that can contain small amounts of additional information that is not yet expressed in a more systematic form in the the other `.janno` file columns.
 

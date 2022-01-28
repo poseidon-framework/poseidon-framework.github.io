@@ -1,6 +1,31 @@
 # Changelog
 
-Here we document changes in the Poseidon standard, so that packages can be manually updated from one version to the next. The documentation on the website should always be relevant only for the latest release.
+Here we document changes in the Poseidon standard, so that packages can be manually updated from one version to the next. The documentation on the website only considers the latest version.
+
+### 2.4.0 -> 2.5.0 [breaking]
+
+Only adds changes to the .janno file -- these are pretty significant, though. Please check [the documentation](janno_details.md) on how to use the new columns.
+
+- Renamed multiple columns
+  - *Individual_ID* -> *Poseidon_ID*
+  - *No_of_Libraries* -> *Nr_Libraries*
+  - *Data_Type* -> *Capture_Type*
+  - *Nr_autosomal_SNPs* -> *Nr_SNPs*
+  - *Publication_Status* -> *Publication*
+  - *Coverage_1240K* -> *Coverage_on_Target_SNPs* (this change also implies a small semantic change in the meaning of this column)
+- Added a new column to specify details about the absolute dating information
+  - *Date_Note*
+- Added a new set of columns to represent biological relationships among samples/individuals
+  - *Alternative_IDs*
+  - *Relation_To*
+  - *Relation_Type*
+  - *Relation_Degree*
+  - *Relation_Note*
+- Replaced the previous, pretty limited solution to document contamination estimates with a more flexible set of columns. That means the following columns were removed: *X_Contam*, *X_Contam_Stderr*, *MT_Contam*, *MT_Contam_Stderr*. Instead we added the following columns:
+  - *Contamination*
+  - *Contamination_Err*
+  - *Contamination_Meas*
+  - *Contamination_Note*
 
 ### 2.3.1 -> 2.4.0 [not breaking]
 

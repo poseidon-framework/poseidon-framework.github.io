@@ -1,10 +1,11 @@
 <!-- docs/_sidebar.md -->
 
 <p align="center">
-  <img src="https://avatars.githubusercontent.com/u/60692894?s=400&u=6e590c94df43be73285a397578e4db5426f219a5&v=4" width = 100>
+  <img src="_media/Poseidon-App-Icon-White-BgSml.png" width = 100>
 </p>
 
 * [Home](home.md)
+* [Background](background.md)
 * **The Poseidon Standard**
 	* [Package definition](standard.md)
 	* [Changelog](changelog.md)
@@ -18,7 +19,7 @@
 	* [poseidonR R package](poseidonR.md)
 * **The Poseidon Repository**
 	* [Public Repository Guide](repo_guide.md)
-	* [Public Repository Package List](public_repo.md)
+	* [Public Repository List](public_repo.md)
 * **Context**
 	* [Code of Conduct](conduct.md)
 	* [Licensing](licenses.md)
