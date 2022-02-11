@@ -5,7 +5,7 @@ We, so the [Department of Archaeogenetics](https://www.eva.mpg.de/archaeogenetic
 <a class="github-button" href="https://github.com/poseidon-framework/published_data/issues" data-icon="octicon-issue-opened" data-show-count="true" aria-label="Issue poseidon-framework/published_data on GitHub">Report an issue</a>
 <a class="github-button" href="https://github.com/poseidon-framework/published_data" data-icon="octicon-star" data-show-count="true" aria-label="Star poseidon-framework/published_data on GitHub">Star this project</a>
 
-While we're planning a more interactive web interface to explore the available data, at this point you can reach it i) through [this](public_repo.md) very simple table, ii) through our [Web-API](#the-dag-poseidon-webserver), or iii) through the [`trident`](trident#fetch-command) command line software.
+While we're planning a more interactive web interface to explore the available data, at this point you can reach it i) through [this](https://poseidon-framework.github.io/published_data/) very simple page, ii) through our [Web-API](#the-dag-poseidon-webserver), or iii) through the [`trident`](trident#fetch-command) command line software.
 
 ## Our git repositories
 
