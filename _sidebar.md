@@ -20,7 +20,7 @@
 * **The Poseidon Repository**
 	* [Public Repository Guide](repo_guide.md)
 	* [Public Repository Overview](https://poseidon-framework.github.io/published_data)
-	* [Experimental Repository Explorer](repo_explorer.md)
+	<!-- * [Experimental Repository Explorer](repo_explorer.md) -->
 * **Context**
 	* [Code of Conduct](conduct.md)
 	* [Licensing](licenses.md)

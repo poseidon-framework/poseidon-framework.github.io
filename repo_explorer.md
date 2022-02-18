@@ -1,4 +1,4 @@
-# The repository explorer
+# The repository explorer (experimental)
 
 <script>
   Vue.createApp({

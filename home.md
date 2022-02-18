@@ -11,6 +11,6 @@
 >   - The [xerxes](xerxes) CLI software
 >   - The [poseidonR](poseidonR) R package
 > 3. A publicly hosted and curated **package repository** of published data
->   - General [guide](repo_guide) to our public repository
+<!-- >   - General [guide](repo_guide) to our public repository -->
 >   - An [overview](https://poseidon-framework.github.io/published_data/) of all currently available public Poseidon packages
 >   - An experimental [explorer](repo_explorer) of our public repository
