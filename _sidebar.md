@@ -23,4 +23,5 @@
 * **Context**
 	* [Code of Conduct](conduct.md)
 	* [Licensing](licenses.md)
+	* [Acknowledgements](acknowledgements.md)
 	* [This page on Github](https://github.com/poseidon-framework/poseidon-framework.github.io)
