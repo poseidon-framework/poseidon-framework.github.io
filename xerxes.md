@@ -61,3 +61,101 @@ The final output of the `fstats` command looks like this:
 '----------------------------------------------------'-----------------------'-----------------------'---------------------'
 ```
 which lists each statistic, the genome-wide estimate, its standard error and its Z-score.
+
+The options for the `fstats` subcommand are (`xerxes fstats --help`):
+
+```
+Usage: xerxes fstats (-d|--baseDir DIR) [-j|--jackknife ARG] 
+                     [-e|--excludeChroms ARG] [--stat ARG] [--statFile ARG] 
+                     [--raw]
+  Compute f-statistics on groups and invidiuals within and across Poseidon
+  packages
+
+Available options:
+  -h,--help                Show this help text
+  -d,--baseDir DIR         a base directory to search for Poseidon Packages
+                           (could be a Poseidon repository)
+  -j,--jackknife ARG       Jackknife setting. If given an integer number, this
+                           defines the block size in SNPs. Set to "CHR" if you
+                           want jackknife blocks defined as entire chromosomes.
+                           The default is at 5000 SNPs
+  -e,--excludeChroms ARG   List of chromosome names to exclude chromosomes,
+                           given as comma-separated list. Defaults to X, Y, MT,
+                           chrX, chrY, chrMT, 23,24,90
+  --stat ARG               Specify a summary statistic to be computed. Can be
+                           given multiple times. Possible options are: F4(name1,
+                           name2, name3, name4), and similarly F3 and F2 stats,
+                           as well as PWM(name1,name2) for pairwise mismatch
+                           rates. Group names are by default matched with group
+                           names as indicated in the PLINK or Eigenstrat files
+                           in the Poseidon dataset. You can also specify
+                           individual names using the syntax "<Ind_name>", so
+                           enclosing them in angular brackets. You can also mix
+                           groups and individuals, like in
+                           "F4(<Ind1>,Group2,Group3,<Ind4>)". Group or
+                           individual names are separated by commas, and a comma
+                           can be followed by any number of spaces, as in some
+                           of the examples in this help text.
+  --statFile ARG           Specify a file with F-Statistics specified similarly
+                           as specified for option --stat. One line per
+                           statistics, and no new-line at the end
+  --raw                    output table as tsv without header. Useful for piping
+                           into grep or awk
+```
+
+## RAS
+
+The RAS command computes pairwise RAS statistics between a collection of "left" entities, and a collection of "right" entities. Every Entity is either a group name or an individual, with the similar syntax as in F-statistics above, so `French` is a group, and `<IND001>` is an individual.
+
+The input of left-pops and right-pops uses a YAML file via `--popConfigFile`. Here is an example:
+```
+groupDefs:
+  group1: a,b,!c,!<d>
+  group2: e,f,!<g>
+popLefts:
+- <I13721>
+- <I14000>
+- <I13722>
+- <Iceman.SG>
+popRights:
+- Mbuti
+- Mixe
+- Spanish
+outgroup: <Chimp.REF>
+```
+
+In this case, two groups are defined on the fly: `group1` comprises groups `a` and `b`, but excludes group `c` and individual `d`. Note that inclusions and exclusions are executed in order. `group2` comprises of group `e` and group `f`, but excludes individual `<g>`.
+
+As in [RAScalculator](https://github.com/TCLamnidis/RAStools), the allele frequency ascertainment is done across right populations only. 
+
+The are a couple of optons, as specified in the CLI help (`xerxes ras --help`):
+
+```
+Usage: xerxes ras (-d|--baseDir DIR) [-j|--jackknife ARG] 
+                  [-e|--excludeChroms ARG] --popConfigFile ARG 
+                  [-k|--maxAlleleCount ARG] [-m|--maxMissingness ARG]
+                  (-f|--tableOutFile ARG)
+  Compute RAS statistics on groups and individuals within and across Poseidon
+  packages
+
+Available options:
+  -h,--help                Show this help text
+  -d,--baseDir DIR         a base directory to search for Poseidon Packages
+                           (could be a Poseidon repository)
+  -j,--jackknife ARG       Jackknife setting. If given an integer number, this
+                           defines the block size in SNPs. Set to "CHR" if you
+                           want jackknife blocks defined as entire chromosomes.
+                           The default is at 5000 SNPs
+  -e,--excludeChroms ARG   List of chromosome names to exclude chromosomes,
+                           given as comma-separated list. Defaults to X, Y, MT,
+                           chrX, chrY, chrMT, 23,24,90
+  --popConfigFile ARG      a file containing the population configuration
+  -k,--maxAlleleCount ARG  define a maximal allele-count cutoff for the RAS
+                           statistics. (default: 10)
+  -m,--maxMissingness ARG  define a maximal missingness for the right
+                           populations in the RAS statistics. (default: 0.1)
+  -f,--tableOutFile ARG    the file to which results are written as
+                           tab-separated file
+```
+
+The output gives both cumulative (up to allele-count k) and and per-allele-frequency RAS (for allele count k) for every pair of left and rights. The standard out contains a pretty-printed table, and in adition, a tab-separated file is written to the file specified using option `-f`. 
