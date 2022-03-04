@@ -148,7 +148,9 @@ Contamination of ancient DNA with foreign reads is a major challenge for archaeo
 
 `Contamination` is a list column to represent the different contamination values estimated for a sample with one or multiple software tools. As usual multiple values are separated by `;`.
 
-`Contamination_Err` is another list column to store the respective error term for the values in `Contamination`.
+`Contamination_Err` is another list column to store the respective (standard) error term for the values in `Contamination`.
+
+Some tools for contamination estimation do not return a mean plus a standard error. ContamMix, for example, yields a 95% confidence interval instead, to better represent assymetric output distributions. `Contamination` and `Contamination_Err` can not represent this. We suggest to derive a mean and a standard error from these alternative outputs. The latter can be calculated as the largest distance from the mean to the limits of the confidence interval.
 
 `Contamination_Meas` finally is the third necessary list column, which contextualizes the values in `Contamination` and `Contamination_Err`. Each measure in these columns has to be accompanied by the software and software version used to calculate it. The individual entries might e.g. look like this:
 
