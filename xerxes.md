@@ -1,6 +1,6 @@
 # Xerxes CLI software
 
-* Documentation for version 1.0.0.0
+* Documentation for version 0.1.0.0
 
 ## Fstats command
 
