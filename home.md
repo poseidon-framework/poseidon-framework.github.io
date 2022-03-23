@@ -5,7 +5,7 @@
 <div id="landingPageButtonsOuter">
   <div id="landingPageButtonsInner">
     <button onclick="window.open(
-      'https://github.com/poseidon-framework',
+      'https://join.slack.com/t/poseidon-8el7276/shared_invite/zt-14q2wxxmf-pbtNtm5E9DFJbjioyfAyMg',
       '_blank');;"
       class="button">
       <span>
