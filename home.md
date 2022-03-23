@@ -1,7 +1,30 @@
 ![poseidon banner with logo](_media/Poseidon-Logo-WaterGraphicLrg.png)
 
-**Poseidon is a framework offering a standardized way to store and share archaeogenetic genotype datasets with archaeological context information.** It aims to [fill a desideratum](background.md) in the current handling of research data. This website features the documentation for all its elements, including:
+**Poseidon is a framework offering a standardized way to store and share archaeogenetic genotype datasets with archaeological context information.** It aims to [fill a desideratum](background.md) in the current handling of research data. 
 
+<div id="landingPageButtonsOuter">
+  <div id="landingPageButtonsInner">
+    <button onclick="window.open(
+      'https://join.slack.com/t/poseidon-8el7276/shared_invite/zt-14q2wxxmf-pbtNtm5E9DFJbjioyfAyMg',
+      '_blank');;"
+      class="button">
+      <span>
+        <i class="fab fa-slack" aria-hidden="true"></i> Join the Poseidon Slack Workspace
+      </span>
+    </button>
+    <button onclick="window.open(
+      'https://github.com/poseidon-framework',
+      '_blank');;"
+      class="button">
+      <span>
+        <i class="fab fa-github" aria-hidden="true"></i> Poseidon on GitHub
+      </span>
+    </button>
+  </div>
+</div>
+
+> This website features the documentation for...
+>
 > 1. A standardized **package format** for genotype and context data, including
 >   - The Poseidon [package definition standard](standard)
 >   - [Genotype data](genotype_data)
