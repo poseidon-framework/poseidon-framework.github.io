@@ -1,6 +1,16 @@
 # Xerxes CLI software
 
-* Documentation for version 0.1.0.0
+`xerxes` is a command line software tool for population genetic analyses of poseidon packages. It is written in Haskell and openly available on Github.
+
+[![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/poseidon-framework/poseidon-analysis-hs?include_prereleases)
+![GitHub all releases](https://img.shields.io/github/downloads/poseidon-framework/poseidon-analysis-hs/total)](https://github.com/poseidon-framework/poseidon-analysis-hs/releases)
+
+<a class="github-button" href="https://github.com/poseidon-framework/poseidon-analysis-hs/issues" data-icon="octicon-issue-opened" data-show-count="true" aria-label="Issue poseidon-framework/poseidon-analysis-hs on GitHub">Report an issue</a>
+<a class="github-button" href="https://github.com/poseidon-framework/poseidon-analysis-hs" data-icon="octicon-star" data-show-count="true" aria-label="Star poseidon-framework/poseidon-analysis-hs on GitHub">Star this project</a>
+
+***
+
+The following documentation was written for v0.1.0.0
 
 ## Fstats command
 
