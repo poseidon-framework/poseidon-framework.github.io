@@ -47,7 +47,7 @@
     .button {
       color: white;
       background-color: #555555;
-      border: 1px solid green;
+      border: 1px solid;
       border-color: grey;
       padding: 8px 15px;
       text-align: center;
@@ -75,6 +75,22 @@
     .button:hover span:after {
       opacity: 1;
       right: 0;
+    }
+    .grid-container{
+      display: grid;
+      grid-template-columns: repeat( auto-fit, minmax(250px, 1fr) );
+      grid-gap: 10px;
+    }
+    .grid-element{
+      background-color: #555555;
+      border: 1px solid;
+      border-color: grey;
+      text-align: left;
+      padding: 15px;
+    }
+    .grid-symbol {
+      text-align: center;
+      font-size: 30px;
     }
   </style>
 </head>
