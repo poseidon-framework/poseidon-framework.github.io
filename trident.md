@@ -343,7 +343,7 @@ Entities in the `--forgeString` or the `--forgeFile` have to be marked in a cert
 
 Do not forget to wrap the forgeString in quotes. 
 
-You can either use `-f` or `--forgeFile`. In the file each line is treated as a separate forgeString, empty lines are ignored and `#` starts comments. So this is a valid forgeFile:
+You can either use `-f`/`--forgeString` or `--forgeFile`. In the file each line is treated as a separate forgeString, empty lines are ignored and `#`s start comments. So this is a valid forgeFile:
 
 ```
 # Packages
@@ -357,7 +357,9 @@ group1, <individual1>, group2, <individual2>, <individual3>
 -<bad_individual2> # This one is from a different time period
 ```
 
-By prepending `-` to the bad individuals, we can exclude them from the new package. `forge` always collects all entities (packages, groups, individuals) it should include, and only then substracts the ones it should exclude. Duplicated entries in the forgeString/File are treated as one entry. If only a negative selection, so only entities for exclusion, are listed, then `forge` will assume you want to merge all individuals in the packages found in the baseDirs (except the ones explicitly excluded, of course). An empty forgeString will therefore merge all available individuals.
+By prepending `-` to individuals, we can exclude them from the new package. `forge` will apply excludes and includes in order.
+
+If the first entity is negative, then forge will assume you want to merge all individuals in the packages found in the baseDirs before the exclude statements are applied. An empty forgeString will merge all available individuals.
 
 ##### Other options
 
