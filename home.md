@@ -9,7 +9,7 @@
       '_blank');;"
       class="button">
       <span>
-        <i class="fab fa-slack" aria-hidden="true"></i> Join the Poseidon Slack Workspace
+        <i class="fab fa-slack" aria-hidden="true"></i> Slack
       </span>
     </button>
     <button onclick="window.open(
@@ -17,7 +17,15 @@
       '_blank');;"
       class="button">
       <span>
-        <i class="fab fa-github" aria-hidden="true"></i> Poseidon on GitHub
+        <i class="fab fa-github" aria-hidden="true"></i> GitHub
+      </span>
+    </button>
+    <button onclick="window.open(
+      'https://twitter.com/poseidon_aDNA',
+      '_blank');;"
+      class="button">
+      <span>
+        <i class="fab fa-twitter" aria-hidden="true"></i> Twitter
       </span>
     </button>
   </div>
