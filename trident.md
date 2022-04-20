@@ -42,6 +42,7 @@ We also provide some more information for developers in the [README on Github](h
 ## Guide for trident
 
 ### Poseidon package repositories
+
 Trident generally requires Poseidon datasets to work with. Most trident subcommands therefore have a central parameter, called `--baseDir` or simply `-d` to specify one or more base directories to look for Poseidon packages. For example, if all Poseidon packages live inside a repository at `/path/to/poseidon/packages` you would simply say `trident <subcommand> -d /path/to/poseidon/dirs/` and `trident` would automatically search all subdirectories inside of the repository for valid poseidon packages (as identified by valid `POSEIDON.yml` files).
 
 You can arrange a poseidon repository in a hierarchical way. For example:
@@ -121,20 +122,20 @@ trident list -d /path/to/poseidon/packages/modern \
  <summary><i class="fas fa-search"></i> <i class="fas fa-terminal"></i> <b>Click here for command line details</b></summary>
 
 ```
-Usage: trident init --inFormat ARG --snpSet ARG --genoFile ARG --snpFile ARG
-                    --indFile ARG (-o|--outPackagePath ARG) 
+Usage: trident init (-r|--inFormat ARG) (-g|--genoFile ARG) (-s|--snpFile ARG)
+                    (-i|--indFile ARG) [--snpSet ARG] (-o|--outPackagePath ARG) 
                     [-n|--outPackageName ARG] [--minimal]
   Create a new Poseidon package from genotype data
 
 Available options:
   -h,--help                Show this help text
-  --inFormat ARG           the format of the input genotype data: EIGENSTRAT or
+  -r,--inFormat ARG        the format of the input genotype data: EIGENSTRAT or
                            PLINK
+  -g,--genoFile ARG        the input geno file path
+  -s,--snpFile ARG         the input snp file path
+  -i,--indFile ARG         the input ind file path
   --snpSet ARG             the snpSet of the new package: 1240K, HumanOrigins or
-                           Other
-  --genoFile ARG           the input geno file path
-  --snpFile ARG            the input snp file path
-  --indFile ARG            the input ind file path
+                           Other. Default: Other
   -o,--outPackagePath ARG  the output package directory path
   -n,--outPackageName ARG  the output package name - this is optional: If no
                            name is provided, then the package name defaults to
@@ -149,15 +150,15 @@ The command
 
 ```
 trident init \
-  --inFormat EIGENSTRAT/PLINK \
-  --genoFile path/to/geno_file \
-  --snpFile path/to/snp_file \
-  --indFile path/to/ind_file \
+  -r EIGENSTRAT/PLINK \
+  -g path/to/geno_file \
+  -s path/to/snp_file \
+  -i path/to/ind_file \
   --snpSet 1240K|HumanOrigins|Other \
   -o path/to/new_package_name
 ```
 
-requires the format (`--inFormat`) of your input data (either `EIGENSTRAT` or `PLINK`), the paths to the respective files in `--genoFile`, `--snpFile`, and `--indFile`, and the "shape" of these files (`--snpSet`), so if they cover the `1240K`, the `HumanOrigins` or an `Other` SNP set.
+requires the format `-r` (`--inFormat`) of your input data (either `EIGENSTRAT` or `PLINK`), the paths to the respective files in `-g` (`--genoFile`), `-s` (`--snpFile`), and `-i` (`--indFile`), and optionally the "shape" of these files (`--snpSet`), so if they cover the `1240K`, the `HumanOrigins` or an `Other` SNP set.
 
 |          | EIGENSTRAT | PLINK |
 |----------|------------|-------|
@@ -227,11 +228,13 @@ To overwrite outdated package versions with `fetch`, the `-u`/`--upgrade` flag h
  <summary><i class="fas fa-search"></i> <i class="fas fa-terminal"></i> <b>Click here for command line details</b></summary>
 
 ```
-Usage: trident forge (-d|--baseDir DIR) 
-                     ((-f|--forgeString ARG) | --forgeFile ARG) [--intersect]
-                     (-o|--outPackagePath ARG) [-n|--outPackageName ARG] 
-                     [--outFormat ARG] [--minimal] [-w|--warnings] 
-                     [--no-extract] [--selectSnps ARG]
+Usage: trident forge [-d|--baseDir DIR] 
+                     [(-r|--inFormat ARG) (-g|--genoFile ARG) (-s|--snpFile ARG)
+                       (-i|--indFile ARG) [--snpSet ARG]] 
+                     [--forgeFile ARG | (-f|--forgeString ARG)] 
+                     [--selectSnps ARG] [--intersect] [--outFormat ARG] 
+                     [--minimal] [--onlyGeno] (-o|--outPackagePath ARG) 
+                     [-n|--outPackageName ARG] [-w|--warnings] [--no-extract]
   Select packages, groups or individuals and create a new Poseidon package from
   them
 
@@ -239,6 +242,18 @@ Available options:
   -h,--help                Show this help text
   -d,--baseDir DIR         a base directory to search for Poseidon Packages
                            (could be a Poseidon repository)
+  -r,--inFormat ARG        the format of the input genotype data: EIGENSTRAT or
+                           PLINK
+  -g,--genoFile ARG        the input geno file path
+  -s,--snpFile ARG         the input snp file path
+  -i,--indFile ARG         the input ind file path
+  --snpSet ARG             the snpSet of the new package: 1240K, HumanOrigins or
+                           Other. Default: Other
+  --forgeFile ARG          A file with a list of packages, groups or individual
+                           samples. Works just as -f, but multiple values can
+                           also be separated by newline, not just by comma.
+                           Empty lines are ignored and comments start with "#",
+                           so everything after "#" is ignored in one line.
   -f,--forgeString ARG     List of packages, groups or individual samples to be
                            combined in the output package. Packages follow the
                            syntax *package_title*, populations/groups are simply
@@ -255,11 +270,15 @@ Available options:
                            (except the ones explicitly excluded) before the
                            exclude entities are applied. An empty forgeString
                            will therefore merge all available individuals.
-  --forgeFile ARG          A file with a list of packages, groups or individual
-                           samples. Works just as -f, but multiple values can
-                           also be separated by newline, not just by comma.
-                           Empty lines are ignored and comments start with "#",
-                           so everything after "#" is ignored in one line.
+  --selectSnps ARG         To extract specific SNPs during this forge operation,
+                           provide a Snp file. Can be either Eigenstrat (file
+                           ending must be '.snp') or Plink (file ending must be
+                           '.bim'). When this option is set, the output package
+                           will have exactly the SNPs listed in this file. Any
+                           SNP not listed in the file will be excluded. If
+                           option '--intersect' is also set, only the SNPs
+                           overlapping between the SNP file and the forged
+                           packages are output.
   --intersect              Whether to output the intersection of the genotype
                            files to be forged. The default (if this option is
                            not set) is to output the union of all SNPs, with
@@ -267,14 +286,16 @@ Available options:
                            do not have a SNP that is present in another package.
                            With this option set, the forged dataset will
                            typically have fewer SNPs, but less missingness.
+  --outFormat ARG          the format of the output genotype data: EIGENSTRAT or
+                           PLINK. Default: PLINK
+  --minimal                should only a minimal output package be created?
+  --onlyGeno               should only the resulting genotype data be returned?
+                           This means the output will not be a Poseidon package
   -o,--outPackagePath ARG  the output package directory path
   -n,--outPackageName ARG  the output package name - this is optional: If no
                            name is provided, then the package name defaults to
                            the basename of the (mandatory) --outPackagePath
                            argument
-  --outFormat ARG          the format of the output genotype data: EIGENSTRAT or
-                           PLINK. Default: PLINK
-  --minimal                should only a minimal output package be created?
   -w,--warnings            Show all warnings for merging genotype data
   --no-extract             Skip the selection step in forge. This will result in
                            outputting all individuals in the relevant packages,
@@ -287,15 +308,6 @@ Available options:
                            individuals from the relevant packages will just be
                            written in the order that they appear in the original
                            packages.
-  --selectSnps ARG         To extract specific SNPs during this forge operation,
-                           provide a Snp file. Can be either Eigenstrat (file
-                           ending must be '.snp') or Plink (file ending must be
-                           '.bim'). When this option is set, the output package
-                           will have exactly the SNPs listed in this file. Any
-                           SNP not listed in the file will be excluded. If
-                           option '--intersect' is also set, only the SNPs
-                           overlapping between the SNP file and the forged
-                           packages are output.
 ```
 
 </details>
@@ -309,7 +321,23 @@ trident forge -d ... -d ... \
   -o path/to/new_package_name
 ```
 
-where the entities (packages, groups/populations, individuals/samples) you want in the output package can be denoted either as as simple string with comma-separated values (`-f`/`--forgeString`) or in a text file (`--forgeFile`). Entities have to be marked in a certain way: 
+where the entities (packages, groups/populations, individuals/samples) you want in the output package can be denoted either as as simple string with comma-separated values (`-f`/`--forgeString`) or in a text file (`--forgeFile`). 
+
+Including one or multiple Poseidon packages with `-d` is not the only way to include data for a forge operation. It is also possible to include unpackaged genotype data directly with `-r + -g + -s + -i (+ --snpSet)`. This makes the following example possible, where we merge data from one Poseidon package and two genotype datasets.
+
+```
+trident forge \
+  -d 2017_GonzalesFortesCurrentBiology \
+  -r PLINK -g 2017_HaberAJHG/2017_HaberAJHG.bed -s 2017_HaberAJHG/2017_HaberAJHG.bim -i 2017_HaberAJHG/2017_HaberAJHG.fam \
+  -r PLINK -g 2018_VeeramahPNAS/2018_VeeramahPNAS.bed -i 2018_VeeramahPNAS/2018_VeeramahPNAS.fam -s 2018_VeeramahPNAS/2018_VeeramahPNAS.bim \
+  -f "<STR241.SG>,<ERS1790729.SG>,Iberia_HG.SG" \
+  -o testpackage \
+  --onlyGeno
+```
+
+##### The forge selection language
+
+Entities in the `--forgeString` or the `--forgeFile` have to be marked in a certain way: 
 
 - Each package is surrounded by `*`, so if you want all individuals of `2019_Jeong_InnerEurasia` in the output package you would add `*2019_Jeong_InnerEurasia*` to the list.
 - Groups/populations are not specially marked. So to get all individuals of the group `Swiss_Roman_period`, you would simply add `Swiss_Roman_period`.
@@ -317,7 +345,7 @@ where the entities (packages, groups/populations, individuals/samples) you want 
 
 Do not forget to wrap the forgeString in quotes. 
 
-You can either use `-f` or `--forgeFile` or even combine them. In the file each line is treated as a separate forgeString, empty lines are ignored and `#` starts comments. So this is a valid forgeFile:
+You can either use `-f`/`--forgeString` or `--forgeFile`. In the file each line is treated as a separate forgeString, empty lines are ignored and `#`s start comments. So this is a valid forgeFile:
 
 ```
 # Packages
@@ -333,7 +361,11 @@ group1, <individual1>, group2, <individual2>, <individual3>
 
 By prepending `-` to the bad individuals, we can exclude them from the forged package. `forge` figures out the final list of samples to include by executing all forge-entities in order. So an entity list `*PackageA*,-<Individual1>,GroupA` may result in a different outcome than `*PackageA*,GroupA,-<Individual1>`, depending on whether `<Individual1>` belongs to `GroupA` or not. If the forge entity list starts with a negative entity, or if the entity list is empty, `forge` will implicitly assume you want to include all individuals in all packages found in the baseDirs (except the ones explicitly excluded, of course). An empty forgeString will therefore merge all available individuals.
 
-Just as for `init` the output package of `forge` is created as a new directory `-o`. The title can also be explicitly defined with `-n`. `--minimal` allows for the creation of a minimal output package without `.bib` and `.janno`. This might be especially useful for data analysis pipelines, where only the genotype data is required.
+##### Other options
+
+Just as for `init` the output package of `forge` is created as a new directory `-o`. The title can also be explicitly defined with `-n`.
+  
+`--minimal` allows for the creation of a minimal output package without `.bib` and `.janno`. This might be especially useful for data analysis pipelines, where only the genotype data is required. Even more basic output comes with `--onlyGeno`, which means that only the genotype data is returned without any Poseidon package.
 
 `forge` has a an optional flag `--intersect`, that defines, if the genotype data from different packages should be merged with an **union** or an **intersect** operation. The default (if this option is not set) is to output the union of all SNPs, with genotypes defined as missing in samples from packages which do not have a SNP that is present in another package. With this option set, on the other hand, the forged dataset will typically have fewer SNPs, but less missingness.
 
@@ -357,15 +389,28 @@ Merging genotype data across different data sources and file formats is tricky. 
  <summary><i class="fas fa-search"></i> <i class="fas fa-terminal"></i> <b>Click here for command line details</b></summary>
 
 ```
-Usage: trident genoconvert (-d|--baseDir DIR) --outFormat ARG [--removeOld]
+Usage: trident genoconvert [-d|--baseDir DIR] 
+                           [(-r|--inFormat ARG) (-g|--genoFile ARG)
+                             (-s|--snpFile ARG) (-i|--indFile ARG) 
+                             [--snpSet ARG]] --outFormat ARG [--onlyGeno] 
+                           [--removeOld]
   Convert the genotype data in a Poseidon package to a different file format
 
 Available options:
   -h,--help                Show this help text
   -d,--baseDir DIR         a base directory to search for Poseidon Packages
                            (could be a Poseidon repository)
+  -r,--inFormat ARG        the format of the input genotype data: EIGENSTRAT or
+                           PLINK
+  -g,--genoFile ARG        the input geno file path
+  -s,--snpFile ARG         the input snp file path
+  -i,--indFile ARG         the input ind file path
+  --snpSet ARG             the snpSet of the new package: 1240K, HumanOrigins or
+                           Other. Default: Other
   --outFormat ARG          the format of the output genotype data: EIGENSTRAT or
                            PLINK.
+  --onlyGeno               should only the resulting genotype data be returned?
+                           This means the output will not be a Poseidon package
   --removeOld              Remove the old genotype files when creating the new
                            ones
 ```
@@ -375,10 +420,18 @@ Available options:
 With the default setting
 
 ```
-trident genoconvert -d ... -d ... --outFormat EIGENSTRAT/PLINK
+trident genoconvert -d ... -d ... --outFormat EIGENSTRAT|PLINK
 ```
 
-all packages in `-d` will be converted to the desired `--outFormat` (either `EIGENSTRAT` or `PLINK`), if the data is not already in this format. 
+all packages in `-d` will be converted to the desired `--outFormat` (either `EIGENSTRAT` or `PLINK`), if the data is not already in this format. This includes updating the respective POSEIDON.yml files.
+
+Instead of `-d` to change Poseidon packages, the combination `-r + -g + -s + -i (+ --snpSet)` allows to directly convert genotype data that is not wrapped in a Poseidon package. See this example:
+
+```
+trident genoconvert \
+  -r PLINK -g 2018_Mittnik_Baltic/Mittnik_Baltic.bed -s 2018_Mittnik_Baltic/Mittnik_Baltic.bim -i 2018_Mittnik_Baltic/Mittnik_Baltic.fam \
+  --outFormat EIGENSTRAT
+```
 
 The "old" data is not deleted, but kept around. That means conversion will result in a package with both PLINK and EIGENSTRAT data, but only one is linked in the POSEIDON.yml file, and that is what will be used by trident. To delete the old data in the conversion you can add the `--removeOld` flag.
 
