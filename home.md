@@ -23,17 +23,35 @@
   </div>
 </div>
 
-> This website features the documentation for...
->
-> 1. A standardized **package format** for genotype and context data, including
->   - The Poseidon [package definition standard](standard)
->   - [Genotype data](genotype_data)
->   - A metadata table, called [.janno file](janno_details)
-> 2. **Software tools** to work with Poseidon packages:
->   - The [trident](trident) CLI software
->   - The [xerxes](xerxes) CLI software
->   - The [poseidonR](poseidonR) R package
-> 3. A publicly hosted and curated **package repository** of published data
->   - A [guide](repo_guide) to our public repository
->   - An [overview](https://poseidon-framework.github.io/published_data/) of all currently available public Poseidon packages
-<!-- > - An experimental [explorer](repo_explorer) of our public repository -->
+<br>
+
+<div class="grid-container">
+  <div class="grid-element">
+    <div class="grid-symbol"><i class="fas fa-clipboard-list" aria-hidden="true"></i></div>
+    Poseidon provides a standardized <b>package format</b> for genotype and context data
+    <ul>
+      <li>The Poseidon <a href="#standard">package definition standard</a></li>
+      <li>How we store <a href="#genotype_data">genotype data</a></li>
+      <li>How we store context data in the <a href="#janno_details">.janno file</a></li>
+    </ul> 
+  </div>
+  <div class="grid-element">
+    <div class="grid-symbol"><i class="fas fa-tools" aria-hidden="true"></i></div>
+    Poseidon includes <b>software tools</b> to work with Poseidon packages
+    <ul>
+      <li>The <a href="#trident">trident</a> CLI software for data management</li>
+      <li>The <a href="#xerxes">xerxes</a> CLI software for data analysis</li>
+      <li>The <a href="#poseidonR">poseidonR</a> package for handling .janno files in R</li>
+    </ul>
+  </div>
+  <div class="grid-element">
+    <div class="grid-symbol"><i class="fas fa-download" aria-hidden="true"></i></div>
+    Poseidon features a publicly hosted and curated <b>package repository</b> of published data
+    <ul>
+      <li>A <a href="#repo_guide">guide</a> explains the repository and how to contribute to it</li>
+      <li style="color: #7CFC00">An <a href="https://poseidon-framework.github.io/published_data">overview and download</a> page features all public Poseidon packages</li>
+    </ul>
+  </div>
+</div>
+
+

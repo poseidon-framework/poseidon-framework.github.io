@@ -208,11 +208,13 @@ It works with
 
 ```
 trident fetch -d ... -d ... \
-  -f "*package_title_1*,*package_title_2*,*package_title_3*" \
+  -f "*package_title_1*,*package_title_2*,*package_title_3*,group_name,<Individual1>" \
   --fetchFile path/to/forgeFile
 ```
 
-and the packages you want to download must be listed either in a simple string with comma-separated values (`-f`/`--fetchString`) or in a text file (`--fetchFile`). Each package title has to be wrapped in asterisks: *package_title* (more about that in the documentation of `forge` below). `--downloadAll` causes fetch to ignore `-f` and download all packages from the server. The downloaded packages are added in the first (!) `-d` directory, but downloads are only performed if the respective packages are not already present in an up-to-date version in any of the `-d` dirs.
+and the entities you want to download must be listed either in a simple string with comma-separated values (`-f`/`--fetchString`) or in a text file (`--fetchFile`). Entities are specified using a special syntax: Package titles are wrapped in asterisks: *package_title* (see also the documentation of `forge` below), group names are spelled as is, and individual names are wrapped in angular brackets, liks `<Individual1>`. Fetch will figure out which packages need to be downloaded to include all specified entities. `--downloadAll` causes fetch to ignore `-f` and download all packages from the server. The downloaded packages are added in the first (!) `-d` directory, but downloads are only performed if the respective packages are not already present in an up-to-date version in any of the `-d` dirs.
+
+Note that `trident fetch` makes most sense in combination with `trident list --remote`: First one can inspect what is available on the server, then one can create a custom fetch command.
 
 `fetch` also has the optional arguments `--remote https:://..."` do name an alternative poseidon server. The default points to the [DAG server](https://poseidon-framework.github.io/#/repos). 
 
@@ -357,14 +359,12 @@ group1, <individual1>, group2, <individual2>, <individual3>
 -<bad_individual2> # This one is from a different time period
 ```
 
-By prepending `-` to individuals, we can exclude them from the new package. `forge` will apply excludes and includes in order.
-
-If the first entity is negative, then forge will assume you want to merge all individuals in the packages found in the baseDirs before the exclude statements are applied. An empty forgeString will merge all available individuals.
+By prepending `-` to the bad individuals, we can exclude them from the forged package. `forge` figures out the final list of samples to include by executing all forge-entities in order. So an entity list `*PackageA*,-<Individual1>,GroupA` may result in a different outcome than `*PackageA*,GroupA,-<Individual1>`, depending on whether `<Individual1>` belongs to `GroupA` or not. If the forge entity list starts with a negative entity, or if the entity list is empty, `forge` will implicitly assume you want to include all individuals in all packages found in the baseDirs (except the ones explicitly excluded, of course). An empty forgeString will therefore merge all available individuals.
 
 ##### Other options
 
-Just as for `init` the output package of `forge` is created as a new directory `-o`. The title can also be explicitly defined with `-n`. 
-
+Just as for `init` the output package of `forge` is created as a new directory `-o`. The title can also be explicitly defined with `-n`.
+  
 `--minimal` allows for the creation of a minimal output package without `.bib` and `.janno`. This might be especially useful for data analysis pipelines, where only the genotype data is required. Even more basic output comes with `--onlyGeno`, which means that only the genotype data is returned without any Poseidon package.
 
 `forge` has a an optional flag `--intersect`, that defines, if the genotype data from different packages should be merged with an **union** or an **intersect** operation. The default (if this option is not set) is to output the union of all SNPs, with genotypes defined as missing in samples from packages which do not have a SNP that is present in another package. With this option set, on the other hand, the forged dataset will typically have fewer SNPs, but less missingness.

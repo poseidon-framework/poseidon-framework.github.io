@@ -144,8 +144,8 @@ The RAS command computes pairwise RAS statistics between a collection of "left" 
 The input of left-pops and right-pops uses a YAML file via `--popConfigFile`. Here is an example:
 ```
 groupDefs:
-  group1: a,b,!c,!<d>
-  group2: e,f,!<g>
+  group1: a,b,-c,-<d>
+  group2: e,f,-<g>
 popLefts:
 - <I13721>
 - <I14000>
