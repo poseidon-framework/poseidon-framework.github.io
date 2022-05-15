@@ -29,12 +29,68 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta charset="UTF-8">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/css/theme-simple-dark.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
   <style>
     header {
       text-align: left;
     }
     footer {
       font-size: 13px !important;
+    }
+    #landingPageButtonsOuter {
+      width:100%
+    }
+    #landingPageButtonsInner {
+      display: table;
+      margin: 0 auto;
+    }
+    .button {
+      color: white;
+      background-color: #555555;
+      border: 1px solid;
+      border-color: grey;
+      padding: 8px 15px;
+      text-align: center;
+      margin: 4px 2px;
+      cursor: pointer;
+      transition: all 0.5s;
+    }
+    .button span {
+      cursor: pointer;
+      display: inline-block;
+      position: relative;
+      transition: 0.5s;
+    }
+    .button span:after {
+      content: '\00bb';
+      position: absolute;
+      opacity: 0;
+      top: 0;
+      right: -20px;
+      transition: 0.5s;
+    }
+    .button:hover span {
+      padding-right: 25px;
+    }
+    .button:hover span:after {
+      opacity: 1;
+      right: 0;
+    }
+    .grid-container{
+      display: grid;
+      grid-template-columns: repeat( auto-fit, minmax(250px, 1fr) );
+      grid-gap: 10px;
+    }
+    .grid-element{
+      background-color: #555555;
+      border: 1px solid;
+      border-color: grey;
+      text-align: left;
+      padding: 15px;
+    }
+    .grid-symbol {
+      text-align: center;
+      font-size: 30px;
     }
   </style>
 </head>
