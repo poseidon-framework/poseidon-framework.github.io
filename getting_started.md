@@ -35,6 +35,39 @@ mkdir -p ~/poseidon_repo
 trident fetch -f '*2012_PattersonGenetics*,*Reference_Genomes*,*Archaic_Humans*' -d ~/poseidon_repo
 ```
 
+We can now check out some summary of the packages:
+
+```bash
+trident summarise -d ~/poseidon_repo
+```
+
+which gives us a short summary of the package contents:
+```
+.-------------------------.--------------------------------------------------------------.
+|         Summary         |                            Value                             |
+:=========================:==============================================================:
+| Nr Individuals          | 1052                                                         |
+| Individuals             | Altai_published.DG, Altai_snpAD.DG, Ancestor.REF, Chimp.REF… |
+| Nr Groups               | 122                                                          |
+| Groups                  | Yoruba: 70, Han: 43, Druze: 39, Palestinian: 38, Ignore_Yor… |
+| Nr Publications         | 10                                                           |
+| Publications            | PattersonGenetics2012, Pruefer2017, PrueferNature2013, Meye… |
+| Nr Countries            | 27                                                           |
+| Countries               | Pakistan: 187, China: 179, Israel: 133, Nigeria: 108, Russi… |
+| Mean age BC/AD          | -45479 ± 5108                                                |
+| Dating type             | modern: 1040, contextual: 12                                 |
+| Sex distribution        | M: 683, F: 356, U: 13                                        |
+| MT haplogroups          | n/a: 1052                                                    |
+| Y haplogroups           | n/a: 1050, A0-T: 1, BT: 1                                    |
+| % endogenous human DNA  | no values                                                    |
+| Nr of SNPs              | 597207 ± 51237                                               |
+| Coverage on target SNPs | 17.09 ± 19.87                                                |
+| Library type            | ds: 1045, ss: 7                                              |
+| UDG treatment           | n/a: 1043, minus: 7, half: 2                                 |
+'-------------------------'--------------------------------------------------------------'
+```
+
+
 ## Simple analyses
 
 Let's analyse the newly downloaded data using some F-statistics. Let's show that people with West-Eurasian ancestry are significantly more closely related to Neanderthals than people with West-African ancestry are:
@@ -80,39 +113,7 @@ trident init --genoFile ~/tmp/2014_SkoglundScience/2014_SkoglundScience.bed \
 
 ## Inspecting packages
 
-OK, we can now check out the new package:
-
-```bash
-trident summarise -d ~/tmp/MyNewPackage
-```
-
-which gives us a short summary of the package contents:
-```
-.-------------------------.--------------------------------------------------------------.
-|         Summary         |                            Value                             |
-:=========================:==============================================================:
-| Nr Individuals          | 11                                                           |
-| Individuals             | Ajvide52.SG, Ajvide53.SG, Ajvide58.SG, Ajvide59.SG, Ajvide7… |
-| Nr Groups               | 5                                                            |
-| Groups                  | Sweden_PWC_NHG.SG: 5, Sweden_TRB_MN.SG: 3, Sweden_HG.SG: 1,… |
-| Nr Publications         | 1                                                            |
-| Publications            | no values                                                    |
-| Nr Countries            | 1                                                            |
-| Countries               | n/a: 11                                                      |
-| Mean age BC/AD          | no values                                                    |
-| Dating type             | n/a: 11                                                      |
-| Sex distribution        | M: 7, F: 4                                                   |
-| MT haplogroups          | n/a: 11                                                      |
-| Y haplogroups           | n/a: 11                                                      |
-| % endogenous human DNA  | no values                                                    |
-| Nr of SNPs              | no values                                                    |
-| Coverage on target SNPs | no values                                                    |
-| Library type            | n/a: 11                                                      |
-| UDG treatment           | n/a: 11                                                      |
-'-------------------------'--------------------------------------------------------------'
-```
-
-We can also check out the completeness of its metadata file (it's "Janno"-File):
+We can also check out the completeness of metadata files in packages (their "Janno"-File):
 
 ```bash
 trident survey -d ~/tmp/MyNewPackage
