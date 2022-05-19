@@ -79,12 +79,12 @@ xerxes fstats -d ~/poseidon_repo --stat 'F4(<Chimp.REF>,<Altai_published.DG>,Yor
 
 Here is the result:
 ```
-.-------------------------------------------------------.-----------------------.-----------------------.--------------------.
-|                       Statistic                       |       Estimate        |        StdErr         |      Z score       |
-:=======================================================:=======================:=======================:====================:
-| F4(<Chimp.REF>,<Altai_published.DG>,Yoruba,French)    | 1.5829336247989434e-3 | 1.9812755791513955e-4 | 7.989467197071763  |
-| F4(<Chimp.REF>,<Altai_published.DG>,Sardinian,French) | 7.610136296417463e-5  | 6.920533028304284e-5  | 1.0996459760097628 |
-'-------------------------------------------------------'-----------------------'-----------------------'--------------------'
+.-------------------------------------------------------.-----------.-----------.--------------------.
+|                       Statistic                       | Estimate  |  StdErr   |      Z score       |
+:=======================================================:===========:===========:====================:
+| F4(<Chimp.REF>,<Altai_published.DG>,Yoruba,French)    | 1.5829e-3 | 1.9813e-4 | 7.989467197071763  |
+| F4(<Chimp.REF>,<Altai_published.DG>,Sardinian,French) | 7.6101e-5 | 6.9205e-5 | 1.0996459760097628 |
+'-------------------------------------------------------'-----------'-----------'--------------------'
 ```
 
 You can see that the Z-Score for French being more closely related to the Altai Neanderthal than Yoruba are (an ethnic group from Nigeria) is much larger than 3, suggesting high significance, while the Z-score for either Sardinians or French being more closely related to the Altai Neanderthal is not-significant.
@@ -155,14 +155,86 @@ with a lot more fields filled.
 
 ## Forging a new packages
 
-Now that we have our own (fake) package and packages with existing data, we can forge them together to create one large package:
+Now that we have our own (fake) package and packages with existing data, we can forge them together to create one large package.
+
+A particularly useful feature is the ability to pull out specific groups, packages and individuals. To make a selection, let's first list the packages we have now:
+
+```bash
+trident list --packages -d ~/poseidon_repo
+```
+
+which gives 
+```
+.------------------------.----------------.
+|         Title          | Nr Individuals |
+:========================:================:
+| 2012_PattersonGenetics | 1036           |
+| Archaic_Humans         | 12             |
+| Reference_Genomes      | 4              |
+'------------------------'----------------'
+```
+
+OK, which groups do we have?
+```bash
+trident list --groups -d ~/poseidon_repo
+```
+
+actually a lot, here is a truncated output:
+```
+.--------------------------------------.------------------------.----------------.
+|                Group                 |        Packages        | Nr Individuals |
+:======================================:========================:================:
+| Adygei                               | 2012_PattersonGenetics | 16             |
+| Altai_Neanderthal.DG                 | Archaic_Humans         | 1              |
+| Altai_Neanderthal_published.DG       | Archaic_Humans         | 1              |
+| Ancestor.REF                         | Reference_Genomes      | 1              |
+| Balochi                              | 2012_PattersonGenetics | 20             |
+| BantuKenya                           | 2012_PattersonGenetics | 6              |
+| BantuSA                              | 2012_PattersonGenetics | 5              |
+| BantuSA_Ovambo                       | 2012_PattersonGenetics | 1              |
+| Basque                               | 2012_PattersonGenetics | 20             |
+| BedouinA                             | 2012_PattersonGenetics | 25             |
+...
+```
+
+and individuals likewise:
+
+```bash
+trident list --individuals -d ~/poseidon_repo
+```
+
+```
+.------------------------.-----------------------------------.--------------------------------------.
+|        Package         |            Individual             |                Group                 |
+:========================:===================================:======================================:
+| 2012_PattersonGenetics | HGDP00001                         | Brahui                               |
+| 2012_PattersonGenetics | HGDP00003                         | Brahui                               |
+| 2012_PattersonGenetics | HGDP00005                         | Brahui                               |
+| 2012_PattersonGenetics | HGDP00007                         | Brahui                               |
+| 2012_PattersonGenetics | HGDP00011                         | Brahui                               |
+| 2012_PattersonGenetics | HGDP00013                         | Ignore_Brahui                        |
+| 2012_PattersonGenetics | HGDP00015                         | Brahui                               |
+...
+```
+
+OK, we can now make arbitraty selections of packages, groups and individuals, for which there is a mini-language described in `trident forge --help`. 
+
+For example, here is a command that forges a new package consisting of
+
+* all individuals that in Patterson package, excluding the Brahui group, but including individual HGDP00001
+* all individuals from the Archaic_Humans package, except for individual Denisova11.SG
+* the Chimp and the Human reference genome
+* my entire newly created package from above
 
 ```bash
 trident forge -d ~/poseidon_repo -d ~/tmp/MyNewPackage \
-  -o ~/tmp/MyForgedPackage -n MyForgedPackage -f '*2012_PattersonGenetics*,*Archaic_Humans*,*MyNewPackage*,*Reference_Genomes*'
+  -o ~/tmp/MyForgedPackage -n MyForgedPackage \
+  -f '*2012_PattersonGenetics*,-Brahui,<HGDP00001>,*Archaic_Humans*,-<Denisova11.SG>,<Chimp.REF>,<Href.REF>,*MyNewPackage*'
 ```
 
-?> Note that the option `-f ''` would have worked just as well in this case, since an empty forge string implicitly forges all packages that it finds under the given base paths `-d ... -d ...`.
+?> Note that there is a shortcut of you just like to forge everything, which is `-f ''`, since an empty forge string implicitly forges all packages that it finds under the given base paths `-d ... -d ...`.
+
+?> Note that you can also give a forge-file if you have a more complex set up. Check out `trident forge --help` and the [documentation](trident.md) to learn more.
 
 We now have our forged package in `~/tmp/MyForgedPackage` with merged genotype data and all metadata, which can be used for further analysis with external tools.
 
