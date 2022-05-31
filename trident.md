@@ -122,13 +122,18 @@ trident list -d /path/to/poseidon/packages/modern \
  <summary><i class="fas fa-search"></i> <i class="fas fa-terminal"></i> <b>Click here for command line details</b></summary>
 
 ```
-Usage: trident init (-r|--inFormat ARG) (-g|--genoFile ARG) (-s|--snpFile ARG)
-                    (-i|--indFile ARG) [--snpSet ARG] (-o|--outPackagePath ARG) 
+Usage: trident init ((-p|--genoOne ARG) | (-r|--inFormat ARG)
+                      (-g|--genoFile ARG) (-s|--snpFile ARG) (-i|--indFile ARG))
+                    [--snpSet ARG] (-o|--outPackagePath ARG) 
                     [-n|--outPackageName ARG] [--minimal]
   Create a new Poseidon package from genotype data
 
 Available options:
   -h,--help                Show this help text
+  -p,--genoOne ARG         one of the input genotype data files. Expects .bed or
+                           .bim or .fam for PLINK and .geno or .snp or .ind for
+                           EIGENSTRAT. The other files must be in the same
+                           directory and must have the same base name
   -r,--inFormat ARG        the format of the input genotype data: EIGENSTRAT or
                            PLINK
   -g,--genoFile ARG        the input geno file path
@@ -158,7 +163,7 @@ trident init \
   -o path/to/new_package_name
 ```
 
-requires the format `-r` (`--inFormat`) of your input data (either `EIGENSTRAT` or `PLINK`), the paths to the respective files in `-g` (`--genoFile`), `-s` (`--snpFile`), and `-i` (`--indFile`), and optionally the "shape" of these files (`--snpSet`), so if they cover the `1240K`, the `HumanOrigins` or an `Other` SNP set.
+requires the format `-r` (`--inFormat`) of your input data (either `EIGENSTRAT` or `PLINK`), the paths to the respective files in `-g` (`--genoFile`), `-s` (`--snpFile`), and `-i` (`--indFile`), and optionally the "shape" of these files (`--snpSet`), so if they cover the `1240K`, the `HumanOrigins` or an `Other` SNP set. A simpler interface added in trident 0.29.0 is available with `-p (+ --snpSet)`.
 
 |          | EIGENSTRAT | PLINK |
 |----------|------------|-------|
@@ -229,8 +234,10 @@ To overwrite outdated package versions with `fetch`, the `-u`/`--upgrade` flag h
 
 ```
 Usage: trident forge [-d|--baseDir DIR] 
-                     [(-r|--inFormat ARG) (-g|--genoFile ARG) (-s|--snpFile ARG)
-                       (-i|--indFile ARG) [--snpSet ARG]] 
+                     [
+                       ((-p|--genoOne ARG) | (-r|--inFormat ARG)
+                         (-g|--genoFile ARG) (-s|--snpFile ARG)
+                         (-i|--indFile ARG)) [--snpSet ARG]] 
                      [--forgeFile ARG | (-f|--forgeString ARG)] 
                      [--selectSnps ARG] [--intersect] [--outFormat ARG] 
                      [--minimal] [--onlyGeno] (-o|--outPackagePath ARG) 
@@ -242,6 +249,10 @@ Available options:
   -h,--help                Show this help text
   -d,--baseDir DIR         a base directory to search for Poseidon Packages
                            (could be a Poseidon repository)
+  -p,--genoOne ARG         one of the input genotype data files. Expects .bed or
+                           .bim or .fam for PLINK and .geno or .snp or .ind for
+                           EIGENSTRAT. The other files must be in the same
+                           directory and must have the same base name
   -r,--inFormat ARG        the format of the input genotype data: EIGENSTRAT or
                            PLINK
   -g,--genoFile ARG        the input geno file path
@@ -323,13 +334,13 @@ trident forge -d ... -d ... \
 
 where the entities (packages, groups/populations, individuals/samples) you want in the output package can be denoted either as as simple string with comma-separated values (`-f`/`--forgeString`) or in a text file (`--forgeFile`). 
 
-Including one or multiple Poseidon packages with `-d` is not the only way to include data for a forge operation. It is also possible to include unpackaged genotype data directly with `-r + -g + -s + -i (+ --snpSet)`. This makes the following example possible, where we merge data from one Poseidon package and two genotype datasets.
+Including one or multiple Poseidon packages with `-d` is not the only way to include data for a forge operation. It is also possible to include unpackaged genotype data directly with `-r + -g + -s + -i (+ --snpSet)` or `-p (+ --snpSet)`. This makes the following example possible, where we merge data from one Poseidon package and two genotype datasets.
 
 ```
 trident forge \
   -d 2017_GonzalesFortesCurrentBiology \
+  -p 2018_VeeramahPNAS/2018_VeeramahPNAS.fam \
   -r PLINK -g 2017_HaberAJHG/2017_HaberAJHG.bed -s 2017_HaberAJHG/2017_HaberAJHG.bim -i 2017_HaberAJHG/2017_HaberAJHG.fam \
-  -r PLINK -g 2018_VeeramahPNAS/2018_VeeramahPNAS.bed -i 2018_VeeramahPNAS/2018_VeeramahPNAS.fam -s 2018_VeeramahPNAS/2018_VeeramahPNAS.bim \
   -f "<STR241.SG>,<ERS1790729.SG>,Iberia_HG.SG" \
   -o testpackage \
   --onlyGeno
@@ -390,16 +401,22 @@ Merging genotype data across different data sources and file formats is tricky. 
 
 ```
 Usage: trident genoconvert [-d|--baseDir DIR] 
-                           [(-r|--inFormat ARG) (-g|--genoFile ARG)
-                             (-s|--snpFile ARG) (-i|--indFile ARG) 
-                             [--snpSet ARG]] --outFormat ARG [--onlyGeno] 
-                           [--removeOld]
+                           [
+                             ((-p|--genoOne ARG) | (-r|--inFormat ARG)
+                               (-g|--genoFile ARG) (-s|--snpFile ARG)
+                               (-i|--indFile ARG)) [--snpSet ARG]]
+                           --outFormat ARG [--onlyGeno] 
+                           [-o|--outPackagePath ARG] [--removeOld]
   Convert the genotype data in a Poseidon package to a different file format
 
 Available options:
   -h,--help                Show this help text
   -d,--baseDir DIR         a base directory to search for Poseidon Packages
                            (could be a Poseidon repository)
+  -p,--genoOne ARG         one of the input genotype data files. Expects .bed or
+                           .bim or .fam for PLINK and .geno or .snp or .ind for
+                           EIGENSTRAT. The other files must be in the same
+                           directory and must have the same base name
   -r,--inFormat ARG        the format of the input genotype data: EIGENSTRAT or
                            PLINK
   -g,--genoFile ARG        the input geno file path
@@ -411,6 +428,10 @@ Available options:
                            PLINK.
   --onlyGeno               should only the resulting genotype data be returned?
                            This means the output will not be a Poseidon package
+  -o,--outPackagePath ARG  the output package directory path - this is optional:
+                           If no path is provided, then the output is written to
+                           the directories where the input genotype data file
+                           (.bed/.geno) is stored
   --removeOld              Remove the old genotype files when creating the new
                            ones
 ```
@@ -425,17 +446,16 @@ trident genoconvert -d ... -d ... --outFormat EIGENSTRAT|PLINK
 
 all packages in `-d` will be converted to the desired `--outFormat` (either `EIGENSTRAT` or `PLINK`), if the data is not already in this format. This includes updating the respective POSEIDON.yml files.
 
-Instead of `-d` to change Poseidon packages, the combination `-r + -g + -s + -i (+ --snpSet)` allows to directly convert genotype data that is not wrapped in a Poseidon package. See this example:
+The "old" data is not deleted, but kept around. That means conversion can result in a package with both PLINK and EIGENSTRAT data, but only one is linked in the POSEIDON.yml file, and that is what will be used by trident. To delete the old data in the conversion you can add the `--removeOld` flag.
+
+Instead of `-d` to change Poseidon packages, the combination `-r + -g + -s + -i (+ --snpSet)` or `-p (+ --snpSet)` allows to directly convert genotype data that is not wrapped in a Poseidon package and store it to a directory given in `-o`. See this example:
 
 ```
 trident genoconvert \
-  -r PLINK -g 2018_Mittnik_Baltic/Mittnik_Baltic.bed -s 2018_Mittnik_Baltic/Mittnik_Baltic.bim -i 2018_Mittnik_Baltic/Mittnik_Baltic.fam \
+  -p 2018_Mittnik_Baltic/Mittnik_Baltic.bed \
   --outFormat EIGENSTRAT
+  -o my_directory
 ```
-
-The "old" data is not deleted, but kept around. That means conversion will result in a package with both PLINK and EIGENSTRAT data, but only one is linked in the POSEIDON.yml file, and that is what will be used by trident. To delete the old data in the conversion you can add the `--removeOld` flag.
-
-Remember that the POSEIDON.yml file can also be edited by hand if you want to replace the genotype data in a package.
 
 #### Update command
 
