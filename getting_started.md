@@ -103,12 +103,9 @@ trident fetch -f '*2014_SkoglundScience*' -d ~/tmp
 We now forget about the fact that this is already a Poseidon package and just use its genotype data to create a new package:
 
 ```bash
-trident init --genoFile ~/tmp/2014_SkoglundScience/2014_SkoglundScience.bed \
-  --snpFile ~/tmp/2014_SkoglundScience/2014_SkoglundScience.bim \
-  --indFile ~/tmp/2014_SkoglundScience/2014_SkoglundScience.fam \
-  --inFormat PLINK --snpSet Other \
-  -o ~/tmp/MyNewPackage \
-  -n MyNewPackage
+trident init \
+  -p ~/tmp/2014_SkoglundScience/2014_SkoglundScience.bed \
+  -o ~/tmp/MyNewPackage
 ```
 
 ## Inspecting packages
