@@ -181,14 +181,20 @@ The output package of `init` is created as a new directory `-o`, which should no
  <summary><i class="fas fa-search"></i> <i class="fas fa-terminal"></i> <b>Click here for command line details</b></summary>
 
 ```
-Usage: trident fetch (-d|--baseDir DIR) [-f|--fetchString ARG] [--fetchFile ARG]
-                     [--remoteURL ARG] [-u|--upgrade] [--downloadAll]
+Usage: trident fetch [-d|--baseDir DIR] 
+                     (--downloadAll | 
+                       (--fetchFile ARG | (-f|--fetchString ARG))) 
+                     [--remoteURL ARG] [-u|--upgrade]
   Download data from a remote Poseidon repository
 
 Available options:
   -h,--help                Show this help text
   -d,--baseDir DIR         a base directory to search for Poseidon Packages
                            (could be a Poseidon repository)
+  --downloadAll            download all packages the server is offering
+  --fetchFile ARG          A file with a list of packages. Works just as -f, but
+                           multiple values can also be separated by newline, not
+                           just by comma. -f and --fetchFile can be combined.
   -f,--fetchString ARG     List of packages to be downloaded from the remote
                            server. Package names should be wrapped in asterisks:
                            *package_title*. You can combine multiple values with
@@ -198,13 +204,9 @@ Available options:
                            or individuals are specified, then packages which
                            include these groups or individuals are included in
                            the download.
-  --fetchFile ARG          A file with a list of packages. Works just as -f, but
-                           multiple values can also be separated by newline, not
-                           just by comma. -f and --fetchFile can be combined.
-  --remoteURL ARG          URL of the remote Poseidon
-                           server (default: "https://c107-224.cloud.gwdg.de")
+  --remoteURL ARG          URL of the remote Poseidon server
+                           (default: "https://c107-224.cloud.gwdg.de")
   -u,--upgrade             overwrite outdated local package versions
-  --downloadAll            download all packages the server is offering
 ```
 
 </details>
@@ -217,7 +219,7 @@ trident fetch -d ... -d ... \
   --fetchFile path/to/forgeFile
 ```
 
-and the entities you want to download must be listed either in a simple string with comma-separated values (`-f`/`--fetchString`) or in a text file (`--fetchFile`). Entities are specified using a special syntax: Package titles are wrapped in asterisks: *package_title* (see also the documentation of `forge` below), group names are spelled as is, and individual names are wrapped in angular brackets, liks `<Individual1>`. Fetch will figure out which packages need to be downloaded to include all specified entities. `--downloadAll` causes fetch to ignore `-f` and download all packages from the server. The downloaded packages are added in the first (!) `-d` directory, but downloads are only performed if the respective packages are not already present in an up-to-date version in any of the `-d` dirs.
+and the entities you want to download must be listed either in one or more simple strings with comma-separated values, which can be passed via one or multiple options `-f`/`--fetchString`, or in one or more text files (`--fetchFile`). Entities are then combined from these sources. Entities are specified using a special syntax: Package titles are wrapped in asterisks: *package_title* (see also the documentation of `forge` below), group names are spelled as is, and individual names are wrapped in angular brackets, liks `<Individual1>`. Fetch will figure out which packages need to be downloaded to include all specified entities. `--downloadAll`, which can be given instead of `-f` and `--fetchFile`, causes fetch to download all packages from the server. The downloaded packages are added in the first (!) `-d` directory (which gets created if it doesn't exist), but downloads are only performed if the respective packages are not already present in an up-to-date version in any of the `-d` dirs.
 
 Note that `trident fetch` makes most sense in combination with `trident list --remote`: First one can inspect what is available on the server, then one can create a custom fetch command.
 
@@ -241,7 +243,7 @@ Usage: trident forge [-d|--baseDir DIR]
                      [--forgeFile ARG | (-f|--forgeString ARG)] 
                      [--selectSnps ARG] [--intersect] [--outFormat ARG] 
                      [--minimal] [--onlyGeno] (-o|--outPackagePath ARG) 
-                     [-n|--outPackageName ARG] [-w|--warnings] [--no-extract]
+                     [-n|--outPackageName ARG] [--no-extract]
   Select packages, groups or individuals and create a new Poseidon package from
   them
 
@@ -265,6 +267,9 @@ Available options:
                            also be separated by newline, not just by comma.
                            Empty lines are ignored and comments start with "#",
                            so everything after "#" is ignored in one line.
+                           Multiple instances of -f and --forgeFile can be
+                           given. They will be evaluated according to their
+                           input order on the command line.
   -f,--forgeString ARG     List of packages, groups or individual samples to be
                            combined in the output package. Packages follow the
                            syntax *package_title*, populations/groups are simply
@@ -280,7 +285,8 @@ Available options:
                            all individuals in the packages found in the baseDirs
                            (except the ones explicitly excluded) before the
                            exclude entities are applied. An empty forgeString
-                           will therefore merge all available individuals.
+                           (and no --forgeFile) will therefore merge all
+                           available individuals.
   --selectSnps ARG         To extract specific SNPs during this forge operation,
                            provide a Snp file. Can be either Eigenstrat (file
                            ending must be '.snp') or Plink (file ending must be
@@ -307,7 +313,6 @@ Available options:
                            name is provided, then the package name defaults to
                            the basename of the (mandatory) --outPackagePath
                            argument
-  -w,--warnings            Show all warnings for merging genotype data
   --no-extract             Skip the selection step in forge. This will result in
                            outputting all individuals in the relevant packages,
                            and hence a superset of the requested
@@ -332,7 +337,7 @@ trident forge -d ... -d ... \
   -o path/to/new_package_name
 ```
 
-where the entities (packages, groups/populations, individuals/samples) you want in the output package can be denoted either as as simple string with comma-separated values (`-f`/`--forgeString`) or in a text file (`--forgeFile`). 
+where the entities (packages, groups/populations, individuals/samples) you want in the output package can be denoted either as one or more simple strings with comma-separated values via one or more (`-f`/`--forgeString`) options, or in one or more text files (`--forgeFile`). Because the order in which inclusions and exclusions are given, the order strictly follows the order as these strings are given via options `-f`/`--forgeString` and `--forgeFile`.
 
 Including one or multiple Poseidon packages with `-d` is not the only way to include data for a forge operation. It is also possible to include unpackaged genotype data directly with `-r + -g + -s + -i (+ --snpSet)` or `-p (+ --snpSet)`. This makes the following example possible, where we merge data from one Poseidon package and two genotype datasets.
 
