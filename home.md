@@ -2,6 +2,8 @@
 
 **Poseidon is a framework offering a standardized way to store and share archaeogenetic genotype datasets with archaeological context information.** It aims to [fill a desideratum](background.md) in the current handling of research data. 
 
+?> New here? Check out our [Getting Started Guide](getting_started.md)
+
 <div id="landingPageButtonsOuter">
   <div id="landingPageButtonsInner">
     <button onclick="window.open(

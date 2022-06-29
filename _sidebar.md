@@ -5,6 +5,7 @@
 </p>
 
 * [Home](home.md)
+* [Getting started](getting_started.md)
 * [Background](background.md)
 * **The Poseidon Standard**
 	* [Package definition](standard.md)
