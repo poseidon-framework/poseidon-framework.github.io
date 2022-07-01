@@ -134,7 +134,7 @@ fstats:
   a: ["French", "Spanish"]
   b: ["Han", "CEU2"]
   # Ascertainment is optional
-- type: F3
+- type: F3 # This will create 3x2x1 = 6 Statistics
   a: ["French", "Spanish", "Mbuti"]
   b: ["Han", "CEU2"]
   c: ["<Chimp.REF>"]
@@ -143,7 +143,7 @@ fstats:
     reference: "CEU2"
     lower: 0.05
     upper: 0.95
-- type: F4
+- type: F4 # This will create 5x5x4x1 = 100 Statistics
   a: ["<I0156.SG>", "<I0157.SG>", "<I0159.SG>", "<I0160.SG>", "<I0161.SG>"]
   b: ["<I0156.SG>", "<I0157.SG>", "<I0159.SG>", "<I0160.SG>", "<I0161.SG>"]
   c: ["CEU2", "FIN2", "GBR2", "IBS2"]
