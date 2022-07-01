@@ -10,81 +10,37 @@
 
 ***
 
-The following documentation was written for v0.1.0.0
+The following documentation was written for v0.2.0.0
 
 ## Fstats command
 
-Xerxes allows you to analyse genotype data across poseidon packages, including your own, as explained above by "hooking" in your own package via a `--baseDir` (or `-d`) parameter. This has the advantage that you can compute arbitrary F-Statistics across groups and individuals distributed in many packages, without the need to explicitly merge the data. Xerxes also takes care of merging PLINK and EIGENSTRAT data on the fly. It also takes care of different genotype base sets, like Human-Origins vs. 1240K. It also flips alleles automatically across genotype files, and throws an error if the alleles in different packages are incongruent with each other. Xerxes is also smart enough to select only the packages relevant for the statistics that you need, and then streams through only those genotype data.
+Xerxes allows you to analyse genotype data across poseidon packages, including your own, as explained above by "hooking" in your own package via a `--baseDir` (or `-d`) parameter. This has the advantage that you can compute arbitrary F-Statistics across groups and individuals distributed in many packages, without the need to explicitly merge the data first. Xerxes also takes care of merging PLINK and EIGENSTRAT data on the fly. It also takes care of different genotype base sets, like Human-Origins vs. 1240K. It also flips alleles automatically across genotype files, and throws an error if the alleles in different packages are incongruent with each other. Xerxes is also smart enough to select only the packages relevant for the statistics that you need, and then streams through only those genotype data.
 
 Here is an example command for computing several F-Statistics:
 
 ```
 xerxes fstats -d ... -d ... \
   --stat "F4(<Chimp.REF>, <Altai_published.DG>, Yoruba, French)" \
-  --stat "F4(<Chimp.REF>, <Altai_snpAD.DG>, Spanish, French)" \
-  --stat "F4(Mbuti,Nganasan,Saami.DG,Finnish)" \
-  --stat "F3(French,Spanish,Mbuti)" \
-  --stat "F3(Sardinian, <MA1.SG>, French)" \
-  --stat "F2(French,Spanish)" \
-  --stat "PWM(French,Spanish)" \
-  --stat "FST(French,Spanish)" \
+  --stat "F3(<Chimp.REF>, <Altai_snpAD.DG>, Spanish)" \
+  --statFile fstats.txt
+  --statConfig fstats.yaml
   -f outputfile.txt
 ```
 
-This showcases a couple of points:
-* You can compute F2, F3 and F4 statistics, as well as Pairwise-Mismatch-Rates (PWM) and FST between groups.
-* Use the `--stat` option to enter a single statistic. Use it multiple times to compute several statistics in one go
-* Use opening and closing brackets to list the groups, separated by comma followed by zero or more spaces.
-* Enclose a statistic with double-quotes in order to not have bash interpret the brackets wrongly.
-* A normal name is interpreted as the name of a group, while a name enclosed by angular brackets, like "<Chimp.REF>" refers to an _individual_. This can be useful if you want to analyse some individuals in a group separately.
+First, the two options `-d ...` exemplify that you need to provide at least one base directory for poseidon packages, but can also give multiple. Second, F-Statistics can be entered in three different ways:
 
-You can also load these statistics from a file. Say you have a file named `fstats.txt` with the following content:
+1. Directly via the command line using `--stat`.
+2. Using a simple text file using `--statFile`
+3. Using a powerful configuration file that allows more options.
 
-```
-F4(<Chimp.REF>, <Altai_published.DG>, Yoruba, French)
-F4(<Chimp.REF>, <Altai_snpAD.DG>, Spanish, French)
-F4(Mbuti,Nganasan,Saami.DG,Finnish)
-```
+These three input ways can be mixed and matched, and given multiple times. They are explained below.
 
-you can then load these statistics using the option `--statFile fstats.txt`. You can also combine statistics read from
-a file and statistics read from the command line.
-
-While running the command, you will see a lot of log messages of the form:
-
-```
-computing chunk range (1,752566) - (1,12635412), size 5000
-computing chunk range (1,12637058) - (1,23477511), size 5000
-computing chunk range (1,23485934) - (1,36980804), size 5000
-computing chunk range (1,36983827) - (1,49518537), size 5000
-computing chunk range (1,49519125) - (1,61041875), size 5000
-```
-
-This shows you the progress of the command. Each logging row here denotes a block of genotype data, for which each statistic is computed, as listed in the end of each line.
-
-The final output of the `fstats` command looks like this:
-
-```
-.----------------------------------------------------.------------------------.-----------------------.---------------------.
-|                     Statistic                      |        Estimate        |        StdErr         |       Z score       |
-:====================================================:========================:=======================:=====================:
-| F4(<Chimp.REF>,<Altai_published.DG>,Yoruba,French) | 1.5818676232155493e-3  | 1.982581647865739e-4  | 7.9788271263301525  |
-| F4(<Chimp.REF>,<Altai_snpAD.DG>,Spanish,French)    | 2.7141327349031186e-5  | 3.466226718060918e-5  | 0.7830222762870696  |
-| F4(Mbuti,Nganasan,Saami.DG,Finnish)                | -4.043746953619087e-3  | 2.762626586426705e-4  | -14.637327293839723 |
-| F3(French,Spanish,Mbuti)                           | 0.2559919477898731     | 2.4689280173971206e-3 | 103.68546429302296  |
-| F3(Sardinian,<MA1.SG>,French)                      | -7.4289157055813515e-3 | 5.014922444930713e-4  | -14.813620324459457 |
-| F2(French,Spanish)                                 | 2.0095370727631068e-4  | 1.2247621687567062e-5 | 16.407569763548867  |
-| PWM(French,Spanish)                                | 0.2344403145673155     | 7.47206478154086e-4   | 313.75573074055995  |
-| FST(French,Spanish)                                | 9.505255375107935e-4   | 4.0975688373199805e-5 | 23.197304920263054  |
-'----------------------------------------------------'------------------------'-----------------------'---------------------'
-
-```
-which lists each statistic, the genome-wide estimate, its standard error and its Z-score. An even more detailed table is output if you specify an output file using option `--tableOutFile` or `-f`, which then also gives the entity names in tab-separated columns, which is useful for further processing.
-
-All options for the `fstats` subcommand can be listed using `xerxes fstats --help`:
+Last, option `-f` can be used to write the output table into a tab-separated text file, beyond just printing a table into the standard out when the program finishes. Note that there are more options, which you can view using `xerxes fstats --help`:
 
 ```
 Usage: xerxes fstats (-d|--baseDir DIR) [-j|--jackknife ARG] 
-                     [-e|--excludeChroms ARG] [--stat ARG] [--statFile ARG] 
+                     [-e|--excludeChroms ARG] 
+                     (--stat ARG | --statConfig ARG | --statFile ARG) 
                      [-f|--tableOutFile ARG]
   Compute f-statistics on groups and invidiuals within and across Poseidon
   packages
@@ -114,6 +70,8 @@ Available options:
                            "F4(<Ind1>,Group2,*Pac*,<Ind4>)". Group or individual
                            names are separated by commas, and a comma can be
                            followed by any number of spaces.
+  --statConfig ARG         Specify a yaml file for the Fstatistics and group
+                           configurations
   --statFile ARG           Specify a file with F-Statistics specified similarly
                            as specified for option --stat. One line per
                            statistics, and no new-line at the end
@@ -125,7 +83,7 @@ Available options:
 
 ### Allowed statistics
 
-The following statistics are allowed in the `--stat` and the `--statFile` options. In all of the following, symbols `a`, `b`, `c` or `d` stand for arbitrary entities allowed in Poseidon, so groups (such as `French`), individuals (such as `<MA1.SG>`) or packages (such as `*2012_PattersonGenetics*`).
+The following statistics are allowed in the `--stat`, `--statFile` and `--statConfig` options. In all of the following, symbols `a`, `b`, `c` or `d` stand for arbitrary entities allowed in Poseidon, so groups (such as `French`), individuals (such as `<MA1.SG>`) or packages (such as `*2012_PattersonGenetics*`).
 
 * `F2vanilla(a, b)`: F2-Statistics - Vanilla version. Computed using `F2vanilla(a, b) = (a-b)^2` across the genome.
 * `F2(a, b)`: F2-Statistics (bias-corrected version). Computed as `F2(a, b) = F2vanilla(a, b) - hA/sA - hB/sB`, where where `sA` is the number of non-missing alleles in entity A, and `hA = nA * nA' / sA * (sA - 1)` is an estimator of half the heterozygosity (see `Het(a)`), and likewise for `sB` and `nB` etc.
@@ -136,6 +94,109 @@ The following statistics are allowed in the `--stat` and the `--statFile` option
 * `FST(a, b)`: An estimate of FST across the genome, following the formular from Appendix A in Patterson et al. 2012, which is a ratio of two terms, with numerator being `F2(a, b)` including bias correction, and the denominator being `F2(a, b) + hA + hB` including bias correction and `hA` and `hB` defined as above.
 * `PWM(a, b)`: The pairwise mismatch rate between entities a and b, computed from allele frequencies as `a (1 - b) + (1 - a) b`.
 
+All of these equations are from Patterson, Nick, Priya Moorjani, Yontao Luo, Swapan Mallick, Nadin Rohland, Yiping Zhan, Teri Genschoreck, Teresa Webster, and David Reich. 2012. “Ancient Admixture in Human History.” Genetics 192 (3): 1065–93. See also Appendix A of this paper for the unbiased estimators used above.
+
+For each of the "slots" A, B, C or D, you can enter:
+* Individuals, using the syntax `<Individual_Name>`
+* Groups, using no special syntax "Group_Name"
+* Packages, using syntax `*Package_Name*` (This can be useful if you happen to have a homogenous set of individuals from multiple groups in one package and want to consider all of these as one group.)
+
+### Defining statistics directly via `--stat`
+
+This is the simples option to instruct the program to compute a specified statistic. Each statistic requires a separate input using `--stat` using this input method. Example:
+
+`xerxes fstats -d ... -d ... --stat "F3(French, Spanish, <Chimp.REF>) --stat "FST(French, Spanish)"`
+
+### Defining statistics in a simple text file
+
+You can prepare a text file, into which you write the above statistics, one statistics per line. Example:
+
+```
+F4(<Chimp.REF>, <Altai_published.DG>, Yoruba, French)
+F4(<Chimp.REF>, <Altai_snpAD.DG>, Spanish, French)
+F4(Mbuti,Nganasan,Saami.DG,Finnish)
+```
+
+you can then load these statistics using the option `--statFile fstats.txt`.
+
+### Input via a configuraton file
+
+This is the most powerful way to input F-Statistics. Here is an example:
+
+```
+groupDefs:
+  CEU2: ["CEU.SG", "-<NA12889.SG>", "-<NA12890.SG>"]
+  FIN2: ["FIN.SG", "-<HG00383.SG>", "-<HG00384.SG>"]
+  GBR2: ["GBR.SG", "-<HG01791.SG>", "-<HG02215.SG>"]
+  IBS2: ["IBS.SG", "-<HG02238.SG>", "-<HG02239.SG>"]
+fstats:
+- type: F2
+  a: ["French", "Spanish"]
+  b: ["Han, CEU2"]
+  # Ascertainment is optional
+- type: F3
+  a: ["French", "Spanish", "Mbuti"]
+  b: ["Han", "CEU2"]
+  c: ["<Chimp.REF>"]
+  ascertainment:
+    outgroup: "<Chimp.REF>" # ascertainint gon outgroup-polarised derived allele frequency
+    reference: "CEU2"
+    lower: 0.05
+    upper: 0.95
+- type: F4
+  a: ["<I0156.SG>", "<I0157.SG>", "<I0159.SG>", "<I0160.SG>", "<I0161.SG>"]
+  b: ["<I0156.SG>", "<I0157.SG>", "<I0159.SG>", "<I0160.SG>", "<I0161.SG>"]
+  c: ["CEU2", "FIN2", "GBR2", "IBS2"]
+  d: ["<Chimp.REF>"]
+  ascertainment:
+    # A missing outgroup means: ascertain on minor allele frequency
+    reference: "CEU.SG"
+    lower: 0.00
+    upper: 0.10
+```
+
+The top level structure of this [YAML](https://en.wikipedia.org/wiki/YAML) file is an object with two fields: `groupDefs` (which is optional) and `fstats` (which is mandatory).
+
+#### Group Definitions
+
+You can specify adhoc group definitions using the syntax above. Every group consists of a name (used as object key) and then a JSON- or YAML-list of signed entities, following the same syntax of `trident forge` (see [trident](trident.md)). Briefly: Individuals, Groups and Packages can be added or excluded (prefixed by a `-`) in order. In the example above, two individuals are removed from each group.
+
+Note that currently, groups can be defined only independently, so not incremental to each other. That means, you cannot currently use an already defined new group name in the entity list of a following group name.
+
+#### Statistic input using YAML
+
+Each statistic defined in the `fstats` section of the YAML file, actually defines a loop over multiple populations in each statistic. In the example above, there are 6 F3-Statistics, each using a different combination of the input groups defined in each of the `a:`, `b:` and `c:` slots. There are also 100 (!) F4 statistics, following all combinations of 5x5x4x1 slots defined in `a:`, `b:`, `c:` and `d:`. This makes it very convenient to loop over statistics.
+
+#### Ascertainment (experimental feature)
+
+In addition, every statistic section allows for a definition of an ascertainment specification, using a special key `ascertainment:`, which is optional. If given, you can specify an optional `outgroup`, a `reference` group in which to ascertain SNPs, and `lower` and `upper` allele frequency bounds. If specified, only SNPs for which the `reference` group has an allele frequency within the given bounds are used to compute the statistic (note that normalisation is still using all non-missing SNPs for that given statistic). If an `outgroup` is defined, then the outgroup-polarised derived allele frequency is used. If no `outgroup` is defined, then the minor allele frequency is used instead.
+
+You can save this into a text file, for example named `fstats_config.yaml`, and load it via `--statConfig fstats_config.yaml`.
+
+
+The final output of the `fstats` command looks like this:
+
+```
+.-----------.------------.------------.-------------.-------------.---------.--------------------.---------------.------------.-----------.------------------------.
+| Statistic |     a      |     b      |      c      |      d      | NrSites |   Asc (Og, Ref)    | Asc (Lo, Up)  |  Estimate  |  StdErr   |        Z score         |
+:===========:============:============:=============:=============:=========:====================:===============:============:===========:========================:
+| F2        | French     | Han        |             |             | 593124  | n/a                | n/a           | 2.7617e-2  | 2.9396e-4 | 93.9481473301681       |
+| F2        | Spanish    | Han        |             |             | 593124  | n/a                | n/a           | 2.7865e-2  | 2.9560e-4 | 94.26775060481035      |
+| F3        | French     | Han        | <Chimp.REF> |             | 580009  | (<Chimp.REF>,CEU2) | (5.0e-2,0.95) | NaN        | NaN       | NaN                    |
+| F3        | French     | CEU2       | <Chimp.REF> |             | 580009  | (<Chimp.REF>,CEU2) | (5.0e-2,0.95) | NaN        | NaN       | NaN                    |
+| F3        | Spanish    | Han        | <Chimp.REF> |             | 580009  | (<Chimp.REF>,CEU2) | (5.0e-2,0.95) | NaN        | NaN       | NaN                    |
+| F3        | Spanish    | CEU2       | <Chimp.REF> |             | 580009  | (<Chimp.REF>,CEU2) | (5.0e-2,0.95) | NaN        | NaN       | NaN                    |
+| F3        | Mbuti      | Han        | <Chimp.REF> |             | 580009  | (<Chimp.REF>,CEU2) | (5.0e-2,0.95) | NaN        | NaN       | NaN                    |
+| F3        | Mbuti      | CEU2       | <Chimp.REF> |             | 580009  | (<Chimp.REF>,CEU2) | (5.0e-2,0.95) | NaN        | NaN       | NaN                    |
+| F4        | <I0156.SG> | <I0156.SG> | CEU2        | <Chimp.REF> | 621857  | ("n/a",CEU.SG)     | (0.0,0.1)     | 0.0000     | 0.0000    | NaN                    |
+| F4        | <I0156.SG> | <I0156.SG> | FIN2        | <Chimp.REF> | 621857  | ("n/a",CEU.SG)     | (0.0,0.1)     | 0.0000     | 0.0000    | NaN                    |
+| F4        | <I0156.SG> | <I0156.SG> | GBR2        | <Chimp.REF> | 621857  | ("n/a",CEU.SG)     | (0.0,0.1)     | 0.0000     | 0.0000    | NaN                    |
+| F4        | <I0156.SG> | <I0156.SG> | IBS2        | <Chimp.REF> | 621857  | ("n/a",CEU.SG)     | (0.0,0.1)     | 0.0000     | 0.0000    | NaN                    |
+| F4        | <I0156.SG> | <I0157.SG> | CEU2        | <Chimp.REF> | 589212  | ("n/a",CEU.SG)     | (0.0,0.1)     | 9.1235e-5  | 1.1259e-4 | 0.8103495849450122     |
+...
+```
+
+which lists each statistic, the slots a, b, c and d, the number of sites with non-missing data for that statistic, Ascertainment information (outgroup, reference, lower and upper bound, if given), the genome-wide estimate, its standard error and its Z-score. If you specify an output file using option `--tableOutFile` or `-f`, these results are also written as tab-separated file.
 
 ## RAS (in development)
 
