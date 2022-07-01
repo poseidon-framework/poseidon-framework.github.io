@@ -132,7 +132,7 @@ groupDefs:
 fstats:
 - type: F2
   a: ["French", "Spanish"]
-  b: ["Han, CEU2"]
+  b: ["Han", "CEU2"]
   # Ascertainment is optional
 - type: F3
   a: ["French", "Spanish", "Mbuti"]
