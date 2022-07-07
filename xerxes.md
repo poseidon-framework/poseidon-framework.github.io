@@ -139,7 +139,7 @@ fstats:
   b: ["Han", "CEU2"]
   c: ["<Chimp.REF>"]
   ascertainment:
-    outgroup: "<Chimp.REF>" # ascertainint gon outgroup-polarised derived allele frequency
+    outgroup: "<Chimp.REF>" # ascertaining on outgroup-polarised derived allele frequency
     reference: "CEU2"
     lower: 0.05
     upper: 0.95
