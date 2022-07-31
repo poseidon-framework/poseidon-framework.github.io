@@ -13,7 +13,7 @@ To download the latest stable release version of `xerxes` click here:
 
 - [📥 Linux](https://github.com/poseidon-framework/poseidon-analysis-hs/releases/latest/download/xerxes-Linux) 
 - [📥 macOS](https://github.com/poseidon-framework/poseidon-analysis-hs/releases/latest/download/xerxes-macOS) 
-- [📥 Windows](https://github.com/poseidon-framework/poseidon-analysis-hs/releases/latest/download/xerxes-Windows.exe). 
+
 
 So in Linux you can run the following commands to get started:
 
