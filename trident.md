@@ -8,8 +8,6 @@
 ![GitHub all releases](https://img.shields.io/github/downloads/poseidon-framework/poseidon-hs/total)](https://github.com/poseidon-framework/poseidon-hs/releases)
 [![Install with Bioconda](https://anaconda.org/bioconda/poseidon-trident/badges/installer/conda.svg)](https://anaconda.org/bioconda/poseidon-trident)
 
-***
-
 ## Installation
 
 To download the latest stable release version of `trident` click here:
