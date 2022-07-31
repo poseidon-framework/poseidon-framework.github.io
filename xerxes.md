@@ -1,18 +1,44 @@
 # Xerxes CLI software
 
-`xerxes` is a command line software tool for population genetic analyses of poseidon packages. It is written in Haskell and openly available on Github.
+`xerxes` is a command line software tool for population genetic analyses of Poseidon packages. It is written in Haskell and openly available on [GitHub](https://github.com/poseidon-framework/poseidon-analysis-hs/).
 
-[![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/poseidon-framework/poseidon-analysis-hs?include_prereleases)
-![GitHub all releases](https://img.shields.io/github/downloads/poseidon-framework/poseidon-analysis-hs/total)](https://github.com/poseidon-framework/poseidon-analysis-hs/releases)
-
-<a class="github-button" href="https://github.com/poseidon-framework/poseidon-analysis-hs/issues" data-icon="octicon-issue-opened" data-show-count="true" aria-label="Issue poseidon-framework/poseidon-analysis-hs on GitHub">Report an issue</a>
-<a class="github-button" href="https://github.com/poseidon-framework/poseidon-analysis-hs" data-icon="octicon-star" data-show-count="true" aria-label="Star poseidon-framework/poseidon-analysis-hs on GitHub">Star this project</a>
+[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/poseidon-framework/poseidon-analysis-hs/CI)](https://github.com/poseidon-framework/poseidon-analysis-hs/actions?query=workflow%3ACI)
+[![Coverage Status](https://img.shields.io/codecov/c/github/poseidon-framework/poseidon-analysis-hs/main.svg)](https://codecov.io/github/poseidon-framework/poseidon-analysis-hs?branch=main)
+[![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/poseidon-framework/poseidon-analysis-hs?include_prereleases) ![GitHub all releases](https://img.shields.io/github/downloads/poseidon-framework/poseidon-analysis-hs/total)](https://github.com/poseidon-framework/poseidon-analysis-hs/releases)
+[![Install with Bioconda](https://anaconda.org/bioconda/poseidon-xerxes/badges/installer/conda.svg)](https://anaconda.org/bioconda/poseidon-xerxes)
 
 ***
 
+## Installation
+
+To download the latest stable release version of `xerxes` click here:
+
+- [📥 Linux](https://github.com/poseidon-framework/poseidon-analysis-hs/releases/latest/download/xerxes-Linux) 
+- [📥 macOS](https://github.com/poseidon-framework/poseidon-analysis-hs/releases/latest/download/xerxes-macOS) 
+- [📥 Windows](https://github.com/poseidon-framework/poseidon-analysis-hs/releases/latest/download/xerxes-Windows.exe). 
+
+So in Linux you can run the following commands to get started:
+
+```bash
+# download the current stable release binary
+wget https://github.com/poseidon-framework/poseidon-analysis-hs/releases/latest/download/xerxes-Linux
+# make it executable
+chmod +x xerxes-Linux
+# run it
+./xerxes-Linux -h
+```
+
+On GitHub you will also find [older release versions](https://github.com/poseidon-framework/poseidon-analysis-hs/releases) and [instructions to build xerxes from source](https://github.com/poseidon-framework/poseidon-analysis-hs#for-haskell-developers).
+
+## Getting help
+
+Beyond the documentation below you can use `xerxes --help` and `xerxes <subcommand> --help` to get information about each parameter, including some which we haven't covered in this guide.
+
+## Guide for xerxes
+
 The following documentation was written for v0.2.0.0
 
-## Fstats command
+### Fstats command
 
 Xerxes allows you to analyse genotype data across poseidon packages, including your own, as explained above by "hooking" in your own package via a `--baseDir` (or `-d`) parameter. This has the advantage that you can compute arbitrary F-Statistics across groups and individuals distributed in many packages, without the need to explicitly merge the data first. Xerxes also takes care of merging PLINK and EIGENSTRAT data on the fly. It also takes care of different genotype base sets, like Human-Origins vs. 1240K. It also flips alleles automatically across genotype files, and throws an error if the alleles in different packages are incongruent with each other. Xerxes is also smart enough to select only the packages relevant for the statistics that you need, and then streams through only those genotype data.
 
@@ -81,7 +107,7 @@ Available options:
                            file
 ```
 
-### Allowed statistics
+#### Allowed statistics
 
 The following statistics are allowed in the `--stat`, `--statFile` and `--statConfig` options. In all of the following, symbols `a`, `b`, `c` or `d` stand for arbitrary entities allowed in Poseidon, so groups (such as `French`), individuals (such as `<MA1.SG>`) or packages (such as `*2012_PattersonGenetics*`).
 
@@ -101,13 +127,13 @@ For each of the "slots" A, B, C or D, you can enter:
 * Groups, using no special syntax "Group_Name"
 * Packages, using syntax `*Package_Name*` (This can be useful if you happen to have a homogenous set of individuals from multiple groups in one package and want to consider all of these as one group.)
 
-### Defining statistics directly via `--stat`
+#### Defining statistics directly via `--stat`
 
 This is the simples option to instruct the program to compute a specified statistic. Each statistic requires a separate input using `--stat` using this input method. Example:
 
 `xerxes fstats -d ... -d ... --stat "F3(French, Spanish, <Chimp.REF>) --stat "FST(French, Spanish)"`
 
-### Defining statistics in a simple text file
+#### Defining statistics in a simple text file
 
 You can prepare a text file, into which you write the above statistics, one statistics per line. Example:
 
@@ -119,7 +145,7 @@ F4(Mbuti,Nganasan,Saami.DG,Finnish)
 
 you can then load these statistics using the option `--statFile fstats.txt`.
 
-### Input via a configuraton file
+#### Input via a configuraton file
 
 This is the most powerful way to input F-Statistics. Here is an example:
 
@@ -157,17 +183,17 @@ fstats:
 
 The top level structure of this [YAML](https://en.wikipedia.org/wiki/YAML) file is an object with two fields: `groupDefs` (which is optional) and `fstats` (which is mandatory).
 
-#### Group Definitions
+##### Group Definitions
 
 You can specify adhoc group definitions using the syntax above. Every group consists of a name (used as object key) and then a JSON- or YAML-list of signed entities, following the same syntax of `trident forge` (see [trident](trident.md)). Briefly: Individuals, Groups and Packages can be added or excluded (prefixed by a `-`) in order. In the example above, two individuals are removed from each group.
 
 Note that currently, groups can be defined only independently, so not incremental to each other. That means, you cannot currently use an already defined new group name in the entity list of a following group name.
 
-#### Statistic input using YAML
+##### Statistic input using YAML
 
 Each statistic defined in the `fstats` section of the YAML file, actually defines a loop over multiple populations in each statistic. In the example above, there are 6 F3-Statistics, each using a different combination of the input groups defined in each of the `a:`, `b:` and `c:` slots. There are also 100 (!) F4 statistics, following all combinations of 5x5x4x1 slots defined in `a:`, `b:`, `c:` and `d:`. This makes it very convenient to loop over statistics.
 
-#### Ascertainment (experimental feature)
+##### Ascertainment (experimental feature)
 
 In addition, every statistic section allows for a definition of an ascertainment specification, using a special key `ascertainment:`, which is optional. If given, you can specify an optional `outgroup`, a `reference` group in which to ascertain SNPs, and `lower` and `upper` allele frequency bounds. If specified, only SNPs for which the `reference` group has an allele frequency within the given bounds are used to compute the statistic (note that normalisation is still using all non-missing SNPs for that given statistic). If an `outgroup` is defined, then the outgroup-polarised derived allele frequency is used. If no `outgroup` is defined, then the minor allele frequency is used instead.
 
@@ -198,7 +224,7 @@ The final output of the `fstats` command looks like this:
 
 which lists each statistic, the slots a, b, c and d, the number of sites with non-missing data for that statistic, Ascertainment information (outgroup, reference, lower and upper bound, if given), the genome-wide estimate, its standard error and its Z-score. If you specify an output file using option `--tableOutFile` or `-f`, these results are also written as tab-separated file.
 
-## RAS (in development)
+### RAS (in development)
 
 The RAS command computes pairwise RAS statistics between a collection of "left" entities, and a collection of "right" entities. Every Entity is either a group name or an individual, with the similar syntax as in F-statistics above, so `French` is a group, and `<IND001>` is an individual.
 
