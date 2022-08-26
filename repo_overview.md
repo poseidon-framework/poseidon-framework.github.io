@@ -24,24 +24,3 @@ We have a webserver running, which currently has several APIs implemented (see [
 2. Under `<package_name>/zip_file`, one can download a package as a zip-file, for example [https://c107-224.cloud.gwdg.de/zip_file/2020_Yu_NorthRussia](https://c107-224.cloud.gwdg.de/zip_file/2020_Yu_NorthRussia).
 
 The webserver is powered by an HTTP server program called `poseidon-http-server` (see also [server](server)), whose source-code can be reviewed at the [same repository](https://github.com/poseidon-framework/poseidon-hs) as `trident` is sourced. For those interested to run their own instance of this webserver, for example under `localhost`, the server comes with a short command line help. It gets installed via `stack install`, similarly to `trident`. The program first scans the given directories for Poseidon packages, then creates zip-files for them, and then starts a HTTP server listening - by default - to port 3000, and providing the two APIs listed above.
-
-## Contributing to our central repositories
-
-The Poseidon framework has a strongly decentralized philosophy and relies very much on a community of users willing to prepare and improve the data in the repositories. To ensure a professional and welcoming atmosphere we would first of all like to ask you to respect our [Contributor Code of Conduct](conduct.md) in all interactions with the Poseidon team and other users on Github and beyond.
-
-There are two basic ways you can contribute to Poseidon:
-
-1) If you identify a mistake in any package metadata, be it context data (`.janno`-files), package-meta-data (`POSEIDON.yml`) or bibliographic information (`.bib` files), we welcome contributions to correct or extend that data. This goes most easily through our github-package, which you can fork, commit changes and ask for Pull requests. You can also use the [issue tracker](https://github.com/poseidon-framework/published_data/issues) on github (for which you can find some help [here](https://lab.github.com/githubtraining/introduction-to-github)). See below for more details on this.
-
-2) If you would like to provide a new package, we would welcome you preparing the meta-data for that new package as far as you can and commiting this package - without the genotype data - as a pull request to our [github-repo](https://github.com/poseidon-framework/published_data). The genetic data we would like to process ourselves, to ensure maximum compatibility with the existing database and to minimise batch effects. So if you want us to add an entirely new package with genetic data, please share with us the raw data, such as BAM or fastq-files, so that we can generate the data and include it into a new Poseidon package.
-
-If you want to prepare a Poseidon dataset for one of the repositories or fix mistakes in the data, you should follow the procedures outlined here. We assume you have some basic knowledge about using a command line software like `trident`, and how to handle Git and Github. If not, then you can become knowledgable quickly at least about the latter, for example [here](https://lab.github.com/githubtraining/introduction-to-github).
-
-
-### Modifying the context data of a package in one of the public repositories (individual or group names in .fam, context information in .janno or .bib) 
-
-1. Fork and clone our central [github repository](https://github.com/poseidon-framework/published_data).
-2. Add the new package (without genotype data), or modify an existing package's metadata.
-3. Commit and push your changes.
-4. Submit a pull request to merge your updates with our repository. We will contact you about this submission as soon as possible.
-
