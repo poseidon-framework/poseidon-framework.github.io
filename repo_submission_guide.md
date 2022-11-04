@@ -1,6 +1,6 @@
 # Contributing to our central repositories
 
-The Poseidon framework has a strongly decentralized philosophy and relies very much on a community of users willing to prepare and improve the data in the repositories. If you want to prepare a Poseidon dataset for one of the repositories or fix mistakes in the data, you should follow the procedures outlined here. To ensure a professional and welcoming atmosphere please respect our [Contributor Code of Conduct](conduct.md) in all interactions with the Poseidon team and other users on GitHub and beyond.
+The Poseidon framework has a strongly decentralized philosophy and relies very much on a community of users willing to prepare and improve the data in the repositories. If you want to prepare a Poseidon dataset for one of the repositories or fix mistakes in the data, you should follow the procedures outlined below. To ensure a professional and welcoming atmosphere please respect our [Contributor Code of Conduct](conduct.md) in all interactions with the Poseidon team and other users on GitHub and beyond. If you have questions about the processes, you can post them as an [issue](https://github.com/poseidon-framework/published_data/issues) on GitHub. 
 
 We assume you have some basic knowledge about using a command line software like `trident`, and how to handle Git and GitHub. If not, then you can become knowledgable quickly about the latter, for example [here](https://lab.github.com/githubtraining/introduction-to-github).
 
@@ -24,16 +24,16 @@ Now your local package should be complete and can be submitted.
 
 The public repository has some additional requirements for your package. The following list contains some of these less obvious qualities you should check before submitting:
 
-- [ ] The package does not exist already in the repository (maybe under another name).
-- [ ] The package title in the `POSEIDON.yml` either conforms to the title predefined [here](https://github.com/poseidon-framework/published_data/issues/14) or follows the general title structure suggested here: `<Year>_<Last name of first author>_<Region, time period or special feature of the paper>`, e.g. `2021_Zegarac_SoutheasternEurope`, `2021_SeguinOrlando_BellBeaker` or `2021_Kivisild_MedievalEstonia`.
-- [ ] The package lives in a directory with this name.
-- [ ] The package version in the `POSEIDON.yml` file is `1.0.0`
-- [ ] There is no CHANGELOG file (this would be meaningless for a first submission).
-- [ ] The `POSEIDON.yml` file contains checksums for the fields `genoFile`, `snpFile`, `indFile`, `jannoFile` and `bibFile`.
-- [ ] The `Publication` column in the `.janno` file is filled and the respective .bib file has complete entries for the listed mentioned keys.
-- [ ] Empty columns are removed from the `.janno` file.
-- [ ] Every file you submit is correctly referenced in the `POSEIDON.yml` file and there are no supplementary files in your submission.
-- [ ] All text files are UTF-8 encoded and have Unix/Unix-like line endings (`LF`, not `CR+LF` or `CR`)
+- The package does not exist already in the repository (maybe under another name).
+- The package title in the `POSEIDON.yml` either conforms to the title predefined [here](https://github.com/poseidon-framework/published_data/issues/14) or follows the general title structure suggested here: `<Year>_<Last name of first author>_<Region, time period or special feature of the paper>`, e.g. `2021_Zegarac_SoutheasternEurope`, `2021_SeguinOrlando_BellBeaker` or `2021_Kivisild_MedievalEstonia`.
+- The package lives in a directory with this name.
+- The package version in the `POSEIDON.yml` file is `1.0.0`
+- There is no CHANGELOG file (this would be meaningless for a first submission).
+- The `POSEIDON.yml` file contains checksums for the fields `genoFile`, `snpFile`, `indFile`, `jannoFile` and `bibFile`.
+- The `Publication` column in the `.janno` file is filled and the respective .bib file has complete entries for the listed mentioned keys.
+- Empty columns are removed from the `.janno` file.
+- Every file you submit is correctly referenced in the `POSEIDON.yml` file and there are no supplementary files in your submission.
+- All text files are UTF-8 encoded and have Unix/Unix-like line endings (`LF`, not `CR+LF` or `CR`)
 
 The procedure for the actual submission is then as follows:
 
@@ -49,17 +49,19 @@ size 177553875
 2. Copy your new package into your local clone with a directory name equal to the package name. The directory should include the genotype data. Git and GitHub will detect automatically that it should treat them as LFS files. Then commit the changes and push.
 3. Submit a pull request from your fork to merge your updates into our repository. We will inspect your submission and contact you on GitHub about necessary changes. When everything is alright and according to our standards, we can merge and add your package. It will then be available from the webserver a couple of days later.
 
-## Modifying the context data of a package in one of the public repositories
+## Modifying a package in the public repository
 
-If you identify a mistake in any package metadata, be it context data (`.janno`-files), package-meta-data (`POSEIDON.yml`) or bibliographic information (`.bib` files), we welcome contributions to correct or extend that data. This goes most easily through our GitHub repository, which you can fork, commit changes and ask for Pull requests. You can also use the [issue tracker](https://github.com/poseidon-framework/published_data/issues) on GitHub (for which you can find some help [here](https://lab.github.com/githubtraining/introduction-to-github)). 
+If you identify a mistake in any package, be it in the context data (`.janno`-files), package-meta-data (`POSEIDON.yml`), bibliographic information (`.bib` files) or genotype data, we welcome both [issues](https://github.com/poseidon-framework/published_data/issues) to point them out and contributions to correct them directly.
 
-<!-- Not reworked yet! See below for more details on this.
+1. Fork and clone the Github repository that contains the package you want to improve. Unlike for the package submission (see above), it is recommended to make a full clone of the repository with Git LFS (see above, so to clone without `GIT_LFS_SKIP_SMUDGE=1`). Expert users are asked, though, to reduce their bandwidth requirements as much as possible. Changes in non-genotype data files are well possible with an incomplete clone. 
+2. Modify the files you want to change. Remember to also update the md5 checksums in the POSEIDON.yml file after you are done. This can be done automatically with [`trident update`](trident?id=update-command). Please use its command line arguments to get well documented changes.
 
-This is rather simple, because no large files have to be moved.
+	- Example 1: You added a radiocarbon date for a sample in the .janno file -- `trident update --versionCompontent "Patch" --newContributors "[Firstname Lastname](email@address.com)" --logText "Added radiocarbon date AAA-1234 for sample I99362"`
 
-1. Fork and clone the Github repository that contains the package you want to improve.
-2. Modify the files you want to change. Remember to also update the md5 checksums in the POSEIDON.yml file after you are done. This can be triggered with [`trident update`](trident?id=update-command).
-3. Commit and push your changes.
-4. Submit a pull request to merge your updates with our repository. We will contact you about this submission as soon as possible.
+	- Example 2: You added a missing sample to a package and thus had to edit the genotype data and the .janno file -- `trident update --versionComponent "Minor" --newContributors "[Firstname Lastname](email@address.com)" --logText "Added sample I99363"`
 
--->
+	- Example 3: You removed a sample from a package -- `trident update --versionComponent "Major" --newContributors "[Firstname Lastname](email@address.com)" --logText "Removed sample I99363. The authors removed this sample in a correction to the paper after detecting a mistake in the wetlab."`
+
+3. Check if the modified package passes the validation with [`trident validate`](trident?id=validate-command). This is mandatory.
+4. Commit and push your changes.
+5. Submit a pull request to merge your updates with our repository. Please do not wait too long (max. 2 weeks) between creation of the fork and submitting the pull request to prevent merge conflicts.
