@@ -8,7 +8,7 @@ We assume you have some basic knowledge about using a command line software like
 
 If you would like to provide a new package, we would welcome you preparing it as far as you can and then commiting it as a pull request to the [GitHub repository](https://github.com/poseidon-framework/published_data) for our public data archive.
 
-### Preparing the package
+### Preparing a package
 
 1. Acquire the respective genotype data in binary PLINK file format. You will have to prepare this e.g. from the [BAM](https://en.wikipedia.org/wiki/SAM_(file_format)) or [FASTQ](https://en.wikipedia.org/wiki/FASTQ_format) files usually shared by the authors of aDNA papers. For some minimal documentation please look [here](genotype_data).
 2. [Install trident](https://poseidon-framework.github.io/#/trident?id=installation-quickstart) and run [`trident init`](trident?id=init-command) with the genotype data. This should give you the skeleton of a Poseidon package, which you can populate with more meta and context information.
@@ -37,13 +37,17 @@ The public repository has some additional requirements for your package. The fol
 
 The procedure for the actual submission is then as follows:
 
-<!-- Not reworked yet! I think there must be a git clone setting to ignore LFS files, but still allow to commit them.
+1. Fork and and then clone the [GitHub repository](https://github.com/poseidon-framework/published_data) for our public data archive. To safe our [Git LFS](https://docs.github.com/en/repositories/working-with-files/managing-large-files/about-git-large-file-storage) bandwidth, **we would like to ask you to clone in a way that does not download the large data files from GitHub** (they should be downloaded from our webserver with [`trident fetch`](trident?id=fetch-command)). At the same time you need to be able to add new LFS files. A proper setup for this includes [downloading and installing Git LFS](https://git-lfs.github.com/) and then setting it up for your user with `git lfs install`. Finally you can clone with the `GIT_LFS_SKIP_SMUDGE` environment variable, which prevents downloading the LFS files despite Git LFS being enabled: 
+`GIT_LFS_SKIP_SMUDGE=1 git clone git@github.com:<your GitHub user name>/published_data.git`. As a consequence the large files will not be downloaded, but only stub files, representing the real files on the LFS server. This clone is only for submission purposes after all -- you can not work with the genotype data in it. `2021_Wang_EastAsia/2021_Wang_EastAsia.bed` for example will look like this:
 
-1. Fork and clone the [GitHub repository](https://github.com/poseidon-framework/published_data).
-2. Copy your new package into your local clone, commit and push. Make sure not to commit any private files or any large genotype data files. Our `.gitignore` settings should usually prevent this automatically.
-3. Submit a pull request to merge your updates with our repository. We will inspect your submission and contact you on GitHub about necessary changes - and finally how you can send us the prepared genotype data.
+```
+version https://git-lfs.github.com/spec/v1
+oid sha256:766e7c9f79c1659dfb924c901420f01e8720557a0ec37f2a694f6a29cdc0a55e
+size 177553875
+```
 
--->
+2. Copy your new package into your local clone with a directory name equal to the package name. The directory should include the genotype data. Git and GitHub will detect automatically that it should treat them as LFS files. Then commit the changes and push.
+3. Submit a pull request from your fork to merge your updates into our repository. We will inspect your submission and contact you on GitHub about necessary changes. When everything is alright and according to our standards, we can merge and add your package. It will then be available from the webserver a couple of days later.
 
 ## Modifying the context data of a package in one of the public repositories
 
