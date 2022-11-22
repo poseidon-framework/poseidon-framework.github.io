@@ -2,6 +2,12 @@
 
 Here we document changes in the Poseidon standard, so that packages can be manually updated from one version to the next. The documentation on the website only considers the latest version.
 
+### 2.5.0 -> 2.6.0 [not breaking]
+
+- Made the *contributor* field in the POSEIDON.yml file optional. We strongly recommend to keep this information in published packages, but for private packages or in computational pipelines it can be omitted now.
+- Added the optional subfield *orcid* to the contributor field of the POSEIDON.yml file. A unique identifier for authors as provided by the [ORCID](https://info.orcid.org/what-is-orcid) is very valuable.
+- Added new possibly entries for the *Capture_Type* field in the .janno file: `ArborComplete`, `ArborPrimePlus`, `ArborAncestralPlus`, `TwistAncientDNA`
+
 ### 2.4.0 -> 2.5.0 [breaking]
 
 Only adds changes to the .janno file -- these are pretty significant, though. Please check [the documentation](janno_details.md) for details on how to use the new columns. 
@@ -53,7 +59,7 @@ Only adds changes to the .janno file -- these are pretty significant, though. Pl
 - Added multiple optional fields to the POSEIDON.yml file. These include checksum fields for the genotype data as well as the .janno and .bib file. Also fields for paths to a README and a CHANGELOG file.
 - Simplified and improved the standard definition document
 
-### 2.0.0 -> 2.0.1 [potentially breaking]
+### 2.0.0 -> 2.0.1 [breaking]
 
 - UTF-8 encoding became mandatory for all files in a Poseidon package
 - Made many implicit details about the fields in the POSEIDON.yml and the .janno file more explicit
