@@ -1,16 +1,12 @@
 # trident CLI software
 
-`trident` is a command line software tool to work with Poseidon packages and handle various data management tasks. It is written in Haskell and openly available on Github.
+`trident` is a command line software tool to work with Poseidon packages and handle various data management tasks. It is written in Haskell and openly available on [GitHub](https://github.com/poseidon-framework/poseidon-hs/).
 
 [![GitHub Workflow Status](https://img.shields.io/github/workflow/status/poseidon-framework/poseidon-hs/CI)](https://github.com/poseidon-framework/poseidon-hs/actions?query=workflow%3ACI)
 [![Coverage Status](https://img.shields.io/codecov/c/github/poseidon-framework/poseidon-hs/master.svg)](https://codecov.io/github/poseidon-framework/poseidon-hs?branch=master)
 [![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/poseidon-framework/poseidon-hs?include_prereleases)
 ![GitHub all releases](https://img.shields.io/github/downloads/poseidon-framework/poseidon-hs/total)](https://github.com/poseidon-framework/poseidon-hs/releases)
 [![Install with Bioconda](https://anaconda.org/bioconda/poseidon-trident/badges/installer/conda.svg)](https://anaconda.org/bioconda/poseidon-trident)
-[![Anaconda-Server Badge](https://anaconda.org/bioconda/poseidon-trident/badges/version.svg)](https://anaconda.org/bioconda/poseidon-trident)
-
-<a class="github-button" href="https://github.com/poseidon-framework/poseidon-hs/issues" data-icon="octicon-issue-opened" data-show-count="true" aria-label="Issue poseidon-framework/poseidon-hs on GitHub">Report an issue</a>
-<a class="github-button" href="https://github.com/poseidon-framework/poseidon-hs" data-icon="octicon-star" data-show-count="true" aria-label="Star poseidon-framework/poseidon-hs on GitHub">Star this project</a>
 
 ## Installation
 
@@ -31,13 +27,11 @@ chmod +x trident-Linux
 ./trident-Linux -h
 ```
 
-The code for trident is available on [Github](https://github.com/poseidon-framework/poseidon-hs). There you will also find [older release versions](https://github.com/poseidon-framework/poseidon-hs/releases) and [instructions to build trident from source](https://github.com/poseidon-framework/poseidon-hs#for-haskell-developers).
+On GitHub you will also find [older release versions](https://github.com/poseidon-framework/poseidon-hs/releases) and [instructions to build trident from source](https://github.com/poseidon-framework/poseidon-hs#for-haskell-developers).
 
 ## Getting help
 
 Beyond the documentation below you can use `trident --help` and `trident <subcommand> --help` to get information about each parameter, including some which we haven't covered in this guide.
-
-We also provide some more information for developers in the [README on Github](https://github.com/poseidon-framework/poseidon-hs).
 
 ## Guide for trident
 

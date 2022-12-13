@@ -19,8 +19,9 @@
 	* [poseidon-http-server](server.md)
 	* [poseidonR R package](poseidonR.md)
 * **The Poseidon Repository**
-	* [Public Repository Guide](repo_guide.md)
-	* [Public Repository Overview](https://poseidon-framework.github.io/published_data)
+	* [Public repository](repo_overview.md)
+	* [Submission guide](repo_submission_guide.md)
+	* [Public repository viewer](https://poseidon-framework.github.io/published_data)
 	<!-- * [Experimental Repository Explorer](repo_explorer.md) -->
 * **Context**
 	* [Code of Conduct](conduct.md)

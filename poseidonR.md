@@ -1,13 +1,10 @@
 # poseidonR R package
 
-poseidonR is an R package to simplify the interaction with Poseidon packages. So far it mostly focusses on `.janno` files and provides a dedicated R S3 class `janno` that inherits from `tibble` and allows to tidily read and manipulate the context information stored in them.
-
-<a class="github-button" href="https://github.com/poseidon-framework/poseidonR/issues" data-icon="octicon-issue-opened" data-show-count="true" aria-label="Issue poseidon-framework/poseidonR on GitHub">Report an issue</a>
-<a class="github-button" href="https://github.com/poseidon-framework/poseidonR" data-icon="octicon-star" data-show-count="true" aria-label="Star poseidon-framework/poseidonR on GitHub">Star this project</a>
+poseidonR is an R package to simplify the interaction with Poseidon packages. So far it mostly focusses on `.janno` files and provides a dedicated R S3 class `janno` that inherits from `tibble` and allows to tidily read and manipulate the context information stored in them. The code is available on [GitHub](https://github.com/poseidon-framework/poseidonR/).
 
 ## Installation
 
-Install the poseidonR package from github with the following command in R:
+Install the poseidonR package from GitHub with the following command in R:
 
 ```
 if(!require('remotes')) install.packages('remotes')
