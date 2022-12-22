@@ -34,8 +34,9 @@ poseidonVersion: 2.5.0
 title: Switzerland_LNBA_Roswita
 description: LNBA Switzerland genetic data not yet published
 contributor:
-  - name: Roswita Malone
-    email: roswita.malone@example.org
+  - name: Josiah Carberry
+    email: carberry@brown.edu
+    orcid: 0000-0002-1825-0097
   - name: Paul Panther
     email: paul.panther@example.edu
 packageVersion: 1.1.2

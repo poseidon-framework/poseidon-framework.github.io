@@ -103,10 +103,12 @@ The `Source_Tissue` column documents the skeletal, soft tissue or other elements
 
 The `Nr_Libraries` column holds a simple integer value of the number of libraries that have been prepared for an individual.
 
-The `Capture_Type` column specifies the general pre-sequencing preparation methods that have been applied to the library. See [Knapp/Hofreiter 2010](https://dx.doi.org/10.3390%2Fgenes1020227) for a review of the different techniques. This field can hold one of four different values, but also multiple of these separated by `;` if different methods have been applied for different libraries.
+The `Capture_Type` column specifies the general pre-sequencing preparation methods that have been applied to the library. See [Knapp/Hofreiter 2010](https://dx.doi.org/10.3390%2Fgenes1020227) for a review of the different techniques (not including younger developments). This field can hold one of multiple different values, but also multiple of these separated by `;` if different methods have been applied for different libraries.
 
 - `Shotgun`: Sequencing without any enrichment (whole genome sequencing, screening etc.)
 - `1240k`: Target enrichment with hybridization capture optimised for sequences covering the 1240k SNP array
+- `ArborComplete`, `ArborPrimePlus`, `ArborAncestralPlus`: Target enrichment with hybridization capture as provided by Arbor Biosciences in three different kits branded [myBaits Expert Human Affinities](https://arborbiosci.com/genomics/targeted-sequencing/mybaits/mybaits-expert/mybaits-expert-human-affinities)
+- `TwistAncientDNA`: Target enrichment with hybridization capture as provided by [Twist Bioscience](https://www.twistbioscience.com/resources/webinar/using-twist-technology-efficiently-enrich-14-million-snp-targets-ancient-dna)
 - `OtherCapture`: Target enrichment with hybridization capture for any other set of sequences
 - `ReferenceGenome`: Modern reference genomes where aDNA fragmentation is not an issue and other sample preparation techniques apply
 
