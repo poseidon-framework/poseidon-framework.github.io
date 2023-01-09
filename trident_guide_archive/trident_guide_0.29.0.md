@@ -1,37 +1,4 @@
-# trident CLI software
-
-`trident` is a command line software tool to work with Poseidon packages and handle various data management tasks. It is written in Haskell and openly available on [GitHub](https://github.com/poseidon-framework/poseidon-hs/).
-
-[![CI](https://github.com/poseidon-framework/poseidon-hs/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/poseidon-framework/poseidon-hs/actions/workflows/main.yml)
-[![Coverage Status](https://img.shields.io/codecov/c/github/poseidon-framework/poseidon-hs/master.svg)](https://codecov.io/github/poseidon-framework/poseidon-hs?branch=master)
-[![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/poseidon-framework/poseidon-hs?include_prereleases) ![GitHub all releases](https://img.shields.io/github/downloads/poseidon-framework/poseidon-hs/total)](https://github.com/poseidon-framework/poseidon-hs/releases)
-[![Install with Bioconda](https://anaconda.org/bioconda/poseidon-trident/badges/version.svg)](https://anaconda.org/bioconda/poseidon-trident) [![Anaconda-Server Badge](https://anaconda.org/bioconda/poseidon-trident/badges/downloads.svg)](https://anaconda.org/bioconda/poseidon-trident)
-
-To download the latest stable release version of `trident` click here:
-[📥 Linux](https://github.com/poseidon-framework/poseidon-hs/releases/latest/download/trident-Linux) |
-[📥 macOS](https://github.com/poseidon-framework/poseidon-hs/releases/latest/download/trident-macOS) |
-[📥 Windows](https://github.com/poseidon-framework/poseidon-hs/releases/latest/download/trident-Windows.exe)
-
-So in Linux you can run the following commands to get started:
-
-```bash
-# download the current stable release binary
-wget https://github.com/poseidon-framework/poseidon-hs/releases/latest/download/trident-Linux
-# make it executable
-chmod +x trident-Linux
-# run it
-./trident-Linux -h
-```
-
-On GitHub you will also find [older release versions](https://github.com/poseidon-framework/poseidon-hs/releases) and [instructions to build trident from source](https://github.com/poseidon-framework/poseidon-hs#for-haskell-developers).
-
-Beyond the documentation below you can use `trident --help` and `trident <subcommand> --help` to get information about each parameter, including some which we haven't covered in this guide.
-
-<!-- tabs:start -->
-
-#### **v1.1.6.0+**
-
-## Guide for trident v1.1.6.0
+## Guide for trident v0.29.0
 
 ### Poseidon package repositories
 
@@ -114,10 +81,10 @@ trident list -d /path/to/poseidon/packages/modern \
  <summary><i class="fas fa-search"></i> <i class="fas fa-terminal"></i> <b>Click here for command line details</b></summary>
 
 ```
-Usage: trident init ((-p|--genoOne ARG) | --inFormat ARG --genoFile ARG
-                      --snpFile ARG --indFile ARG) [--snpSet ARG]
-                    (-o|--outPackagePath ARG) [-n|--outPackageName ARG] 
-                    [--minimal]
+Usage: trident init ((-p|--genoOne ARG) | (-r|--inFormat ARG)
+                      (-g|--genoFile ARG) (-s|--snpFile ARG) (-i|--indFile ARG))
+                    [--snpSet ARG] (-o|--outPackagePath ARG) 
+                    [-n|--outPackageName ARG] [--minimal]
   Create a new Poseidon package from genotype data
 
 Available options:
@@ -126,12 +93,11 @@ Available options:
                            .bim or .fam for PLINK and .geno or .snp or .ind for
                            EIGENSTRAT. The other files must be in the same
                            directory and must have the same base name
-  --inFormat ARG           the format of the input genotype data: EIGENSTRAT or
-                           PLINK (only necessary for data input with --genoFile
-                           + --snpFile + --indFile)
-  --genoFile ARG           the input geno file path
-  --snpFile ARG            the input snp file path
-  --indFile ARG            the input ind file path
+  -r,--inFormat ARG        the format of the input genotype data: EIGENSTRAT or
+                           PLINK
+  -g,--genoFile ARG        the input geno file path
+  -s,--snpFile ARG         the input snp file path
+  -i,--indFile ARG         the input ind file path
   --snpSet ARG             the snpSet of the new package: 1240K, HumanOrigins or
                            Other. Default: Other
   -o,--outPackagePath ARG  the output package directory path
@@ -148,15 +114,15 @@ The command
 
 ```
 trident init \
-  --inFormat EIGENSTRAT/PLINK \
-  --genoFile path/to/geno_file \
-  --snpFile path/to/snp_file \
-  --indFile path/to/ind_file \
+  -r EIGENSTRAT/PLINK \
+  -g path/to/geno_file \
+  -s path/to/snp_file \
+  -i path/to/ind_file \
   --snpSet 1240K|HumanOrigins|Other \
   -o path/to/new_package_name
 ```
 
-requires the format (`--inFormat`) of your input data (either `EIGENSTRAT` or `PLINK`), the paths to the respective files (`--genoFile`, `--snpFile`, `--indFile`), and optionally the "shape" of these files (`--snpSet`), so if they cover the `1240K`, the `HumanOrigins` or an `Other` SNP set. A simpler interface added in trident 0.29.0 is available with `-p (+ --snpSet)`.
+requires the format `-r` (`--inFormat`) of your input data (either `EIGENSTRAT` or `PLINK`), the paths to the respective files in `-g` (`--genoFile`), `-s` (`--snpFile`), and `-i` (`--indFile`), and optionally the "shape" of these files (`--snpSet`), so if they cover the `1240K`, the `HumanOrigins` or an `Other` SNP set. A simpler interface added in trident 0.29.0 is available with `-p (+ --snpSet)`.
 
 |          | EIGENSTRAT | PLINK |
 |----------|------------|-------|
@@ -174,20 +140,14 @@ The output package of `init` is created as a new directory `-o`, which should no
  <summary><i class="fas fa-search"></i> <i class="fas fa-terminal"></i> <b>Click here for command line details</b></summary>
 
 ```
-Usage: trident fetch (-d|--baseDir DIR) 
-                     (--downloadAll | 
-                       (--fetchFile ARG | (-f|--fetchString ARG))) 
-                     [--remoteURL ARG] [-u|--upgrade]
+Usage: trident fetch (-d|--baseDir DIR) [-f|--fetchString ARG] [--fetchFile ARG]
+                     [--remoteURL ARG] [-u|--upgrade] [--downloadAll]
   Download data from a remote Poseidon repository
 
 Available options:
   -h,--help                Show this help text
   -d,--baseDir DIR         a base directory to search for Poseidon Packages
                            (could be a Poseidon repository)
-  --downloadAll            download all packages the server is offering
-  --fetchFile ARG          A file with a list of packages. Works just as -f, but
-                           multiple values can also be separated by newline, not
-                           just by comma. -f and --fetchFile can be combined.
   -f,--fetchString ARG     List of packages to be downloaded from the remote
                            server. Package names should be wrapped in asterisks:
                            *package_title*. You can combine multiple values with
@@ -197,9 +157,13 @@ Available options:
                            or individuals are specified, then packages which
                            include these groups or individuals are included in
                            the download.
-  --remoteURL ARG          URL of the remote Poseidon server
-                           (default: "https://c107-224.cloud.gwdg.de")
+  --fetchFile ARG          A file with a list of packages. Works just as -f, but
+                           multiple values can also be separated by newline, not
+                           just by comma. -f and --fetchFile can be combined.
+  --remoteURL ARG          URL of the remote Poseidon
+                           server (default: "https://c107-224.cloud.gwdg.de")
   -u,--upgrade             overwrite outdated local package versions
+  --downloadAll            download all packages the server is offering
 ```
 
 </details>
@@ -212,7 +176,7 @@ trident fetch -d ... -d ... \
   --fetchFile path/to/forgeFile
 ```
 
-and the entities you want to download must be listed either in one or more simple strings with comma-separated values, which can be passed via one or multiple options `-f`/`--fetchString`, or in one or more text files (`--fetchFile`). Entities are then combined from these sources. Entities are specified using a special syntax: Package titles are wrapped in asterisks: *package_title* (see also the documentation of `forge` below), group names are spelled as is, and individual names are wrapped in angular brackets, liks `<Individual1>`. Fetch will figure out which packages need to be downloaded to include all specified entities. `--downloadAll`, which can be given instead of `-f` and `--fetchFile`, causes fetch to download all packages from the server. The downloaded packages are added in the first (!) `-d` directory (which gets created if it doesn't exist), but downloads are only performed if the respective packages are not already present in an up-to-date version in any of the `-d` dirs.
+and the entities you want to download must be listed either in a simple string with comma-separated values (`-f`/`--fetchString`) or in a text file (`--fetchFile`). Entities are specified using a special syntax: Package titles are wrapped in asterisks: *package_title* (see also the documentation of `forge` below), group names are spelled as is, and individual names are wrapped in angular brackets, liks `<Individual1>`. Fetch will figure out which packages need to be downloaded to include all specified entities. `--downloadAll` causes fetch to ignore `-f` and download all packages from the server. The downloaded packages are added in the first (!) `-d` directory, but downloads are only performed if the respective packages are not already present in an up-to-date version in any of the `-d` dirs.
 
 Note that `trident fetch` makes most sense in combination with `trident list --remote`: First one can inspect what is available on the server, then one can create a custom fetch command.
 
@@ -228,13 +192,15 @@ To overwrite outdated package versions with `fetch`, the `-u`/`--upgrade` flag h
  <summary><i class="fas fa-search"></i> <i class="fas fa-terminal"></i> <b>Click here for command line details</b></summary>
 
 ```
-Usage: trident forge ((-d|--baseDir DIR) | 
-                       ((-p|--genoOne ARG) | --inFormat ARG --genoFile ARG
-                         --snpFile ARG --indFile ARG) [--snpSet ARG]) 
+Usage: trident forge [-d|--baseDir DIR] 
+                     [
+                       ((-p|--genoOne ARG) | (-r|--inFormat ARG)
+                         (-g|--genoFile ARG) (-s|--snpFile ARG)
+                         (-i|--indFile ARG)) [--snpSet ARG]] 
                      [--forgeFile ARG | (-f|--forgeString ARG)] 
                      [--selectSnps ARG] [--intersect] [--outFormat ARG] 
                      [--minimal] [--onlyGeno] (-o|--outPackagePath ARG) 
-                     [-n|--outPackageName ARG] [--no-extract]
+                     [-n|--outPackageName ARG] [-w|--warnings] [--no-extract]
   Select packages, groups or individuals and create a new Poseidon package from
   them
 
@@ -246,12 +212,11 @@ Available options:
                            .bim or .fam for PLINK and .geno or .snp or .ind for
                            EIGENSTRAT. The other files must be in the same
                            directory and must have the same base name
-  --inFormat ARG           the format of the input genotype data: EIGENSTRAT or
-                           PLINK (only necessary for data input with --genoFile
-                           + --snpFile + --indFile)
-  --genoFile ARG           the input geno file path
-  --snpFile ARG            the input snp file path
-  --indFile ARG            the input ind file path
+  -r,--inFormat ARG        the format of the input genotype data: EIGENSTRAT or
+                           PLINK
+  -g,--genoFile ARG        the input geno file path
+  -s,--snpFile ARG         the input snp file path
+  -i,--indFile ARG         the input ind file path
   --snpSet ARG             the snpSet of the new package: 1240K, HumanOrigins or
                            Other. Default: Other
   --forgeFile ARG          A file with a list of packages, groups or individual
@@ -259,9 +224,6 @@ Available options:
                            also be separated by newline, not just by comma.
                            Empty lines are ignored and comments start with "#",
                            so everything after "#" is ignored in one line.
-                           Multiple instances of -f and --forgeFile can be
-                           given. They will be evaluated according to their
-                           input order on the command line.
   -f,--forgeString ARG     List of packages, groups or individual samples to be
                            combined in the output package. Packages follow the
                            syntax *package_title*, populations/groups are simply
@@ -277,8 +239,7 @@ Available options:
                            all individuals in the packages found in the baseDirs
                            (except the ones explicitly excluded) before the
                            exclude entities are applied. An empty forgeString
-                           (and no --forgeFile) will therefore merge all
-                           available individuals.
+                           will therefore merge all available individuals.
   --selectSnps ARG         To extract specific SNPs during this forge operation,
                            provide a Snp file. Can be either Eigenstrat (file
                            ending must be '.snp') or Plink (file ending must be
@@ -305,6 +266,7 @@ Available options:
                            name is provided, then the package name defaults to
                            the basename of the (mandatory) --outPackagePath
                            argument
+  -w,--warnings            Show all warnings for merging genotype data
   --no-extract             Skip the selection step in forge. This will result in
                            outputting all individuals in the relevant packages,
                            and hence a superset of the requested
@@ -329,18 +291,17 @@ trident forge -d ... -d ... \
   -o path/to/new_package_name
 ```
 
-where the entities (packages, groups/populations, individuals/samples) you want in the output package can be denoted either as one or more simple strings with comma-separated values via one or more (`-f`/`--forgeString`) options, or in one or more text files (`--forgeFile`). Because the order in which inclusions and exclusions are given, the order strictly follows the order as these strings are given via options `-f`/`--forgeString` and `--forgeFile`.
+where the entities (packages, groups/populations, individuals/samples) you want in the output package can be denoted either as as simple string with comma-separated values (`-f`/`--forgeString`) or in a text file (`--forgeFile`). 
 
-Including one or multiple Poseidon packages with `-d` is not the only way to include data for a forge operation. It is also possible to include unpackaged genotype data directly with `-p (+ --snpSet)` or `--inFormat + --genoFile + --snpFile + --indFile (+ --snpSet)`. This makes the following example possible, where we merge data from one Poseidon package and two genotype datasets to get a new EIGENSTRAT dataset.
+Including one or multiple Poseidon packages with `-d` is not the only way to include data for a forge operation. It is also possible to include unpackaged genotype data directly with `-r + -g + -s + -i (+ --snpSet)` or `-p (+ --snpSet)`. This makes the following example possible, where we merge data from one Poseidon package and two genotype datasets.
 
 ```
 trident forge \
   -d 2017_GonzalesFortesCurrentBiology \
   -p 2018_VeeramahPNAS/2018_VeeramahPNAS.fam \
-  --inFormat PLINK --genoFile 2017_HaberAJHG/2017_HaberAJHG.bed --snpFile 2017_HaberAJHG/2017_HaberAJHG.bim --indFile 2017_HaberAJHG/2017_HaberAJHG.fam \
+  -r PLINK -g 2017_HaberAJHG/2017_HaberAJHG.bed -s 2017_HaberAJHG/2017_HaberAJHG.bim -i 2017_HaberAJHG/2017_HaberAJHG.fam \
   -f "<STR241.SG>,<ERS1790729.SG>,Iberia_HG.SG" \
   -o testpackage \
-  --outFormat EIGENSTRAT \
   --onlyGeno
 ```
 
@@ -354,9 +315,7 @@ Entities in the `--forgeString` or the `--forgeFile` have to be marked in a cert
 
 Do not forget to wrap the forgeString in quotes. 
 
-You can use both `-f`/`--forgeString` and `--forgeFile` and even combine multiple of each. They are evaluated in order.
-
-In the file each line is treated as a separate forgeString, empty lines are ignored and `#`s start comments. So this is a valid forgeFile:
+You can either use `-f`/`--forgeString` or `--forgeFile`. In the file each line is treated as a separate forgeString, empty lines are ignored and `#`s start comments. So this is a valid forgeFile:
 
 ```
 # Packages
@@ -390,7 +349,7 @@ Just as for `init` the output package of `forge` is created as a new directory `
 
 `--selectSnps` allows to provide `forge` with a SNP file in EIGENSTRAT (`.snp`) or PLINK (`.bim`) format to create a package with a specific selection. When this option is set, the output package will have exactly the SNPs listed in this file. Any SNP not listed in the file will be excluded. If `--intersect` is also set, only the SNPs overlapping between the SNP file and the forged packages are output.
 
-Merging genotype data across different data sources and file formats is tricky. `forge` is more verbose about potential issues, if the `--logMode` flag is set to `VerboseLog`.
+Merging genotype data across different data sources and file formats is tricky. `forge` is more verbose about potential issues, if the `-w`/`--warnings` flag is set.
 
 #### Genoconvert command
 
@@ -400,9 +359,11 @@ Merging genotype data across different data sources and file formats is tricky. 
  <summary><i class="fas fa-search"></i> <i class="fas fa-terminal"></i> <b>Click here for command line details</b></summary>
 
 ```
-Usage: trident genoconvert ((-d|--baseDir DIR) | 
-                             ((-p|--genoOne ARG) | --inFormat ARG --genoFile ARG
-                               --snpFile ARG --indFile ARG) [--snpSet ARG])
+Usage: trident genoconvert [-d|--baseDir DIR] 
+                           [
+                             ((-p|--genoOne ARG) | (-r|--inFormat ARG)
+                               (-g|--genoFile ARG) (-s|--snpFile ARG)
+                               (-i|--indFile ARG)) [--snpSet ARG]]
                            --outFormat ARG [--onlyGeno] 
                            [-o|--outPackagePath ARG] [--removeOld]
   Convert the genotype data in a Poseidon package to a different file format
@@ -415,12 +376,11 @@ Available options:
                            .bim or .fam for PLINK and .geno or .snp or .ind for
                            EIGENSTRAT. The other files must be in the same
                            directory and must have the same base name
-  --inFormat ARG           the format of the input genotype data: EIGENSTRAT or
-                           PLINK (only necessary for data input with --genoFile
-                           + --snpFile + --indFile)
-  --genoFile ARG           the input geno file path
-  --snpFile ARG            the input snp file path
-  --indFile ARG            the input ind file path
+  -r,--inFormat ARG        the format of the input genotype data: EIGENSTRAT or
+                           PLINK
+  -g,--genoFile ARG        the input geno file path
+  -s,--snpFile ARG         the input snp file path
+  -i,--indFile ARG         the input ind file path
   --snpSet ARG             the snpSet of the new package: 1240K, HumanOrigins or
                            Other. Default: Other
   --outFormat ARG          the format of the output genotype data: EIGENSTRAT or
@@ -447,7 +407,7 @@ all packages in `-d` will be converted to the desired `--outFormat` (either `EIG
 
 The "old" data is not deleted, but kept around. That means conversion can result in a package with both PLINK and EIGENSTRAT data, but only one is linked in the POSEIDON.yml file, and that is what will be used by trident. To delete the old data in the conversion you can add the `--removeOld` flag.
 
-Instead of `-d` to change Poseidon packages, the `-p (+ --snpSet)` or `--inFormat + --genoFile + --snpFile + --indFile (+ --snpSet)` allow to directly convert genotype data that is not wrapped in a Poseidon package and store it to a directory given in `-o`. See this example:
+Instead of `-d` to change Poseidon packages, the combination `-r + -g + -s + -i (+ --snpSet)` or `-p (+ --snpSet)` allows to directly convert genotype data that is not wrapped in a Poseidon package and store it to a directory given in `-o`. See this example:
 
 ```
 trident genoconvert \
@@ -458,7 +418,7 @@ trident genoconvert \
 
 #### Update command
 
-`update` automatically harmonizes POSEIDON.yml files of one or multiple packages if the packages were changed. This is not an automatic update from one Poseidon version to the next!
+`update` automatically updates POSEIDON.yml files of one or multiple packages if the packages were changed.
 
 <details>
  <summary><i class="fas fa-search"></i> <i class="fas fa-terminal"></i> <b>Click here for command line details</b></summary>
@@ -483,15 +443,15 @@ Available options:
                            lagging behind.
   --versionComponent ARG   Part of the package version number in the
                            POSEIDON.yml file that should be updated: Major,
-                           Minor or Patch (see https://semver.org)
-                           (default: Patch)
+                           Minor or Patch (see
+                           https://semver.org) (default: Patch)
   --noChecksumUpdate       Should update of checksums in the POSEIDON.yml file
                            be skipped
   --ignoreGeno             ignore SNP and GenoFile
   --newContributors ARG    Contributors to add to the POSEIDON.yml file in the
                            form "[Firstname Lastname](Email address);..."
-  --logText ARG            Log text for this version jump in the CHANGELOG file
-                           (default: "not specified")
+  --logText ARG            Log text for this version jump in the CHANGELOG
+                           file (default: "not specified")
   --force                  Normally the POSEIDON.yml files are only changed if
                            the poseidonVersion is adjusted or any of the
                            checksums change. With --force a package version
@@ -552,8 +512,8 @@ Available options:
                            (could be a Poseidon repository)
   --remote                 list packages from a remote server instead the local
                            file system
-  --remoteURL ARG          URL of the remote Poseidon server
-                           (default: "https://c107-224.cloud.gwdg.de")
+  --remoteURL ARG          URL of the remote Poseidon
+                           server (default: "https://c107-224.cloud.gwdg.de")
   --packages               list all packages
   --groups                 list all groups, ignoring any group names after the
                            first as specified in the Janno-file
@@ -713,21 +673,3 @@ In fact much of this validation already runs as part of the general package read
 ### Analysis commands
 
 All analysis commands (e.g. `trident fstats`) have been moved from trident to the analysis tool [xerxes](/xerxes).
-
-#### **v1.1.0.0 to v1.1.4.2**
-
-[filename](trident_guide_archive/trident_guide_1.1.0.0_to_1.1.4.2.md ':include')
-
-#### **v1.0.0.0**
-
-[filename](trident_guide_archive/trident_guide_1.0.0.0.md ':include')
-
-#### **v0.29.0**
-
-[filename](trident_guide_archive/trident_guide_0.29.0.md ':include')
-
-#### **v0.28.0**
-
-[filename](trident_guide_archive/trident_guide_0.28.0.md ':include')
-
-<!-- tabs:end -->
