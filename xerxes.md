@@ -8,12 +8,9 @@
 [![Install with Bioconda](https://anaconda.org/bioconda/poseidon-xerxes/badges/version.svg)](https://anaconda.org/bioconda/poseidon-xerxes)
 [![Anaconda-Server Badge](https://anaconda.org/bioconda/poseidon-xerxes/badges/downloads.svg)](https://anaconda.org/bioconda/poseidon-xerxes)
 
-## Installation
-
 To download the latest stable release version of `xerxes` click here:
-
-- [📥 Linux](https://github.com/poseidon-framework/poseidon-analysis-hs/releases/latest/download/xerxes-Linux) 
-- [📥 macOS](https://github.com/poseidon-framework/poseidon-analysis-hs/releases/latest/download/xerxes-macOS) 
+[📥 Linux](https://github.com/poseidon-framework/poseidon-analysis-hs/releases/latest/download/xerxes-Linux) 
+[📥 macOS](https://github.com/poseidon-framework/poseidon-analysis-hs/releases/latest/download/xerxes-macOS) 
 
 
 So in Linux you can run the following commands to get started:
@@ -28,8 +25,6 @@ chmod +x xerxes-Linux
 ```
 
 On GitHub you will also find [older release versions](https://github.com/poseidon-framework/poseidon-analysis-hs/releases) and [instructions to build xerxes from source](https://github.com/poseidon-framework/poseidon-analysis-hs#for-haskell-developers).
-
-## Getting help
 
 Beyond the documentation below you can use `xerxes --help` and `xerxes <subcommand> --help` to get information about each parameter, including some which we haven't covered in this guide.
 
