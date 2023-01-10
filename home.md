@@ -23,11 +23,11 @@
       </span>
     </button>
     <button onclick="window.open(
-      'https://twitter.com/poseidon_aDNA',
+      'https://ecoevo.social/@poseidon',
       '_blank');;"
       class="button">
       <span>
-        <i class="fab fa-twitter" aria-hidden="true"></i> Twitter
+        <i class="fab fa-mastodon" aria-hidden="true"></i> Mastodon
       </span>
     </button>
   </div>
