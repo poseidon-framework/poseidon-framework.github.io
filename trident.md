@@ -392,6 +392,45 @@ Just as for `init` the output package of `forge` is created as a new directory `
 
 Merging genotype data across different data sources and file formats is tricky. `forge` is more verbose about potential issues, if the `--logMode` flag is set to `VerboseLog`.
 
+##### Treatment of the .janno file while merging
+
+`forge` merges and subsets .janno files along with the genotype data. If a package lacks a .janno file, then a basic one will be created internally based on the information in the genotype data, and used for the output. Missing columns across packages will be filled with `n/a`. 
+
+For merging two .janno files **A** and **B** the following rules apply regarding undefined, arbitrary additional columns:
+
+- If **A** has an additional column which is not in **B** then empty cells in the rows imported from **B** are filled with `n/a`.
+- If **A** and **B** share additional columns with identical column name, then they are treated as semantically identical units and merged accordingly.
+- In the resulting .janno file, all additional columns from both **A** and **B** are sorted alphabetically and appended after the normal, specified variables.
+
+The following example illustrates the described behaviour:
+
+**A.janno**
+
+| Poseidon_ID | Group_Name | Genetic_Sex | AdditionalColumn1 | AdditionalColumn2 |
+|-------------|------------|-------------|-------------------|-------------------|
+| XXX011      | POP1       | M           | A                 | D                 |
+| XXX012      | POP2       | F           | B                 | E                 |
+| XXX013      | POP1       | M           | C                 | F                 |
+
+**B.janno**
+
+| Poseidon_ID | Group_Name | Genetic_Sex | AdditionalColumn3 | AdditionalColumn2 |
+|-------------|------------|-------------|-------------------|-------------------|
+| YYY022      | POP5       | F           | G                 | J                 |
+| YYY023      | POP5       | F           | H                 | K                 |
+| YYY024      | POP5       | M           | I                 | L                 |
+
+**A.janno + B.janno**
+
+| Poseidon_ID | Group_Name | Genetic_Sex | AdditionalColumn1 | AdditionalColumn2 | AdditionalColumn3 |
+|-------------|------------|-------------|-------------------|-------------------|-------------------|
+| XXX011      | POP1       | M           | A                 | D                 | n/a               |
+| XXX012      | POP2       | F           | B                 | E                 | n/a               |
+| XXX013      | POP1       | M           | C                 | F                 | n/a               |
+| YYY022      | POP5       | F           | n/a               | J                 | G                 |
+| YYY023      | POP5       | F           | n/a               | K                 | H                 |
+| YYY024      | POP5       | M           | n/a               | L                 | I                 |
+
 #### Genoconvert command
 
 `genoconvert` converts the genotype data in a Poseidon package to a different file format. The respective entries in the POSEIDON.yml file are changed accordingly. 
@@ -685,7 +724,6 @@ Available options:
   -h,--help                Show this help text
   -d,--baseDir DIR         a base directory to search for Poseidon Packages
                            (could be a Poseidon repository)
-  --verbose                print more output to the command line
   --ignoreGeno             ignore SNP and GenoFile
   --noExitCode             do not produce an explicit exit code
 ```
@@ -709,6 +747,8 @@ and it will either report a success (`Validation passed ✓`) or failure with sp
 - Correspondence of individual and group IDs in .janno and genotype data files
 
 In fact much of this validation already runs as part of the general package reading pipeline invoked for many trident subcommands (e.g. `forge`). `validate` is meant to be more thorough, though, and will explicitly fail if even a single package is broken.
+
+Remember to run it with `--logMode VerboseLog` to get more information if the output is not sufficient to debug an issue.
 
 ### Analysis commands
 
