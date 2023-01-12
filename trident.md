@@ -750,10 +750,6 @@ In fact much of this validation already runs as part of the general package read
 
 Remember to run it with `--logMode VerboseLog` to get more information if the output is not sufficient to debug an issue.
 
-### Analysis commands
-
-All analysis commands (e.g. `trident fstats`) have been moved from trident to the analysis tool [xerxes](/xerxes).
-
 #### **v1.1.0.0 to v1.1.4.2**
 
 [filename](trident_guide_archive/trident_guide_1.1.0.0_to_1.1.4.2.md ':include')

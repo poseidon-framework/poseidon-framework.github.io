@@ -669,7 +669,3 @@ and it will either report a success (`Validation passed ✓`) or failure with sp
 - Correspondence of individual and group IDs in .janno and genotype data files
 
 In fact much of this validation already runs as part of the general package reading pipeline invoked for many trident subcommands (e.g. `forge`). `validate` is meant to be more thorough, though, and will explicitly fail if even a single package is broken.
-
-### Analysis commands
-
-All analysis commands (e.g. `trident fstats`) have been moved from trident to the analysis tool [xerxes](/xerxes).
