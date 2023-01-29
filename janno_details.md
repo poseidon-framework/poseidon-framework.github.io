@@ -160,7 +160,7 @@ Some tools for contamination estimation do not return a mean plus a standard err
 - `hapCon v0.4a1`
 - `custom script`
 
-This setup has the consequence that the columns `Contamination`, `Contamination_Err`, `Contamination_Meas` alsways have to have the same number of `;`-separated values.
+This setup has the consequence that the columns `Contamination`, `Contamination_Err`, `Contamination_Meas` always have to have the same number of `;`-separated values.
 
 The `Contamination_Note` column is a free text field to add additional information about the contamination estimates, e.g. which parameters where used with the respective software tools.
 
