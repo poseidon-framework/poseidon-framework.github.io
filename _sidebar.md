@@ -12,6 +12,7 @@
 	* [Changelog](changelog.md)
 	* [Genotype data details](genotype_data.md)
 	* [.janno file details](janno_details.md)
+	* [sequencingSourceFile details](sequencingSourceFileDetails.md)
 * **The Poseidon Software**
 	* [Version overview table](version_table.md)
 	* [trident CLI software](trident.md)
