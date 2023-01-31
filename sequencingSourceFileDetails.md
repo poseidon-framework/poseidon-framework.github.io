@@ -1,8 +1,8 @@
 # Sequencing Source File Details
 
-Poseidon 2.7.0 added an option to specify sequencing source data. This is a tab-separated table, much like the Janno file, but following [a different schema](). Note that the primary entities in this table are Sequencing entities (typically corresponding to DNA libraries or even multiple runs/lanes of the same library). The link to the Individuals listed in the Janno-file are made through a foreign-key relationship into `Poseidon_ID`.
+Poseidon 2.7.0 added an option to specify sequencing source data. This is a tab-separated table, much like the Janno file, but following [a different schema](https://github.com/poseidon-framework/poseidon2-schema/blob/master/sequencingSourceFile_columns.tsv). Note that the primary entities in this table are Sequencing entities (typically corresponding to DNA libraries or even multiple runs/lanes of the same library). The link to the Individuals listed in the Janno-file are made through a foreign-key relationship into `Poseidon_ID`.
 
-Here is an example for such a file,
+Here is an example for such a file:
 
 ```
 Poseidon_ID	sample_accession	study_accession	run_accession	sample_alias	secondary_sample_accession	first_public	last_updated	instrument_model	library_layout	library_source	instrument_platform	library_name	library_strategy	fastq_aspera	fastq_bytes	fastq_md5	fastq_ftp	read_count	submitted_ftp
