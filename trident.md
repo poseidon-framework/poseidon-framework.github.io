@@ -485,6 +485,8 @@ Just as for `init` the output package of `forge` is created as a new directory `
 
 Merging genotype data across different data sources and file formats is tricky. `forge` is more verbose about potential issues, if the `--logMode` flag is set to `VerboseLog`.
 
+The `--onlyGeno` command specifies that only genotype data should be output, not an entire Poseidon package. 
+
 #### Genoconvert command
 
 `genoconvert` converts the genotype data in a Poseidon package to a different file format. The respective entries in the POSEIDON.yml file are changed accordingly. 
