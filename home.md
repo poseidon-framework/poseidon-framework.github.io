@@ -56,9 +56,9 @@
   </div>
   <div class="grid-element">
     <div class="grid-symbol"><i class="fas fa-download" aria-hidden="true"></i></div>
-    Poseidon features a publicly hosted and curated <b>package repository</b> of published data
+    Poseidon features publicly hosted and curated <b>package repositories</b> of published data
     <ul>
-      <li>A <a href="#repo_overview">guide</a> explains the repository and how to contribute to it</li>
+      <li>A <a href="#repo_overview">guide</a> explains the repositories and how to contribute to them</li>
       <li style="color: #7CFC00">An <a href="https://poseidon-framework.github.io/published_data">overview and download</a> page features all public Poseidon packages</li>
     </ul>
   </div>
