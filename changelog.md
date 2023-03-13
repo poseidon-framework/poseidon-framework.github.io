@@ -2,6 +2,13 @@
 
 Here we document changes in the Poseidon standard, so that packages can be manually updated from one version to the next. The documentation on the website only considers the latest version.
 
+### 2.6.0 -> 2.7.0 [not breaking]
+
+- Added the Sequencing Source File (`.ssf`) to the Poseidon package definition.
+- Added the column `Country_ISO` to the .janno file definition.
+- Added the list column `Library_Names` to the .janno file definition.
+- Replaced the option `other` by `mixed` in the `Library_Built` .janno column. Although this is technically a breaking change, we will not treat 2.7.0 as breaking. We assume this only affects few packages.
+
 ### 2.5.0 -> 2.6.0 [not breaking]
 
 - Made the *contributor* field in the POSEIDON.yml file optional. We strongly recommend to keep this information in published packages, but for private packages or in computational pipelines it can be omitted now.
