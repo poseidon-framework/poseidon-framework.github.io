@@ -51,7 +51,7 @@
     <ul>
       <li>The <a href="#trident">trident</a> CLI software for data management</li>
       <li>The <a href="#xerxes">xerxes</a> CLI software for data analysis</li>
-      <li>The <a href="#poseidonR">poseidonR</a> package for handling .janno files in R</li>
+      <li>The <a href="#janno">janno</a> package for handling .janno files in R</li>
     </ul>
   </div>
   <div class="grid-element">
