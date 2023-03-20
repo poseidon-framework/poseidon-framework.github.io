@@ -77,18 +77,6 @@ Inspection commands:
                            structural correctness
 ```
 
-For all subcommands the general argument `--logMode` defines how trident reports messages (to stderr) on the command line:
-
-- *NoLog*: Hides all messages.
-- *SimpleLog*: Plain and simple output to stderr.
-- *DefaultLog*: Adds severity indicators before each message. (default setting)
-- *ServerLog*: Additionally adds timestamps before each message.
-- *VerboseLog*: Shows not just messages on the log levels `Info`, `Ẁarning` and `Error` like the other modes, but also on the more verbose level `Debug`. Use this for debugging.
-
-The global command `--inPlinkPopName` controls how population names are read from Plink FAM files.
-
-#### Handling data with trident
-
 Trident allows to work directly with genotype data (see `-p` below), but its optimized for the interaction with [Poseidon packages](https://poseidon-framework.github.io/#/standard), which wrap and contextualize the data. Most trident subcommands therefore have a central parameter, called `--baseDir` or simply `-d` to specify one or more base directories to look for packages. For example, if all Poseidon packages live inside a repository at `/path/to/poseidon/packages` you would simply say `trident <subcommand> -d /path/to/poseidon/dirs/` and `trident` would automatically search all subdirectories inside of the repository for valid Poseidon packages (as identified by valid `POSEIDON.yml` files).
 
 You can arrange a poseidon repository in a hierarchical way. For example:
@@ -146,11 +134,31 @@ trident list -d /path/to/poseidon/packages/modern \
   -d ~/my_project --packages
 ```
 
-#### Notes on duplicates
+#### General notes
+
+##### Logging and command line output
+
+For all subcommands the general argument `--logMode` defines how trident reports messages (to stderr) on the command line:
+
+- *NoLog*: Hides all messages.
+- *SimpleLog*: Plain and simple output to stderr.
+- *DefaultLog*: Adds severity indicators before each message. (default setting)
+- *ServerLog*: Additionally adds timestamps before each message.
+- *VerboseLog*: Shows not just messages on the log levels `Info`, `Ẁarning` and `Error` like the other modes, but also on the more verbose level `Debug`. Use this for debugging.
+
+##### Duplicates
 
 - If multiple packages in a package repository share the same `title`, then trident will try to select the one with the highest version number. If this is not sufficient to resolve the conflict, trident will stop.
 - Individual/sample names (`Poseidon_ID`s) within one package have to be unique, or trident will stop.
 - We generally also discourage ID duplicates across packages in package repositories, but trident will generally continue with them after printing a warning. This does not apply for `validate`, by default (you can change this behaviour with `--ignoreDuplicates`), and `forge`. `forge` offers a special mechanism to resolve duplicates within its selection language (see below).
+
+##### Group names in .fam files
+
+The `.fam` file of Plink-formatted genotype data is used inconsistently across different popular aDNA software tools to store group/population name information. The (global) option `--inPlinkPopName` with the arguments `asFamily` (default), `asPhenotype` and `asBoth` allows to control the reading of the population name from Plink `.fam` files. The subcommands that write genotype data (`forge`, `genoconvert`) have a corresponding option `--outPlinkPopName` to specify this for the output.
+
+##### Whitespaces in the `.janno` file
+
+While reading the `.janno` file `trident` trims all leading and trailing whitespaces around individual cells. Also all instances of the `No-Break Space` unicode character will be removed. This means these whitespaces will not be preserved when a package is `forge`d.
 
 ### Package creation and manipulation commands
 
@@ -287,7 +295,8 @@ Usage: trident forge ((-d|--baseDir DIR) |
                      [--forgeFile ARG | (-f|--forgeString ARG)]
                      [--selectSnps ARG] [--intersect] [--outFormat ARG]
                      [--minimal] [--onlyGeno] (-o|--outPackagePath ARG)
-                     [-n|--outPackageName ARG] [--no-extract]
+                     [-n|--outPackageName ARG] [--packagewise]
+                     [--outPlinkPopName ARG]
   Select packages, groups or individuals and create a new Poseidon package from
   them
 
@@ -366,17 +375,25 @@ Available options:
                            name is provided, then the package name defaults to
                            the basename of the (mandatory) --outPackagePath
                            argument
-  --no-extract             Skip the selection step in forge. This will result in
-                           outputting all individuals in the relevant packages,
-                           and hence a superset of the requested
-                           individuals/groups. It may result in better
+  --packagewise            Skip the within-package selection step in forge. This
+                           will result in outputting all individuals in the
+                           relevant packages, and hence a superset of the
+                           requested individuals/groups. It may result in better
                            performance in cases where one wants to forge entire
-                           packages or almost entire packages. Note that this
-                           will also ignore any ordering in the output
-                           groups/individuals. With this option active,
-                           individuals from the relevant packages will just be
-                           written in the order that they appear in the original
-                           packages.
+                           packages or almost entire packages. Details: Forge
+                           conceptually performs two types of selection: First,
+                           it identifies which packages in the supplied base
+                           directories are relevant to the requested forge, i.e.
+                           whether they are either explicitly listed using
+                           *PackageName*, or because they contain selected
+                           individuals or groups. Second, within each relevant
+                           package, individuals which are not requested are
+                           removed. This option skips only the second step, but
+                           still performs the first.
+  --outPlinkPopName ARG    Where to write the population/group name into the FAM
+                           file in Plink-format. Three options are possible:
+                           asFamily (default) | asPhenotype | asBoth. See also
+                           --inPlinkPopName.
 ```
 
 </details>
@@ -495,6 +512,10 @@ Just as for `init` the output package of `forge` is created as a new directory `
 
 Merging genotype data across different data sources and file formats is tricky. `forge` is more verbose about potential issues, if the `--logMode` flag is set to `VerboseLog`.
 
+The `--onlyGeno` command specifies that only genotype data should be output, not an entire Poseidon package. 
+
+With `--packagewise` the within-package selection step in forge can be skipped. This will result in outputting all individuals in the relevant packages, and hence a superset of the requested individuals/groups. It may result in better performance in cases where one wants to forge entire packages.
+
 #### Genoconvert command
 
 `genoconvert` converts the genotype data in a Poseidon package to a different file format. The respective entries in the POSEIDON.yml file are changed accordingly. 
@@ -508,6 +529,7 @@ Usage: trident genoconvert ((-d|--baseDir DIR) |
                                --snpFile ARG --indFile ARG) [--snpSet ARG])
                            --outFormat ARG [--onlyGeno]
                            [-o|--outPackagePath ARG] [--removeOld]
+                           [--outPlinkPopName ARG]
   Convert the genotype data in a Poseidon package to a different file format
 
 Available options:
@@ -540,6 +562,10 @@ Available options:
                            (.bed/.geno) is stored
   --removeOld              Remove the old genotype files when creating the new
                            ones
+  --outPlinkPopName ARG    Where to write the population/group name into the FAM
+                           file in Plink-format. Three options are possible:
+                           asFamily (default) | asPhenotype | asBoth. See also
+                           --inPlinkPopName.
 ```
 
 </details>
@@ -788,6 +814,8 @@ Available options:
   -d,--baseDir DIR         a base directory to search for Poseidon Packages
                            (could be a Poseidon repository)
   --ignoreGeno             ignore SNP and GenoFile
+  --fullGeno               test parsing of all SNPs (by default only the first
+                           100 SNPs are probed)
   --noExitCode             do not produce an explicit exit code
   --ignoreDuplicates       do not stop on duplicated individual names in the
                            package collection
@@ -807,7 +835,7 @@ and it will either report a success (`Validation passed ✓`) or failure with sp
 
 - Presence of the necessary files
 - Full structural correctness of .bib and .janno file
-- Superficial correctness of genotype data files. A full check would be too computationally expensive
+- Superficial correctness of genotype data files by parsing the first 100 SNPs. A full check that parses all SNPs can be run with the `--fullGeno` option
 - Correspondence of BibTeX keys in .bib and .janno
 - Correspondence of individual and group IDs in .janno and genotype data files
 
