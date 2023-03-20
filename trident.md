@@ -29,16 +29,17 @@ Beyond the documentation below you can use `trident --help` and `trident <subcom
 
 <!-- tabs:start -->
 
-#### **v1.1.7.0**
+#### **v1.1.11.0**
 
-## Guide for trident v1.1.7.0
+## Guide for trident 1.1.11.0
 
 ### The trident CLI
 
 Trident is a command line software tool structured in multiple subcommands. If you installed it properly you can call it on the command line by typing `trident`. This will show an overview of the general options and all subcommands, which are explained in detail below.
 
 ```
-Usage: trident [--version] [--logMode ARG] [--errLength ARG] (COMMAND | COMMAND)
+Usage: trident [--version] [--logMode ARG] [--errLength ARG] 
+               [--inPlinkPopName ARG] (COMMAND | COMMAND)
   trident is a management and analysis tool for Poseidon packages. Report issues
   here: https://github.com/poseidon-framework/poseidon-hs/issues
 
@@ -51,6 +52,9 @@ Available options:
   --errLength ARG          After how many characters should a potential error
                            message be truncated. "Inf" for no truncation.
                            (default: CharCount 1500)
+  --inPlinkPopName ARG     Where to read the population/group name from the FAM
+                           file in Plink-format. Three options are possible:
+                           asFamily (default) | asPhenotype | asBoth.
 
 Package creation and manipulation commands:
   init                     Create a new Poseidon package from genotype data
@@ -80,6 +84,8 @@ For all subcommands the general argument `--logMode` defines how trident reports
 - *DefaultLog*: Adds severity indicators before each message. (default setting)
 - *ServerLog*: Additionally adds timestamps before each message.
 - *VerboseLog*: Shows not just messages on the log levels `Info`, `Ẁarning` and `Error` like the other modes, but also on the more verbose level `Debug`. Use this for debugging.
+
+The global command `--inPlinkPopName` controls how population names are read from Plink FAM files.
 
 #### Handling data with trident
 
@@ -464,6 +470,10 @@ The following example illustrates the described behaviour:
 | YYY022      | POP5       | F           | n/a               | J                 | G                 |
 | YYY023      | POP5       | F           | n/a               | K                 | H                 |
 | YYY024      | POP5       | M           | n/a               | L                 | I                 |
+
+##### Treatment of the .ssf file while merging
+
+The Sequencing Source File (short .ssf file) is forged in exactly the same way as the janno file. SSF files that are present are included in the forge product in the way that the user expects, following selection of those entities which are listed in the `poseidon_IDs` columns of the SSF files. Columns that are only present in some packages, including those not defined by our [Schema] are also included in the forged product in the same way as described for Janno above.
 
 ##### Other options
 

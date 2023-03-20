@@ -49,6 +49,8 @@ The `.janno` file contains five columns to describe the spatial origin of an ind
 
 The `Country` column should contain a present-day political country name following the `English short name` in [ISO 3166](https://www.iso.org/iso-3166-country-codes.html). 
 
+The `Country_ISO` column should contain the present-day political country of origin of the sample, expressed in codes using the standard ISO 3166-1 alpha-2, like "AR" for Argentina or "NO" for Norway.
+
 The `Location` column allows for free form text entry and can contain further, unspecified location information. This might be the name of an administrative or geographic region, or an arbitrary unit of reference like a mountain, lake or city close to the point of discory of the respective sample.
 
 The `Site` column should contain a site name, ideally in the latin alphabet and ideally the name that is commonly used in publications.
@@ -119,11 +121,13 @@ The `UDG` column documents if the libraries for the respective individual went t
 - `plus`: A protocol with UDG-full treatment (e.g. [Aaron/Neumann/Brandt et al. 2020c](https://dx.doi.org/10.17504/protocols.io.bqbpmsmn))
 - `mixed`: Multiple later merged libraries went through different UDG treatment approaches
 
+The `Library_Names` column should contain the names for the library as used in the publication.
+
 The `Library_Built` column describes the library preparation method regarding single- or double-stranded protocols. See e.g. [Gansauge/Meyer 2013](https://doi.org/10.1038/nprot.2013.038) for more information.
 
 - `ds`: Double-stranded library preparation
 - `ss`: Single-stranded library preparation
-- `other`: Other library preparion method or merged data from differently prepared libraries
+- `mixed`: If multiple libraries with different strandedness were used. See also the [Sequencing Source File](sequencingSourceFileDetails.md) as a way to provide details.
 
 The `Genotype_Ploidy` column stores a characteristic of the aDNA data treatment. Humans have two complete sets of chromosomes in their cells and hence are diploid organisms. For many computational aDNA applications it is more practical, though, to work with pseudo-haploid data, so data were only one read per position is selected by a random sampling process.
 
