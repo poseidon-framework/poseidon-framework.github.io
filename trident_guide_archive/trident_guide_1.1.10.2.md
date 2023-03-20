@@ -1,44 +1,11 @@
-# trident CLI software
-
-`trident` is a command line software tool to work with Poseidon packages and handle various data management tasks. It is written in Haskell and openly available on [GitHub](https://github.com/poseidon-framework/poseidon-hs/).
-
-[![CI](https://github.com/poseidon-framework/poseidon-hs/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/poseidon-framework/poseidon-hs/actions/workflows/main.yml)
-[![Coverage Status](https://img.shields.io/codecov/c/github/poseidon-framework/poseidon-hs/master.svg)](https://codecov.io/github/poseidon-framework/poseidon-hs?branch=master)
-[![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/poseidon-framework/poseidon-hs?include_prereleases) ![GitHub all releases](https://img.shields.io/github/downloads/poseidon-framework/poseidon-hs/total)](https://github.com/poseidon-framework/poseidon-hs/releases)
-[![Install with Bioconda](https://anaconda.org/bioconda/poseidon-trident/badges/version.svg)](https://anaconda.org/bioconda/poseidon-trident) [![Anaconda-Server Badge](https://anaconda.org/bioconda/poseidon-trident/badges/downloads.svg)](https://anaconda.org/bioconda/poseidon-trident)
-
-To download the latest stable release version of `trident` click here:
-[📥 Linux](https://github.com/poseidon-framework/poseidon-hs/releases/latest/download/trident-Linux) |
-[📥 macOS](https://github.com/poseidon-framework/poseidon-hs/releases/latest/download/trident-macOS) |
-[📥 Windows](https://github.com/poseidon-framework/poseidon-hs/releases/latest/download/trident-Windows.exe)
-
-So in Linux you can run the following commands to get started:
-
-```bash
-# download the current stable release binary
-wget https://github.com/poseidon-framework/poseidon-hs/releases/latest/download/trident-Linux
-# make it executable
-chmod +x trident-Linux
-# run it
-./trident-Linux -h
-```
-
-On GitHub you will also find [older release versions](https://github.com/poseidon-framework/poseidon-hs/releases) and [instructions to build trident from source](https://github.com/poseidon-framework/poseidon-hs#for-haskell-developers). The relevant changes from one version to the next are documented in this [changelog](https://github.com/poseidon-framework/poseidon-hs/blob/master/CHANGELOGRELEASE.md).
-
-Beyond the documentation below you can use `trident --help` and `trident <subcommand> --help` to get information about each parameter, including some which we haven't covered in the guide. If you're new to Poseidon and trident, we recommend that you take a look at our [Getting started guide](getting_started) first.
-
-<!-- tabs:start -->
-
-#### **v1.1.11.0**
-
-## Guide for trident 1.1.11.0
+## Guide for trident v1.1.10.2
 
 ### The trident CLI
 
 Trident is a command line software tool structured in multiple subcommands. If you installed it properly you can call it on the command line by typing `trident`. This will show an overview of the general options and all subcommands, which are explained in detail below.
 
 ```
-Usage: trident [--version] [--logMode ARG] [--errLength ARG] 
+Usage: trident [--version] [--logMode ARG] [--errLength ARG]
                [--inPlinkPopName ARG] (COMMAND | COMMAND)
   trident is a management and analysis tool for Poseidon packages. Report issues
   here: https://github.com/poseidon-framework/poseidon-hs/issues
@@ -488,10 +455,6 @@ The following example illustrates the described behaviour:
 | YYY023      | POP5       | F           | n/a               | K                 | H                 |
 | YYY024      | POP5       | M           | n/a               | L                 | I                 |
 
-##### Treatment of the .ssf file while merging
-
-The Sequencing Source File (short .ssf file) is forged in exactly the same way as the janno file. SSF files that are present are included in the forge product in the way that the user expects, following selection of those entities which are listed in the `poseidon_IDs` columns of the SSF files. Columns that are only present in some packages, including those not defined by our [Schema] are also included in the forged product in the same way as described for Janno above.
-
 ##### Other options
 
 Just as for `init` the output package of `forge` is created as a new directory `-o`. The title can also be explicitly defined with `-n`.
@@ -842,33 +805,3 @@ and it will either report a success (`Validation passed ✓`) or failure with sp
 In fact much of this validation already runs as part of the general package reading pipeline invoked for many trident subcommands (e.g. `forge`). `validate` is meant to be more thorough, though, and will explicitly fail if even a single package is broken.
 
 Remember to run it with `--logMode VerboseLog` to get more information if the output is not sufficient to debug an issue.
-
-#### **v1.1.10.2**
-
-[filename](trident_guide_archive/trident_guide_1.1.10.2.md ':include')
-
-#### **v1.1.7.0**
-
-[filename](trident_guide_archive/trident_guide_1.1.7.0.md ':include')
-
-#### **v1.1.6.0**
-
-[filename](trident_guide_archive/trident_guide_1.1.6.0.md ':include')
-
-#### **v1.1.0.0 to v1.1.4.2**
-
-[filename](trident_guide_archive/trident_guide_1.1.0.0_to_1.1.4.2.md ':include')
-
-#### **v1.0.0.0**
-
-[filename](trident_guide_archive/trident_guide_1.0.0.0.md ':include')
-
-#### **v0.29.0**
-
-[filename](trident_guide_archive/trident_guide_0.29.0.md ':include')
-
-#### **v0.28.0**
-
-[filename](trident_guide_archive/trident_guide_0.28.0.md ':include')
-
-<!-- tabs:end -->
