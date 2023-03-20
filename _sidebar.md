@@ -12,12 +12,13 @@
 	* [Changelog](changelog.md)
 	* [Genotype data details](genotype_data.md)
 	* [.janno file details](janno_details.md)
+	* [sequencingSourceFile details](sequencingSourceFileDetails.md)
 * **The Poseidon Software**
 	* [Version overview table](version_table.md)
 	* [trident CLI software](trident.md)
 	* [xerxes CLI software](xerxes.md)
 	* [poseidon-http-server](server.md)
-	* [poseidonR R package](poseidonR.md)
+	* [janno R package](janno_r_package.md)
 * **The Poseidon Repository**
 	* [Public repository](repo_overview.md)
 	* [Submission guide](repo_submission_guide.md)

@@ -49,6 +49,8 @@ The `.janno` file contains five columns to describe the spatial origin of an ind
 
 The `Country` column should contain a present-day political country name following the `English short name` in [ISO 3166](https://www.iso.org/iso-3166-country-codes.html). 
 
+The `Country_ISO` column should contain the present-day political country of origin of the sample, expressed in codes using the standard ISO 3166-1 alpha-2, like "AR" for Argentina or "NO" for Norway.
+
 The `Location` column allows for free form text entry and can contain further, unspecified location information. This might be the name of an administrative or geographic region, or an arbitrary unit of reference like a mountain, lake or city close to the point of discory of the respective sample.
 
 The `Site` column should contain a site name, ideally in the latin alphabet and ideally the name that is commonly used in publications.
@@ -75,7 +77,7 @@ The uncalibrated radiocarbon measurement can be described by a Gaussian distribu
 
 The columns `Date_BC_AD_Median`, `Date_BC_AD_Start`, `Date_BC_AD_Stop` store a simplified summary of the age information. Ages are reported in years BC and AD, so in relation to the zero point of the Gregorian calender. BC dates are represented with negative, AD with positive integer values. For some background on AD/BC/CE/BCE/calBP/etc. see [this](https://www.artobatours.com/articles/archaeology/bp-bc-bce-ad-ce-cal-mean) excellent blog post.
 
-- If radiocarbon dates are available (`Date_Type = C14`): `Date_BC_AD_Median` should report the median age after calibration. With multiple dates this can be determined either with sum calibration or more complex (e.g. bayesian) age modelling. `Date_BC_AD_Start` and `Date_BC_AD_Stop` should report the starting/ending age of a 95% probability window around the age median. poseidonR offers a simple function to calibrate radiocarbon dates and compile the necessary input for `Date_BC_AD_Median`, `Date_BC_AD_Start`, `Date_BC_AD_Stop`: [`poseidonR::quickcalibrate()`](https://github.com/poseidon-framework/poseidonR#general-helper-functions)
+- If radiocarbon dates are available (`Date_Type = C14`): `Date_BC_AD_Median` should report the median age after calibration. With multiple dates this can be determined either with sum calibration or more complex (e.g. bayesian) age modelling. `Date_BC_AD_Start` and `Date_BC_AD_Stop` should report the starting/ending age of a 95% probability window around the age median. The janno R package offers a simple function to calibrate radiocarbon dates and compile the necessary input for `Date_BC_AD_Median`, `Date_BC_AD_Start`, `Date_BC_AD_Stop`: [`janno::quickcalibrate()`](https://github.com/poseidon-framework/janno#general-helper-functions)
 - If only contextual (e.g. from archaeological typology) age information is available (`Date_Type = contextual`): `Date_BC_AD_Start` and `Date_BC_AD_Stop` should simply report the approximate starting and end date determined by the respective source of scientific authority (e.g. an archaeologist knowledgable about the relevant typological sequences). In this case `Date_BC_AD_Median` should be calculated as the mean of `Date_BC_AD_Start` and `Date_BC_AD_Stop` rounded to an integer value.
 - If the sample is a modern reference sample (`Date_Type = modern`): `Date_BC_AD_Median`, `Date_BC_AD_Start`, `Date_BC_AD_Stop` should all be set to the value 2000, for 2000AD.
 
@@ -119,11 +121,13 @@ The `UDG` column documents if the libraries for the respective individual went t
 - `plus`: A protocol with UDG-full treatment (e.g. [Aaron/Neumann/Brandt et al. 2020c](https://dx.doi.org/10.17504/protocols.io.bqbpmsmn))
 - `mixed`: Multiple later merged libraries went through different UDG treatment approaches
 
+The `Library_Names` column should contain the names for the library as used in the publication.
+
 The `Library_Built` column describes the library preparation method regarding single- or double-stranded protocols. See e.g. [Gansauge/Meyer 2013](https://doi.org/10.1038/nprot.2013.038) for more information.
 
 - `ds`: Double-stranded library preparation
 - `ss`: Single-stranded library preparation
-- `other`: Other library preparion method or merged data from differently prepared libraries
+- `mixed`: If multiple libraries with different strandedness were used. See also the [Sequencing Source File](sequencingSourceFileDetails.md) as a way to provide details.
 
 The `Genotype_Ploidy` column stores a characteristic of the aDNA data treatment. Humans have two complete sets of chromosomes in their cells and hence are diploid organisms. For many computational aDNA applications it is more practical, though, to work with pseudo-haploid data, so data were only one read per position is selected by a random sampling process.
 

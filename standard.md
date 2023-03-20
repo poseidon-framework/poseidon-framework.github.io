@@ -8,6 +8,7 @@ A Poseidon package is defined as a directory with specific files:
 * an optional bibliography file formatted as [BibTeX](http://www.bibtex.org/)
 * an optional README file
 * an optional CHANGELOG file
+* an optional sequencingSourceFile, which lists links to raw data in archives such as the [ENA](https://www.ebi.ac.uk/ena/browser/home).
 
 The precise definitions of each of these files is detailed in our [schema-repository](https://github.com/poseidon-framework/poseidon2-schema).
 
@@ -25,6 +26,7 @@ Switzerland_LNBA_Roswita/Switzerland_LNBA.janno
 Switzerland_LNBA_Roswita/Switzerland_LNBA.bib
 Switzerland_LNBA_Roswita/README.txt
 Switzerland_LNBA_Roswita/CHANGELOG.txt
+Switzerland_LNBA_Roswita/sourcedata.tsv
 ```
 
 And here a fitting `POSEIDON.yml` file. It lists relative file paths and metainformation in a standardized, machine-readable format.
@@ -48,6 +50,7 @@ genotypeData:
   indFile: Switzerland_LNBA_Roswita.fam
   snpSet: 1240K
 jannoFile: Switzerland_LNBA_Roswita.janno
+sequencingSourceFile: sourcedata.tsv
 bibFile: sources.bib
 readmeFile: README.txt
 changelogFile: CHANGELOG.txt
