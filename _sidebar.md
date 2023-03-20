@@ -18,7 +18,7 @@
 	* [trident CLI software](trident.md)
 	* [xerxes CLI software](xerxes.md)
 	* [poseidon-http-server](server.md)
-	* [janno R package](janno.md)
+	* [janno R package](janno_r_package.md)
 * **The Poseidon Repository**
 	* [Public repository](repo_overview.md)
 	* [Submission guide](repo_submission_guide.md)
