@@ -38,7 +38,7 @@ On startup, qjanno creates an [SQLite](https://www.sqlite.org) database [in memo
 
 The query is pre-parsed to extract file names and then forwarded to an SQLite database server via the Haskell library [sqlite-simple](https://hackage.haskell.org/package/sqlite-simple). That means qjanno can parse and understand basic SQLite3 syntax, though not everything. [`PRAGMA` functions](https://www.sqlite.org/pragma.html#syntax), for example, are not available. The examples below show some of the available syntax, but they are not exhaustive. Trial and error is recommended to see what does and what does not work. Please report missing functionality in our [issue board on GitHub](https://github.com/poseidon-framework/qjanno/issues).
 
-### The general interface
+### The CLI interface
 
 This is the CLI interface of qjanno:
 
@@ -99,7 +99,53 @@ qjanno is asked to run the query `SELECT Poseidon_ID,Country FROM d(2010_Rasmuss
 4. Now the actual query gets executed. In this case the `SELECT` statement includes two variables (column names): `Poseidon_ID` and `Country`. The database server returns these two columns for the merged .janno table.
 5. qjanno returns the resulting table in a neat, human readable format.
 
-...
+#### CLI details
+
+qjanno can not just read .janno files, but arbitrary .csv and .tsv files. This option is triggered by providing file names (relative paths) in the `FROM` field of the query, not `d(...)`.
+
+```
+$ echo -e "Col1,Col2\nVal1,Val2\nVal3,Val4\n" > test.csv
+$ qjanno "SELECT Col2 FROM test.csv"
+.------.
+| Col2 |
+:======:
+| Val2 |
+| Val4 |
+'------'
+```
+
+qjanno automatically tries to detect the relevant separator of files. With `--sep` a delimiter can be specified explicitly, and the shortcut `-t` sets `--sep $'\t'` for tab-separated files. So a .janno file can also be read with the following syntax:
+
+```
+$ qjanno "SELECT Poseidon_ID,Country FROM 2010_RasmussenNature/2010_RasmussenNature.janno" -t # -t is optional
+.-------------.-----------.
+| Poseidon_ID |  Country  |
+:=============:===========:
+| Inuk.SG     | Greenland |
+'-------------'-----------'
+```
+
+The `--noHeader` option allows to read files without headers, so column names. The columns are then automatically named *c1,c2,...cN*:
+
+```
+$ echo -e "Val1,Val2\nVal3,Val4\n" > test.csv
+$ qjanno "SELECT c1,c2 FROM test.csv" --noHeader
+.------.------.
+|  c1  |  c2  |
+:======:======:
+| Val1 | Val2 |
+| Val3 | Val4 |
+'------'------'
+```
+
+The other options concern the output: `--raw` returns the output table not in this neat human-readable format, but in a simple .tsv format. `--noOutHeader` omits the header line on output.
+
+```
+$ echo -e "Col1,Col2\nVal1,Val2\nVal3,Val4\n" > test.csv
+$ qjanno "SELECT Col1,Col2 FROM test.csv" --raw --noOutHeader
+Val1  Val2
+Val3  Val4
+```
 
 ### Query examples
 
