@@ -149,9 +149,40 @@ Val3  Val4
 
 ### Query examples
 
-This assumes the working directory is a mirror of the published_data repository.
+The following examples show some of the functionality of the SQLite query language available through qjanno. See the [SQLite syntax documention](https://www.sqlite.org/lang.html) for more details.
+
+**Subsetting with `WHERE`**
 
 ```
 ...
 ```
 
+**Ordering with `ORDER BY`**
+
+```
+...
+```
+
+**Reducing the number of return values with `LIMIT`**
+
+```
+...
+```
+
+**Combining tables with `JOIN`**
+
+```
+...
+```
+
+**Compiling sets with `UNION` and `INTERSECT`**
+
+```
+...
+```
+
+**Applying aggregate functions like `COUNT(*)` or `AVG(*)`**
+
+```
+...
+```
