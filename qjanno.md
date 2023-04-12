@@ -51,14 +51,13 @@ Usage: qjanno [--version] [QUERY] [-q|--queryFile FILE] [-c|--showColumns]
 Available options:
   -h,--help                Show this help text
   --version                Show qjanno version
-  QUERY                    MYSQL syntax query with paths to files for table
+  QUERY                    SQLite syntax query with paths to files for table
                            names. See the online documentation for examples. The
-                           special table name syntax 'd(path1,path2,...)''
-                           treats the paths (path1, path2, ...) as base
-                           directories where .janno files are searched
-                           recursively. All detected .janno files are merged
-                           into one table and can thus be subjected to arbitrary
-                           queries.
+                           special table name syntax 'd(path1,path2,...)' treats
+                           the paths (path1, path2, ...) as base directories
+                           where .janno files are searched recursively. All
+                           detected .janno files are merged into one table and
+                           can thus be subjected to arbitrary queries.
   -q,--queryFile FILE      Read query from the provided file.
   -c,--showColumns         Don't run the query, but show all available columns
                            in the input files.
@@ -176,7 +175,7 @@ Get all individuals in these two packages where UDG is set to 'minus'.
 $ qjanno " \
 SELECT Poseidon_ID,UDG \
 FROM d(2010_RasmussenNature,2012_MeyerScience) \
-WHERE UDG = 'minus'
+WHERE UDG = 'minus' \
 "
 .-------------.-------.
 | Poseidon_ID |  UDG  |
@@ -191,7 +190,7 @@ Get all individuals where UDG is not 'minus' **and** Country is 'Sudan'.
 $ qjanno " \
 SELECT Poseidon_ID,Country \
 FROM d(2010_RasmussenNature,2012_MeyerScience) \
-WHERE UDG <> 'minus' AND Country = 'Sudan'
+WHERE UDG <> 'minus' AND Country = 'Sudan' \
 "
 .--------------.---------.
 | Poseidon_ID  | Country |
@@ -206,7 +205,7 @@ Get all individuals where UDG is filled somehow, so not `NULL`, **or** the Count
 $ qjanno " \
 SELECT Poseidon_ID,Country \
 FROM d(2010_RasmussenNature,2012_MeyerScience) \
-WHERE UDG IS NOT NULL OR Country = 'Sudan'
+WHERE UDG IS NOT NULL OR Country = 'Sudan' \
 "
 .--------------.-----------.
 | Poseidon_ID  |  Country  |
@@ -222,7 +221,7 @@ Get all individuals where Nr_SNPs is equal to or bigger than 600,000.
 $ qjanno " \
 SELECT Poseidon_ID,Nr_SNPs \
 FROM d(2010_RasmussenNature,2012_MeyerScience) \
-WHERE Nr_SNPs >= 600000
+WHERE Nr_SNPs >= 600000 \
 "
 .-------------.---------.
 | Poseidon_ID | Nr_SNPs |
@@ -239,7 +238,7 @@ Order all individuals by Nr_SNPs.
 $ qjanno " \
 SELECT Poseidon_ID,Nr_SNPs \
 FROM d(2010_RasmussenNature,2012_MeyerScience) \
-ORDER BY Nr_SNPs
+ORDER BY Nr_SNPs \
 "
 .----------------------.---------.
 |     Poseidon_ID      | Nr_SNPs |
@@ -260,7 +259,7 @@ Order all individuals by Nr_SNPs, but this time in a descending (`DESC`) order.
 $ qjanno " \
 SELECT Poseidon_ID,Date_BC_AD_Median \
 FROM d(2010_RasmussenNature,2012_MeyerScience) \
-ORDER BY Nr_SNPs DESC
+ORDER BY Nr_SNPs DESC \
 "
 .----------------------.-------------------.
 |     Poseidon_ID      | Date_BC_AD_Median |
@@ -283,7 +282,7 @@ Only return the first three result individuals.
 $ qjanno " \
 SELECT Poseidon_ID,Group_Name \
 FROM d(2010_RasmussenNature,2012_MeyerScience) \
-LIMIT 3
+LIMIT 3 \
 "
 .---------------.-----------------------------.
 |  Poseidon_ID  |         Group_Name          |
@@ -323,7 +322,7 @@ $ qjanno " \
 SELECT d2010RasmussenNature2012MeyerScience.Poseidon_ID,Country,MoreInfo \
 FROM d(2010_RasmussenNature,2012_MeyerScience) \
 INNER JOIN test.csv \
-ON d2010RasmussenNature2012MeyerScience.Poseidon_ID = test.Poseidon_ID
+ON d2010RasmussenNature2012MeyerScience.Poseidon_ID = test.Poseidon_ID \
 "
 .---------------.-----------.----------.
 |  Poseidon_ID  |  Country  | MoreInfo |
