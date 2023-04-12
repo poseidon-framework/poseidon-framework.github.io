@@ -138,11 +138,24 @@ $ qjanno "SELECT c1,c2 FROM test.csv" --noHeader
 '------'------'
 ```
 
-The other options concern the output: `--raw` returns the output table not in this neat human-readable format, but in a simple .tsv format. `--noOutHeader` omits the header line on output.
+`-c`/`--showColumns` is a special option that, when activated, makes qjanno return not the result of the query, but an overview table with the columns available in the loaded tables/files. That is helpful to get an overview what could be queried in the first place:
 
 ```
 $ echo -e "Col1,Col2\nVal1,Val2\nVal3,Val4\n" > test.csv
-$ qjanno "SELECT Col1,Col2 FROM test.csv" --raw --noOutHeader
+$ qjanno "SELECT * FROM test.csv" -c
+.--------.----------.
+| Column |   Path   |
+:========:==========:
+| Col1   | test.csv |
+| Col2   | test.csv |
+'--------'----------'
+```
+
+The remaining options concern the output: `--raw` returns the output table not in this neat human-readable format, but in a simple .tsv format. `--noOutHeader` omits the header line on output.
+
+```
+$ echo -e "Col1,Col2\nVal1,Val2\nVal3,Val4\n" > test.csv
+$ qjanno "SELECT * FROM test.csv" --raw --noOutHeader
 Val1  Val2
 Val3  Val4
 ```
@@ -154,19 +167,113 @@ The following examples show some of the functionality of the SQLite query langua
 **Subsetting with `WHERE`**
 
 ```
-...
+$ qjanno " \
+SELECT Poseidon_ID,UDG \
+FROM d(2010_RasmussenNature,2012_MeyerScience) \
+WHERE UDG = 'minus'
+"
+.-------------.-------.
+| Poseidon_ID |  UDG  |
+:=============:=======:
+| Inuk.SG     | minus |
+'-------------'-------'
+```
+
+```
+$ qjanno " \
+SELECT Poseidon_ID,Country \
+FROM d(2010_RasmussenNature,2012_MeyerScience) \
+WHERE UDG <> 'minus' AND Country = 'Sudan'
+"
+.--------------.---------.
+| Poseidon_ID  | Country |
+:==============:=========:
+| A_Dinka-4.DG | Sudan   |
+'--------------'---------'
+```
+
+```
+$ qjanno " \
+SELECT Poseidon_ID,Country \
+FROM d(2010_RasmussenNature,2012_MeyerScience) \
+WHERE UDG IS NOT NULL OR Country = 'Sudan'
+"
+.--------------.-----------.
+| Poseidon_ID  |  Country  |
+:==============:===========:
+| Inuk.SG      | Greenland |
+| A_Dinka-4.DG | Sudan     |
+'--------------'-----------'
+```
+
+```
+$ qjanno " \
+SELECT Poseidon_ID,Nr_SNPs \
+FROM d(2010_RasmussenNature,2012_MeyerScience) \
+WHERE Nr_SNPs >= 600000
+"
+.-------------.---------.
+| Poseidon_ID | Nr_SNPs |
+:=============:=========:
+| Inuk.SG     | 1101700 |
+'-------------'---------'
 ```
 
 **Ordering with `ORDER BY`**
 
 ```
-...
+$ qjanno " \
+SELECT Poseidon_ID,Nr_SNPs \
+FROM d(2010_RasmussenNature,2012_MeyerScience) \
+ORDER BY Nr_SNPs
+"
+.----------------------.---------.
+|     Poseidon_ID      | Nr_SNPs |
+:======================:=========:
+| A_French-4.DG        | 592535  |
+| A_Ju_hoan_North-5.DG | 593045  |
+| A_Mbuti-5.DG         | 593057  |
+| A_Dinka-4.DG         | 593076  |
+| A_Yoruba-4.DG        | 593097  |
+| A_Sardinian-4.DG     | 593109  |
+| Inuk.SG              | 1101700 |
+'----------------------'---------'
+```
+
+```
+$ qjanno " \
+SELECT Poseidon_ID,Date_BC_AD_Median \
+FROM d(2010_RasmussenNature,2012_MeyerScience) \
+ORDER BY Nr_SNPs DESC
+"
+.----------------------.-------------------.
+|     Poseidon_ID      | Date_BC_AD_Median |
+:======================:===================:
+| Inuk.SG              | -1935             |
+| A_Sardinian-4.DG     |                   |
+| A_Yoruba-4.DG        |                   |
+| A_Dinka-4.DG         |                   |
+| A_Mbuti-5.DG         |                   |
+| A_Ju_hoan_North-5.DG |                   |
+| A_French-4.DG        |                   |
+'----------------------'-------------------'
 ```
 
 **Reducing the number of return values with `LIMIT`**
 
 ```
-...
+$ qjanno " \
+SELECT Poseidon_ID,Group_Name \
+FROM d(2010_RasmussenNature,2012_MeyerScience) \
+LIMIT 3
+"
+.---------------.-----------------------------.
+|  Poseidon_ID  |         Group_Name          |
+:===============:=============================:
+| Inuk.SG       | Greenland_Saqqaq.SG         |
+| A_Mbuti-5.DG  | Ignore_Mbuti(discovery).DG  |
+| A_Yoruba-4.DG | Ignore_Yoruba(discovery).DG |
+'---------------'-----------------------------'
 ```
 
 **Combining tables with `JOIN`**
