@@ -184,13 +184,13 @@ WHERE UDG = 'minus' \
 '-------------'-------'
 ```
 
-Get all individuals where UDG is not 'minus' **and** Country is 'Sudan'.
+Get all individuals where Genetic_Sex is not 'F' **and** Country is 'Sudan'.
 
 ```
 $ qjanno " \
 SELECT Poseidon_ID,Country \
 FROM d(2010_RasmussenNature,2012_MeyerScience) \
-WHERE UDG <> 'minus' AND Country = 'Sudan' \
+WHERE Genetic_Sex <> 'F' AND Country = 'Sudan' \
 "
 .--------------.---------.
 | Poseidon_ID  | Country |
@@ -253,13 +253,13 @@ ORDER BY Nr_SNPs \
 '----------------------'---------'
 ```
 
-Order all individuals by Nr_SNPs, but this time in a descending (`DESC`) order.
+Order all individuals by Date_BC_AD_Median in a descending (`DESC`) order.
 
 ```
 $ qjanno " \
 SELECT Poseidon_ID,Date_BC_AD_Median \
 FROM d(2010_RasmussenNature,2012_MeyerScience) \
-ORDER BY Nr_SNPs DESC \
+ORDER BY Date_BC_AD_Median DESC \
 "
 .----------------------.-------------------.
 |     Poseidon_ID      | Date_BC_AD_Median |
@@ -339,7 +339,7 @@ SQLite provides a number of aggregate functions: `avg(X)`, `count(*)`, `count(X)
 Determine the minimal number of SNPs across all individuals.
 
 ```
-qjanno "SELECT min(Nr_SNPs) AS Minimal_number_of_SNPs FROM d(2010_RasmussenNature,2012_MeyerScience)"
+$ qjanno "SELECT min(Nr_SNPs) AS Minimal_number_of_SNPs FROM d(2010_RasmussenNature,2012_MeyerScience)"
 .------------------------.
 | Minimal_number_of_SNPs |
 :========================:
