@@ -279,16 +279,17 @@ LIMIT 3
 **Combining tables with `JOIN`**
 
 ```
-...
+$ echo -e "Poseidon_ID,MoreInfo\nInuk.SG,5\nA_French-4.DG,3\n" > test.csv
+$ qjanno " \
+SELECT b883056c.Poseidon_ID,MoreInfo \
+FROM d(2010_RasmussenNature,2012_MeyerScience) \
+INNER JOIN test.csv ON dc438cd9e8c7287854a3794f4632b89dc531a6615.Poseidon_ID = b883056c.Poseidon_ID
+"
 ```
 
-**Compiling sets with `UNION` and `INTERSECT`**
+This is awkward because of the random table names. I should find a way to get nice names.
 
-```
-...
-```
-
-**Applying aggregate functions like `COUNT(*)` or `AVG(*)`**
+**Grouping data and applying aggregate functions like `COUNT(*)` or `AVG(*)`**
 
 ```
 ...
