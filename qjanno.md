@@ -138,19 +138,6 @@ $ qjanno "SELECT c1,c2 FROM test.csv" --noHeader
 '------'------'
 ```
 
-`-c`/`--showColumns` is a special option that, when activated, makes qjanno return not the result of the query, but an overview table with the columns available in the loaded tables/files. That is helpful to get an overview what could be queried in the first place:
-
-```
-$ echo -e "Col1,Col2\nVal1,Val2\nVal3,Val4\n" > test.csv
-$ qjanno "SELECT * FROM test.csv" -c
-.--------.----------.
-| Column |   Path   |
-:========:==========:
-| Col1   | test.csv |
-| Col2   | test.csv |
-'--------'----------'
-```
-
 The remaining options concern the output: `--raw` returns the output table not in this neat human-readable format, but in a simple .tsv format. `--noOutHeader` omits the header line on output.
 
 ```
@@ -159,6 +146,23 @@ $ qjanno "SELECT * FROM test.csv" --raw --noOutHeader
 Val1  Val2
 Val3  Val4
 ```
+
+#### The special `-c`/`--showColumns` option
+
+`-c`/`--showColumns` is a special option that, when activated, makes qjanno return not the result of the query, but an overview table with the columns available in the loaded tables/files. That is helpful to get an overview what could be queried in the first place. It also returns the artificial, tidy table names assigned by `qjanno` before writing to the SQLite database.
+
+```
+$ echo -e "Col1,Col2\nVal1,Val2\nVal3,Val4\n" > test.csv
+$ qjanno "SELECT * FROM test.csv" -c
+.--------.----------.-------------------.
+| Column |   Path   | qjanno Table name |
+:========:==========:===================:
+| Col1   | test.csv | test              |
+| Col2   | test.csv | test              |
+'--------'----------'-------------------'
+```
+
+We can often not simply use the file names as table names, because SQLite has strict requirements for the structure of names. File names or relative paths are often invalid table names and need to be replaced with a tidy string SQLite accepts. Usually these artifically generated names are irrelevant from a user perspective -- except a query involves multiple files, e.g. in a `JOIN` operation. See below for an example where this is required.
 
 ### Query examples
 
@@ -278,16 +282,38 @@ LIMIT 3
 
 **Combining tables with `JOIN`**
 
+For `JOIN` operations, SQLite requires table names to specify which columns are meant when combining multiple tables with overlapping column names. See the option `-c`/`--showColumns` to get the relevant table names as generated from the input paths.
+
 ```
 $ echo -e "Poseidon_ID,MoreInfo\nInuk.SG,5\nA_French-4.DG,3\n" > test.csv
-$ qjanno " \
-SELECT b883056c.Poseidon_ID,MoreInfo \
-FROM d(2010_RasmussenNature,2012_MeyerScience) \
-INNER JOIN test.csv ON dc438cd9e8c7287854a3794f4632b89dc531a6615.Poseidon_ID = b883056c.Poseidon_ID
-"
-```
 
-This is awkward because of the random table names. I should find a way to get nice names.
+$ qjanno "SELECT * FROM d(2010_RasmussenNature,2012_MeyerScience)" -c
+.------------------------------.-------------------------------------------.--------------------------------------.
+|            Column            |                   Path                    |          qjanno Table name           |
+:==============================:===========================================:======================================:
+| Capture_Type                 | d(2010_RasmussenNature,2012_MeyerScience) | d2010RasmussenNature2012MeyerScience |
+...
+
+$ qjanno "SELECT * FROM test.csv" -c
+.-------------.----------.-------------------.
+|   Column    |   Path   | qjanno Table name |
+:=============:==========:===================:
+| Poseidon_ID | test.csv | test              |
+...
+
+$ qjanno " \
+SELECT d2010RasmussenNature2012MeyerScience.Poseidon_ID,MoreInfo \
+FROM d(2010_RasmussenNature,2012_MeyerScience) \
+INNER JOIN test.csv \
+ON d2010RasmussenNature2012MeyerScience.Poseidon_ID = test.Poseidon_ID
+"
+.---------------.----------.
+|  Poseidon_ID  | MoreInfo |
+:===============:==========:
+| Inuk.SG       | 5        |
+| A_French-4.DG | 3        |
+'---------------'----------'
+```
 
 **Grouping data and applying aggregate functions like `COUNT(*)` or `AVG(*)`**
 
