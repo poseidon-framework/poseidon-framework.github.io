@@ -170,6 +170,8 @@ The following examples show some of the functionality of the SQLite query langua
 
 **Subsetting with `WHERE`**
 
+Get all individuals in these two packages where UDG is set to 'minus'.
+
 ```
 $ qjanno " \
 SELECT Poseidon_ID,UDG \
@@ -183,6 +185,8 @@ WHERE UDG = 'minus'
 '-------------'-------'
 ```
 
+Get all individuals where UDG is not 'minus' **and** Country is 'Sudan'.
+
 ```
 $ qjanno " \
 SELECT Poseidon_ID,Country \
@@ -195,6 +199,8 @@ WHERE UDG <> 'minus' AND Country = 'Sudan'
 | A_Dinka-4.DG | Sudan   |
 '--------------'---------'
 ```
+
+Get all individuals where UDG is filled somehow, so not `NULL`, **or** the Country is 'Sudan'.
 
 ```
 $ qjanno " \
@@ -210,6 +216,8 @@ WHERE UDG IS NOT NULL OR Country = 'Sudan'
 '--------------'-----------'
 ```
 
+Get all individuals where Nr_SNPs is equal to or bigger than 600,000.
+
 ```
 $ qjanno " \
 SELECT Poseidon_ID,Nr_SNPs \
@@ -224,6 +232,8 @@ WHERE Nr_SNPs >= 600000
 ```
 
 **Ordering with `ORDER BY`**
+
+Order all individuals by Nr_SNPs.
 
 ```
 $ qjanno " \
@@ -243,6 +253,8 @@ ORDER BY Nr_SNPs
 | Inuk.SG              | 1101700 |
 '----------------------'---------'
 ```
+
+Order all individuals by Nr_SNPs, but this time in a descending (`DESC`) order.
 
 ```
 $ qjanno " \
@@ -264,6 +276,8 @@ ORDER BY Nr_SNPs DESC
 ```
 
 **Reducing the number of return values with `LIMIT`**
+
+Only return the first three result individuals.
 
 ```
 $ qjanno " \
@@ -300,23 +314,52 @@ $ qjanno "SELECT * FROM test.csv" -c
 :=============:==========:===================:
 | Poseidon_ID | test.csv | test              |
 ...
+```
 
+Join the .janno files with the information in the test.csv file by the `Poseidon_ID` column.
+
+```
 $ qjanno " \
-SELECT d2010RasmussenNature2012MeyerScience.Poseidon_ID,MoreInfo \
+SELECT d2010RasmussenNature2012MeyerScience.Poseidon_ID,Country,MoreInfo \
 FROM d(2010_RasmussenNature,2012_MeyerScience) \
 INNER JOIN test.csv \
 ON d2010RasmussenNature2012MeyerScience.Poseidon_ID = test.Poseidon_ID
 "
-.---------------.----------.
-|  Poseidon_ID  | MoreInfo |
-:===============:==========:
-| Inuk.SG       | 5        |
-| A_French-4.DG | 3        |
-'---------------'----------'
+.---------------.-----------.----------.
+|  Poseidon_ID  |  Country  | MoreInfo |
+:===============:===========:==========:
+| Inuk.SG       | Greenland | 5        |
+| A_French-4.DG | France    | 3        |
+'---------------'-----------'----------'
 ```
 
-**Grouping data and applying aggregate functions like `COUNT(*)` or `AVG(*)`**
+**Grouping data and applying aggregate functions**
+
+SQLite provides a number of aggregate functions: `avg(X)`, `count(*)`, `count(X)`, `group_concat(X)`, `group_concat(X,Y)`, `max(X)`, `min(X)`, `sum(X)`. See the documentation [here](https://www.sqlite.org/lang_aggfunc.html). These summary functions can be well combined with the `GROUP BY` operation.
+
+Determine the minimal number of SNPs across all individuals.
 
 ```
-...
+qjanno "SELECT min(Nr_SNPs) AS Minimal_number_of_SNPs FROM d(2010_RasmussenNature,2012_MeyerScience)"
+.------------------------.
+| Minimal_number_of_SNPs |
+:========================:
+| 592535                 |
+'------------------------'
+```
+
+Count the number of individuals per Date_Type group and calculate the average Nr_SNPs for both groups.
+
+```
+$ qjanno " \
+SELECT Date_Type,count(*),avg(Nr_SNPs) \
+FROM d(2010_RasmussenNature,2012_MeyerScience) \
+GROUP BY Date_Type \
+"
+.-----------.----------.--------------.
+| Date_Type | count(*) | avg(Nr_SNPs) |
+:===========:==========:==============:
+| C14       | 1        | 1101700.0    |
+| modern    | 6        | 592986.5     |
+'-----------'----------'--------------'
 ```
