@@ -28,15 +28,15 @@ On GitHub you will also find [older release versions](https://github.com/poseido
 
 qjanno is a fork of the [qhs](https://github.com/itchyny/qhs) software tool, which is, in turn, inspired by the CLI tool [q](https://github.com/harelba/q). All of them enable SQL queries on delimiter-separated text files (e.g. .csv or .tsv). For qjanno we copied the source code of qhs v0.3.3 (MIT-License) and adjusted it to provide a smooth experience with a special kind of .tsv file: The Poseidon [.janno](janno_details.md) file.
 
-Unlike `trident` or `xerxes` it does not have a complete understaning of the .janno-file structure, though, and (mostly) treats it like a normal .tsv file. It does not validate the files upon reading and takes them at face value. Still .janno files are given special consideration: With the `d(...)` pseudo-function they can be searched recursively and loaded together into one table.
+Unlike `trident` or `xerxes` qjanno does not have a complete understanding of the .janno-file structure, and (mostly) treats it like a normal .tsv file. It does not validate the files upon reading and takes them at face value. Still .janno files are given special consideration: With the `d(...)` pseudo-function they can be searched recursively and loaded together into one table.
 
-qjanno still supports most features of qhs, so it can still read .csv and .tsv files independently or in conjunction with .janno files.
+qjanno still supports most features of qhs, so it can still read .csv and .tsv files independently or in conjunction with .janno files (e.g. for `JOIN` operations).
 
 ### How does this work?
 
 On startup, qjanno creates an [SQLite](https://www.sqlite.org) database [in memory](https://www.sqlite.org/inmemorydb.html). It then reads the requested, structured text files, attributes each column a type (either character or numeric) and writes the contents of the files to tables in the in-memory database. It finally sends the user-provided SQL query to the database, waits for the result, parses it and returns it on the command line.
 
-The query is pre-parsed to extract file names and then forwarded to an SQLite database server via the Haskell library [sqlite-simple](https://hackage.haskell.org/package/sqlite-simple). That means qjanno can parse and understand basic SQLite3 syntax, though not everything. [`PRAGMA` functions](https://www.sqlite.org/pragma.html#syntax), for example, are not available. The examples below show some of the available syntax, but they are not exhaustive. Trial and error is recommended to see what does and what does not work. Please report missing functionality in our [issue board on GitHub](https://github.com/poseidon-framework/qjanno/issues).
+The query gets pre-parsed to extract file names and then forwarded to an SQLite database server via the Haskell library [sqlite-simple](https://hackage.haskell.org/package/sqlite-simple). That means qjanno can parse and understand basic SQLite3 syntax, though not everything. [`PRAGMA` functions](https://www.sqlite.org/pragma.html#syntax), for example, are not available. The examples below show some of the available syntax, but they are not exhaustive. Trial and error is recommended to see what does and what does not work. Please report missing functionality in our [issue board on GitHub](https://github.com/poseidon-framework/qjanno/issues).
 
 ### The CLI interface
 
@@ -113,7 +113,7 @@ $ qjanno "SELECT Col2 FROM test.csv"
 '------'
 ```
 
-qjanno automatically tries to detect the relevant separator of files. With `--sep` a delimiter can be specified explicitly, and the shortcut `-t` sets `--sep $'\t'` for tab-separated files. So a .janno file can also be read with the following syntax:
+qjanno automatically tries to detect the relevant separator of files. With `--sep` a delimiter can be specified explicitly, and the shortcut `-t` sets `--sep $'\t'` for tab-separated files. So a .janno file can also be read without `d(...)` using the following syntax:
 
 ```
 $ qjanno "SELECT Poseidon_ID,Country FROM 2010_RasmussenNature/2010_RasmussenNature.janno" -t # -t is optional
@@ -137,7 +137,7 @@ $ qjanno "SELECT c1,c2 FROM test.csv" --noHeader
 '------'------'
 ```
 
-The remaining options concern the output: `--raw` returns the output table not in this neat human-readable format, but in a simple .tsv format. `--noOutHeader` omits the header line on output.
+The remaining options concern the output: `--raw` returns the output table not in the neat, human-readable ASCII table layout, but in a simple .tsv format. `--noOutHeader` omits the header line in the output.
 
 ```
 $ echo -e "Col1,Col2\nVal1,Val2\nVal3,Val4\n" > test.csv
@@ -146,9 +146,21 @@ Val1  Val2
 Val3  Val4
 ```
 
-#### The special `-c`/`--showColumns` option
+Note that these output options allow to directly prepare individual lists in trident's forgeScript selection language format:
 
-`-c`/`--showColumns` is a special option that, when activated, makes qjanno return not the result of the query, but an overview table with the columns available in the loaded tables/files. That is helpful to get an overview what could be queried in the first place. It also returns the artificial, tidy table names assigned by `qjanno` before writing to the SQLite database.
+```
+$ qjanno "SELECT '<'||Poseidon_ID||'>' FROM d(2012_MeyerScience)" --raw --noOutHeader
+<A_Mbuti-5.DG>
+<A_Yoruba-4.DG>
+<A_Sardinian-4.DG>
+<A_French-4.DG>
+<A_Dinka-4.DG>
+<A_Ju_hoan_North-5.DG>
+```
+
+#### The `-c`/`--showColumns` option
+
+`-c`/`--showColumns` is a special option that, when activated, makes qjanno return not the result of a given query, but an overview table with the columns available in all loaded tables/files for said query. That is helpful to get an overview what could actually be queried.
 
 ```
 $ echo -e "Col1,Col2\nVal1,Val2\nVal3,Val4\n" > test.csv
@@ -161,15 +173,15 @@ $ qjanno "SELECT * FROM test.csv" -c
 '--------'----------'-------------------'
 ```
 
-We can often not simply use the file names as table names, because SQLite has strict requirements for the structure of names. File names or relative paths are often invalid table names and need to be replaced with a tidy string SQLite accepts. Usually these artifically generated names are irrelevant from a user perspective -- except a query involves multiple files, e.g. in a `JOIN` operation. See below for an example where this is required.
+This summary also includes the artificial, structurally cleaned table names assigned by `qjanno` before writing to the SQLite database. Often we can not simply use the file names as table names, because SQLite has strict naming requirements. File names or relative paths are generally invalid as table names and need to be replaced with a tidy string. These artificially generated names are mostly irrelevant from a user perspective -- except a query involves multiple files, e.g. in a `JOIN` operation. See below for an example.
 
 ### Query examples
 
-The following examples show some of the functionality of the SQLite query language available through qjanno. See the [SQLite syntax documention](https://www.sqlite.org/lang.html) for more details.
+The following examples show some of the functionality of the SQLite query language available through qjanno. See the [SQLite syntax documentation](https://www.sqlite.org/lang.html) for more details.
 
-**Subsetting with `WHERE`**
+**Sub-setting with `WHERE`**
 
-Get all individuals in these two packages where UDG is set to 'minus'.
+Get all individuals (rows) in two Poseidon packages where UDG is set to 'minus'.
 
 ```
 $ qjanno " \
@@ -199,7 +211,7 @@ WHERE Genetic_Sex <> 'F' AND Country = 'Sudan' \
 '--------------'---------'
 ```
 
-Get all individuals where UDG is filled somehow, so not `NULL`, **or** the Country is 'Sudan'.
+Get all individuals where the the UDG column is not `NULL` **or** the Country is 'Sudan'.
 
 ```
 $ qjanno " \
@@ -253,7 +265,7 @@ ORDER BY Nr_SNPs \
 '----------------------'---------'
 ```
 
-Order all individuals by Date_BC_AD_Median in a descending (`DESC`) order.
+Order all individuals by Date_BC_AD_Median in a descending (`DESC`) order. Date_BC_AD_Median includes NULL values.
 
 ```
 $ qjanno " \
@@ -315,7 +327,7 @@ $ qjanno "SELECT * FROM test.csv" -c
 ...
 ```
 
-Join the .janno files with the information in the test.csv file by the `Poseidon_ID` column.
+Join the .janno files with the information in the test.csv file (by the `Poseidon_ID` column).
 
 ```
 $ qjanno " \
@@ -334,7 +346,7 @@ ON d2010RasmussenNature2012MeyerScience.Poseidon_ID = test.Poseidon_ID \
 
 **Grouping data and applying aggregate functions**
 
-SQLite provides a number of aggregate functions: `avg(X)`, `count(*)`, `count(X)`, `group_concat(X)`, `group_concat(X,Y)`, `max(X)`, `min(X)`, `sum(X)`. See the documentation [here](https://www.sqlite.org/lang_aggfunc.html). These summary functions can be well combined with the `GROUP BY` operation.
+SQLite provides a number of aggregation functions: `avg(X)`, `count(*)`, `count(X)`, `group_concat(X)`, `group_concat(X,Y)`, `max(X)`, `min(X)`, `sum(X)`. See the documentation [here](https://www.sqlite.org/lang_aggfunc.html). These functions can be well combined with the `GROUP BY` operation.
 
 Determine the minimal number of SNPs across all individuals.
 
