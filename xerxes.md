@@ -99,6 +99,8 @@ Available options:
                            Useful for short test runs
   -f,--tableOutFile ARG    a file to which results are written as tab-separated
                            file
+  --blockTableFile         a file to which the per-Block results are written as
+                           tab-separated file
 ```
 
 #### Allowed statistics
@@ -194,6 +196,8 @@ In addition, every statistic section allows for a definition of an ascertainment
 You can save this into a text file, for example named `fstats_config.yaml`, and load it via `--statConfig fstats_config.yaml`.
 
 
+##### Output
+
 The final output of the `fstats` command looks like this:
 
 ```
@@ -217,6 +221,8 @@ The final output of the `fstats` command looks like this:
 ```
 
 which lists each statistic, the slots a, b, c and d, the number of sites with non-missing data for that statistic, Ascertainment information (outgroup, reference, lower and upper bound, if given), the genome-wide estimate, its standard error and its Z-score. If you specify an output file using option `--tableOutFile` or `-f`, these results are also written as tab-separated file.
+
+Additionally, an option `--blockOutFile` can be specified, to which then a table with estimates per Jackknife block is written.
 
 ### RAS (in development)
 
