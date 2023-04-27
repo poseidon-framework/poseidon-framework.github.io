@@ -6,7 +6,7 @@ While we're planning a more interactive web interface to explore the available d
 
 ## Our git repositories
 
-We opted to monitor our repositories with [Git](https://git-scm.com) to ensure clean version management on the file level. The context data in a Poseidon package is text data that can be stored and maintained easily with line-wise version control. Unfortuntaly that does not hold true for the large genotype data files. They are not suitable to be handled in Git directly. Instead we rely on Github's [large file storage system](https://docs.github.com/en/repositories/working-with-files/managing-large-files/about-large-files-on-github), which works, but comes with a number of technical hurdles and drawbacks both for us and the user.
+We opted to monitor our repositories with [Git](https://git-scm.com) to ensure clean version management on the file level. The context data in a Poseidon package is text data that can be stored and maintained easily with line-wise version control. Unfortunately that does not hold true for the large genotype data files. They are not suitable to be handled in Git directly. Instead we rely on Github's [large file storage system](https://docs.github.com/en/repositories/working-with-files/managing-large-files/about-large-files-on-github), which works, but comes with a number of technical hurdles and drawbacks both for us and the user.
 
 We generally do _not_ recommend to use the github repositories for end-user-level access to our packages, so to download the data. We do recommend that you work through Github, though, if you would like to submit an issue or suggest changes to the data (e.g. via a Pull Request).
 
