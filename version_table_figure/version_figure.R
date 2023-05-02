@@ -29,13 +29,13 @@ p <- ggplot() +
   geom_segment(
     data = versions_for_segments,
     mapping = aes(x = minPoseidonVersion, xend = maxPoseidonVersion, y = version, yend = version),
-    color = "red",
+    color = "#1587D3",
     linewidth = 1.2
   ) +
   geom_point(
     data = versions,
     mapping = aes(x = poseidonVersion, y = version),
-    color = "red",
+    color = "#1587D3",
     size = 3
   ) +  
   geom_point(
