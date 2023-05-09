@@ -48,11 +48,11 @@ p <- ggplot() +
   scale_x_discrete(position = "top") +
   theme(
     strip.text.y.left = element_text(angle = 0),
-    axis.title.y = element_blank(),
     plot.background = element_rect(fill = "#283339"),
     #axis.text.y.right = element_text(hjust = 1),
     axis.text = element_text(color = "white", size = 10),
-    axis.title = element_text(color = "white", size = 10),
+    axis.text.x = element_text(angle = 20, hjust = 0, vjust = 1),
+    axis.title = element_blank(),
     panel.background = element_rect(fill = "#283339"),
     panel.grid.major.y = element_line(linewidth = 0.1),
     panel.grid.minor.y = element_blank(),
@@ -69,7 +69,7 @@ ggsave(
   scale = 4,
   units = "px",
   width = 150,
-  height = 300,
+  height = 310,
   dpi = 150
 )
   

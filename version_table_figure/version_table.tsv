@@ -1,4 +1,5 @@
 tool	version	poseidonVersion
+janno	1.0.0	2.7.1
 janno	1.0.0	2.7.0
 janno	0.11.1	2.6.0
 janno	0.11.0	2.6.0
@@ -15,10 +16,18 @@ janno	0.5.0	2.4.0
 janno	0.4.2	2.4.0
 janno	0.4.1	2.4.0
 janno	0.4.0	2.4.0
+qjanno	1.0.0	2.7.1
 qjanno	1.0.0	2.7.0
 qjanno	1.0.0	2.6.0
 qjanno	1.0.0	2.5.0
 qjanno	1.0.0	2.4.0
+trident	1.1.12.0	2.7.1
+trident	1.1.12.0	2.7.0
+trident	1.1.12.0	2.6.0
+trident	1.1.12.0	2.5.0
+trident	1.1.11.4	2.7.0
+trident	1.1.11.4	2.6.0
+trident	1.1.11.4	2.5.0
 trident	1.1.11.0	2.7.0
 trident	1.1.11.0	2.6.0
 trident	1.1.11.0	2.5.0
