@@ -2,6 +2,16 @@
 
 Here we document changes in the Poseidon standard, so that packages can be manually updated from one version to the next. The documentation on the website only considers the latest version.
 
+### 2.7.0 -> 2.7.1 [not breaking]
+
+Only changes to the definition of the Sequencing Source File (`.ssf`):
+
+- The `poseidon_IDs` column was made not mandatory.
+- The `sample_accession` column was made not mandatory and the entries do not have to be unique any more within one package.
+- The `secondary_sample_accession` also lost the uniqueness constraint.
+
+Beyond that also some small adjustments to the variable definition/description of the `.ssf` columns `udg`, `library_built`, `library_name` and `run_accession`. The latter will probably be unique in most Poseidon packages, but duplicates are possible under rare circumstances.
+
 ### 2.6.0 -> 2.7.0 [not breaking]
 
 - Added the Sequencing Source File (`.ssf`) to the Poseidon package definition.
