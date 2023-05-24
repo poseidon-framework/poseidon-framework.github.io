@@ -12,7 +12,7 @@
 	* [Changelog](changelog.md)
 	* [Genotype data details](genotype_data.md)
 	* [.janno file details](janno_details.md)
-	* [sequencingSourceFile details](sequencingSourceFileDetails.md)
+	* [.ssf file details](ssf_details.md)
 * **The Poseidon Software**
 	* [Version overview table](version_table.md)
 	* [trident CLI software](trident.md)
@@ -20,8 +20,8 @@
 	* [qjanno CLI software](qjanno.md)
 	* [poseidon-http-server](server.md)
 	* [janno R package](janno_r_package.md)
-* **The Poseidon Repository**
-	* [Public repository](repo_overview.md)
+* **The Poseidon Repositories**
+	* [Public repositories](repo_overview.md)
 	* [Submission guide](repo_submission_guide.md)
 	* [Public repository viewer](https://poseidon-framework.github.io/published_data)
 	<!-- * [Experimental Repository Explorer](repo_explorer.md) -->
