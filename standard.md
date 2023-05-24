@@ -1,6 +1,6 @@
 <!-- Subheaders will be ignored here https://docsify.js.org/#/more-pages?id=ignoring-subheaders -->
 
-##### [Mirrored from the poseidon-schema repository](https://github.com/poseidon-framework/poseidon2-schema) <!-- {docsify-ignore-all} -->
+##### [Mirrored from the poseidon-schema repository](https://github.com/poseidon-framework/poseidon-schema) <!-- {docsify-ignore-all} -->
 
 <!-- tabs:start -->
 
@@ -50,7 +50,7 @@ Switzerland_LNBA_Roswita/CHANGELOG.md
 The `POSEIDON.yml` file lists relative file paths and metainformation in a standardized, machine-readable format.
 
 - It must be a valid [YAML file](https://yaml.org/).
-- Its fields of the `POSEIDON.yml` file are documented in the [POSEIDON_yml_fields.tsv file](https://github.com/poseidon-framework/poseidon2-schema/blob/master/POSEIDON_yml_fields.tsv) in this repository.
+- Its fields of the `POSEIDON.yml` file are documented in the [POSEIDON_yml_fields.tsv file](https://github.com/poseidon-framework/poseidon-schema/blob/master/POSEIDON_yml_fields.tsv) in this repository.
 
 Example:
 
@@ -102,7 +102,7 @@ In addition to these files and their checksums, you also should provide a `snpSe
 
 The `.janno` file is a tab-separated text file with a header line. It holds context information (variables/columns) for each sample (objects/rows) in a package.
 
-- A set of strictly defined core variables (defined by column name) and their possible content are documented here: [janno_columns.tsv](https://github.com/poseidon-framework/poseidon2-schema/blob/master/janno_columns.tsv)
+- A set of strictly defined core variables (defined by column name) and their possible content are documented here: [janno_columns.tsv](https://github.com/poseidon-framework/poseidon-schema/blob/master/janno_columns.tsv)
 - A `.janno` file can have all of these core variables, or only a subset of them. 
 - Only three columns are mandatory to make the file valid: **Poseidon_ID**, **Group_Name** and **Genetic_Sex**
 - Arbitrary columns not defined here can be added as long as their column names do not clash with the defined ones.
@@ -170,18 +170,18 @@ The link to the individuals listed in the `.janno`-file (and therefore to the en
 
 #### **v2.7.0**
 
-[filename](https://raw.githubusercontent.com/poseidon-framework/poseidon2-schema/v2.7.0/README.md ':include')
+[filename](https://raw.githubusercontent.com/poseidon-framework/poseidon-schema/v2.7.0/README.md ':include')
 
 #### **v2.6.0**
 
-[filename](https://raw.githubusercontent.com/poseidon-framework/poseidon2-schema/v2.6.0/README.md ':include')
+[filename](https://raw.githubusercontent.com/poseidon-framework/poseidon-schema/v2.6.0/README.md ':include')
 
 #### **v2.5.0**
 
-[filename](https://raw.githubusercontent.com/poseidon-framework/poseidon2-schema/v2.5.0/README.md ':include')
+[filename](https://raw.githubusercontent.com/poseidon-framework/poseidon-schema/v2.5.0/README.md ':include')
 
 #### **v2.4.0**
 
-[filename](https://raw.githubusercontent.com/poseidon-framework/poseidon2-schema/v2.4.0/README.md ':include')
+[filename](https://raw.githubusercontent.com/poseidon-framework/poseidon-schema/v2.4.0/README.md ':include')
 
 <!-- tabs:end -->

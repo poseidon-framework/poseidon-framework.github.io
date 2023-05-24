@@ -488,7 +488,7 @@ If any of these applies to a package in the search directory (`--baseDir`/`-d`),
 - If any checksums changed, then they will be updated. If certain checksums are not set yet, then they will be added. The checksum update can be skipped with `--noChecksumUpdate` or partially skipped for the genotype data with `--ignoreGeno`.
 - The CHANGELOG.md file will be updated with a new row for the new version and the text in `--logText` (default: "not specified"), which will be appended as the first line of the file. If no CHANGELOG.md file exists, then it will be created and referenced in the POSEIDON.yml file.
 
-:heavy_exclamation_mark: As `update` reads and rewrites POSEIDON.yml files, it may change their inner order, layout or even content (e.g. if they have fields which are not in the [Poseidon package definition](https://github.com/poseidon-framework/poseidon2-schema)). Create a backup of the POSEIDON.yml file before running `update` if you are uncertain.
+:heavy_exclamation_mark: As `update` reads and rewrites POSEIDON.yml files, it may change their inner order, layout or even content (e.g. if they have fields which are not in the [Poseidon package definition](https://github.com/poseidon-framework/poseidon-schema)). Create a backup of the POSEIDON.yml file before running `update` if you are uncertain.
 
 ### Inspection commands
 
@@ -660,7 +660,7 @@ trident validate -d ... -d ...
 
 and it will either report a success (`Validation passed ✓`) or failure with specific error messages to simplify fixing the issues. 
 
-`validate` tries to ensure that each package in the dataset adheres to the [schema definition](https://github.com/poseidon-framework/poseidon2-schema). Here is a list of what is checked:
+`validate` tries to ensure that each package in the dataset adheres to the [schema definition](https://github.com/poseidon-framework/poseidon-schema). Here is a list of what is checked:
 
 - Presence of the necessary files
 - Full structural correctness of .bib and .janno file

@@ -28,7 +28,7 @@ The public repository has some additional requirements for your package beyond w
 - The `POSEIDON.yml` file contains checksums for the fields `genoFile`, `snpFile`, `indFile`, `jannoFile` and `bibFile`.
 - The `Publication` column in the `.janno` file is filled and the respective .bib file has complete entries for the listed mentioned keys.
 - Empty columns are removed from the `.janno` file.
-- The order of columns in the `.janno` file adheres to the [standard order](https://github.com/poseidon-framework/poseidon2-schema/blob/master/janno_columns.tsv).
+- The order of columns in the `.janno` file adheres to the [standard order](https://github.com/poseidon-framework/poseidon-schema/blob/master/janno_columns.tsv).
 - Every file you submit is correctly referenced in the `POSEIDON.yml` file and there are no additional, supplementary files in your submission that are not listed in the `.yml` file.
 - All text files are UTF-8 encoded and have Unix/Unix-like line endings (`LF`, not `CR+LF` or `CR`)
 
