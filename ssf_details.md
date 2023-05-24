@@ -1,4 +1,4 @@
-# Sequencing Source File Details
+# .ssf file details
 
 Poseidon 2.7.0 added an option to specify sequencing source data. This is a tab-separated table, much like the Janno file, but following [a different schema](https://github.com/poseidon-framework/poseidon2-schema/blob/master/ssf_columns.tsv), typically with file ending `*.ssf` for "Sequencing Source File". The primary entities in this table are Sequencing entities (typically corresponding to DNA libraries or even multiple runs/lanes of the same library). The link to the Individuals listed in the Janno-file are made through a foreign-key relationship from the column `poseidon_IDs` in this file to `Poseidon_ID` in the Janno-file. The relationship is many-to-many, so each row in the SSF file can contain multiple Poseidon_IDs, and multiple rows can link to the same Poseidon_ID.
 
