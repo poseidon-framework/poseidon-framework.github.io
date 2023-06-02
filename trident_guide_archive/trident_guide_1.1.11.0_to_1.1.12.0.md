@@ -1,37 +1,4 @@
-# trident CLI software <!-- {docsify-ignore-all} -->
-
-`trident` is a command line software tool to work with Poseidon packages and handle various data management tasks. It is written in Haskell and openly available on [GitHub](https://github.com/poseidon-framework/poseidon-hs/).
-
-[![CI](https://github.com/poseidon-framework/poseidon-hs/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/poseidon-framework/poseidon-hs/actions/workflows/main.yml)
-[![Coverage Status](https://img.shields.io/codecov/c/github/poseidon-framework/poseidon-hs/master.svg)](https://codecov.io/github/poseidon-framework/poseidon-hs?branch=master)
-[![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/poseidon-framework/poseidon-hs?include_prereleases) ![GitHub all releases](https://img.shields.io/github/downloads/poseidon-framework/poseidon-hs/total)](https://github.com/poseidon-framework/poseidon-hs/releases)
-[![Install with Bioconda](https://anaconda.org/bioconda/poseidon-trident/badges/version.svg)](https://anaconda.org/bioconda/poseidon-trident) [![Anaconda-Server Badge](https://anaconda.org/bioconda/poseidon-trident/badges/downloads.svg)](https://anaconda.org/bioconda/poseidon-trident)
-
-To download the latest stable release version of `trident` click here:
-[📥 Linux](https://github.com/poseidon-framework/poseidon-hs/releases/latest/download/trident-Linux) |
-[📥 macOS](https://github.com/poseidon-framework/poseidon-hs/releases/latest/download/trident-macOS) |
-[📥 Windows](https://github.com/poseidon-framework/poseidon-hs/releases/latest/download/trident-Windows.exe)
-
-So in Linux you can run the following commands to get started:
-
-```bash
-# download the current stable release binary
-wget https://github.com/poseidon-framework/poseidon-hs/releases/latest/download/trident-Linux
-# make it executable
-chmod +x trident-Linux
-# run it
-./trident-Linux -h
-```
-
-On GitHub you will also find [older release versions](https://github.com/poseidon-framework/poseidon-hs/releases) and [instructions to build trident from source](https://github.com/poseidon-framework/poseidon-hs#for-haskell-developers). The relevant changes from one version to the next are documented in this [changelog](https://github.com/poseidon-framework/poseidon-hs/blob/master/CHANGELOGRELEASE.md).
-
-Beyond the documentation below you can use `trident --help` and `trident <subcommand> --help` to get information about each parameter, including some which we haven't covered in the guide. If you're new to Poseidon and trident, we recommend that you take a look at our [Getting started guide](getting_started) first.
-
-<!-- tabs:start -->
-
-#### **v1.2.0.0**
-
-## Guide for trident v1.2.0.0
+## Guide for trident v1.1.11.0 to v1.1.12.0
 
 ### The trident CLI
 
@@ -148,7 +115,7 @@ For all subcommands the general argument `--logMode` defines how trident reports
 
 ##### Duplicates
 
-- If multiple packages in a package repository share the same `title`, then trident will try to select the one with the highest version number. If this is not sufficient to resolve the conflict, trident will stop. An exception for that is the `list` subcommand, which will read and report all packages/groups/individuals in all versions.
+- If multiple packages in a package repository share the same `title`, then trident will try to select the one with the highest version number. If this is not sufficient to resolve the conflict, trident will stop.
 - Individual/sample names (`Poseidon_ID`s) within one package have to be unique, or trident will stop.
 - We generally also discourage ID duplicates across packages in package repositories, but trident will generally continue with them after printing a warning. This does not apply for `validate`, by default (you can change this behaviour with `--ignoreDuplicates`), and `forge`. `forge` offers a special mechanism to resolve duplicates within its selection language (see below).
 
@@ -237,8 +204,7 @@ The output package of `init` is created as a new directory `-o`, which should no
 Usage: trident fetch (-d|--baseDir DIR)
                      (--downloadAll |
                        (--fetchFile ARG | (-f|--fetchString ARG)))
-                     [--remoteURL ARG]
-
+                     [--remoteURL ARG] [-u|--upgrade]
   Download data from a remote Poseidon repository
 
 Available options:
@@ -259,7 +225,8 @@ Available options:
                            include these groups or individuals are included in
                            the download.
   --remoteURL ARG          URL of the remote Poseidon server
-                           (default: "https://server.poseidon-adna.org")
+                           (default: "https://c107-224.cloud.gwdg.de")
+  -u,--upgrade             overwrite outdated local package versions
 ```
 
 </details>
@@ -268,16 +235,18 @@ It works with
 
 ```
 trident fetch -d ... -d ... \
-  -f "*package_title_1*,*package_title_2*,*package_title_3*,group_name,<individual1>"
+  -f "*package_title_1*,*package_title_2*,*package_title_3*,group_name,<Individual1>"
 ```
 
 and the entities you want to download must be listed either in a simple string of comma-separated values, which can be passed via `-f`/`--fetchString`, or in a text file (`--fetchFile`). Entities are then combined from these sources.
 
-Entities are specified using a special syntax (see also the documentation of `forge` below): Package titles are wrapped in asterisks: `*package_title*`, group names are spelled as is, and individual names are wrapped in angular brackets, so `<individual1>`. Fetch will figure out which packages need to be downloaded to include all specified entities. `--downloadAll`, which can be given instead of `-f` and `--fetchFile`, causes fetch to download all packages from the server. The downloaded packages are added in the first (!) `-d` directory (which gets created if it doesn't exist), but downloads are only performed if the respective packages are not already present in the latest version in any of the `-d` dirs.
+Entities are specified using a special syntax (see also the documentation of `forge` below): Package titles are wrapped in asterisks: *package_title*, group names are spelled as is, and individual names are wrapped in angular brackets, liks `<Individual1>`. Fetch will figure out which packages need to be downloaded to include all specified entities. `--downloadAll`, which can be given instead of `-f` and `--fetchFile`, causes fetch to download all packages from the server. The downloaded packages are added in the first (!) `-d` directory (which gets created if it doesn't exist), but downloads are only performed if the respective packages are not already present in an up-to-date version in any of the `-d` dirs.
 
 Note that `trident fetch` makes most sense in combination with `trident list --remote`: First one can inspect what is available on the server, then one can create a custom fetch command.
 
 `fetch` also has the optional arguments `--remote https:://..."` to name an alternative poseidon server. The default points to the [DAG server](repo_overview). 
+
+To overwrite outdated package versions with `fetch`, the `-u`/`--upgrade` flag has to be set. Note that many file systems do not offer a way to recover overwritten files. So be careful with this switch.
 
 #### Forge command
 
@@ -674,7 +643,6 @@ If any of these applies to a package in the search directory (`--baseDir`/`-d`),
 Usage: trident list ((-d|--baseDir DIR) | --remote [--remoteURL ARG])
                     (--packages | --groups | --individuals
                       [-j|--jannoColumn JANNO_HEADER]) [--raw]
-
   List packages, groups or individuals from local or remote Poseidon
   repositories
 
@@ -685,7 +653,7 @@ Available options:
   --remote                 list packages from a remote server instead the local
                            file system
   --remoteURL ARG          URL of the remote Poseidon server
-                           (default: "https://server.poseidon-adna.org")
+                           (default: "https://c107-224.cloud.gwdg.de")
   --packages               list all packages
   --groups                 list all groups, ignoring any group names after the
                            first as specified in the Janno-file
@@ -696,6 +664,7 @@ Available options:
                            Date_C14_Uncal_BP, Endogenous, ...
   --raw                    output table as tsv without header. Useful for piping
                            into grep or awk
+  --ignoreGeno             ignore SNP and GenoFile
 ```
 
 </details>
@@ -706,7 +675,19 @@ To list packages from your local repositories, as seen above you can run
 trident list -d ... -d ... --packages
 ```
 
-This will yield a nicely formatted table of all packages, their last update and the number of individuals in it.
+This will yield a table like this
+
+```
+.-----------------------------------------.------------.----------------.
+|                  Title                  |    Date    | Nr Individuals |
+:=========================================:============:================:
+| 2015_1000Genomes_1240K_haploid_pulldown | 2020-08-10 | 2535           |
+| 2016_Mallick_SGDP1240K_diploid_pulldown | 2020-08-10 | 280            |
+| 2018_BostonDatashare_modern_published   | 2020-08-10 | 2772           |
+| ...                                     | ...        |                |
+'-----------------------------------------'------------'----------------'
+```
+so a nicely formatted table of all packages, their last update and the number of individuals in it.
 
 To view packages on the remote server, instead of using directories to specify the locations of repositories on your system, you can use `--remote` to show packages on the remote server. For example
 
@@ -716,9 +697,9 @@ trident list --packages --remote
 
 will result in a view of all published packages in our [public online repository](repo_overview).
 
-You can also list groups, as defined in the third column of EIGENSTRAT `.ind` files (or the first/last column of a PLINK `.fam` file), and individuals with `--groups` and `--individuals` instead of `--packages`.
+You can also list groups, as defined in the third column of EIGENSTRAT `.ind` files (or the first column of a PLINK `.fam` file), and individuals with `--groups` and `--individuals` instead of `--packages`.
 
-The `--individuals` flag provides a way to immediately access information from the `.janno` files on the command line. This works with the `-j`/`--jannoColumn` option. For example adding `-j Country -j Date_C14_Uncal_BP` to the commands above will add the `Country` and the `Date_C14_Uncal_BP` columns to the respective output tables.
+The `--individuals` flag provides a way to immediately access information from the `.janno` files on the command line. This works with the `-j`/`--jannoColumn` option. For example adding `--jannoColum Country --jannoColumn Date_C14_Uncal_BP` to the commands above will add the `Country` and the `Date_C14_Uncal_BP` columns to the respective output tables.
 
 Note that if you want a less fancy table, for example because you want to load this into Excel, or pipe into another command that cannot deal with the neat table layout, you can use the `--raw` option to output that table as a simple tab-delimited stream.
 
@@ -828,38 +809,3 @@ and it will either report a success (`Validation passed ✓`) or failure with sp
 In fact much of this validation already runs as part of the general package reading pipeline invoked for many trident subcommands (e.g. `forge`). `validate` is meant to be more thorough, though, and will explicitly fail if even a single package is broken.
 
 Remember to run it with `--logMode VerboseLog` to get more information if the output is not sufficient to debug an issue.
-
-
-#### **v1.1.11.0 to v1.1.12.0**
-
-[filename](trident_guide_archive/trident_guide_1.1.11.0_to_1.1.12.0.md ':include')
-
-#### **v1.1.10.2**
-
-[filename](trident_guide_archive/trident_guide_1.1.10.2.md ':include')
-
-#### **v1.1.7.0**
-
-[filename](trident_guide_archive/trident_guide_1.1.7.0.md ':include')
-
-#### **v1.1.6.0**
-
-[filename](trident_guide_archive/trident_guide_1.1.6.0.md ':include')
-
-#### **v1.1.0.0 to v1.1.4.2**
-
-[filename](trident_guide_archive/trident_guide_1.1.0.0_to_1.1.4.2.md ':include')
-
-#### **v1.0.0.0**
-
-[filename](trident_guide_archive/trident_guide_1.0.0.0.md ':include')
-
-#### **v0.29.0**
-
-[filename](trident_guide_archive/trident_guide_0.29.0.md ':include')
-
-#### **v0.28.0**
-
-[filename](trident_guide_archive/trident_guide_0.28.0.md ':include')
-
-<!-- tabs:end -->
