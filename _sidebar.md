@@ -21,7 +21,7 @@
 	* [janno R package](janno_r_package.md)
 * **The Poseidon Repositories**
 	* [Public repositories](repo_overview.md)
-	* [Web API](server.md)
+	* [Web API](web_api.md)
 	* [Submission guide](repo_submission_guide.md)
 	* [<i class="fas fa-globe-europe" aria-hidden="true"></i> Public repository viewer](https://poseidon-framework.github.io/published_data)
 	<!-- * [Experimental Repository Explorer](repo_explorer.md) -->

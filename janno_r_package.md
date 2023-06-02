@@ -1,4 +1,4 @@
-# janno R package
+# janno R package <!-- {docsify-ignore-all} -->
 
 janno (formerly known as poseidonR) is an R package to simplify the interaction with .janno files in Poseidon packages. It provides a dedicated R S3 class `janno` that inherits from `tibble` and allows to tidily read and manipulate the context information stored in them. The code is available on [GitHub](https://github.com/poseidon-framework/janno/).
 
