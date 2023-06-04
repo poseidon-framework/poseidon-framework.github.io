@@ -10,10 +10,13 @@
       }
     },
     async mounted () {
-      const response_pacs = await fetch("https://c107-224.cloud.gwdg.de/packages_all")
-      const pacs = await response_pacs.json()
-      const response_groups = await fetch("https://c107-224.cloud.gwdg.de/groups_all")
-      const groups = await response_groups.json()
+      const response_pacs = await fetch("https://server.poseidon-adna.org/packages")
+      const response_pacs_json = await response_pacs.json()
+      const pacs = response_pacs_json.serverResponse.packageInfo
+      const response_groups = await fetch("https://server.poseidon-adna.org/groups")
+      const groups_json = await response_groups.json()
+      const groups = groups_json.serverResponse.groupInfo
+      console.log(groups)
       this.packages = pacs
       this.groups = groups
     }
@@ -43,7 +46,7 @@
       <tr v-for="pac in packages">
         <th>{{pac.title}}</td>
         <td>{{pac.description}}</td>
-        <td>{{pac.version}}</td>
+        <td>{{pac.packageVersion}}</td>
         <td>{{pac.nrIndividuals}}</td>
       </tr>
       </tbody>
@@ -61,8 +64,8 @@
       </thead>
       <tbody>
       <tr v-for="group in groups">
-        <th>{{group.name}}</td>
-        <td>{{group.packages.join(', ')}}</td>
+        <th>{{group.groupName}}</td>
+        <td>{{group.packageNames.map(x => x.packageTitle).join(', ')}}</td>
         <td>{{group.nrIndividuals}}</td>
       </tr>
       </tbody>
