@@ -2,7 +2,7 @@
 
 # The Poseidon package <!-- {docsify-ignore-all} -->
 
-Overview tables of the pre-defined fields and columns in the `POSEIDON.yml`, `.janno` and `.ssf` file:
+The pre-defined fields and columns in the `POSEIDON.yml`, `.janno` and `.ssf` file for the latest schema version **v2.7.1**:
 
 <script>
   Vue.createApp({
@@ -14,12 +14,21 @@ Overview tables of the pre-defined fields and columns in the `POSEIDON.yml`, `.j
       }
     },
     async mounted () {
+      const ymlResponse = await fetch(
+        "https://raw.githubusercontent.com/poseidon-framework/poseidon2-schema/master/POSEIDON_yml_fields.tsv"
+      );
+      const ymlTSVData = await ymlResponse.text();
+      this.ymlDefFileRows = this.parseTSV(ymlTSVData);
       const jannoResponse = await fetch(
         "https://raw.githubusercontent.com/poseidon-framework/poseidon2-schema/master/janno_columns.tsv"
       );
       const jannoTSVData = await jannoResponse.text();
-      const jannoDefFileRows = this.parseTSV(jannoTSVData);
-      this.jannoDefFileRows = jannoDefFileRows;
+      this.jannoDefFileRows = this.parseTSV(jannoTSVData);
+      const ssfResponse = await fetch(
+        "https://raw.githubusercontent.com/poseidon-framework/poseidon2-schema/master/ssf_columns.tsv"
+      );
+      const ssfTSVData = await ssfResponse.text();
+      this.ssfDefFileRows = this.parseTSV(ssfTSVData);
     },
     methods: {
       parseTSV(csvData) {
@@ -49,76 +58,85 @@ Overview tables of the pre-defined fields and columns in the `POSEIDON.yml`, `.j
 
 <details>
   <summary>Overview table of the fields in the POSEIDON.yml file.</summary>
-  <div>Selected: {{selected_entity_type}}</div>
-  <div v-if="jannoDefFileRows">
-    <p>loaded {{jannoDefFileRows.length}} rows</p>
+  <div v-if="ymlDefFileRows">
+    <p>{{ymlDefFileRows.length}} fields</p>
     <table>
       <thead>
         <tr>
-          <th>Title</th>
+          <th>Field</th>
+          <th>Description</th>
         </tr>
       </thead>
       <tbody>
-      <tr v-for="jannoDefFileRow in jannoDefFileRows">
-        <th>{{jannoDefFileRow.janno_column_name}}</td>
+      <tr v-for="ymlDefFileRow in ymlDefFileRows">
+        <td>{{ymlDefFileRow.field}}</td>
+        <td>{{ymlDefFileRow.description}}</td>
       </tr>
       </tbody>
     </table>
   </div>
-  <div v-else><i>...fetching data from poseidon package server</i></div>
+  <div v-else><i>...fetching data from GitHub</i></div>
 </details>
+
+See the full table with more precise data type definitions here: [POSEIDON_yml_fields.tsv](https://github.com/poseidon-framework/poseidon-schema/blob/master/POSEIDON_yml_fields.tsv)
 
 #### **.janno variables**
 
 <details>
   <summary>Overview table of the columns in the .janno file.</summary>
-  <div>Selected: {{selected_entity_type}}</div>
   <div v-if="jannoDefFileRows">
-    <p>loaded {{jannoDefFileRows.length}} rows</p>
+    <p>{{jannoDefFileRows.length}} variables</p>
     <table>
       <thead>
         <tr>
-          <th>Title</th>
+          <th>Variable</th>
+          <th>Description</th>
         </tr>
       </thead>
       <tbody>
       <tr v-for="jannoDefFileRow in jannoDefFileRows">
-        <th>{{jannoDefFileRow.janno_column_name}}</td>
+        <td>{{jannoDefFileRow.janno_column_name}}</td>
+        <td>{{jannoDefFileRow.description}}</td>
       </tr>
       </tbody>
     </table>
   </div>
-  <div v-else><i>...fetching data from poseidon package server</i></div>
+  <div v-else><i>...fetching data from GitHub</i></div>
 </details>
+
+See the full table with more precise data type definitions here: [janno_columns.tsv](https://github.com/poseidon-framework/poseidon-schema/blob/master/janno_columns.tsv)
 
 #### **.ssf variables**
 
 <details>
   <summary>Overview table of the columns in the .ssf file.</summary>
-  <div>Selected: {{selected_entity_type}}</div>
-  <div v-if="jannoDefFileRows">
-    <p>loaded {{jannoDefFileRows.length}} rows</p>
+  <div v-if="ssfDefFileRows">
+    <p>{{ssfDefFileRows.length}} variables</p>
     <table>
       <thead>
         <tr>
-          <th>Title</th>
+          <th>Variable</th>
+          <th>Description</th>
         </tr>
       </thead>
       <tbody>
-      <tr v-for="jannoDefFileRow in jannoDefFileRows">
-        <th>{{jannoDefFileRow.janno_column_name}}</td>
+      <tr v-for="ssfDefFileRow in ssfDefFileRows">
+        <td>{{ssfDefFileRow.sequencingSourceFile_column_name}}</td>
+        <td>{{ssfDefFileRow.description}}</td>
       </tr>
       </tbody>
     </table>
   </div>
-  <div v-else><i>...fetching data from poseidon package server</i></div>
+  <div v-else><i>...fetching data from GitHub</i></div>
 </details>
+
+See the full table with more precise data type definitions here: [ssf_columns.tsv](https://github.com/poseidon-framework/poseidon-schema/blob/master/ssf_columns.tsv)
 
 <!-- tabs:end -->
 
 </div>
 
-The formal definition of the package format, mirrored from the [poseidon-schema repository](https://github.com/poseidon-framework/poseidon-schema):
+The current and older version of the formal definition of the package format, mirrored from the [poseidon-schema repository](https://github.com/poseidon-framework/poseidon-schema):
 
 <!-- tabs:start -->
 
