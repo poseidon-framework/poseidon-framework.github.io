@@ -40,9 +40,10 @@
     <div class="grid-symbol"><i class="fas fa-clipboard-list" aria-hidden="true"></i></div>
     Poseidon provides a standardized <b>package format</b> for genotype and context data
     <ul>
-      <li>The Poseidon <a href="#standard">package definition standard</a></li>
-      <li>How we store <a href="#genotype_data">genotype data</a></li>
-      <li>How we store context data in the <a href="#janno_details">.janno file</a></li>
+      <li>The Poseidon <a href="#standard">package standard</a></li>
+      <li>How we define and store <a href="#genotype_data">genotype data</a></li>
+      <li>How we include context data in the <a href="#janno_details">.janno file</a></li>
+      <li>How we reference raw sequencing data with the <a href="#ssf_details">.ssf file</a></li>
     </ul> 
   </div>
   <div class="grid-element">
@@ -51,15 +52,18 @@
     <ul>
       <li>The <a href="#trident">trident</a> CLI software for data management</li>
       <li>The <a href="#xerxes">xerxes</a> CLI software for data analysis</li>
-      <li>The <a href="#janno">janno</a> package for handling .janno files in R</li>
+      <li>The <a href="#qjanno">qjanno</a> CLI software for querying .janno files with SQL statements</li>
+      <li>The <a href="#janno_r_package">janno</a> package for handling .janno files in R</li>
     </ul>
   </div>
   <div class="grid-element">
     <div class="grid-symbol"><i class="fas fa-download" aria-hidden="true"></i></div>
-    Poseidon features publicly hosted and curated <b>package repositories</b> of published data
+    Poseidon features publicly hosted and curated <b>package archives</b> of published data
     <ul>
-      <li>A <a href="#repo_overview">guide</a> explains the repositories and how to contribute to them</li>
-      <li style="color: #7CFC00">An <a href="https://poseidon-framework.github.io/published_data">overview and download</a> page features all public Poseidon packages</li>
+      <li>A <a href="#repo_overview">guide</a> explains the repositories</li>
+      <li>And how to <a href="#repo_submission_guide">contribute data</a></li>
+      <li>Our server software provides an open <a href="#web_api">Web-API</a> to access packages</li>
+      <li style="color: #7CFC00">Which enables an <a href="https://poseidon-framework.github.io/published_data">overview and download</a> page to browse the archives</li>
     </ul>
   </div>
 </div>
