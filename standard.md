@@ -1,6 +1,124 @@
 <!-- Subheaders will be ignored here https://docsify.js.org/#/more-pages?id=ignoring-subheaders -->
 
-##### [Mirrored from the poseidon-schema repository](https://github.com/poseidon-framework/poseidon-schema) <!-- {docsify-ignore-all} -->
+# The Poseidon package <!-- {docsify-ignore-all} -->
+
+Overview tables of the pre-defined fields and columns in the `POSEIDON.yml`, `.janno` and `.ssf` file:
+
+<script>
+  Vue.createApp({
+    data () {
+     return {
+        ymlDefFileRows: null,
+        jannoDefFileRows: null,
+        ssfDefFileRows: null,
+      }
+    },
+    async mounted () {
+      const jannoResponse = await fetch(
+        "https://raw.githubusercontent.com/poseidon-framework/poseidon2-schema/master/janno_columns.tsv"
+      );
+      const jannoTSVData = await jannoResponse.text();
+      const jannoDefFileRows = this.parseTSV(jannoTSVData);
+      this.jannoDefFileRows = jannoDefFileRows;
+    },
+    methods: {
+      parseTSV(csvData) {
+        const lines = csvData.split("\n");
+        const headers = lines[0].split("\t");
+        const rows = [];
+        for (let i = 1; i < lines.length; i++) {
+          const values = lines[i].split("\t");
+          if (values.length !== headers.length) continue;
+          const row = {};
+          for (let j = 0; j < headers.length; j++) {
+            row[headers[j]] = values[j];
+          }
+          rows.push(row);
+        }
+        return rows;
+      }
+    }
+  }).mount('#defFileViewer');
+</script>
+
+<div id="defFileViewer">
+
+<!-- tabs:start -->
+
+#### **POSEIDON.yml variables**
+
+<details>
+  <summary>Overview table of the fields in the POSEIDON.yml file.</summary>
+  <div>Selected: {{selected_entity_type}}</div>
+  <div v-if="jannoDefFileRows">
+    <p>loaded {{jannoDefFileRows.length}} rows</p>
+    <table>
+      <thead>
+        <tr>
+          <th>Title</th>
+        </tr>
+      </thead>
+      <tbody>
+      <tr v-for="jannoDefFileRow in jannoDefFileRows">
+        <th>{{jannoDefFileRow.janno_column_name}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <div v-else><i>...fetching data from poseidon package server</i></div>
+</details>
+
+#### **.janno variables**
+
+<details>
+  <summary>Overview table of the columns in the .janno file.</summary>
+  <div>Selected: {{selected_entity_type}}</div>
+  <div v-if="jannoDefFileRows">
+    <p>loaded {{jannoDefFileRows.length}} rows</p>
+    <table>
+      <thead>
+        <tr>
+          <th>Title</th>
+        </tr>
+      </thead>
+      <tbody>
+      <tr v-for="jannoDefFileRow in jannoDefFileRows">
+        <th>{{jannoDefFileRow.janno_column_name}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <div v-else><i>...fetching data from poseidon package server</i></div>
+</details>
+
+#### **.ssf variables**
+
+<details>
+  <summary>Overview table of the columns in the .ssf file.</summary>
+  <div>Selected: {{selected_entity_type}}</div>
+  <div v-if="jannoDefFileRows">
+    <p>loaded {{jannoDefFileRows.length}} rows</p>
+    <table>
+      <thead>
+        <tr>
+          <th>Title</th>
+        </tr>
+      </thead>
+      <tbody>
+      <tr v-for="jannoDefFileRow in jannoDefFileRows">
+        <th>{{jannoDefFileRow.janno_column_name}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <div v-else><i>...fetching data from poseidon package server</i></div>
+</details>
+
+<!-- tabs:end -->
+
+</div>
+
+The formal definition of the package format, mirrored from the [poseidon-schema repository](https://github.com/poseidon-framework/poseidon-schema):
 
 <!-- tabs:start -->
 
