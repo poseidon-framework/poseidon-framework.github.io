@@ -1,8 +1,81 @@
 # Poseidon Web API
 
-To share the
+To make the data in our [Public Poseidon Archives](repo_overview) conveniently and reproducibly available we run a web server with an open and free [API](https://en.wikipedia.org/wiki/Web_API).
 
-## The Interface
+It provides the following endpoints:
+
+1. `https://server.poseidon-adna.org/packages`: returns a list of all packages.
+2. `https://server.poseidon-adna.org/groups`: returns a list of all groups.
+3. `https://server.poseidon-adna.org/individuals`: returns a list of all individuals.
+4. `https://server.poseidon-adna.org/zip_file/<package_name>?package_version=1.0.1`: returns a zip file of the package with the given name and the given version. If no version is given, it returns the latest.
+
+The different endpoints can be accessed directly, or with additional arguments. `?client_version=...` is a general argument for all of them to check client-server compatibility (for the trident subcommands `list` and `fetch`). It defaults to the trident version of the server, so usually the latest release version.
+
+## `/packages`, `/groups`, and `/individuals`
+
+`/packages`, `/groups`, and `/individuals` return nested JSON-lists that give an overview of the data in the public data archives. These lists have the following general structure:
+
+```
+├── serverMessage
+│   ├── 0
+│   ├── 1
+│   └── ...
+└── serverResponse
+    ├── constructor
+    └── packageInfo | groupInfo | extIndInfo
+        ├── 0
+        ├── 1
+        └── ...
+```
+
+`packageInfo`, `groupInfo`, and `extIndInfo` are lists of objects, where each object has the following fields:
+
+<table>
+<tr>
+<th>packageInfo</th>
+<th>groupInfo</th>
+<th>extIndInfo</th>
+</tr>
+<tr>
+<td style="vertical-align:top">
+
+```
+title
+description
+packageVersion
+lastModified
+poseidonVersion
+nrIndividuals
+```
+</td>
+<td style="vertical-align:top">
+
+```
+groupName
+packageNames []
+nrIndividuals
+```
+</td>
+<td style="vertical-align:top">
+
+```
+Poseidon_ID
+Group_Names []
+packageTitle
+packageVersion
+additionalJannoColumns []
+```
+</td>
+</tr>
+</table>
+
+
+## `/zip_file`
+
+&additionalJannoColumns=
+
+
+The return data type JSON
 
 We have a webserver running, which currently has several APIs implemented (see [server](server)), including
 
@@ -17,12 +90,7 @@ All Server-APIs except for `zip_file` now return a complex JSON datatype with se
 
 All APIs except for `zip_file` also accept an additional parameter `?client_version=X.X.X`, so that the server may in the future respond to old clients that an update is needed in order to understand the API. Our `trident list --remote` functionality already makes use of this.
 
-Here are the individual APIs:
 
-- `https://server.poseidon-adna.org/packages`: returns a list of all packages.
-- `https://server.poseidon-adna.org/groups`: returns a list of all groups.
-- `https://server.poseidon-adna.org/individuals`: returns a list of all individuals.
-- `https://server.poseidon-adna.org/zip_file/<package_name>?package_version=1.0.1`: returns a zip file of the package with the given name and the given version. If no version is given, it returns the latest.
 
 ## The server implementation
 
