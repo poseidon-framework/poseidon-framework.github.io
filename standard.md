@@ -2,7 +2,9 @@
 
 # The Poseidon package <!-- {docsify-ignore-all} -->
 
-The pre-defined fields and columns in the `POSEIDON.yml`, `.janno` and `.ssf` file for the latest schema version **v2.7.1**:
+The core idea of Poseidon is to organize genotype data together with relevant meta- and context data in a structured yet flexible, human- and machine-readable format. This format is the Poseidon package, defined in a versioned specification, openly available here: https://github.com/poseidon-framework/poseidon-schema. This page mirrors the tables and text in this schema repository.
+
+1. The pre-defined fields and columns in the `POSEIDON.yml`, `.janno` and `.ssf` file for the latest schema version **v2.7.1**:
 
 <script>
   Vue.createApp({
@@ -57,7 +59,7 @@ The pre-defined fields and columns in the `POSEIDON.yml`, `.janno` and `.ssf` fi
 #### **POSEIDON.yml variables**
 
 <details>
-  <summary>Overview table of the fields in the POSEIDON.yml file.</summary>
+  <summary><u>Overview table of the fields in the POSEIDON.yml file.</u></summary>
   <div v-if="ymlDefFileRows">
     <p>{{ymlDefFileRows.length}} fields</p>
     <table>
@@ -83,7 +85,7 @@ See the full table with more precise data type definitions here: [POSEIDON_yml_f
 #### **.janno variables**
 
 <details>
-  <summary>Overview table of the columns in the .janno file.</summary>
+  <summary><u>Overview table of the columns in the .janno file.</u></summary>
   <div v-if="jannoDefFileRows">
     <p>{{jannoDefFileRows.length}} variables</p>
     <table>
@@ -109,7 +111,7 @@ See the full table with more precise data type definitions here: [janno_columns.
 #### **.ssf variables**
 
 <details>
-  <summary>Overview table of the columns in the .ssf file.</summary>
+  <summary><u>Overview table of the columns in the .ssf file.</u></summary>
   <div v-if="ssfDefFileRows">
     <p>{{ssfDefFileRows.length}} variables</p>
     <table>
@@ -136,7 +138,7 @@ See the full table with more precise data type definitions here: [ssf_columns.ts
 
 </div>
 
-The current and older version of the formal definition of the package format, mirrored from the [poseidon-schema repository](https://github.com/poseidon-framework/poseidon-schema):
+2. The current and older version of the formal definition of the package format, mirrored from the [poseidon-schema repository](https://github.com/poseidon-framework/poseidon-schema):
 
 <!-- tabs:start -->
 
