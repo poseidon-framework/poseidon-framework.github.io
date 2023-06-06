@@ -71,8 +71,25 @@ The core idea of Poseidon is to organize genotype data together with relevant me
       </thead>
       <tbody>
       <tr v-for="ymlDefFileRow in ymlDefFileRows">
-        <td>{{ymlDefFileRow.field}}</td>
-        <td>{{ymlDefFileRow.description}}</td>
+        <td>
+          <div style="max-width: 15ch;word-wrap:break-word;">
+            {{ymlDefFileRow.field}}<sup v-if="ymlDefFileRow.mandatory == 'TRUE'">*</sup>
+          </div>
+        </td>
+        <td>
+          <div>
+            {{ymlDefFileRow.description}}
+          </div>
+          <div v-if="ymlDefFileRow.parent">
+            <u>subfield of:</u> {{ymlDefFileRow.parent}}
+          </div>
+          <div v-if="ymlDefFileRow.type">
+            <u>type:</u> {{ymlDefFileRow.type}}
+          </div>
+          <div v-if="ymlDefFileRow.format">
+            <u>format:</u> {{ymlDefFileRow.format}}
+          </div>
+        </td>
       </tr>
       </tbody>
     </table>
@@ -80,7 +97,7 @@ The core idea of Poseidon is to organize genotype data together with relevant me
   <div v-else><i>...fetching data from GitHub</i></div>
 </details>
 
-See the full table with more precise data type definitions here: [POSEIDON_yml_fields.tsv](https://github.com/poseidon-framework/poseidon-schema/blob/master/POSEIDON_yml_fields.tsv)
+See the machine-readable table with precise data type definitions here: [POSEIDON_yml_fields.tsv](https://github.com/poseidon-framework/poseidon-schema/blob/master/POSEIDON_yml_fields.tsv)
 
 #### **.janno variables**
 
@@ -97,8 +114,28 @@ See the full table with more precise data type definitions here: [POSEIDON_yml_f
       </thead>
       <tbody>
       <tr v-for="jannoDefFileRow in jannoDefFileRows">
-        <td>{{jannoDefFileRow.janno_column_name}}</td>
-        <td>{{jannoDefFileRow.description}}</td>
+        <td>
+          <div style="max-width: 15ch;word-wrap:break-word;">
+            {{jannoDefFileRow.janno_column_name}}<sup v-if="jannoDefFileRow.mandatory == 'TRUE'">*</sup>
+          </div>
+        </td>
+        <td>
+          <div>
+            {{jannoDefFileRow.description}}
+          </div>
+          <div v-if="jannoDefFileRow.multi == 'TRUE'">
+            <u>list column</u>
+          </div>
+          <div v-if="jannoDefFileRow.data_type">
+            <u>type:</u> {{jannoDefFileRow.data_type}}
+          </div>
+          <div v-if="jannoDefFileRow.choice == 'TRUE'">
+            <u>allowed values:</u> {{jannoDefFileRow.choice_options}}
+          </div>
+          <div v-if="jannoDefFileRow.range == 'TRUE'">
+            <u>allowed range:</u> {{jannoDefFileRow.range_lower}} - {{jannoDefFileRow.range_upper}}
+          </div>
+        </td>
       </tr>
       </tbody>
     </table>
@@ -106,7 +143,7 @@ See the full table with more precise data type definitions here: [POSEIDON_yml_f
   <div v-else><i>...fetching data from GitHub</i></div>
 </details>
 
-See the full table with more precise data type definitions here: [janno_columns.tsv](https://github.com/poseidon-framework/poseidon-schema/blob/master/janno_columns.tsv)
+See the machine-readable table with precise data type definitions here: [janno_columns.tsv](https://github.com/poseidon-framework/poseidon-schema/blob/master/janno_columns.tsv)
 
 #### **.ssf variables**
 
@@ -123,8 +160,28 @@ See the full table with more precise data type definitions here: [janno_columns.
       </thead>
       <tbody>
       <tr v-for="ssfDefFileRow in ssfDefFileRows">
-        <td>{{ssfDefFileRow.sequencingSourceFile_column_name}}</td>
-        <td>{{ssfDefFileRow.description}}</td>
+        <td>
+          <div style="max-width: 15ch;word-wrap:break-word;">
+            {{ssfDefFileRow.sequencingSourceFile_column_name}}<sup v-if="ssfDefFileRow.mandatory == 'TRUE'">*</sup>
+          </div>
+        </td>
+        <td>
+          <div>
+            {{ssfDefFileRow.description}}
+          </div>
+          <div v-if="ssfDefFileRow.multi == 'TRUE'">
+            <u>list column</u>
+          </div>
+          <div v-if="ssfDefFileRow.data_type">
+            <u>type:</u> {{ssfDefFileRow.data_type}}
+          </div>
+          <div v-if="ssfDefFileRow.choice == 'TRUE'">
+            <u>allowed values:</u> {{ssfDefFileRow.choice_options}}
+          </div>
+          <div v-if="ssfDefFileRow.range == 'TRUE'">
+            <u>allowed range:</u> {{ssfDefFileRow.range_lower}} - {{ssfDefFileRow.range_upper}}
+          </div>
+        </td>
       </tr>
       </tbody>
     </table>
@@ -132,7 +189,7 @@ See the full table with more precise data type definitions here: [janno_columns.
   <div v-else><i>...fetching data from GitHub</i></div>
 </details>
 
-See the full table with more precise data type definitions here: [ssf_columns.tsv](https://github.com/poseidon-framework/poseidon-schema/blob/master/ssf_columns.tsv)
+See the machine-readable table with precise data type definitions here: [ssf_columns.tsv](https://github.com/poseidon-framework/poseidon-schema/blob/master/ssf_columns.tsv)
 
 <!-- tabs:end -->
 
