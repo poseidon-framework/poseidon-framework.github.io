@@ -20,6 +20,7 @@
 	* [qjanno CLI software](qjanno.md)
 	* [poseidon-http-server](server.md)
 	* [janno R package](janno_r_package.md)
+	* [Developer notes](dev_notes.md)
 * **<i class="fas fa-download" aria-hidden="true"></i>&nbsp; The Poseidon Archives**
 	* [Public repositories](repo_overview.md)
 	* [Submission guide](repo_submission_guide.md)
