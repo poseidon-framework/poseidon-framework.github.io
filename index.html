@@ -152,6 +152,13 @@
           hook.afterEach(function(html) {
             return header + html + footer;
           });
+          // mermaid bug fix: https://github.com/Leward/mermaid-docsify/issues/31
+          hook.doneEach(function () {
+            let mermaidConfig = {
+              querySelector: ".mermaid",
+            };
+            mermaid.run(mermaidConfig);
+          });
         }
       ]
     }
@@ -177,6 +184,6 @@
     window.mermaid = mermaid;
   </script>
   <script src="//unpkg.com/docsify-mermaid@2.0.0/dist/docsify-mermaid.js"></script>
-  
+
 </body>
 </html>
