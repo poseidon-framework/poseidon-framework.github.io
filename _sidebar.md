@@ -19,16 +19,16 @@
 	* [trident CLI software](trident.md)
 	* [xerxes CLI software](xerxes.md)
 	* [qjanno CLI software](qjanno.md)
-	* [poseidon-http-server](server.md)
 	* [janno R package](janno_r_package.md)
 	* [Developer notes](dev_notes.md)
 * **<i class="fas fa-download" aria-hidden="true"></i>&nbsp; The Poseidon Archives**
 	* [Public repositories](repo_overview.md)
+	* [Web API](web_api.md)
 	* [Submission guide](repo_submission_guide.md)
-	* [Public repository viewer](https://poseidon-framework.github.io/published_data)
+	* [<i class="fas fa-globe-europe" aria-hidden="true"></i> Public repository viewer](https://poseidon-framework.github.io/published_data)
 	<!-- * [Experimental Repository Explorer](repo_explorer.md) -->
 * **Context**
 	* [Code of Conduct](conduct.md)
 	* [Licensing](licenses.md)
 	* [Acknowledgements](acknowledgements.md)
-	* [This page on Github](https://github.com/poseidon-framework/poseidon-framework.github.io)
+	* [<i class="fab fa-github" aria-hidden="true"></i> This page on Github](https://github.com/poseidon-framework/poseidon-framework.github.io)

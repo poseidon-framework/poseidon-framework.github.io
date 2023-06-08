@@ -69,7 +69,7 @@ ggsave(
   scale = 4,
   units = "px",
   width = 150,
-  height = 310,
+  height = 312,
   dpi = 150
 )
   
