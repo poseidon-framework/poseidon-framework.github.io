@@ -38,10 +38,10 @@ The endpoints can be accessed directly, or with additional arguments. These have
 
 ```
 packageInfo[i]
-├── title
-├── description
+├── packageTitle
 ├── packageVersion
 ├── lastModified
+├── description
 ├── poseidonVersion
 └── nrIndividuals
 ```
@@ -51,7 +51,8 @@ packageInfo[i]
 ```
 groupInfo[i]
 ├── groupName
-├── packageNames []
+├── packageTitle
+├── packageVersion
 └── nrIndividuals
 ```
 </td>
@@ -59,8 +60,8 @@ groupInfo[i]
 
 ```
 extIndInfo[i]
-├── Poseidon_ID
-├── Group_Names []
+├── poseidonID
+├── groupNames []
 ├── packageTitle
 ├── packageVersion
 └── additionalJannoColumns []
