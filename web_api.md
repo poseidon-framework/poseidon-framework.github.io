@@ -1,6 +1,6 @@
 # Poseidon Web API
 
-To make the data in our [Public Poseidon Archives](repo_overview) conveniently and reproducibly available we run a web server with an open and free [API](https://en.wikipedia.org/wiki/Web_API).
+To make the data in our [Public Poseidon Archives](repo_overview) conveniently and reproducibly available we run a web server with an open [API](https://en.wikipedia.org/wiki/Web_API).
 
 It provides the following endpoints:
 

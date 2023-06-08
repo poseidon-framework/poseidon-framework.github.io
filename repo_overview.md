@@ -6,7 +6,7 @@ At the moment there are two archives: [published_data](https://github.com/poseid
 
 ## How to access this data
 
-While we're planning a more interactive web interface to explore the available data, at this point you can reach it i) through a simple [Public repository viewer](https://poseidon-framework.github.io/published_data/) webpage, ii) through our [Web-API](web_api), or iii) through the [`fetch`](trident#fetch-command) command of the trident command line software.
+While we're planning a more interactive web interface to explore the available data, at this point you can reach it i) through a simple [Public repository viewer](https://poseidon-framework.github.io/published_data/) webpage, ii) through our [Web-API](web_api), or iii) through the [`fetch`](trident#fetch-command) and [`list --remote`](trident#list-command) commands of the trident command line software.
 
 ### Our git repositories
 
