@@ -28,8 +28,11 @@ For historical reasons the PCA does not only contain author submissions, though.
 
 ## The Poseidon Minotaur Archive (PMA)
 
-...
+<!-- ToDo: Fix links! -->
 
+The Poseidon Minotaur Archive ([on GitHub: <i class="fab fa-github" aria-hidden="true"></i>](https://github.com/poseidon-framework/...)) mirrors the PCA in that is features publication-wise packages, sometimes even the very same as the PCA. To distinguish them clearly, package titles and sample-wise Poseidon_IDs in the PMA carry the suffix `_MNT` (for "MiNoTaur").
+
+**Packages in the PMA include consistently reprocessed genotype data**, run through the [Minotaur workflow](...). Consitent bioinformatic processing across publications is an important quality for meta-analysis. So while the context information in the .janno file between PCA and PMA is identical to some degree, the PMA packages fulfill an important property for data reuse beyond paper-wise reproducibility.
 
 ## The Poseidon AADR Archive (PAA)
 
