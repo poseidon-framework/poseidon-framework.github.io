@@ -1,6 +1,6 @@
 # Public Poseidon Archives
 
-We, so the [Department of Archaeogenetics](https://www.eva.mpg.de/archaeogenetics/index.html) at the Max Planck Institute for Evolutionary Anthropology and many affiliated colleagues around the world, maintain public repositories that serves as a central hub for most data we use, produce and publish.
+We, so the [Department of Archaeogenetics](https://www.eva.mpg.de/archaeogenetics/index.html) at the Max Planck Institute for Evolutionary Anthropology and many colleagues around the world, maintain public repositories that serves as a central hub for most data we use, produce and publish.
 
 At the moment there are three archives, which are described below:
 
@@ -24,17 +24,16 @@ The Poseidon Community Archive ([on GitHub: <i class="fab fa-github" aria-hidden
 
 **The PCA focusses on author submissions**, so Poseidon packages prepared by the authors of the packaged publication, containing exactly the genotype data used for the analysis in the paper. This ensures a high degree of computational reproducibility. Author submissions are also ideal for the context data in the .janno file, because the respective domain-experts are generally most knowledgable on the spatiotemporal origin of their samples.
 
-For historical reasons the PCA does not only contain author submissions, though. To kickstart the public archive development in 2020, we prepopulated it with data from the AADR and directly incorportated publications without explicit author involvement. This data will remain in the PCA to maintain established workflows. Authors and other community members are always welcome to step up, take ownership and improve the quality of these datasets, in case the current state is not satisfactory.
+For historical reasons the PCA does not only contain author submissions, though. To kickstart the public archive development in 2020, we prepopulated it with data from the AADR and directly incorportated publications without explicit author involvement. This legacy data will remain in the PCA to maintain established workflows. Authors and other community members are always welcome to step up, take ownership and improve the quality of these datasets, in case the current state is not satisfactory.
 
 ## The Poseidon Minotaur Archive (PMA)
 
 <!-- ToDo: Fix links! -->
 
-The Poseidon Minotaur Archive ([on GitHub: <i class="fab fa-github" aria-hidden="true"></i>](https://github.com/poseidon-framework/...)) mirrors the PCA in that is features publication-wise packages, sometimes even the very same as the PCA. To distinguish them clearly, package titles and sample-wise Poseidon_IDs in the PMA carry the suffix `_MNT` (for "MiNoTaur").
+The Poseidon Minotaur Archive ([on GitHub: <i class="fab fa-github" aria-hidden="true"></i>](https://github.com/poseidon-framework/...)) mirrors the PCA in that it features publication-wise packages, sometimes even the very same as the PCA. To distinguish them clearly, package titles and sample-wise Poseidon_IDs in the PMA carry the suffix `_MNT` (for "MiNoTaur").
 
 **Packages in the PMA include consistently reprocessed genotype data**, run through the [Minotaur workflow](...). Consitent bioinformatic processing across publications is an important quality for meta-analysis. So while the context information in the .janno file between PCA and PMA is identical to some degree, the PMA packages fulfill an important property for data reuse beyond paper-wise reproducibility.
 
 ## The Poseidon AADR Archive (PAA)
 
-...
-
+The Poseidon AADR Archive ([on GitHub: <i class="fab fa-github" aria-hidden="true"></i>](https://github.com/poseidon-framework/...)) is the conceptionally most simple archive. It features "poseidonized" versions of releases of the [Allen Ancient DNA Resource (AADR)](https://reich.hms.harvard.edu/allen-ancient-dna-resource-aadr-downloadable-genotypes-present-day-and-ancient-dna-data). The code for the cleaning and packaging process is documented [here](https://github.com/poseidon-framework/aadr2poseidon). Due to file size limitations of GitHub's LFS system each AADR dataset is split into smaller sub-packages by data type and geographic origin.
