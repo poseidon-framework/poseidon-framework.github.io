@@ -22,11 +22,11 @@
 	* [janno R package](janno_r_package.md)
 	* [Developer notes](dev_notes.md)
 * **<i class="fas fa-download" aria-hidden="true"></i>&nbsp; The Poseidon Archives**
-	* [Public repositories](repo_overview.md)
+	* [Public archives](archive_overview.md)
 	* [Web API](web_api.md)
-	* [Submission guide](repo_submission_guide.md)
+	* [Submission guide](archive_submission_guide.md)
 	* [<i class="fas fa-globe-europe" aria-hidden="true"></i> Public repository viewer](https://poseidon-framework.github.io/published_data)
-	<!-- * [Experimental Repository Explorer](repo_explorer.md) -->
+	<!-- * [Experimental Repository Explorer](archive_explorer.md) -->
 * **Context**
 	* [Code of Conduct](conduct.md)
 	* [Licensing](licenses.md)
