@@ -16,7 +16,7 @@ We therefore generally do **not** recommend to use the GitHub repositories for e
 - our [Web API](web_api)
 - the [`fetch`](trident#fetch-command) and [`list --remote`](trident#list-command) commands of trident, which use the API internally
 
-!> At the moment, the webpage and the Web API only include data from the PCA. The other archives will soon be available.
+!> At the moment the webpage and the Web API only include data from the PCA. The other archives will soon be available.
 
 We do recommend that you work through GitHub, though, if you want to report an issue or suggest changes to the data (as described [here](archive_submission_guide.md)).
 

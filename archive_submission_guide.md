@@ -4,6 +4,8 @@ The Poseidon framework has a strongly decentralized philosophy and relies very m
 
 We assume you have some basic knowledge about using a command line software like [`trident`](trident), and how to handle Git and GitHub. If not, then you can become knowledgable quickly about the latter, for example [here](https://lab.github.com/githubtraining/introduction-to-github).
 
+!> At the moment this documentation only covers submissions to the [Poseidon Community Archive](archive_overview). We will soon consolidate and document the contribution process for the Poseidon Minotaur Archive.
+
 ## Preparing a new package for the public repository
 
 If you would like to provide a new package, you should prepare it as far as you can and then commit it as a pull request to the repository.
