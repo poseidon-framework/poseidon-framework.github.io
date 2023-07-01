@@ -20,7 +20,7 @@ We do recommend that you work through GitHub, though, if you want to report an i
 
 ## The Poseidon Community Archive (PCA)
 
-The Poseidon Community Archive ([on GitHub: <i class="fab fa-github" aria-hidden="true"></i>](https://github.com/poseidon-framework/community_archive)) is the oldest and arguably the most important public archive. It stores publication-wise packages, so one package for the genotype data released with one paper.
+The Poseidon Community Archive ([on GitHub: <i class="fab fa-github" aria-hidden="true"></i>](https://github.com/poseidon-framework/community-archive)) is the oldest and arguably the most important public archive. It stores publication-wise packages, so one package for the genotype data released with one paper.
 
 **The PCA focusses on author submissions**, so Poseidon packages prepared by the authors of the packaged publication, containing exactly the genotype data used for the analysis in the paper. This ensures a high degree of computational reproducibility. Author submissions are also ideal for the context data in the .janno file, because the respective domain-experts are generally most knowledgable on the spatiotemporal origin of their samples.
 
