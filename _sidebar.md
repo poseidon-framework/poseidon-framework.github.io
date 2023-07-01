@@ -25,7 +25,7 @@
 	* [Public archives](archive_overview.md)
 	* [Web API](web_api.md)
 	* [Submission guide](archive_submission_guide.md)
-	* [<i class="fas fa-globe-europe" aria-hidden="true"></i> Public repository viewer](https://poseidon-framework.github.io/published_data)
+	* [<i class="fas fa-globe-europe" aria-hidden="true"></i> Public repository viewer](http://www.poseidon-adna.org/community-archive/)
 	<!-- * [Experimental Repository Explorer](archive_explorer.md) -->
 * **Context**
 	* [Code of Conduct](conduct.md)
