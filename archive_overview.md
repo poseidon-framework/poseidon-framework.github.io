@@ -4,9 +4,9 @@ We, so the [Department of Archaeogenetics](https://www.eva.mpg.de/archaeogenetic
 
 At the moment there are three archives, which are described below:
 
-- [The Poseidon Community Archive (PCA)]()
-- [The Poseidon Minotaur Archive (PMA)]()
-- [The Poseidon AADR Archive (PAA)]()
+- [The Poseidon Community Archive (PCA)](#the-poseidon-community-archive-pca)
+- [The Poseidon Minotaur Archive (PMA)](#the-poseidon-minotaur-archive-pma)
+- [The Poseidon AADR Archive (PAA)](#the-poseidon-aadr-archive-paa)
 
 We opted to maintain these archives with [Git](https://git-scm.com) on [GitHub](https://github.com/poseidon-framework) to ensure clean version management on the file level. The context data in a Poseidon package is text data that can be stored and maintained easily with line-wise version control. Unfortunately that does not hold true for the large genotype data files. They are not suitable to be handled in Git directly. Instead we rely on GitHub's [large file storage system](https://docs.github.com/en/repositories/working-with-files/managing-large-files/about-large-files-on-github), which comes with a number of technical hurdles and drawbacks both for developers and users of the Poseidon archives.
 
@@ -36,4 +36,4 @@ The Poseidon Minotaur Archive ([on GitHub: <i class="fab fa-github" aria-hidden=
 
 ## The Poseidon AADR Archive (PAA)
 
-The Poseidon AADR Archive ([on GitHub: <i class="fab fa-github" aria-hidden="true"></i>](https://github.com/poseidon-framework/...)) is the conceptionally most simple archive. It features "poseidonized" versions of releases of the [Allen Ancient DNA Resource (AADR)](https://reich.hms.harvard.edu/allen-ancient-dna-resource-aadr-downloadable-genotypes-present-day-and-ancient-dna-data). The code for the cleaning and packaging process is documented [here](https://github.com/poseidon-framework/aadr2poseidon). Due to file size limitations of GitHub's LFS system each AADR dataset is split into smaller sub-packages by data type and geographic origin.
+The Poseidon AADR Archive ([on GitHub: <i class="fab fa-github" aria-hidden="true"></i>](https://github.com/poseidon-framework/...)) is the conceptionally most simple archive. It features **"poseidonized" versions of releases of the [Allen Ancient DNA Resource (AADR)](https://reich.hms.harvard.edu/allen-ancient-dna-resource-aadr-downloadable-genotypes-present-day-and-ancient-dna-data)**. The code and decisions for the cleaning and packaging process are documented [here](https://github.com/poseidon-framework/aadr2poseidon). Due to file size limitations of GitHub's LFS system each AADR dataset is split into smaller sub-packages by data type and geographic origin.
