@@ -11,6 +11,8 @@ It provides the following endpoints:
 
 The endpoints can be accessed directly, or with additional arguments. These have to be listed after `?`, and must be separated by `&`. See the documentation of individual arguments below the general description of the endpoints.
 
+!> At the moment, the API only serves data from the [Poseidon Community Archive](archive_overview). We're working on a feature to also query the other archives.
+
 ## Endpoints
 
 ### `/packages`, `/groups`, and `/individuals`

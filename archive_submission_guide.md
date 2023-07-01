@@ -1,4 +1,4 @@
-# Contributing to our central repositories
+# Contributing to our public archives
 
 The Poseidon framework has a strongly decentralized philosophy and relies very much on a community of users willing to prepare and improve the data in the public data repositories. If you want to prepare a Poseidon dataset for one of the repositories or fix mistakes in the data, you should follow the procedures outlined below. To ensure a professional and welcoming atmosphere please respect our [Contributor Code of Conduct](conduct.md) in all interactions with the Poseidon team and other users on GitHub and beyond. If you have questions about the processes, you can post them as an issue on GitHub or contact us directly.
 
@@ -21,7 +21,7 @@ If you would like to provide a new package, you should prepare it as far as you 
 The public repository has some additional requirements for your package beyond what you would need to simply use the package locally for your own analysis. The following list contains some of these less obvious qualities you should check before submitting:
 
 - The package does not exist already in the repository (maybe under another name).
-- The package title in the `POSEIDON.yml` either conforms to the title predefined [here](https://github.com/poseidon-framework/published_data/issues/14) or follows the general title structure suggested here: `<Year>_<Last name of first author>_<Region, time period or special feature of the paper>`, e.g. `2021_Zegarac_SoutheasternEurope`, `2021_SeguinOrlando_BellBeaker` or `2021_Kivisild_MedievalEstonia`.
+- The package title in the `POSEIDON.yml` conforms to the general title structure suggested here: `<Year>_<Last name of first author>_<Region, time period or special feature of the paper>`, e.g. `2021_Zegarac_SoutheasternEurope`, `2021_SeguinOrlando_BellBeaker` or `2021_Kivisild_MedievalEstonia`.
 - The package lives in a directory also with this name.
 - The package version in the `POSEIDON.yml` file is `1.0.0`
 - There is no CHANGELOG file (this would be meaningless for a first submission).
@@ -36,11 +36,11 @@ The public repository has some additional requirements for your package beyond w
 
 The procedure for the actual submission is then as follows:
 
-1. Fork and and then clone the [GitHub repository](https://github.com/poseidon-framework/published_data) for our public data archive. To safe our [Git LFS](https://docs.github.com/en/repositories/working-with-files/managing-large-files/about-git-large-file-storage) bandwidth, **we would like to ask you to clone in a way that does not download the large data files from GitHub** (they should be downloaded from our webserver with [`trident fetch`](trident?id=fetch-command)). At the same time you need to be able to add new LFS files. A proper setup for this includes [downloading and installing Git LFS](https://git-lfs.github.com/) and then setting it up for your user with `git lfs install`. You can then clone with the `GIT_LFS_SKIP_SMUDGE` environment variable, which prevents downloading the LFS files despite Git LFS being enabled:
+1. Fork and and then clone the GitHub repository for the archive you want to modify. To safe our [Git LFS](https://docs.github.com/en/repositories/working-with-files/managing-large-files/about-git-large-file-storage) bandwidth, **we would like to ask you to clone in a way that does not download the large data files from GitHub** (they should be downloaded from our webserver with [`trident fetch`](trident?id=fetch-command)). At the same time you need to be able to add new LFS files. A proper setup for this includes [downloading and installing Git LFS](https://git-lfs.github.com/) and then setting it up for your user with `git lfs install`. You can then clone with the `GIT_LFS_SKIP_SMUDGE` environment variable, which prevents downloading the LFS files despite Git LFS being enabled:
 
 ```
 GIT_LFS_SKIP_SMUDGE=1
-git clone git@github.com:<your GitHub user name>/published_data.git
+git clone git@github.com:<your GitHub user name>/<archive name>.git
 ```
 
 As a consequence the large files will not be downloaded, but only stub files, representing the real files on the LFS server. This clone is only for submission purposes after all -- you can not work with the genotype data in it. `2021_Wang_EastAsia/2021_Wang_EastAsia.bed` for example will look like this:
@@ -56,7 +56,7 @@ size 177553875
 
 ## Modifying an existing package in the public repository
 
-If you identify a mistake in any package, be it in the context data (`.janno`-files), package-meta-data (`POSEIDON.yml`), bibliographic information (`.bib` files) or genotype data, we welcome both [issues](https://github.com/poseidon-framework/published_data/issues) to point them out and contributions to correct them directly.
+If you identify a mistake in any package, be it in the context data (`.janno`-files), package-meta-data (`POSEIDON.yml`), bibliographic information (`.bib` files) or genotype data, we welcome both issues to point them out and contributions to correct them directly.
 
 1. Fork and clone the Github repository that contains the package you want to improve. Unlike for the package submission (see above), it is recommended to make a full clone of the repository with Git LFS (see above, so to clone without `GIT_LFS_SKIP_SMUDGE=1` here). Expert users are asked, though, to reduce their bandwidth requirements as much as possible. Changes in non-genotype data files are well possible with an incomplete clone.
 2. Modify the files you want to change. Remember to also (i) update the md5 checksums in the POSEIDON.yml file, (ii) increment the package version number and (iii) add an informative entry to the changelog file after you are done. This can be done automatically with [`trident update`](trident?id=update-command). Please use its command line arguments to get well documented changes (see the following examples).

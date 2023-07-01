@@ -60,8 +60,8 @@
     <div class="grid-symbol"><i class="fas fa-download" aria-hidden="true"></i></div>
     Poseidon features publicly hosted and curated <b>package archives</b> of published data
     <ul>
-      <li>A <a href="#repo_overview">guide</a> explains the repositories</li>
-      <li>And how to <a href="#repo_submission_guide">contribute data</a></li>
+      <li>A <a href="#archive_overview">guide</a> explains the repositories</li>
+      <li>And how to <a href="#archive_submission_guide">contribute data</a></li>
       <li>Our server software provides an open <a href="#web_api">Web-API</a> to access packages</li>
       <li style="color: #7CFC00">Which enables an <a href="https://poseidon-framework.github.io/community-archive">overview and download</a> page to browse the archives</li>
     </ul>

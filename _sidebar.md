@@ -23,10 +23,11 @@
 	* [Developer notes](dev_notes.md)
 * **<i class="fas fa-download" aria-hidden="true"></i>&nbsp; The Poseidon Archives**
 	* [Public archives](archive_overview.md)
-	* [Web API](web_api.md)
-	* [Submission guide](archive_submission_guide.md)
 	* [<i class="fas fa-globe-europe" aria-hidden="true"></i> Public repository viewer](http://www.poseidon-adna.org/community-archive/)
 	<!-- * [Experimental Repository Explorer](archive_explorer.md) -->
+	* [Web API](web_api.md)
+	* [Submission guide](archive_submission_guide.md)
+	* [Minotaur workflow](minotaur.md)
 * **Context**
 	* [Code of Conduct](conduct.md)
 	* [Licensing](licenses.md)
