@@ -65,7 +65,8 @@
       <tbody>
       <tr v-for="group in groups">
         <th>{{group.groupName}}</td>
-        <td>{{group.packageNames.map(x => x.packageTitle).join(', ')}}</td>
+        <td>{{group.packageTitle}}</td>
+	<td>{{group.packageVersion}}</td>
         <td>{{group.nrIndividuals}}</td>
       </tr>
       </tbody>
