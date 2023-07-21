@@ -29,9 +29,9 @@ Beyond the documentation below you can use `trident --help` and `trident <subcom
 
 <!-- tabs:start -->
 
-#### **v1.2.0.0**
+#### **v1.2.0.0 to v1.2.1.0**
 
-## Guide for trident v1.2.0.0
+## Guide for trident v1.2.0.0 to v1.2.1.0
 
 ### The trident CLI
 
