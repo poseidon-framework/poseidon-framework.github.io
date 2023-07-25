@@ -1,23 +1,24 @@
 # Poseidon Web API
 
-To make the data in our [Public Poseidon Archives](repo_overview) conveniently and reproducibly available we run a web server with an open [API](https://en.wikipedia.org/wiki/Web_API).
+To make the data in our [public Poseidon archives](archive_overview) conveniently and reproducibly available we run a web server with an open [API](https://en.wikipedia.org/wiki/Web_API).
 
-It provides the following endpoints:
+It is available at `https://server.poseidon-adna.org` and provides the following endpoints:
 
-1. `https://server.poseidon-adna.org/packages`: returns a list of all packages.
-2. `https://server.poseidon-adna.org/groups`: returns a list of all groups.
-3. `https://server.poseidon-adna.org/individuals`: returns a list of all individuals.
-4. `https://server.poseidon-adna.org/zip_file/<package_name>`: returns a zip file of the package with the given name.
-
-The endpoints can be accessed directly, or with additional arguments. These have to be listed after `?`, and must be separated by `&`. See the documentation of individual arguments below the general description of the endpoints.
-
-!> At the moment the API only serves data from the [Poseidon Community Archive](archive_overview). We're working on a feature to also query the other archives.
+| Endpoint                    | Description                                           |
+|-----------------------------|-------------------------------------------------------|
+| `/packages`                 | returns a list of all packages                        |
+| `/groups`                   | returns a list of all groups                          |
+| `/individuals`              | returns a list of all samples/individuals             |
+| `/zip_file/<package_name>`  | returns a zip file of the package with the given name |
 
 ## Endpoints
 
-### `/packages`, `/groups`, and `/individuals`
+`/packages`, `/groups`, and `/individuals` return nested JSON-lists that give an overview of the data in the public data archives.
 
-`/packages`, `/groups`, and `/individuals` return nested JSON-lists that give an overview of the data in the public data archives. These lists have the following general structure:
+?> Access a JSON list of packages:<br>
+   https://server.poseidon-adna.org/packages
+
+These lists have the following general structure:
 
 ```
 ├── serverMessage
@@ -72,27 +73,40 @@ extIndInfo[i]
 </tr>
 </table>
 
-Note the `additionalJannoColumns` argument for `/individuals` to request additional variables.
+With `/zip_file/<package_name>`, one can download a package as a zip-file. 
 
-### `/zip_file/<package_name>`
-
-With `/zip_file/<package_name>`, one can download a package as a zip-file, for example [https://server.poseidon-adna.org/zip_file/2020_Yu_NorthRussia](https://server.poseidon-adna.org/zip_file/2020_Yu_NorthRussia).
-
-Note the `package_version` argument to request a specific version of a package.
+?> Download one package as a .zip archive:<br>
+   https://server.poseidon-adna.org/zip_file/2020_Yu_NorthRussia
 
 ## Arguments
 
-### `client_version`
+The endpoints can be accessed directly, or with additional arguments. These have to be listed after `?`, and must be separated by `&`. See the documentation of individual arguments below.
+
+The most imporant argument is `archive=...`, which serves to select the package archive a given query should be applied to. See the overview [here](archive_overview) for the currently available options `community-archive`, `minotaur-archive` and `aadr-archive`. The archive names are identical to the respecitve GitHub repository names. If `archive=...` is not provided, then the query will target the default `community-archive`.
+
+?> Request a list of packages in the `aadr-archive`:<br>
+   https://server.poseidon-adna.org/packages?archive=aadr-archive<br>
+   Download a package from this archive:<br>
+   https://server.poseidon-adna.org/zip_file/AADR_v54_1_p1_1240K_EuropeAncient?archive=aadr-archive
 
 `client_version=...` is an argument for `/packages`, `/groups`, and `/individuals` to check client-server compatibility (primarily for the trident subcommand `list`). It defaults to the trident version of the server, so usually the latest release version of trident. If the client has a version that is not supported by the server the connection attempt is rejected.
 
-### `additionalJannoColumns`
+?> Request a list of packages with an old client version:<br>
+   https://server.poseidon-adna.org/packages?archive=aadr-archive&client_version=1.2.0.0<br>
+   (note how the two arguments were appended here with `&`)
 
-For `/individuals` the API provides an additional argument: `additionalJannoColumns=...`. It allows to add information from arbitrary .janno file columns into the `additionalJannoColumns` JSON-list. For example `https://server.poseidon-adna.org/individuals?additionalJannoColumns=Country` will return the individuals list, but now with information on the origin country of a sample (e.g. `"additionalJannoColumns":[["Country","Greenland"]]`).
+`/zip_file/<package_name>` allows to specify a version of the requested package by appending `?package_version=...`. It defaults to the latest available version of a given package.
 
-### `package_version`
+?> Download a specific version of a package:<br>
+   https://server.poseidon-adna.org/zip_file/AADR_v54_1_p1_1240K_EuropeAncient?archive=aadr-archive&package_version=0.1.2
 
-`/zip_file/<package_name>` also allows to specify the specific version of the requested package by appending `?package_version=...`, so e.g. `package_version=1.0.1`. It defaults to the latest available version.
+For `/individuals` the API provides an additional argument: `additionalJannoColumns=...`. It allows to add information from arbitrary .janno file columns into the `additionalJannoColumns` JSON-list.
+
+?> Request the individuals list for the default archive, but with information on the origin country of the samples:<br>
+   https://server.poseidon-adna.org/individuals?additionalJannoColumns=Country<br>
+   This also works for multiple variables at once, which can be given in a comma-separated list:<br>
+   https://server.poseidon-adna.org/individuals?additionalJannoColumns=Latitude,Longitude
+
 
 ## The server implementation
 
