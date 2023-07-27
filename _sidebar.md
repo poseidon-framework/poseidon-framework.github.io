@@ -14,6 +14,7 @@
 	* [Genotype data details](genotype_data.md)
 	* [.janno file details](janno_details.md)
 	* [.ssf file details](ssf_details.md)
+	* [Package Explorer](package_explorer.md)
 * **<i class="fas fa-tools" aria-hidden="true"></i>&nbsp; The Poseidon Software**
 	* [Version overview table](version_table.md)
 	* [trident CLI software](trident.md)
@@ -24,7 +25,7 @@
 * **<i class="fas fa-download" aria-hidden="true"></i>&nbsp; The Poseidon Archives**
 	* [Public archives](archive_overview.md)
 	* [<i class="fas fa-globe-europe" aria-hidden="true"></i> Public repository viewer](http://www.poseidon-adna.org/community-archive/)
-	* [Experimental Repository Explorer](archive_explorer.md)
+	<!-- * [Experimental Repository Explorer](archive_explorer.md) -->
 	* [Web API](web_api.md)
 	* [Submission guide](archive_submission_guide.md)
 	* [Minotaur workflow](minotaur.md)
