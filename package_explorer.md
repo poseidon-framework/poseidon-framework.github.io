@@ -6,50 +6,57 @@
 
 <script markdown="1">
   // Vue.js component code
-  Vue.component('package-explorer', {
-    data() {
-      return {
-        packages: null,
-        selected_entity_type: 'packages',
-        searchQuery: '',
-        displayType: 'table', // Initialize to 'table'
-        selectedPackage: null, // To store the selected package when in List View
-      };
-    },
-    async mounted() {
-      await this.loadData();
-    },
-    computed: {
-      filteredPackages() {
-        if (!this.packages) {
-          return [];
-        }
+  const { createApp, ref } = Vue;
 
-        if (!this.searchQuery) {
-          return this.packages;
-        }
+  const PackageExplorer = {
+    setup() {
+      const packages = ref(null);
+      const selectedEntityType = ref('packages');
+      const searchQuery = ref('');
+      const displayType = ref('table');
+      const selectedPackage = ref(null);
 
-        const lowercaseQuery = this.searchQuery.toLowerCase();
-        return this.packages.filter(pac =>
-          pac.packageTitle.toLowerCase().includes(lowercaseQuery)
-        );
-      },
-    },
-    methods: {
-      async loadData() {
+      const loadData = async () => {
         try {
           const response_pacs = await fetch('https://server.poseidon-adna.org/packages');
           const response_pacs_json = await response_pacs.json();
-          const pacs = response_pacs_json.serverResponse.packageInfo;
-
-          this.packages = pacs;
+          packages.value = response_pacs_json.serverResponse.packageInfo;
         } catch (error) {
           console.error(error);
         }
-      },
-      showPackageDetails(package) {
-        this.selectedPackage = package;
-      },
+      };
+
+      const filteredPackages = Vue.computed(() => {
+        if (!packages.value) {
+          return [];
+        }
+
+        if (!searchQuery.value) {
+          return packages.value;
+        }
+
+        const lowercaseQuery = searchQuery.value.toLowerCase();
+        return packages.value.filter(pac =>
+          pac.packageTitle.toLowerCase().includes(lowercaseQuery)
+        );
+      });
+
+      const showPackageDetails = (package) => {
+        selectedPackage.value = package;
+      };
+
+      loadData();
+
+      return {
+        packages,
+        selectedEntityType,
+        searchQuery,
+        displayType,
+        filteredPackages,
+        selectedPackage,
+        loadData,
+        showPackageDetails,
+      };
     },
     template: `
       <div>
@@ -58,7 +65,7 @@
         <input type="radio" id="list_view" value="list" v-model="displayType" />
         <label for="list_view">List View</label>
 
-        <div v-if="packages && selected_entity_type === 'packages'">
+        <div v-if="packages && selectedEntityType === 'packages'">
           <!-- Table view -->
           <div v-if="displayType === 'table'">
             <p>loaded {{ filteredPackages.length }} packages</p>
@@ -75,7 +82,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="pac in filteredPackages" :key="pac.packageTitle" @click.stop="showPackageDetails(pac)">
+                <tr v-for="pac in filteredPackages" :key="pac.packageTitle" @click="showPackageDetails(pac)">
                   <td>{{ pac.packageTitle }}</td>
                   <td>{{ pac.description }}</td>
                   <td>{{ pac.packageVersion }}</td>
@@ -90,7 +97,7 @@
           <!-- List view -->
           <div v-else-if="displayType === 'list'">
             <ul class="list-view">
-              <li v-for="pac in filteredPackages" :key="pac.packageTitle" @click.stop="showPackageDetails(pac)">
+              <li v-for="pac in filteredPackages" :key="pac.packageTitle" @click="showPackageDetails(pac)">
                 {{ pac.packageTitle }}
               </li>
             </ul>
@@ -126,11 +133,9 @@
         <div v-else><i>...fetching data from poseidon package server</i></div>
       </div>
     `,
-  });
+  };
 
-  new Vue({
-    el: '#app',
-  });
+  createApp(PackageExplorer).mount('#app');
 </script>
 
 <style markdown="1">
