@@ -109,7 +109,7 @@ Being able to specify one or multiple repositories is often not enough, as you m
 then you can make that to a skeleton Poseidon package with the [`init`](#init-command) command. You can also do it manually by simply adding a `POSEIDON.yml` file, with for example the following content:
 
 ```
-poseidonVersion: 2.5.0
+poseidonVersion: 2.7.1
 title: My_awesome_project
 description: Unpublished genetic data from my awesome project
 contributor:
@@ -126,9 +126,9 @@ jannoFile: my_project.janno
 bibFile: sources.bib
 ```
 
-Two remarks: 1) all file paths are considered _relative_ to the directory in which `POSEIDON.yml` resides. Here we assume that you put this file into the same directory as the three genotype files. 2) Besides the genotype data files there are two (technically optional) files referenced by this example `POSEIDON.yml` file: `sources.bib` and `my_project.janno`. Of course you can add them manually - `init` automatically creates empty dummy versions.
+Two remarks: 1) all file paths are considered _relative_ to the directory in which `POSEIDON.yml` resides. For this example we assume that this file is added into the same directory as the three genotype files. 2) Besides the genotype data files there are two (technically optional) files referenced by this example `POSEIDON.yml` file: `sources.bib` and `my_project.janno`. Of course you can add them manually - `init` automatically creates empty dummy versions.
 
-Once you have set up your own "Poseidon" package (which is really only a skeleton so far), you can add it to your `trident` analysis, by simply adding your project directory to the command using `-d`, for example:
+Once you have set up your own Poseidon package (which is really only a skeleton so far), you can add it to your `trident` analysis, by simply adding your project directory to the command using `-d`, for example:
 
 ```
 trident list -d /path/to/poseidon/packages/modern \
@@ -147,6 +147,8 @@ For all subcommands the general argument `--logMode` defines how trident reports
 - *DefaultLog*: Adds severity indicators before each message. (default setting)
 - *ServerLog*: Additionally adds timestamps before each message.
 - *VerboseLog*: Shows not just messages on the log levels `Info`, `Ẁarning` and `Error` like the other modes, but also on the more verbose level `Debug`. Use this for debugging.
+
+`--debug` is short for `--logMode VerboseLog` to activate this important log level more easily.
 
 ##### Duplicates
 
@@ -221,7 +223,7 @@ trident init \
   -o path/to/new_package_name
 ```
 
-requires the format (`--inFormat`) of your input data (either `EIGENSTRAT` or `PLINK`), the paths to the respective files (`--genoFile`, `--snpFile`, `--indFile`), and optionally the "shape" of these files (`--snpSet`), so if they cover the `1240K`, the `HumanOrigins` or an `Other` SNP set. A simpler interface added in trident 0.29.0 is available with `-p (+ --snpSet)`.
+requires the format (`--inFormat`) of your input data (either `EIGENSTRAT` or `PLINK`), the paths to the respective files (`--genoFile`, `--snpFile`, `--indFile`), and optionally the "shape" of these files (`--snpSet`), so if they cover the `1240K`, the `HumanOrigins` or an `Other` SNP set. A simpler interface is available with `-p (+ --snpSet)`.
 
 |          | EIGENSTRAT | PLINK |
 |----------|------------|-------|
@@ -233,7 +235,7 @@ The output package of `init` is created as a new directory `-o`, which should no
 
 #### Fetch command
 
-`fetch` allows to download Poseidon packages from a remote Poseidon server. Read more about this repository [here](repo_overview).
+`fetch` allows to download Poseidon packages from a remote Poseidon server via a [Web API](web_api). Read more about the data available with it [here](archive_overview).
 
 <details>
  <summary><i class="fas fa-search"></i> <i class="fas fa-terminal"></i> <b>Click here for command line details</b></summary>
@@ -288,7 +290,7 @@ Entities are specified using a special syntax (see also the documentation of `fo
 
 Note that `trident fetch` makes most sense in combination with `trident list --remote`: First one can inspect what is available on the server, then one can create a custom fetch command.
 
-`fetch` also has the optional arguments `--remote https:://..."` to name an alternative poseidon server. The default points to the [DAG server](repo_overview). 
+`fetch` also has the optional arguments `--remote https:://..."` to name an alternative Poseidon server and `--archive` to select a Poseidon archive on the server. Here is a list of the [archives available on the official Poseidon server](archive_overview).
 
 #### Forge command
 
@@ -503,6 +505,10 @@ The following example illustrates the described behaviour:
 
 The Sequencing Source File (short .ssf file) is forged in exactly the same way as the janno file. SSF files that are present are included in the forge product in the way that the user expects, following selection of those entities which are listed in the `poseidon_IDs` columns of the SSF files. Columns that are only present in some packages, including those not defined by our [Schema] are also included in the forged product in the same way as described for Janno above.
 
+##### Treatment of the .bib file while merging
+
+In the forge process all relevant samples for the output package are determined. This includes their .janno entries and therefore the information on the publication keys documented for them in the .janno `Publication` column. The output .bib file compiles only the relevant references for the samples in the output package. It includes the references exactly once and is sorted alphabetically (by key).
+
 ##### Other options
 
 Just as for `init` the output package of `forge` is created as a new directory `-o`. The title can also be explicitly defined with `-n`.
@@ -600,9 +606,9 @@ trident genoconvert \
   -o my_directory
 ```
 
-#### Update command
+#### Rectify command
 
-`update` automatically harmonizes POSEIDON.yml files of one or multiple packages if the packages were changed. This is not an automatic update from one Poseidon version to the next!
+`rectify` automatically harmonizes POSEIDON.yml files of one or multiple packages. This is not an automatic update from one Poseidon version to the next, but rather a clean-up wizard after manual modifications.
 
 <details>
  <summary><i class="fas fa-search"></i> <i class="fas fa-terminal"></i> <b>Click here for command line details</b></summary>
@@ -639,35 +645,26 @@ Available options:
 
 </details>
 
-It can be called with a lot of optional arguments
+It can be called with a lot of optional arguments:
 
 ```
 trident update -d ... -d ... \
   --poseidonVersion "X.X.X" \
-  --versionComponent Major/Minor/Patch \
-  --noChecksumUpdate
+  --packageVersion Major|Minor|Patch \
+  --logText "short description of the update"
+  --checksumAll
   --ignoreGeno
   --newContributors "[Firstname Lastname](Email address);..."
-  --logText "short description of the update"
-  --force
 ```
 
-By default `update` will not edit a package's POSEIDON.yml file, even when arguments like `--versionComponent`, `--newContributors` or `--logText` are explicitly set. This default exists to run the function on a large set of packages where only few of them were edited and need an active update. A package will only be modified by `update` if either
+These arguments determine which fields of the POSEIDON.yml file should be modified.
 
-- any of the files with checksums (e.g. the genotype data) in it were modified,
-- the `--poseidonVersion` argument differs from the `poseidonVersion` in the package's POSEIDON.yml file
-- or the `--force` flag was set in `update`.
+- `--poseidonVersion` allows a simple change of the `poseidonVersion` field in the POSEIDON.yml file.
+- `--packageVersion` increments the package version number in the first, the second or the third position. It can optionally be called with `--logText`, which appends an entry to the CHANGELOG file for the respecitve package version update. `--logText` also creates a new CHANGELOG file if it does not exist yet.
+- `--checksumGeno`, `--checksumJanno`, `--checksumSSF` and `--checksumBib` add or modify the respective checksum fields in the POSEIDON.yml file. `--checksumAll` is a wrapper to call all of them at once.
+- `--newContributors` adds new contributors.
 
-If any of these applies to a package in the search directory (`--baseDir`/`-d`), it will be updated. This includes the following steps:
-
-- If `--poseidonVersion` is different from the `poseidonVersion` field in the package, then that will be updated.
-- The `packageVersion` will be incremented. If `--versionComponent` is not set, then it falls back to `Patch`, so a change in the last position of the three digit version number. `Minor` increments the middle, and `Major` the first position (see [semantic versioning](https://semver.org)).
-- The `lastModified` field will be updated to the current day (based on your computer's system time).
-- The contributors in `--newContributors` will be added to the `contributor` field if they're not there already.
-- If any checksums changed, then they will be updated. If certain checksums are not set yet, then they will be added. The checksum update can be skipped with `--noChecksumUpdate` or partially skipped for the genotype data with `--ignoreGeno`.
-- The CHANGELOG.md file will be updated with a new row for the new version and the text in `--logText` (default: "not specified"), which will be appended as the first line of the file. If no CHANGELOG.md file exists, then it will be created and referenced in the POSEIDON.yml file.
-
-:heavy_exclamation_mark: As `update` reads and rewrites POSEIDON.yml files, it may change their inner order, layout or even content (e.g. if they have fields which are not in the [Poseidon package definition](https://github.com/poseidon-framework/poseidon-schema)). Create a backup of the POSEIDON.yml file before running `update` if you are uncertain.
+:warning: As `rectify` reads and rewrites POSEIDON.yml files, it may change their inner order, layout or even content (e.g. if they have fields which are not in the [POSEIDON.yml definition](standard)). Create a backup of the POSEIDON.yml file before running `rectify` if you are uncertain if this might affect you negatively.
 
 ### Inspection commands
 
@@ -721,21 +718,21 @@ To list packages from your local repositories, as seen above you can run
 trident list -d ... -d ... --packages
 ```
 
-This will yield a nicely formatted table of all packages, their last update and the number of individuals in it.
+This will yield a nicely formatted table of all packages, their version and the number of individuals in them.
 
-To view packages on the remote server, instead of using directories to specify the locations of repositories on your system, you can use `--remote` to show packages on the remote server. For example
+You can use `--remote` to show packages on the remote server. For example
 
 ```
-trident list --packages --remote
+trident list --packages --remote --archive "community-archive"
 ```
 
-will result in a view of all published packages in our [public online repository](repo_overview).
+will result in a view of all packages available in one of the [public online archives](archive_overview). Just as for `fetch`, the `--archive` flag allows to choose which public archive to query.
 
-You can also list groups, as defined in the third column of EIGENSTRAT `.ind` files (or the first/last column of a PLINK `.fam` file), and individuals with `--groups` and `--individuals` instead of `--packages`.
+Independent of whether you query a local or an online archive, you can not just list packages, but also groups, as defined in the third column of EIGENSTRAT `.ind` files (or the first/last column of a PLINK `.fam` file), and individuals with the flags `--groups` and `--individuals` (instead of `--packages`).
 
-The `--individuals` flag provides a way to immediately access information from the `.janno` files on the command line. This works with the `-j`/`--jannoColumn` option. For example adding `-j Country -j Date_C14_Uncal_BP` to the commands above will add the `Country` and the `Date_C14_Uncal_BP` columns to the respective output tables.
+The `--individuals` flag additionally provides a way to immediately access information from `.janno` files on the command line. This works with the `-j`/`--jannoColumn` option. For example adding `-j Country -j Date_C14_Uncal_BP` to the commands above will add the `Country` and the `Date_C14_Uncal_BP` columns to the respective output tables.
 
-Note that if you want a less fancy table, for example because you want to load this into Excel, or pipe into another command that cannot deal with the neat table layout, you can use the `--raw` option to output that table as a simple tab-delimited stream.
+Note that if you want a less fancy table, for example because you want to load this into Excel, or pipe into another command that cannot deal with the table layout, you can use the `--raw` option to output that table as a simple tab-delimited stream.
 
 #### Summarise command
 
@@ -765,7 +762,7 @@ You can run it with
 trident summarise -d ... -d ...
 ```
 
-which will show you context information like -- among others -- the number of individuals in the dataset, their sex distribution, the mean age of the samples (for ancient data) or the mean coverage on the 1240K SNP array in a table. `summarise` depends on complete .janno files and will silently ignore missing information for some statistics.
+which will show you context information like -- among others -- the number of individuals in the dataset, their sex distribution, the mean age of the samples (for ancient data) or the mean coverage on the 1240K SNP array in a table. `summarise` depends on complete .janno files and will silently ignore missing information.
 
 You can use the `--raw` option to output the summary table in a simple, tab-delimited layout.
 
@@ -803,7 +800,7 @@ Again you can use the `--raw` option to output the survey table in a tab-delimit
 
 #### Validate command
 
-`validate` checks poseidon datasets for structural correctness. 
+`validate` checks Poseidon packages and indivudual package components for structural correctness.
 
 <details>
  <summary><i class="fas fa-search"></i> <i class="fas fa-terminal"></i> <b>Click here for command line details</b></summary>
@@ -867,7 +864,7 @@ and it will either report a success (`Validation passed ✓`) or failure with sp
 
 In fact much of this validation already runs as part of the general package reading pipeline invoked for many trident subcommands (e.g. `forge`). `validate` is meant to be more thorough, though, and will explicitly fail if even a single package is broken.
 
-Remember to run it with `--logMode VerboseLog` to get more information if the output is not sufficient to debug an issue.
+Remember to run it with `--debug` to get more information if the output is not sufficient to debug an issue.
 
 
 #### **v1.2.0.0 to v1.2.1.0**
