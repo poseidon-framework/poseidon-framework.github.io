@@ -38,21 +38,23 @@ Beyond the documentation below you can use `trident --help` and `trident <subcom
 Trident is a command line software tool structured in multiple subcommands. If you installed it properly you can call it on the command line by typing `trident`. This will show an overview of the general options and all subcommands, which are explained in detail below.
 
 ```
-Usage: trident [--version] [--logMode ARG] [--errLength ARG] 
-               [--inPlinkPopName ARG] (COMMAND | COMMAND)
+Usage: trident [--version] [--logMode MODE | --debug] [--errLength INT]
+               [--inPlinkPopName MODE] (COMMAND | COMMAND)
+
   trident is a management and analysis tool for Poseidon packages. Report issues
   here: https://github.com/poseidon-framework/poseidon-hs/issues
 
 Available options:
   -h,--help                Show this help text
   --version                Show version number
-  --logMode ARG            How information should be reported: NoLog, SimpleLog,
-                           DefaultLog, ServerLog or VerboseLog
+  --logMode MODE           How information should be reported: NoLog, SimpleLog,
+                           DefaultLog, ServerLog or VerboseLog.
                            (default: DefaultLog)
-  --errLength ARG          After how many characters should a potential error
+  --debug                  Short for --logMode VerboseLog.
+  --errLength INT          After how many characters should a potential error
                            message be truncated. "Inf" for no truncation.
                            (default: CharCount 1500)
-  --inPlinkPopName ARG     Where to read the population/group name from the FAM
+  --inPlinkPopName MODE    Where to read the population/group name from the FAM
                            file in Plink-format. Three options are possible:
                            asFamily (default) | asPhenotype | asBoth.
 
@@ -63,17 +65,17 @@ Package creation and manipulation commands:
                            new Poseidon package from them
   genoconvert              Convert the genotype data in a Poseidon package to a
                            different file format
-  update                   Update POSEIDON.yml files automatically
+  rectify                  Adjust POSEIDON.yml files automatically to package
+                           changes
 
 Inspection commands:
   list                     List packages, groups or individuals from local or
                            remote Poseidon repositories
   summarise                Get an overview over the content of one or multiple
                            Poseidon packages
-  summarize                Synonym for summarise
   survey                   Survey the degree of context information completeness
                            for Poseidon packages
-  validate                 Check one or multiple Poseidon packages for
+  validate                 Check Poseidon packages or package components for
                            structural correctness
 ```
 
@@ -170,36 +172,39 @@ While reading the `.janno` file `trident` trims all leading and trailing whitesp
  <summary><i class="fas fa-search"></i> <i class="fas fa-terminal"></i> <b>Click here for command line details</b></summary>
 
 ```
-Usage: trident init ((-p|--genoOne ARG) | --inFormat ARG --genoFile ARG
-                      --snpFile ARG --indFile ARG) [--snpSet ARG]
-                    (-o|--outPackagePath ARG) [-n|--outPackageName ARG]
+Usage: trident init ((-p|--genoOne FILE) | --inFormat FORMAT --genoFile FILE
+                      --snpFile FILE --indFile FILE) [--snpSet SET]
+                    (-o|--outPackagePath DIR) [-n|--outPackageName STRING]
                     [--minimal]
+
   Create a new Poseidon package from genotype data
 
 Available options:
   -h,--help                Show this help text
-  -p,--genoOne ARG         one of the input genotype data files. Expects .bed or
-                           .bim or .fam for PLINK and .geno or .snp or .ind for
+  -p,--genoOne FILE        One of the input genotype data files. Expects .bed,
+                           .bim or .fam for PLINK and .geno, .snp or .ind for
                            EIGENSTRAT. The other files must be in the same
-                           directory and must have the same base name
-  --inFormat ARG           the format of the input genotype data: EIGENSTRAT or
-                           PLINK (only necessary for data input with --genoFile
-                           + --snpFile + --indFile)
-  --genoFile ARG           the input geno file path
-  --snpFile ARG            the input snp file path
-  --indFile ARG            the input ind file path
-  --snpSet ARG             the snpSet of the package: 1240K, HumanOrigins or
-                           Other. (only relevant for data input with
-                           -p|--genoOne or --genoFile + --snpFile + --indFile,
-                           because the packages in a -d|--baseDir already have
-                           this information in their respective POSEIDON.yml
-                           files) Default: Other
-  -o,--outPackagePath ARG  the output package directory path
-  -n,--outPackageName ARG  the output package name - this is optional: If no
-                           name is provided, then the package name defaults to
-                           the basename of the (mandatory) --outPackagePath
-                           argument
-  --minimal                should only a minimal output package be created?
+                           directory and must have the same base name.
+  --inFormat FORMAT        The format of the input genotype data: EIGENSTRAT or
+                           PLINK. Only necessary for data input with --genoFile
+                           + --snpFile + --indFile.
+  --genoFile FILE          Path to the input geno file.
+  --snpFile FILE           Path to the input snp file.
+  --indFile FILE           Path to the input ind file.
+  --snpSet SET             The snpSet of the package: 1240K, HumanOrigins or
+                           Other. Only relevant for data input with -p|--genoOne
+                           or --genoFile + --snpFile + --indFile, because the
+                           packages in a -d|--baseDir already have this
+                           information in their respective POSEIDON.yml files.
+                           (default: Other)
+  -o,--outPackagePath DIR  Path to the output package directory.
+  -n,--outPackageName STRING
+                           The output package name. This is optional: If no name
+                           is provided, then the package name defaults to the
+                           basename of the (mandatory) --outPackagePath
+                           argument. (default: Nothing)
+  --minimal                Should the output data be reduced to a necessary
+                           minimum and omit empty scaffolding?
 ```
 
 </details>
@@ -236,20 +241,19 @@ The output package of `init` is created as a new directory `-o`, which should no
 ```
 Usage: trident fetch (-d|--baseDir DIR)
                      (--downloadAll |
-                       (--fetchFile ARG | (-f|--fetchString ARG)))
-                     [--remoteURL ARG]
+                       (--fetchFile FILE | (-f|--fetchString DSL)))
+                     [--remoteURL URL] [--archive STRING]
 
   Download data from a remote Poseidon repository
 
 Available options:
   -h,--help                Show this help text
-  -d,--baseDir DIR         a base directory to search for Poseidon Packages
-                           (could be a Poseidon repository)
-  --downloadAll            download all packages the server is offering
-  --fetchFile ARG          A file with a list of packages. Works just as -f, but
+  -d,--baseDir DIR         A base directory to search for Poseidon packages.
+  --downloadAll            Download all packages the server is offering.
+  --fetchFile FILE         A file with a list of packages. Works just as -f, but
                            multiple values can also be separated by newline, not
                            just by comma. -f and --fetchFile can be combined.
-  -f,--fetchString ARG     List of packages to be downloaded from the remote
+  -f,--fetchString DSL     List of packages to be downloaded from the remote
                            server. Package names should be wrapped in asterisks:
                            *package_title*. You can combine multiple values with
                            comma, so for example: "*package_1*, *package_2*,
@@ -258,8 +262,15 @@ Available options:
                            or individuals are specified, then packages which
                            include these groups or individuals are included in
                            the download.
-  --remoteURL ARG          URL of the remote Poseidon server
+  --remoteURL URL          URL of the remote Poseidon server.
                            (default: "https://server.poseidon-adna.org")
+  --archive STRING         The name of the Poseidon package archive that should
+                           be queried. If not given, then the query falls back
+                           to the default archive of the server selected with
+                           --remoteURL. See the archive documentation at
+                           https://www.poseidon-adna.org/#/archive_overview for
+                           a list of archives currently available from the
+                           official Poseidon Web API. (default: Nothing)
 ```
 
 </details>
@@ -288,37 +299,37 @@ Note that `trident fetch` makes most sense in combination with `trident list --r
 
 ```
 Usage: trident forge ((-d|--baseDir DIR) |
-                       ((-p|--genoOne ARG) | --inFormat ARG --genoFile ARG
-                         --snpFile ARG --indFile ARG) [--snpSet ARG])
-                     [--forgeFile ARG | (-f|--forgeString ARG)]
-                     [--selectSnps ARG] [--intersect] [--outFormat ARG]
-                     [--minimal] [--onlyGeno] (-o|--outPackagePath ARG)
-                     [-n|--outPackageName ARG] [--packagewise]
-                     [--outPlinkPopName ARG]
+                       ((-p|--genoOne FILE) | --inFormat FORMAT --genoFile FILE
+                         --snpFile FILE --indFile FILE) [--snpSet SET])
+                     [--forgeFile FILE | (-f|--forgeString DSL)]
+                     [--selectSnps FILE] [--intersect] [--outFormat FORMAT]
+                     [--minimal] [--onlyGeno] (-o|--outPackagePath DIR)
+                     [-n|--outPackageName STRING] [--packagewise]
+                     [--outPlinkPopName MODE]
+
   Select packages, groups or individuals and create a new Poseidon package from
   them
 
 Available options:
   -h,--help                Show this help text
-  -d,--baseDir DIR         a base directory to search for Poseidon Packages
-                           (could be a Poseidon repository)
-  -p,--genoOne ARG         one of the input genotype data files. Expects .bed or
-                           .bim or .fam for PLINK and .geno or .snp or .ind for
+  -d,--baseDir DIR         A base directory to search for Poseidon packages.
+  -p,--genoOne FILE        One of the input genotype data files. Expects .bed,
+                           .bim or .fam for PLINK and .geno, .snp or .ind for
                            EIGENSTRAT. The other files must be in the same
-                           directory and must have the same base name
-  --inFormat ARG           the format of the input genotype data: EIGENSTRAT or
-                           PLINK (only necessary for data input with --genoFile
-                           + --snpFile + --indFile)
-  --genoFile ARG           the input geno file path
-  --snpFile ARG            the input snp file path
-  --indFile ARG            the input ind file path
-  --snpSet ARG             the snpSet of the package: 1240K, HumanOrigins or
-                           Other. (only relevant for data input with
-                           -p|--genoOne or --genoFile + --snpFile + --indFile,
-                           because the packages in a -d|--baseDir already have
-                           this information in their respective POSEIDON.yml
-                           files) Default: Other
-  --forgeFile ARG          A file with a list of packages, groups or individual
+                           directory and must have the same base name.
+  --inFormat FORMAT        The format of the input genotype data: EIGENSTRAT or
+                           PLINK. Only necessary for data input with --genoFile
+                           + --snpFile + --indFile.
+  --genoFile FILE          Path to the input geno file.
+  --snpFile FILE           Path to the input snp file.
+  --indFile FILE           Path to the input ind file.
+  --snpSet SET             The snpSet of the package: 1240K, HumanOrigins or
+                           Other. Only relevant for data input with -p|--genoOne
+                           or --genoFile + --snpFile + --indFile, because the
+                           packages in a -d|--baseDir already have this
+                           information in their respective POSEIDON.yml files.
+                           (default: Other)
+  --forgeFile FILE         A file with a list of packages, groups or individual
                            samples. Works just as -f, but multiple values can
                            also be separated by newline, not just by comma.
                            Empty lines are ignored and comments start with "#",
@@ -326,7 +337,7 @@ Available options:
                            Multiple instances of -f and --forgeFile can be
                            given. They will be evaluated according to their
                            input order on the command line.
-  -f,--forgeString ARG     List of packages, groups or individual samples to be
+  -f,--forgeString DSL     List of packages, groups or individual samples to be
                            combined in the output package. Packages follow the
                            syntax *package_title*, populations/groups are simply
                            group_id and individuals <individual_id>. You can
@@ -347,7 +358,7 @@ Available options:
                            different main group or source package, they can be
                            specified with the special syntax
                            "<package:group:individual>".
-  --selectSnps ARG         To extract specific SNPs during this forge operation,
+  --selectSnps FILE        To extract specific SNPs during this forge operation,
                            provide a Snp file. Can be either Eigenstrat (file
                            ending must be '.snp') or Plink (file ending must be
                            '.bim'). When this option is set, the output package
@@ -355,7 +366,7 @@ Available options:
                            SNP not listed in the file will be excluded. If
                            option '--intersect' is also set, only the SNPs
                            overlapping between the SNP file and the forged
-                           packages are output.
+                           packages are output. (default: Nothing)
   --intersect              Whether to output the intersection of the genotype
                            files to be forged. The default (if this option is
                            not set) is to output the union of all SNPs, with
@@ -363,16 +374,18 @@ Available options:
                            do not have a SNP that is present in another package.
                            With this option set, the forged dataset will
                            typically have fewer SNPs, but less missingness.
-  --outFormat ARG          the format of the output genotype data: EIGENSTRAT or
-                           PLINK. Default: PLINK
-  --minimal                should only a minimal output package be created?
-  --onlyGeno               should only the resulting genotype data be returned?
-                           This means the output will not be a Poseidon package
-  -o,--outPackagePath ARG  the output package directory path
-  -n,--outPackageName ARG  the output package name - this is optional: If no
-                           name is provided, then the package name defaults to
-                           the basename of the (mandatory) --outPackagePath
-                           argument
+  --outFormat FORMAT       The format of the output genotype data: EIGENSTRAT or
+                           PLINK. (default: PLINK)
+  --minimal                Should the output data be reduced to a necessary
+                           minimum and omit empty scaffolding?
+  --onlyGeno               Should only the resulting genotype data be returned?
+                           This means the output will not be a Poseidon package.
+  -o,--outPackagePath DIR  Path to the output package directory.
+  -n,--outPackageName STRING
+                           The output package name. This is optional: If no name
+                           is provided, then the package name defaults to the
+                           basename of the (mandatory) --outPackagePath
+                           argument. (default: Nothing)
   --packagewise            Skip the within-package selection step in forge. This
                            will result in outputting all individuals in the
                            relevant packages, and hence a superset of the
@@ -388,7 +401,7 @@ Available options:
                            package, individuals which are not requested are
                            removed. This option skips only the second step, but
                            still performs the first.
-  --outPlinkPopName ARG    Where to write the population/group name into the FAM
+  --outPlinkPopName MODE   Where to write the population/group name into the FAM
                            file in Plink-format. Three options are possible:
                            asFamily (default) | asPhenotype | asBoth. See also
                            --inPlinkPopName.
@@ -523,44 +536,44 @@ With `--packagewise` the within-package selection step in forge can be skipped. 
 
 ```
 Usage: trident genoconvert ((-d|--baseDir DIR) |
-                             ((-p|--genoOne ARG) | --inFormat ARG --genoFile ARG
-                               --snpFile ARG --indFile ARG) [--snpSet ARG])
-                           --outFormat ARG [--onlyGeno]
-                           [-o|--outPackagePath ARG] [--removeOld]
-                           [--outPlinkPopName ARG]
+                             ((-p|--genoOne FILE) | --inFormat FORMAT
+                               --genoFile FILE --snpFile FILE --indFile FILE)
+                             [--snpSet SET]) --outFormat FORMAT [--onlyGeno]
+                           [-o|--outPackagePath DIR] [--removeOld]
+                           [--outPlinkPopName MODE]
+
   Convert the genotype data in a Poseidon package to a different file format
 
 Available options:
   -h,--help                Show this help text
-  -d,--baseDir DIR         a base directory to search for Poseidon Packages
-                           (could be a Poseidon repository)
-  -p,--genoOne ARG         one of the input genotype data files. Expects .bed or
-                           .bim or .fam for PLINK and .geno or .snp or .ind for
+  -d,--baseDir DIR         A base directory to search for Poseidon packages.
+  -p,--genoOne FILE        One of the input genotype data files. Expects .bed,
+                           .bim or .fam for PLINK and .geno, .snp or .ind for
                            EIGENSTRAT. The other files must be in the same
-                           directory and must have the same base name
-  --inFormat ARG           the format of the input genotype data: EIGENSTRAT or
-                           PLINK (only necessary for data input with --genoFile
-                           + --snpFile + --indFile)
-  --genoFile ARG           the input geno file path
-  --snpFile ARG            the input snp file path
-  --indFile ARG            the input ind file path
-  --snpSet ARG             the snpSet of the package: 1240K, HumanOrigins or
-                           Other. (only relevant for data input with
-                           -p|--genoOne or --genoFile + --snpFile + --indFile,
-                           because the packages in a -d|--baseDir already have
-                           this information in their respective POSEIDON.yml
-                           files) Default: Other
-  --outFormat ARG          the format of the output genotype data: EIGENSTRAT or
+                           directory and must have the same base name.
+  --inFormat FORMAT        The format of the input genotype data: EIGENSTRAT or
+                           PLINK. Only necessary for data input with --genoFile
+                           + --snpFile + --indFile.
+  --genoFile FILE          Path to the input geno file.
+  --snpFile FILE           Path to the input snp file.
+  --indFile FILE           Path to the input ind file.
+  --snpSet SET             The snpSet of the package: 1240K, HumanOrigins or
+                           Other. Only relevant for data input with -p|--genoOne
+                           or --genoFile + --snpFile + --indFile, because the
+                           packages in a -d|--baseDir already have this
+                           information in their respective POSEIDON.yml files.
+                           (default: Other)
+  --outFormat FORMAT       the format of the output genotype data: EIGENSTRAT or
                            PLINK.
-  --onlyGeno               should only the resulting genotype data be returned?
-                           This means the output will not be a Poseidon package
-  -o,--outPackagePath ARG  the output package directory path - this is optional:
-                           If no path is provided, then the output is written to
-                           the directories where the input genotype data file
-                           (.bed/.geno) is stored
+  --onlyGeno               Should only the resulting genotype data be returned?
+                           This means the output will not be a Poseidon package.
+  -o,--outPackagePath DIR  Path to the output package directory. This is
+                           optional: If no path is provided, then the output is
+                           written to the directories where the input genotype
+                           data file (.bed/.geno) is stored. (default: Nothing)
   --removeOld              Remove the old genotype files when creating the new
-                           ones
-  --outPlinkPopName ARG    Where to write the population/group name into the FAM
+                           ones.
+  --outPlinkPopName MODE   Where to write the population/group name into the FAM
                            file in Plink-format. Three options are possible:
                            asFamily (default) | asPhenotype | asBoth. See also
                            --inPlinkPopName.
@@ -595,38 +608,33 @@ trident genoconvert \
  <summary><i class="fas fa-search"></i> <i class="fas fa-terminal"></i> <b>Click here for command line details</b></summary>
 
 ```
-Usage: trident update (-d|--baseDir DIR) [--poseidonVersion ARG]
-                      [--ignorePoseidonVersion] [--versionComponent ARG]
-                      [--noChecksumUpdate] [--newContributors ARG]
-                      [--logText ARG] [--force]
-  Update POSEIDON.yml files automatically
+Usage: trident rectify (-d|--baseDir DIR) [--ignorePoseidonVersion]
+                       [--poseidonVersion ?.?.?]
+                       [--packageVersion VPART [--logText STRING]]
+                       [--checksumAll | [--checksumGeno] [--checksumJanno]
+                         [--checksumSSF] [--checksumBib]]
+                       [--newContributors DSL]
+
+  Adjust POSEIDON.yml files automatically to package changes
 
 Available options:
   -h,--help                Show this help text
-  -d,--baseDir DIR         a base directory to search for Poseidon Packages
-                           (could be a Poseidon repository)
-  --poseidonVersion ARG    Poseidon version the packages should be updated to:
-                           e.g. "2.5.3" (default: Nothing)
+  -d,--baseDir DIR         A base directory to search for Poseidon packages.
   --ignorePoseidonVersion  Read packages even if their poseidonVersion is not
-                           compatible with the trident version. The assumption
-                           is, that the package is already structurally adjusted
-                           to the trident version and only the version number is
-                           lagging behind.
-  --versionComponent ARG   Part of the package version number in the
+                           compatible with trident.
+  --poseidonVersion ?.?.?  Poseidon version the packages should be updated to:
+                           e.g. "2.5.3".
+  --packageVersion VPART   Part of the package version number in the
                            POSEIDON.yml file that should be updated: Major,
-                           Minor or Patch (see https://semver.org)
-                           (default: Patch)
-  --noChecksumUpdate       Should update of checksums in the POSEIDON.yml file
-                           be skipped
-  --ignoreGeno             ignore SNP and GenoFile
-  --newContributors ARG    Contributors to add to the POSEIDON.yml file in the
-                           form "[Firstname Lastname](Email address);..."
-  --logText ARG            Log text for this version jump in the CHANGELOG file
-                           (default: "not specified")
-  --force                  Normally the POSEIDON.yml files are only changed if
-                           the poseidonVersion is adjusted or any of the
-                           checksums change. With --force a package version
-                           update can be triggered even if this is not the case.
+                           Minor or Patch (see https://semver.org).
+  --logText STRING         Log text for this version in the CHANGELOG file.
+  --checksumAll            Update all checksums.
+  --checksumGeno           Update genotype data checksums.
+  --checksumJanno          Update .janno file checksum.
+  --checksumSSF            Update .ssf file checksum
+  --checksumBib            Update .bib file checksum.
+  --newContributors DSL    Contributors to add to the POSEIDON.yml file in the
+                           form "[Firstname Lastname](Email address);...".
 ```
 
 </details>
@@ -671,31 +679,38 @@ If any of these applies to a package in the search directory (`--baseDir`/`-d`),
  <summary><i class="fas fa-search"></i> <i class="fas fa-terminal"></i> <b>Click here for command line details</b></summary>
 
 ```
-Usage: trident list ((-d|--baseDir DIR) | --remote [--remoteURL ARG])
+Usage: trident list ((-d|--baseDir DIR) | --remote [--remoteURL URL]
+                      [--archive STRING])
                     (--packages | --groups | --individuals
-                      [-j|--jannoColumn JANNO_HEADER]) [--raw]
+                      [-j|--jannoColumn COLNAME]) [--raw]
 
   List packages, groups or individuals from local or remote Poseidon
   repositories
 
 Available options:
   -h,--help                Show this help text
-  -d,--baseDir DIR         a base directory to search for Poseidon Packages
-                           (could be a Poseidon repository)
-  --remote                 list packages from a remote server instead the local
-                           file system
-  --remoteURL ARG          URL of the remote Poseidon server
+  -d,--baseDir DIR         A base directory to search for Poseidon packages.
+  --remote                 List packages from a remote server instead the local
+                           file system.
+  --remoteURL URL          URL of the remote Poseidon server.
                            (default: "https://server.poseidon-adna.org")
-  --packages               list all packages
-  --groups                 list all groups, ignoring any group names after the
-                           first as specified in the Janno-file
-  --individuals            list individuals
-  -j,--jannoColumn JANNO_HEADER
-                           list additional fields from the janno files, using
-                           the Janno column heading name, such as Country, Site,
-                           Date_C14_Uncal_BP, Endogenous, ...
-  --raw                    output table as tsv without header. Useful for piping
-                           into grep or awk
+  --archive STRING         The name of the Poseidon package archive that should
+                           be queried. If not given, then the query falls back
+                           to the default archive of the server selected with
+                           --remoteURL. See the archive documentation at
+                           https://www.poseidon-adna.org/#/archive_overview for
+                           a list of archives currently available from the
+                           official Poseidon Web API. (default: Nothing)
+  --packages               List all packages.
+  --groups                 List all groups, ignoring any group names after the
+                           first as specified in the .janno-file.
+  --individuals            List all individuals/samples.
+  -j,--jannoColumn COLNAME List additional fields from the janno files, using
+                           the .janno column heading name, such as "Country",
+                           "Site", "Date_C14_Uncal_BP", etc..
+  --raw                    Return the output table as tab-separated values
+                           without header. This is useful for piping into grep
+                           or awk.
 ```
 
 </details>
@@ -731,14 +746,15 @@ Note that if you want a less fancy table, for example because you want to load t
 
 ```
 Usage: trident summarise (-d|--baseDir DIR) [--raw]
+
   Get an overview over the content of one or multiple Poseidon packages
 
 Available options:
   -h,--help                Show this help text
-  -d,--baseDir DIR         a base directory to search for Poseidon Packages
-                           (could be a Poseidon repository)
-  --raw                    output table as tsv without header. Useful for piping
-                           into grep or awk
+  -d,--baseDir DIR         A base directory to search for Poseidon packages.
+  --raw                    Return the output table as tab-separated values
+                           without header. This is useful for piping into grep
+                           or awk.
 ```
 
 </details>
@@ -762,14 +778,15 @@ You can use the `--raw` option to output the summary table in a simple, tab-deli
 
 ```
 Usage: trident survey (-d|--baseDir DIR) [--raw]
+
   Survey the degree of context information completeness for Poseidon packages
 
 Available options:
   -h,--help                Show this help text
-  -d,--baseDir DIR         a base directory to search for Poseidon Packages
-                           (could be a Poseidon repository)
-  --raw                    output table as tsv without header. Useful for piping
-                           into grep or awk
+  -d,--baseDir DIR         A base directory to search for Poseidon packages.
+  --raw                    Return the output table as tab-separated values
+                           without header. This is useful for piping into grep
+                           or awk.
 ```
 
 </details>
@@ -792,19 +809,42 @@ Again you can use the `--raw` option to output the survey table in a tab-delimit
  <summary><i class="fas fa-search"></i> <i class="fas fa-terminal"></i> <b>Click here for command line details</b></summary>
 
 ```
-Usage: trident validate (-d|--baseDir DIR)
-  Check one or multiple Poseidon packages for structural correctness
+Usage: trident validate ((-d|--baseDir DIR) [--ignoreGeno] [--fullGeno]
+                          [--ignoreDuplicates] [-c|--ignoreChecksums]
+                          [--ignorePoseidonVersion] |
+                          --pyml FILE | (-p|--genoOne FILE) | --inFormat FORMAT
+                          --genoFile FILE --snpFile FILE --indFile FILE |
+                          --janno FILE | --ssf FILE | --bib FILE) [--noExitCode]
+
+  Check Poseidon packages or package components for structural correctness
 
 Available options:
   -h,--help                Show this help text
-  -d,--baseDir DIR         a base directory to search for Poseidon Packages
-                           (could be a Poseidon repository)
-  --ignoreGeno             ignore SNP and GenoFile
-  --fullGeno               test parsing of all SNPs (by default only the first
-                           100 SNPs are probed)
-  --noExitCode             do not produce an explicit exit code
-  --ignoreDuplicates       do not stop on duplicated individual names in the
-                           package collection
+  -d,--baseDir DIR         A base directory to search for Poseidon packages.
+  --ignoreGeno             Ignore snp and geno file.
+  --fullGeno               Test parsing of all SNPs (by default only the first
+                           100 SNPs are probed).
+  --ignoreDuplicates       Do not stop on duplicated individual names in the
+                           package collection.
+  -c,--ignoreChecksums     Whether to ignore checksums. Useful for speedup in
+                           debugging.
+  --ignorePoseidonVersion  Read packages even if their poseidonVersion is not
+                           compatible with trident.
+  --pyml FILE              Path to a POSEIDON.yml file.
+  -p,--genoOne FILE        One of the input genotype data files. Expects .bed,
+                           .bim or .fam for PLINK and .geno, .snp or .ind for
+                           EIGENSTRAT. The other files must be in the same
+                           directory and must have the same base name.
+  --inFormat FORMAT        The format of the input genotype data: EIGENSTRAT or
+                           PLINK. Only necessary for data input with --genoFile
+                           + --snpFile + --indFile.
+  --genoFile FILE          Path to the input geno file.
+  --snpFile FILE           Path to the input snp file.
+  --indFile FILE           Path to the input ind file.
+  --janno FILE             Path to a .janno file.
+  --ssf FILE               Path to a .ssf file.
+  --bib FILE               Path to a .bib file.
+  --noExitCode             Do not produce an explicit exit code.
 ```
 
 </details>
