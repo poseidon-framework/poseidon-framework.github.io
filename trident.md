@@ -852,20 +852,23 @@ You can run it with
 trident validate -d ... -d ...
 ```
 
-and it will either report a success (`Validation passed ✓`) or failure with specific error messages to simplify fixing the issues. 
+to check packages and it will either report a success (`Validation passed`) or failure with specific error messages.
 
-`validate` tries to ensure that each package in the dataset adheres to the [schema definition](https://github.com/poseidon-framework/poseidon-schema). Here is a list of what is checked:
+Instead of validating entire packages with `-d` you can also apply it to individual files and package components: `--pyml` (POSEIDON.yml), `-p | --inFormat + --genoFile + --snpFile + --indFile` (genotype data), `--janno` (.janno file), `--ssf` (.ssf file) or `--bib` (.bib file). In this case `validate` attempts to read and parse the respecitve files individually and reports any issues it encounters. Note that this considers the files in isolation and does not include any cross-file consistency checks.
 
-- Presence of the necessary files
-- Full structural correctness of .bib and .janno file
-- Superficial correctness of genotype data files by parsing the first 100 SNPs. A full check that parses all SNPs can be run with the `--fullGeno` option
+When applied to packages, `validate` tries to ensure that each package adheres to the [schema definition](standard). Here is a list of what is checked:
+
+- Structural correctness of the POSEIDON.yml file.
+- Presence of all files references in the POSEIDON.yml file.
+- Full structural correctness of .janno, .ssf and .bib file.
+- Superficial correctness of genotype data files by parsing the first 100 SNPs. A full check that parses all SNPs can be triggered with the `--fullGeno` option. `--ignoreGeno`, on the other hand, causes `validate` to ignore the genotype data entirely, which speeds up the validation significantly.
 - Correspondence of BibTeX keys in .bib and .janno
-- Correspondence of individual and group IDs in .janno and genotype data files
+- Correspondence of sample IDs in .janno and .ssf.
+- Correspondence of sample and group IDs in .janno and genotype data files.
 
-In fact much of this validation already runs as part of the general package reading pipeline invoked for many trident subcommands (e.g. `forge`). `validate` is meant to be more thorough, though, and will explicitly fail if even a single package is broken.
+In fact much of this validation already runs as part of the general package reading pipeline invoked for other trident subcommands (e.g. `forge`). `validate` is meant to be more thorough/brittle, though, and will explicitly fail if even a single package is broken. For special cases more flexibility can be enabled with the options `--ignoreDuplicates`, `--ignoreChecksums` and `--ignorePoseidonVersion`.
 
-Remember to run it with `--debug` to get more information if the output is not sufficient to debug an issue.
-
+Remember to run `validate` it with `--debug` to get more information in case the default output is not sufficient to analyse an issue.
 
 #### **v1.2.0.0 to v1.2.1.0**
 
