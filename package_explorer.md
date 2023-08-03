@@ -1,10 +1,10 @@
-# Package Explorer
+# Repository Explorer
 
 <div id="app">
   <package-explorer></package-explorer>
 </div>
 
-<script markdown="1">
+<script>
   // Vue.js component code
   const { createApp, ref } = Vue;
 
@@ -75,6 +75,8 @@
         <label for="table_view">Table View</label>
         <input type="radio" id="list_view" value="list" v-model="displayType" />
         <label for="list_view">List View</label>
+        <input type="radio" id="map_view" value="map" v-model="displayType" />
+        <label for="map_view">Map View</label>
 
         <div></div> <!-- Empty div for spacing -->
 
@@ -156,15 +158,39 @@
             </table>
           </div>
         </div>
+        <div v-else-if="displayType === 'map'">
+          <!-- Map view -->
+          <map-view v-if="mapViewVisible"></map-view>
+        </div>
         <div v-else><i>...fetching data from poseidon package server</i></div>
       </div>
     `,
   };
 
-  createApp(PackageExplorer).mount('#app');
+  // Create a separate Vue component for the map view
+  const MapView = {
+    template: `
+      <div>
+        <!-- Leaflet world map component-->
+        <div id="map" style="height: 400px;"></div>
+      </div>
+    `,
+    mounted() {
+      // Leaflet world map configuration and markers here
+      const map = L.map('map').setView([0, 0], 2);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+    },
+  };
+
+  // Create Vue app with both components
+  const app = createApp(PackageExplorer);
+  app.component('map-view', MapView);
+
+  // Mount the Vue app
+  app.mount('#app');
 </script>
 
-<style markdown="1">
+<style>
   /* Styles for list view */
   .list-view ul {
     list-style-type: none;
