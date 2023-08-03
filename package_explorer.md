@@ -1,4 +1,4 @@
-# Repository Explorer
+# Package Explorer
 
 <div id="app">
   <package-explorer></package-explorer>
@@ -13,12 +13,18 @@
       const packages = ref(null);
       const selectedEntityType = ref('packages');
       const searchQuery = ref('');
-      const displayType = ref('table');
+      const displayType = ref('table'); // Initialize to 'table'
       const selectedPackage = ref(null);
+      const archiveType = ref('gold_standard'); // Initialize to 'gold_standard'
 
       const loadData = async () => {
         try {
-          const response_pacs = await fetch('https://server.poseidon-adna.org/packages');
+          let apiUrl = 'https://server.poseidon-adna.org/packages';
+          if (archiveType.value === 'aadr_archive') {
+            apiUrl += '?archive=aadr-archive';
+          }
+
+          const response_pacs = await fetch(apiUrl);
           const response_pacs_json = await response_pacs.json();
           packages.value = response_pacs_json.serverResponse.packageInfo;
         } catch (error) {
@@ -45,6 +51,10 @@
         selectedPackage.value = package;
       };
 
+      const showSelection = () => {
+        loadData();
+      };
+
       loadData();
 
       return {
@@ -54,8 +64,9 @@
         displayType,
         filteredPackages,
         selectedPackage,
-        loadData,
+        archiveType,
         showPackageDetails,
+        showSelection,
       };
     },
     template: `
@@ -64,6 +75,21 @@
         <label for="table_view">Table View</label>
         <input type="radio" id="list_view" value="list" v-model="displayType" />
         <label for="list_view">List View</label>
+
+        <div></div> <!-- Empty div for spacing -->
+
+        <!-- Archive type dropdown -->
+        <div>
+          <label for="archive_type">Archive type:</label>
+          <select id="archive_type" v-model="archiveType">
+            <option value="gold_standard">Poseidon Gold standard</option>
+            <option value="aadr_archive">Poseidon AADR</option>
+          </select>
+        </div>
+
+        <div></div> <!-- Empty div for spacing -->
+
+        <button @click="showSelection">Show Selection</button>
 
         <div v-if="packages && selectedEntityType === 'packages'">
           <!-- Table view -->
