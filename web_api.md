@@ -115,26 +115,30 @@ The Poseidon http server is written in Haskell and provided as a hidden subcomma
 For those interested in running their own instance of this webserver, for example under `localhost`, the server comes with a short command line help:
 
 ```
-Usage: trident serve (-d|--baseDir DIR) [-z|--zipDir DIR] [-p|--port PORT]
+Usage: trident serve (-d|--baseDir DSL) [-z|--zipDir DIR] [-p|--port PORT]
                      [-c|--ignoreChecksums]
-                     [--certFile CERTFILE [--chainFile CHAINFILE]
-                       --keyFile KEYFILE]
+                     [--certFile FILE [--chainFile FILE] --keyFile FILE]
 
   Serve Poseidon packages via HTTP or HTTPS
 
 Available options:
   -h,--help                Show this help text
-  -d,--baseDir DIR         a base directory to search for Poseidon Packages
-                           (could be a Poseidon repository)
-  -z,--zipDir DIR          a directory to store Zip files in. If not specified,
-                           do not generate zip files
-  -p,--port PORT           the port on which the server listens (default: 3000)
-  -c,--ignoreChecksums     whether to ignore checksums. Useful for speedup in
-                           debugging
-  --certFile CERTFILE      The cert file of the TLS Certificate used for HTTPS
-  --chainFile CHAINFILE    The chain file of the TLS Certificate used for HTTPS.
-                           Can be given multiple times
-  --keyFile KEYFILE        The key file of the TLS Certificate used for HTTPS
+  -d,--baseDir DSL         A base path, prepended by the corresponding archive
+                           name under which packages in this path are being
+                           served. Example: arch1=/path/to/basepath. Can be
+                           given multiple times. Multiple paths for the same
+                           archive are combined internally. The very first named
+                           archive is considered to be the default archive on
+                           the server.
+  -z,--zipDir DIR          A directory to store .zip files in. If not specified,
+                           do not generate .zip files. (default: Nothing)
+  -p,--port PORT           The port on which the server listens. (default: 3000)
+  -c,--ignoreChecksums     Whether to ignore checksums. Useful for speedup in
+                           debugging.
+  --certFile FILE          The cert file of the TLS Certificate used for HTTPS.
+  --chainFile FILE         The chain file of the TLS Certificate used for HTTPS.
+                           Can be given multiple times.
+  --keyFile FILE           The key file of the TLS Certificate used for HTTPS.
 ```
 
 Without the three last options given, the server will listen for unsecured HTTP traffic, which is useful for testing. When given a `--certFile` and a `--keyFile`, the server listens to secure HTTPS traffic. 
