@@ -21,7 +21,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href="_media/favicon-76.png">
   <link rel="apple-touch-icon" sizes="152x152" href="_media/favicon-152.png">
   <link rel="apple-touch-icon" sizes="180x180" href="_media/favicon-180.png">
-  <link rel="stylesheet" href="//unpkg.com/leaflet@2.7.0/dist/leaflet.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <meta name="msapplication-TileColor" content="#FFFFFF">
   <meta name="msapplication-TileImage" content="_media/favicon-144.png">
   <meta name="msapplication-config" content="/browserconfig.xml">
@@ -179,11 +179,19 @@
   <script src="//cdn.jsdelivr.net/npm/vue@3/dist/vue.global.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/docsify-tabs@1"></script>
   <script src="//cdn.jsdelivr.net/npm/docsify@latest"></script>
-  <script src="https://unpkg.com/docsify@4.11.0/dist/docsify.min.js"></script>
-  <script src="https://unpkg.com/docsify-external-script@1.0.3/dist/docsify-external-script.min.js"></script>
-  <script src="//unpkg.com/leaflet@2.7.0/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/docsify@4.9.4/lib/docsify.min.js"></script>
+  <!-- <script src="https://unpkg.com/browse/docsify@4.7.0/src/plugins/external-script.js"></script> -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
+ <!-- Make sure you put this AFTER Leaflet's CSS -->
+ <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+   integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+   crossorigin=""></script>
 
+   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+   integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+   crossorigin=""/>
+   
   <!-- diagrams with mermaid: https://github.com/Leward/mermaid-docsify -->
   <script type="module">
     import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs";

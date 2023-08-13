@@ -16,6 +16,7 @@
       const displayType = ref('table'); // Initialize to 'table'
       const selectedPackage = ref(null);
       const archiveType = ref('gold_standard'); // Initialize to 'gold_standard'
+      const mapViewVisible = ref(true);
 
       const loadData = async () => {
         try {
@@ -65,6 +66,7 @@
         filteredPackages,
         selectedPackage,
         archiveType,
+        mapViewVisible,
         showPackageDetails,
         showSelection,
       };
@@ -157,12 +159,13 @@
               </tbody>
             </table>
           </div>
-        </div>
-        <div v-else-if="displayType === 'map'">
+          <div v-else-if="displayType === 'map'">
           <!-- Map view -->
           <map-view v-if="mapViewVisible"></map-view>
         </div>
         <div v-else><i>...fetching data from poseidon package server</i></div>
+        </div>
+        
       </div>
     `,
   };
@@ -190,6 +193,9 @@
   app.mount('#app');
 </script>
 
+<script>
+  import LeafletMap from './components/LeafletMap.vue';
+  </script>
 <style>
   /* Styles for list view */
   .list-view ul {
