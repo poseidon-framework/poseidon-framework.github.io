@@ -280,3 +280,8 @@ Available options:
 ```
 
 The output gives both cumulative (up to allele-count k) and and per-allele-frequency RAS (for allele count k) for every pair of left and rights. The standard out contains a pretty-printed table, and in adition, a tab-separated file is written to the file specified using option `-f`. 
+
+`xerxes ras` makes a few important assumptions:
+1) It assumes that the Right Populations are "nearly" completely non-missing. Any allele that is actually missing from the rights is in fact treated as homozygous-reference! A different approach would be to compute the actual frequencies on the non-missing right alleles, but then we cannot anymore nicely accumulate over different ascertainment allele counts.
+2) If no outgroup is specified, the ascertainment operates on minor-allele frequency (as in fstats)
+3) If an outgroup is specified and missing from a SNP, or if the SNP is polymorphic, the SNP is skipped as missing
