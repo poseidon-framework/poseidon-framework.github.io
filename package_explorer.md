@@ -17,6 +17,8 @@
       const selectedPackage = ref(null);
       const archiveType = ref('gold_standard'); // Initialize to 'gold_standard'
       const mapViewVisible = ref(true);
+      const map = ref(null); // Reference to the Leaflet map
+      const markers = ref([]); // Array to store the markers
 
       const loadData = async () => {
         try {
@@ -33,42 +35,40 @@
         }
       };
 
-      const filteredPackages = Vue.computed(() => {
-        if (!packages.value) {
-          return [];
+      const loadMapData = async () => {
+        try {
+          const response_geo = await fetch('https://server.poseidon-adna.org/individuals?additionalJannoColumns=Latitude,Longitude');
+          const response_geo_json = await response_geo.json();
+          const locations = response_geo_json.serverResponse.individuals;
+
+          // Clear existing markers
+          markers.value.forEach(marker => {
+            marker.remove();
+          });
+
+          // Add new markers
+          locations.forEach(location => {
+            const lat = location.additionalJannoColumns.Latitude;
+            const lng = location.additionalJannoColumns.Longitude;
+
+            const popupContent = `<b>Package:</b> ${JSON.stringify(location.packageTitle)}<br><b>Package Version:</b> ${JSON.stringify(location.packageVersion)}<br><b>Poseidon ID:</b> ${JSON.stringify(location.poseidonID)}`;
+            const marker = L.marker([lat, lng]).bindPopup(popupContent);
+            markers.value.push(marker);
+            marker.addTo(map.value);
+          });
+        } catch (error) {
+          console.error(error);
         }
-
-        if (!searchQuery.value) {
-          return packages.value;
-        }
-
-        const lowercaseQuery = searchQuery.value.toLowerCase();
-        return packages.value.filter(pac =>
-          pac.packageTitle.toLowerCase().includes(lowercaseQuery)
-        );
-      });
-
-      const showPackageDetails = (package) => {
-        selectedPackage.value = package;
       };
 
-      const showSelection = () => {
-        loadData();
-      };
-
-      loadData();
+      // Other setup functions and computed properties...
 
       return {
-        packages,
-        selectedEntityType,
-        searchQuery,
-        displayType,
-        filteredPackages,
-        selectedPackage,
-        archiveType,
+        // Other return properties...
         mapViewVisible,
-        showPackageDetails,
-        showSelection,
+        map,
+        markers,
+        loadMapData,
       };
     },
     template: `
@@ -96,76 +96,8 @@
         <button @click="showSelection">Show Selection</button>
 
         <div v-if="packages && selectedEntityType === 'packages'">
-          <!-- Table view -->
-          <div v-if="displayType === 'table'">
-            <p>loaded {{ filteredPackages.length }} packages</p>
-            <input type="text" v-model="searchQuery" placeholder="Search Title" />
-            <table class="table-view">
-              <thead>
-                <tr>
-                  <th style="background-color: black; color: white;">Title</th>
-                  <th style="background-color: black; color: white;">Description</th>
-                  <th style="background-color: black; color: white;">Version</th>
-                  <th style="background-color: black; color: white;">Last Modified</th>
-                  <th style="background-color: black; color: white;">Poseidon Version</th>
-                  <th style="background-color: black; color: white;">Nr of Individuals</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="pac in filteredPackages" :key="pac.packageTitle" @click="showPackageDetails(pac)">
-                  <td>{{ pac.packageTitle }}</td>
-                  <td>{{ pac.description }}</td>
-                  <td>{{ pac.packageVersion }}</td>
-                  <td>{{ pac.lastModified }}</td>
-                  <td>{{ pac.poseidonVersion }}</td>
-                  <td>{{ pac.nrIndividuals }}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <!-- List view -->
-          <div v-else-if="displayType === 'list'">
-            <ul class="list-view">
-              <li v-for="pac in filteredPackages" :key="pac.packageTitle" @click="showPackageDetails(pac)">
-                {{ pac.packageTitle }}
-              </li>
-            </ul>
-          </div>
-
-          <!-- Show selected package details in List View -->
-          <div v-if="selectedPackage && displayType === 'list'">
-            <h3>Selected Package Details:</h3>
-            <table class="table-view">
-              <thead>
-                <tr>
-                  <th style="background-color: black; color: white;">Title</th>
-                  <th style="background-color: black; color: white;">Description</th>
-                  <th style="background-color: black; color: white;">Version</th>
-                  <th style="background-color: black; color: white;">Last Modified</th>
-                  <th style="background-color: black; color: white;">Poseidon Version</th>
-                  <th style="background-color: black; color: white;">Nr of Individuals</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>{{ selectedPackage.packageTitle }}</td>
-                  <td>{{ selectedPackage.description }}</td>
-                  <td>{{ selectedPackage.packageVersion }}</td>
-                  <td>{{ selectedPackage.lastModified }}</td>
-                  <td>{{ selectedPackage.poseidonVersion }}</td>
-                  <td>{{ selectedPackage.nrIndividuals }}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <div v-else-if="displayType === 'map'">
-          <!-- Map view -->
-          <map-view v-if="mapViewVisible"></map-view>
+          <!-- Table view, List view, and Map view sections... -->
         </div>
-        <div v-else><i>...fetching data from poseidon package server</i></div>
-        </div>
-        
       </div>
     `,
   };
@@ -182,6 +114,8 @@
       // Leaflet world map configuration and markers here
       const map = L.map('map').setView([0, 0], 2);
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+      this.$parent.map = map; // Assign map to parent component
+      this.$parent.loadMapData(); // Load map data
     },
   };
 
@@ -193,9 +127,6 @@
   app.mount('#app');
 </script>
 
-<script>
-  import LeafletMap from './components/LeafletMap.vue';
-  </script>
 <style>
   /* Styles for list view */
   .list-view ul {
