@@ -214,6 +214,35 @@ app.mount('#app');
 </script>
 
 <style>
-/* Styles for list view and table view... */
+  /* Styles for list view */
+  .list-view ul {
+    list-style-type: none;
+    padding: 0;
+  }
+
+  .list-view li {
+    margin-bottom: 10px;
+    padding: 5px;
+    border: 1px solid #ddd;
+    cursor: pointer;
+  }
+
+  /* Styles for table view */
+  .table-view {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .table-view th,
+  .table-view td {
+    padding: 8px;
+    border: 1px solid #ddd;
+    text-align: left;
+  }
+
+  /* Common styles */
+  label {
+    margin-right: 10px;
+  }
 </style>
 
