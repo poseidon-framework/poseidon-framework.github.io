@@ -18,7 +18,6 @@ const PackageExplorer = {
     const displayType = ref('table');
     const selectedPackage = ref(null);
     const archiveType = ref('gold_standard');
-    const mapViewVisible = ref(true);
 
     const loadData = async () => {
       try {
@@ -68,7 +67,6 @@ const PackageExplorer = {
       displayType,
       selectedPackage,
       archiveType,
-      mapViewVisible,
       filteredPackages,
       showPackageDetails,
       showSelection,
@@ -81,8 +79,6 @@ const PackageExplorer = {
       <label for="table_view">Table View</label>
       <input type="radio" id="list_view" value="list" v-model="displayType" />
       <label for="list_view">List View</label>
-      <input type="radio" id="map_view" value="map" v-model="displayType" />
-      <label for="map_view">Map View</label>
 
       <div></div> <!-- Empty div for spacing -->
 
@@ -99,6 +95,9 @@ const PackageExplorer = {
       <button @click="showSelection">Show Selection</button>
 
       <div v-if="packages && selectedEntityType === 'packages'">
+
+        <map-view></map-view>
+
         <div v-if="displayType === 'table'">
           <p>loaded {{ filteredPackages.length }} packages</p>
           <input type="text" v-model="searchQuery" placeholder="Search Title" />
@@ -160,9 +159,6 @@ const PackageExplorer = {
           </table>
         </div>
         
-        <div v-else-if="displayType === 'map'">
-          <map-view v-if="mapViewVisible"></map-view>
-        </div>
         <div v-else><i>...fetching data from poseidon package server</i></div>
       </div>
     </div>
@@ -173,14 +169,19 @@ const loadMapData = async (map) => {
   try {
     const response_geo = await fetch('https://server.poseidon-adna.org/individuals?additionalJannoColumns=Latitude,Longitude');
     const response_geo_json = await response_geo.json();
-    const individuals = response_geo_json.serverResponse.extIndInfo;
-    individuals.forEach(individual => {
+    const individuals_all = response_geo_json.serverResponse.extIndInfo;
+    const individuals_one_package = individuals_all.filter((ind) => ind.packageTitle == "2019_Feldman_Anatolia")
+
+    const markerGroup = L.markerClusterGroup();
+    individuals_all.forEach(individual => {
       const addCols = individual.additionalJannoColumns
       const lat = addCols.filter((oneCol) => oneCol[0] == "Latitude")[0][1]
       const lng = addCols.filter((oneCol) => oneCol[0] == "Longitude")[0][1]
       const popupContent = `<b>Package:</b> ${location.packageTitle}<br><b>Package Version:</b> ${location.packageVersion}<br><b>Poseidon ID:</b> ${location.poseidonID}`;
-      var marker = L.marker([lat,lng]).bindPopup(popupContent).addTo(map);
+      var marker = L.marker([lat,lng]).bindPopup(popupContent);
+      markerGroup.addLayer(marker);
     });
+    map.addLayer(markerGroup);
 
   } catch (error) {
     console.error(error);
