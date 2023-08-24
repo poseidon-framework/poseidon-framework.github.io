@@ -7,8 +7,6 @@
 <script>
 const { createApp, ref, computed } = Vue;
 
-const MapSymbol = Symbol();
-
 const PackageExplorer = {
   setup() {
     const packages = ref(null);
@@ -17,18 +15,42 @@ const PackageExplorer = {
     const searchQuery = ref('');
     const displayType = ref('table');
     const selectedPackage = ref(null);
-    const archiveType = ref('gold_standard');
+    const archiveType = ref('community-archive');
+    const mapInstance = ref(null);
 
     const loadData = async () => {
       try {
         let apiUrl = 'https://server.poseidon-adna.org/packages';
-        if (archiveType.value === 'aadr_archive') {
-          apiUrl += '?archive=aadr-archive';
-        }
-
+        apiUrl += ('?archive=' + archiveType.value);
         const response_pacs = await fetch(apiUrl);
         const response_pacs_json = await response_pacs.json();
         packages.value = response_pacs_json.serverResponse.packageInfo;
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    const loadMapData = async () => {
+      try {
+        if (!mapInstance.value) { return; } // If the map instance is not available, return
+        let apiUrl = 'https://server.poseidon-adna.org/individuals?additionalJannoColumns=Latitude,Longitude';
+        apiUrl += ('&archive=' + archiveType.value);
+        const response_inds = await fetch(apiUrl);
+        const response_inds_json = await response_inds.json();
+        const individuals_all = response_inds_json.serverResponse.extIndInfo;
+        const individuals_one_package = individuals_all.filter((ind) => ind.packageTitle == "2019_Feldman_Anatolia")
+
+        const markerGroup = L.markerClusterGroup();
+        individuals_all.forEach(individual => {
+          const addCols = individual.additionalJannoColumns
+          const lat = addCols.filter((oneCol) => oneCol[0] == "Latitude")[0][1]
+          const lng = addCols.filter((oneCol) => oneCol[0] == "Longitude")[0][1]
+          const popupContent = `<b>Package:</b> ${location.packageTitle}<br><b>Package Version:</b> ${location.packageVersion}<br><b>Poseidon ID:</b> ${location.poseidonID}`;
+          var marker = L.marker([lat,lng]).bindPopup(popupContent);
+          markerGroup.addLayer(marker);
+        });
+        mapInstance.value.addLayer(markerGroup);
+
       } catch (error) {
         console.error(error);
       }
@@ -56,6 +78,7 @@ const PackageExplorer = {
 
     const showSelection = () => {
       loadData();
+      loadMapData();
     };
 
     loadData();
@@ -66,11 +89,12 @@ const PackageExplorer = {
       searchQuery,
       displayType,
       selectedPackage,
-      archiveType,
       filteredPackages,
       showPackageDetails,
       showSelection,
-      MapView
+      archiveType,
+      loadMapData,
+      mapInstance
     };
   },
   template: `
@@ -85,8 +109,8 @@ const PackageExplorer = {
       <div>
         <label for="archive_type">Archive type:</label>
         <select id="archive_type" v-model="archiveType">
-          <option value="gold_standard">Poseidon Gold standard</option>
-          <option value="aadr_archive">Poseidon AADR</option>
+          <option value="community-archive">Poseidon Community Archive</option>
+          <option value="aadr-archive">Poseidon AADR Archive</option>
         </select>
       </div>
 
@@ -165,29 +189,6 @@ const PackageExplorer = {
   `,
 };
 
-const loadMapData = async (map) => {
-  try {
-    const response_geo = await fetch('https://server.poseidon-adna.org/individuals?additionalJannoColumns=Latitude,Longitude');
-    const response_geo_json = await response_geo.json();
-    const individuals_all = response_geo_json.serverResponse.extIndInfo;
-    const individuals_one_package = individuals_all.filter((ind) => ind.packageTitle == "2019_Feldman_Anatolia")
-
-    const markerGroup = L.markerClusterGroup();
-    individuals_all.forEach(individual => {
-      const addCols = individual.additionalJannoColumns
-      const lat = addCols.filter((oneCol) => oneCol[0] == "Latitude")[0][1]
-      const lng = addCols.filter((oneCol) => oneCol[0] == "Longitude")[0][1]
-      const popupContent = `<b>Package:</b> ${location.packageTitle}<br><b>Package Version:</b> ${location.packageVersion}<br><b>Poseidon ID:</b> ${location.poseidonID}`;
-      var marker = L.marker([lat,lng]).bindPopup(popupContent);
-      markerGroup.addLayer(marker);
-    });
-    map.addLayer(markerGroup);
-
-  } catch (error) {
-    console.error(error);
-  }
-};
-
 const MapView = {
   template: `
     <div>
@@ -197,15 +198,15 @@ const MapView = {
   mounted() {
     const map = L.map('map').setView([0, 0], 2);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
-    loadMapData(map);
-    this.$parent[MapSymbol] = map; // Save the map instance
+    this.$parent.mapInstance = map; // Update the mapInstance ref
+    this.$parent.loadMapData();
   },
 };
 
 const app = createApp(PackageExplorer);
 app.component('map-view', MapView);
-
 app.mount('#app');
+
 </script>
 
 <style>
