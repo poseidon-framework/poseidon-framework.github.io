@@ -41,11 +41,11 @@ const PackageExplorer = {
         const individuals_one_package = individuals_all.filter((ind) => ind.packageTitle == "2019_Feldman_Anatolia")
 
         const markerGroup = L.markerClusterGroup();
-        individuals_all.forEach(individual => {
-          const addCols = individual.additionalJannoColumns
+        individuals_all.forEach(ind => {
+          const addCols = ind.additionalJannoColumns
           const lat = addCols.filter((oneCol) => oneCol[0] == "Latitude")[0][1]
           const lng = addCols.filter((oneCol) => oneCol[0] == "Longitude")[0][1]
-          const popupContent = `<b>Package:</b> ${location.packageTitle}<br><b>Package Version:</b> ${location.packageVersion}<br><b>Poseidon ID:</b> ${location.poseidonID}`;
+          const popupContent = `<b>Package:</b> ${ind.packageTitle}<br><b>Package Version:</b> ${ind.packageVersion}<br><b>Poseidon ID:</b> ${ind.poseidonID}`;
           var marker = L.marker([lat,lng]).bindPopup(popupContent);
           markerGroup.addLayer(marker);
         });
@@ -196,8 +196,8 @@ const MapView = {
     </div>
   `,
   mounted() {
-    const map = L.map('map').setView([0, 0], 2);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+    const map = L.map('map').setView([30, 10], 2);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {noWrap: true}).addTo(map);
     this.$parent.mapInstance = map; // Update the mapInstance ref
     this.$parent.loadMapData();
   },
