@@ -12,13 +12,13 @@ const MapSymbol = Symbol();
 const PackageExplorer = {
   setup() {
     const packages = ref(null);
+    const individuals = ref(null);
     const selectedEntityType = ref('packages');
     const searchQuery = ref('');
     const displayType = ref('table');
     const selectedPackage = ref(null);
     const archiveType = ref('gold_standard');
     const mapViewVisible = ref(true);
-    const markers = ref([]);
 
     const loadData = async () => {
       try {
@@ -35,44 +35,21 @@ const PackageExplorer = {
       }
     };
 
-    const loadMapData = async () => {
-      try {
-        const response_geo = await fetch('https://server.poseidon-adna.org/individuals?additionalJannoColumns=Latitude,Longitude');
-        const response_geo_json = await response_geo.json();
-        const locations = response_geo_json.serverResponse.individuals;
+    const filteredPackages = computed(
+      () => {
+        if (!packages.value) {
+          return [];
+        }
 
-        markers.value.forEach(marker => {
-          marker.remove();
-        });
+        if (!searchQuery.value) {
+          return packages.value;
+        }
 
-        locations.forEach(location => {
-          const lat = location.additionalJannoColumns.Latitude;
-          const lng = location.additionalJannoColumns.Longitude;
-
-          const popupContent = `<b>Package:</b> ${location.packageTitle}<br><b>Package Version:</b> ${location.packageVersion}<br><b>Poseidon ID:</b> ${location.poseidonID}`;
-          const marker = L.marker([lat, lng]).bindPopup(popupContent);
-          markers.value.push(marker);
-          marker.addTo(map.value);
-        });
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    const filteredPackages = computed(() => {
-      if (!packages.value) {
-        return [];
-      }
-
-      if (!searchQuery.value) {
-        return packages.value;
-      }
-
-      const lowercaseQuery = searchQuery.value.toLowerCase();
-      return packages.value.filter(pac =>
-        pac.packageTitle.toLowerCase().includes(lowercaseQuery)
-      );
-    });
+        const lowercaseQuery = searchQuery.value.toLowerCase();
+        return packages.value.filter(pac =>
+          pac.packageTitle.toLowerCase().includes(lowercaseQuery)
+        );
+      });
 
     const showPackageDetails = (package) => {
       selectedPackage.value = package;
@@ -92,11 +69,10 @@ const PackageExplorer = {
       selectedPackage,
       archiveType,
       mapViewVisible,
-      markers,
-      loadMapData,
       filteredPackages,
       showPackageDetails,
       showSelection,
+      MapView
     };
   },
   template: `
@@ -193,6 +169,24 @@ const PackageExplorer = {
   `,
 };
 
+const loadMapData = async (map) => {
+  try {
+    const response_geo = await fetch('https://server.poseidon-adna.org/individuals?additionalJannoColumns=Latitude,Longitude');
+    const response_geo_json = await response_geo.json();
+    const individuals = response_geo_json.serverResponse.extIndInfo;
+    individuals.forEach(individual => {
+      const addCols = individual.additionalJannoColumns
+      const lat = addCols.filter((oneCol) => oneCol[0] == "Latitude")[0][1]
+      const lng = addCols.filter((oneCol) => oneCol[0] == "Longitude")[0][1]
+      const popupContent = `<b>Package:</b> ${location.packageTitle}<br><b>Package Version:</b> ${location.packageVersion}<br><b>Poseidon ID:</b> ${location.poseidonID}`;
+      var marker = L.marker([lat,lng]).bindPopup(popupContent).addTo(map);
+    });
+
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 const MapView = {
   template: `
     <div>
@@ -202,7 +196,7 @@ const MapView = {
   mounted() {
     const map = L.map('map').setView([0, 0], 2);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
-
+    loadMapData(map);
     this.$parent[MapSymbol] = map; // Save the map instance
   },
 };
