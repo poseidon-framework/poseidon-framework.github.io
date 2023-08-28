@@ -10,19 +10,16 @@ const { createApp, ref, computed, watchEffect } = Vue;
 const PackageExplorer = {
   setup() {
     const packages = ref(null);
-    const individuals = ref(null);
-    const selectedEntityType = ref('packages');
     const searchQuery = ref('');
-    const selectedPackage = ref(null);
     const archiveType = ref('community-archive');
     const mapInstance = ref(null);
     const markers = ref([]);
+    const markerClusters = ref(null);
 
     const packageTitles = computed(() => {
       if (!packages.value) {
         return [];
       }
-
       return packages.value.map(pac => pac.packageTitle.toLowerCase());
     });
 
@@ -45,10 +42,6 @@ const PackageExplorer = {
       );
     });
 
-    const showPackageDetails = (package) => {
-      selectedPackage.value = package;
-    };
-
     const loadData = async () => {
       try {
         let apiUrl = 'https://server.poseidon-adna.org/packages';
@@ -64,32 +57,49 @@ const PackageExplorer = {
     const loadMapData = async () => {
       try {
         if (!mapInstance.value) { return; }
-        markers.value.forEach(marker => marker.remove());
-        markers.value = [];
+        
+        if (!markers.value.length) {
+          markers.value = [];
+          markerClusters.value = L.markerClusterGroup();
+          
+          let apiUrl = 'https://server.poseidon-adna.org/individuals?additionalJannoColumns=Latitude,Longitude';
+          apiUrl += ('&archive=' + archiveType.value);
+          const response_inds = await fetch(apiUrl);
+          const response_inds_json = await response_inds.json();
+          const individuals_all = response_inds_json.serverResponse.extIndInfo;
 
-        let apiUrl = 'https://server.poseidon-adna.org/individuals?additionalJannoColumns=Latitude,Longitude';
-        apiUrl += ('&archive=' + archiveType.value);
-        const response_inds = await fetch(apiUrl);
-        const response_inds_json = await response_inds.json();
-        const individuals_all = response_inds_json.serverResponse.extIndInfo;
+          individuals_all.forEach(ind => {
+            const addCols = ind.additionalJannoColumns;
+            const lat = addCols.filter(oneCol => oneCol[0] == "Latitude")[0][1];
+            const lng = addCols.filter(oneCol => oneCol[0] == "Longitude")[0][1];
 
-        const markerGroup = L.markerClusterGroup();
-        individuals_all.forEach(ind => {
-          const addCols = ind.additionalJannoColumns;
-          const lat = addCols.filter(oneCol => oneCol[0] == "Latitude")[0][1];
-          const lng = addCols.filter(oneCol => oneCol[0] == "Longitude")[0][1];
+            if (packageTitles.value.includes(ind.packageTitle.toLowerCase())) {
+              const popupContent = `<b>Package:</b> ${ind.packageTitle}<br><b>Package Version:</b> ${ind.packageVersion}<br><b>Poseidon ID:</b> ${ind.poseidonID}`;
+              const marker = L.marker([lat, lng]).bindPopup(popupContent);
+              markerClusters.value.addLayer(marker);
+              markers.value.push(marker);
+            }
+          });
+        }
 
-          if (packageTitles.value.includes(ind.packageTitle.toLowerCase())) {
-            const popupContent = `<b>Package:</b> ${ind.packageTitle}<br><b>Package Version:</b> ${ind.packageVersion}<br><b>Poseidon ID:</b> ${ind.poseidonID}`;
-            const marker = L.marker([lat, lng]).bindPopup(popupContent);
-            markerGroup.addLayer(marker);
-            markers.value.push(marker);
-          }
-        });
-        mapInstance.value.addLayer(markerGroup);
+        mapInstance.value.addLayer(markerClusters.value);
       } catch (error) {
         console.error(error);
       }
+    };
+
+    const highlightSamples = (packageTitle) => {
+      markerClusters.value.clearLayers();
+      markers.value.forEach(marker => {
+        if (marker._popup.getContent().includes(packageTitle)) {
+          markerClusters.value.addLayer(marker);
+        }
+      });
+    };
+
+    const resetMarkers = () => {
+      markerClusters.value.clearLayers();
+      markerClusters.value.addLayers(markers.value);
     };
 
     const showSelection = () => {
@@ -105,15 +115,14 @@ const PackageExplorer = {
 
     return {
       packages,
-      selectedEntityType,
       searchQuery,
-      selectedPackage,
       archiveType,
       mapInstance,
       filteredPackages,
-      showPackageDetails,
       showSelection,
-      loadMapData
+      loadMapData,
+      highlightSamples,
+      resetMarkers,
     };
   },
   template: `
@@ -129,36 +138,35 @@ const PackageExplorer = {
       <div></div> <!-- Empty div for spacing -->
 
       <button @click="showSelection">Show Selection</button>
+      <button @click="resetMarkers">Reset Markers</button>
 
-      <div v-if="packages && selectedEntityType === 'packages'">
+      <div v-if="packages">
 
         <map-view></map-view>
 
-        <div>
-          <p>loaded {{ filteredPackages.length }} packages</p>
-          <input type="text" v-model="searchQuery" placeholder="Search Title" />
-          <table class="table-view">
-            <thead>
-              <tr>
-                <th style="background-color: black; color: white;">Title</th>
-                <th style="background-color: black; color: white;">Package Information</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="pac in filteredPackages" :key="pac.packageTitle" @click="showPackageDetails(pac)">
-                <td>{{ pac.packageTitle }}</td>
-                <td>
-                  <b>Description:</b> {{ pac.description }}<br>
-                  <b>Version:</b> {{ pac.packageVersion }}<br>
-                  <b>Last Modified:</b> {{ pac.lastModified }}<br>
-                  <b>Poseidon Version:</b> {{ pac.poseidonVersion }}<br>
-                  <b>Nr of Individuals:</b> {{ pac.nrIndividuals }}<br>
-                  <b>Download genotype data:</b> <a :href="'https://server.poseidon-adna.org/zip_file/' + pac.packageTitle">{{ 'https://server.poseidon-adna.org/zip_file/' + pac.packageTitle }}</a>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+        <table class="table-view">
+          <thead>
+            <tr>
+              <th style="background-color: black; color: white;">Package Title</th>
+              <th style="background-color: black; color: white;">Package Information</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="pac in filteredPackages" :key="pac.packageTitle">
+              <td>{{ pac.packageTitle }}</td>
+              <td>
+                <b>Description:</b> {{ pac.description }}<br>
+                <b>Version:</b> {{ pac.packageVersion }}<br>
+                <b>Last Modified:</b> {{ pac.lastModified }}<br>
+                <b>Poseidon Version:</b> {{ pac.poseidonVersion }}<br>
+                <b>Nr of Individuals:</b> {{ pac.nrIndividuals }}<br>
+                <b>Download genotype data:</b> <a :href="'https://server.poseidon-adna.org/zip_file/' + pac.packageTitle">{{ 'https://server.poseidon-adna.org/zip_file/' + pac.packageTitle }}</a>
+                <br>
+                <button @click="highlightSamples(pac.packageTitle)">Highlight Samples</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   `,
