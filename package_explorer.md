@@ -64,8 +64,8 @@ const PackageExplorer = {
     const loadMapData = async () => {
       try {
         if (!mapInstance.value) { return; }
-        markers.value.forEach(marker => marker.remove()); // Clear existing markers
-        markers.value = []; // Reset markers array
+        markers.value.forEach(marker => marker.remove());
+        markers.value = [];
 
         let apiUrl = 'https://server.poseidon-adna.org/individuals?additionalJannoColumns=Latitude,Longitude';
         apiUrl += ('&archive=' + archiveType.value);
@@ -152,7 +152,8 @@ const PackageExplorer = {
                   <b>Version:</b> {{ pac.packageVersion }}<br>
                   <b>Last Modified:</b> {{ pac.lastModified }}<br>
                   <b>Poseidon Version:</b> {{ pac.poseidonVersion }}<br>
-                  <b>Nr of Individuals:</b> {{ pac.nrIndividuals }}
+                  <b>Nr of Individuals:</b> {{ pac.nrIndividuals }}<br>
+                  <b>Download genotype data:</b> <a :href="'https://server.poseidon-adna.org/zip_file/' + pac.packageTitle">{{ 'https://server.poseidon-adna.org/zip_file/' + pac.packageTitle }}</a>
                 </td>
               </tr>
             </tbody>
