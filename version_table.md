@@ -18,8 +18,9 @@ The following figure documents which versions of the Poseidon standard are compa
       );
       const versionTableTSVData = await response.text();
       this.versionTableRows = this.parseTSV(versionTableTSVData);
-      this.tools = this.versionTableRows.map((row) => row.tool).filter((x, i, a) => a.indexOf(x) == i).sort()
-      this.poseidonVersions = this.versionTableRows.map((row) => row.poseidonVersion).filter((x, i, a) => a.indexOf(x) == i).sort()
+      this.tools = ["trident", "xerxes", "qjanno", "janno"]
+        //this.versionTableRows.map((row) => row.tool).filter(this.unique).sort()
+      this.poseidonVersions = this.versionTableRows.map((row) => row.poseidonVersion).filter(this.unique).sort()
       this.versionsPerTool = this.tools.map((tool) => this.getVersions(tool, this.versionTableRows))
       console.log(this.versionsPerTool)
     },
@@ -41,7 +42,13 @@ The following figure documents which versions of the Poseidon standard are compa
       },
       getVersions(tool, versionTableRows) {
         return(
-          versionTableRows.filter((row) => row.tool == tool).map((row) => row.version).filter((x, i, a) => a.indexOf(x) == i).sort()
+          versionTableRows
+            .filter((row) => row.tool == tool)
+            .map((row) => row.version)
+            // https://stackoverflow.com/questions/40201533/sort-version-dotted-number-strings-in-javascript
+            .map( a => a.split('.').map( n => +n+1000000 ).join('.') )
+            .sort((a,b) => b-a)
+            .map( a => a.split('.').map( n => +n-1000000 ).join('.') )
         )
       },
       exists2(versionTableRows,t,v,pV) {
@@ -49,7 +56,10 @@ The following figure documents which versions of the Poseidon standard are compa
       },
       exists(versionTableRows,t,v,pV) {
         var fittingRows = versionTableRows.filter((row) => row.tool == t && row.version == v && row.poseidonVersion == pV );
-        return(fittingRows.length > 0);
+        return fittingRows.length > 0;
+      },
+      unique(value, index, array) {
+        return array.indexOf(value) === index;
       }
     }
   }).mount('#versionFileViewer');
