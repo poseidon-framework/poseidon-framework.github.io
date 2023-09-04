@@ -8,7 +8,8 @@ The following figure documents which versions of the Poseidon standard are compa
      return {
         versionTableRows: null,
         tools: null,
-        poseidonVersions: null
+        poseidonVersions: null,
+        versionsPerTool: null
       }
     },
     async mounted () {
@@ -19,6 +20,8 @@ The following figure documents which versions of the Poseidon standard are compa
       this.versionTableRows = this.parseTSV(versionTableTSVData);
       this.tools = this.versionTableRows.map((row) => row.tool).filter((x, i, a) => a.indexOf(x) == i).sort()
       this.poseidonVersions = this.versionTableRows.map((row) => row.poseidonVersion).filter((x, i, a) => a.indexOf(x) == i).sort()
+      this.versionsPerTool = this.tools.map((tool) => this.getVersions(tool, this.versionTableRows))
+      console.log(this.versionsPerTool)
     },
     methods: {
       parseTSV(csvData) {
@@ -35,6 +38,18 @@ The following figure documents which versions of the Poseidon standard are compa
           rows.push(row);
         }
         return rows;
+      },
+      getVersions(tool, versionTableRows) {
+        return(
+          versionTableRows.filter((row) => row.tool == tool).map((row) => row.version).filter((x, i, a) => a.indexOf(x) == i).sort()
+        )
+      },
+      exists2(versionTableRows,t,v,pV) {
+        return(true);
+      },
+      exists(versionTableRows,t,v,pV) {
+        var fittingRows = versionTableRows.filter((row) => row.tool == t && row.version == v && row.poseidonVersion == pV );
+        return(fittingRows.length > 0);
       }
     }
   }).mount('#versionFileViewer');
@@ -44,33 +59,29 @@ The following figure documents which versions of the Poseidon standard are compa
 
 <div v-if="versionTableRows">
     <table>
-      <thead>
-        <tr>
-        	<th>tool</th>
-        	<th v-for="poseidonVersion in poseidonVersions">{{poseidonVersion}}<th>
-        </tr>
-      </thead>
       <tbody>
-      <tr v-for="versionTableRow in versionTableRows">
-<!--         <td>
-          <div style="max-width: 15ch;word-wrap:break-word;">
-            {{ymlDefFileRow.field}}<sup v-if="ymlDefFileRow.mandatory == 'TRUE'">*</sup>
-          </div>
+      <tr v-for="tool in tools">
+        <td>
+          {{tool}}
         </td>
         <td>
-          <div>
-            {{ymlDefFileRow.description}}
-          </div>
-          <div v-if="ymlDefFileRow.parent">
-            <u>subfield of:</u> {{ymlDefFileRow.parent}}
-          </div>
-          <div v-if="ymlDefFileRow.type">
-            <u>type:</u> {{ymlDefFileRow.type}}
-          </div>
-          <div v-if="ymlDefFileRow.format">
-            <u>format:</u> {{ymlDefFileRow.format}}
-          </div>
-        </td> -->
+          <table>
+            <thead>
+              <tr>
+                <th v-for="poseidonVersion in poseidonVersions">{{poseidonVersion}}<th>
+              <tr>
+            </thead>
+            <tbody>
+              <tr v-for="version in versionsPerTool[tools.findIndex((t) => t == tool)]">
+                <td v-for="poseidonVersion in poseidonVersions">
+                  <div v-if="exists(versionTableRows,tool,version,poseidonVersion)">
+                    test
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
       </tr>
       </tbody>
     </table>
