@@ -22,7 +22,7 @@ The following figure documents which versions of the Poseidon standard are compa
         //this.versionTableRows.map((row) => row.tool).filter(this.unique).sort()
       this.poseidonVersions = this.versionTableRows.map((row) => row.poseidonVersion).filter(this.unique).sort()
       this.versionsPerTool = this.tools.map((tool) => this.getVersions(tool, this.versionTableRows))
-      console.log(this.versionsPerTool)
+      //console.log(this.versionsPerTool)
     },
     methods: {
       parseTSV(csvData) {
@@ -45,6 +45,7 @@ The following figure documents which versions of the Poseidon standard are compa
           versionTableRows
             .filter((row) => row.tool == tool)
             .map((row) => row.version)
+            .filter(this.unique)
             // https://stackoverflow.com/questions/40201533/sort-version-dotted-number-strings-in-javascript
             .map( a => a.split('.').map( n => +n+1000000 ).join('.') )
             .sort((a,b) => b-a)
@@ -67,7 +68,7 @@ The following figure documents which versions of the Poseidon standard are compa
 
 <div id="versionFileViewer">
 
-<div v-if="versionTableRows">
+  <div v-if="versionTableRows">
     <table>
       <tbody>
       <tr v-for="tool in tools">
@@ -78,14 +79,16 @@ The following figure documents which versions of the Poseidon standard are compa
           <table>
             <thead>
               <tr>
+                <th></th>
                 <th v-for="poseidonVersion in poseidonVersions">{{poseidonVersion}}<th>
               <tr>
             </thead>
             <tbody>
               <tr v-for="version in versionsPerTool[tools.findIndex((t) => t == tool)]">
+                <td>{{version}}</td>
                 <td v-for="poseidonVersion in poseidonVersions">
                   <div v-if="exists(versionTableRows,tool,version,poseidonVersion)">
-                    test
+                    ✅
                   </div>
                 </td>
               </tr>
@@ -96,6 +99,7 @@ The following figure documents which versions of the Poseidon standard are compa
       </tbody>
     </table>
   </div>
+  
   <div v-else><i>...fetching data from GitHub</i></div>
 
 </div>
