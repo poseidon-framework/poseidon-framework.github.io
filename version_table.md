@@ -1,13 +1,13 @@
 # Version overview table
 
-The following figure documents which versions of the Poseidon standard (columns) are compatible with which versions of the software tools (rows).
+The following table documents which versions of the Poseidon standard (columns) are compatible with which versions of the software tools (rows).
 
 <script>
   Vue.createApp({
     data () {
      return {
         versionTableRows: null,
-        tools: null,
+        tools: ["trident", "xerxes", "qjanno", "janno"],
         poseidonVersions: null,
         versionsPerTool: null
       }
@@ -18,11 +18,8 @@ The following figure documents which versions of the Poseidon standard (columns)
       );
       const versionTableTSVData = await response.text();
       this.versionTableRows = this.parseTSV(versionTableTSVData);
-      this.tools = ["trident", "xerxes", "qjanno", "janno"]
-        //this.versionTableRows.map((row) => row.tool).filter(this.unique).sort()
       this.poseidonVersions = this.versionTableRows.map((row) => row.poseidonVersion).filter(this.unique).sort()
       this.versionsPerTool = this.tools.map((tool) => this.getVersions(tool, this.versionTableRows))
-      //console.log(this.versionsPerTool)
     },
     methods: {
       parseTSV(csvData) {
@@ -40,6 +37,9 @@ The following figure documents which versions of the Poseidon standard (columns)
         }
         return rows;
       },
+      unique(value, index, array) {
+        return array.indexOf(value) === index;
+      },
       getVersions(tool, versionTableRows) {
         return(
           versionTableRows
@@ -52,15 +52,9 @@ The following figure documents which versions of the Poseidon standard (columns)
             .map( a => a.split('.').map( n => +n-1000000 ).join('.') )
         )
       },
-      exists2(versionTableRows,t,v,pV) {
-        return(true);
-      },
       exists(versionTableRows,t,v,pV) {
-        var fittingRows = versionTableRows.filter((row) => row.tool == t && row.version == v && row.poseidonVersion == pV );
+        var fittingRows = versionTableRows.filter((row) => row.tool == t && row.version == v && row.poseidonVersion == pV);
         return fittingRows.length > 0;
-      },
-      unique(value, index, array) {
-        return array.indexOf(value) === index;
       }
     }
   }).mount('#versionFileViewer');
@@ -70,7 +64,7 @@ The following figure documents which versions of the Poseidon standard (columns)
 
   <div v-if="versionTableRows">
     <table class="table-default">
-      <tbody class="table-body">
+      <tbody>
       <tr v-for="tool in tools" style="background: none;">
         <td style="vertical-align: top; text-align: left; padding-top: 30px; writing-mode: vertical-rl; font-size: 25px;">
           {{tool}}
