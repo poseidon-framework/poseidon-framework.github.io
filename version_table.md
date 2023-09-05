@@ -1,6 +1,6 @@
 # Version overview table
 
-The following figure documents which versions of the Poseidon standard are compatible with which versions of the software tools. Newer versions of `trident` can generally still read older packages, when no [breaking changes](changelog.md) were introduced.
+The following figure documents which versions of the Poseidon standard (columns) are compatible with which versions of the software tools (rows).
 
 <script>
   Vue.createApp({
@@ -69,17 +69,17 @@ The following figure documents which versions of the Poseidon standard are compa
 <div id="versionFileViewer">
 
   <div v-if="versionTableRows">
-    <table>
-      <tbody>
-      <tr v-for="tool in tools">
-        <td>
+    <table class="table-default">
+      <tbody class="table-body">
+      <tr v-for="tool in tools" style="background: none;">
+        <td style="vertical-align: top; text-align: left; padding-top: 30px; writing-mode: vertical-rl; font-size: 25px;">
           {{tool}}
         </td>
         <td>
-          <table>
+          <table class="table-default">
             <thead>
-              <tr>
-                <th></th>
+              <tr style="background: none;">
+                <th>v</th>
                 <th v-for="poseidonVersion in poseidonVersions">{{poseidonVersion}}<th>
               <tr>
             </thead>
@@ -103,5 +103,28 @@ The following figure documents which versions of the Poseidon standard are compa
   <div v-else><i>...fetching data from GitHub</i></div>
 
 </div>
+
+<style>
+  .table-default {
+    width: 100%;
+    display: table !important;
+  }
+  .table-default thead {
+    width: 100%;
+  } 
+  .table-default tbody {
+    width: 100%;
+  } 
+  .table-default tr {
+    width: 100%;
+    line-height: 8px !important;
+  }
+  .table-default th {
+    text-align: center !important;
+  }
+  .table-default td {
+    text-align: center;
+  }
+</style>
 
 There is no documented version history before Poseidon v2.4.0.
