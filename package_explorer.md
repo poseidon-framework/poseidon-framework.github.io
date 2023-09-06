@@ -113,6 +113,12 @@ const PackageExplorer = {
       loadMapData();
     });
 
+   const downloadGenotypeData = (packageTitle) => {
+     const downloadLink = document.createElement('a');
+     downloadLink.href = `https://server.poseidon-adna.org/zip_file/${packageTitle}`;
+     downloadLink.download = `${packageTitle}.zip`;
+     downloadLink.click();
+   };
     return {
       packages,
       searchQuery,
@@ -123,6 +129,7 @@ const PackageExplorer = {
       loadMapData,
       highlightSamples,
       resetMarkers,
+      downloadGenotypeData,
     };
   },
   template: `
@@ -160,7 +167,8 @@ const PackageExplorer = {
                 <b>Last Modified:</b> {{ pac.lastModified }}<br>
                 <b>Poseidon Version:</b> {{ pac.poseidonVersion }}<br>
                 <b>Nr of Individuals:</b> {{ pac.nrIndividuals }}<br>
-                <b>Download genotype data:</b> <a :href="'https://server.poseidon-adna.org/zip_file/' + pac.packageTitle">{{ 'https://server.poseidon-adna.org/zip_file/' + pac.packageTitle }}</a>
+                <b>Download genotype data:</b> 
+                <button @click="downloadGenotypeData(pac.packageTitle)">Download</button>
                 <br>
                 <button @click="highlightSamples(pac.packageTitle)">Highlight Samples</button>
               </td>
