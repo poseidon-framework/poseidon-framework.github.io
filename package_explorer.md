@@ -14,6 +14,7 @@ const PackageExplorer = {
     const mapInstance    = ref(null);
     var   mapMarkers     = [];
     const markerClusters = L.markerClusterGroup({chunkedLoading: true});
+    const modalPackage   = ref('');
 
     const packageTitles = computed(() => {
       if (!packages.value) { return []; }
@@ -46,7 +47,7 @@ const PackageExplorer = {
 
     const loadSamples = async () => {
       try {  
-        let apiUrl = 'https://server.poseidon-adna.org/individuals?additionalJannoColumns=Latitude,Longitude';
+        let apiUrl = 'https://server.poseidon-adna.org/individuals?additionalJannoColumns=Latitude,Longitude,Country';
         apiUrl += ('&archive=' + archiveType.value);
         const response_inds = await fetch(apiUrl);
         const response_inds_json = await response_inds.json();
@@ -56,18 +57,21 @@ const PackageExplorer = {
       }
     };
 
+    const getSamplesForPackage = (requestedPackageTitle) => {
+      if (!samples.value) { return; }
+      return(samples.value.filter(s => { return(s.packageTitle === requestedPackageTitle) }))
+    }
+
     const addSamplesToMap = async (requestedPackageTitle) => {
       try {
         // check if necessary data and objects are there
         if (!mapInstance.value) { return; }
         if (!samples.value) { return; }
         // filter to one package, if this is requested
-        if (requestedPackageTitle === undefined) {
-          samplesFiltered = samples.value
+        if (requestedPackageTitle === undefined) { 
+          samplesFiltered = samples.value;
         } else {
-          samplesFiltered = samples.value.filter(s => {
-            return(s.packageTitle === requestedPackageTitle)
-          })
+          samplesFiltered = getSamplesForPackage(requestedPackageTitle);
         }
         // compile markers
         samplesFiltered.forEach(s => {
@@ -95,7 +99,7 @@ const PackageExplorer = {
     const loadAllData = async () => {
       await loadPackages();
       await loadSamples();
-    }
+    };
 
     const updateMap = async (requestedPackageTitle) => {
       if (markerClusters) { resetMarkers(); }
@@ -130,6 +134,8 @@ const PackageExplorer = {
       highlightSamplesInMap,
       resetMarkers,
       downloadGenotypeData,
+      getSamplesForPackage,
+      modalPackage
     };
   },
   template: `
@@ -148,27 +154,58 @@ const PackageExplorer = {
 
         <map-view></map-view>
 
-        <table class="table-view">
-          <thead>
-            <tr>
-              <th style="background-color: black; color: white;">Package Title</th>
-              <th style="background-color: black; color: white;">Package Information</th>
-            </tr>
-          </thead>
+        <table class="table-default">
+          <colgroup>
+            <col style="width:6%">
+            <col style="width:38%">
+            <col style="width:38%">
+            <col style="width:6%">
+            <col style="width:6%">
+            <col style="width:6%">
+          </colgroup>  
           <tbody>
             <tr v-for="pac in filteredPackages" :key="pac.packageTitle">
-              <td>{{ pac.packageTitle }}</td>
               <td>
-                <b>Description:</b> {{ pac.description }}<br>
-                <b>Version:</b> {{ pac.packageVersion }}<br>
-                <b>Last Modified:</b> {{ pac.lastModified }}<br>
-                <b>Poseidon Version:</b> {{ pac.poseidonVersion }}<br>
-                <b>Nr of Individuals:</b> {{ pac.nrIndividuals }}<br>
-                <b>Download genotype data:</b> 
-                <button @click="downloadGenotypeData(pac.packageTitle)">Download</button>
-                <br>
-                <button @click="highlightSamplesInMap(pac.packageTitle)">Highlight Samples</button>
+                {{ pac.nrIndividuals }}
               </td>
+              <td style="overflow-wrap: break-word;">
+                {{ pac.packageTitle }}
+              </td>
+              <td>
+                <details>
+                  <b>Description:</b> {{ pac.description }}<br>
+                  <b>Version:</b> {{ pac.packageVersion }}<br>
+                  <b>Last Modified:</b> {{ pac.lastModified }}<br>
+                  <b>Poseidon Version:</b> {{ pac.poseidonVersion }}<br>
+                  <b>Nr of samples:</b> {{ pac.nrIndividuals }}
+                </details>
+              </td>
+              <td>
+                <button @click="modalPackage = pac.packageTitle"><i class="fas fa-search" aria-hidden="true"></i></button>
+              </td>
+              <td>
+                <button @click="highlightSamplesInMap(pac.packageTitle)"><i class="fas fa-map" aria-hidden="true"></i></button>
+              </td>
+              <td>
+                <button @click="downloadGenotypeData(pac.packageTitle)"><i class="fas fa-download" aria-hidden="true"></i></button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div v-if="modalPackage !== ''" class="modal-background"> 
+      <div class="modal">
+        <div class="modal-header">
+          <h3>{{ modalPackage }}</h3>
+          <label for="modal" @click="modalPackage = ''">close</label>
+        </div>
+        <table>
+          <tbody>
+            <tr v-for="sample in getSamplesForPackage(modalPackage)">
+              <td>{{ sample.poseidonID }}</td>
+              <td>{{ sample.additionalJannoColumns[2][1] }}</td>
             </tr>
           </tbody>
         </table>
@@ -197,22 +234,72 @@ app.mount('#app');
 </script>
 
 <style>
-  /* Styles for table view */
-  .table-view {
+
+  .table-default {
     width: 100%;
-    border-collapse: collapse;
+    display: table !important;
+    table-layout: fixed;
+  }
+  .table-default thead {
+    width: 100%;
+  } 
+  .table-default tbody {
+    width: 100%;
+  } 
+  .table-default tr {
+    width: 100%;
+  }
+  .table-default th {
+  }
+  .table-default td {
   }
 
-  .table-view th,
-  .table-view td {
-    padding: 8px;
-    border: 1px solid #ddd;
-    text-align: left;
+  .modal-background {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9998;
   }
-
-  /* Common styles */
-  label {
-    margin-right: 10px;
+  .modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    width: 50%;
+    height: 50%;
+    background-color: #fff;
+    box-sizing: border-box;
+    z-index: 9999;
+    overflow: auto;
   }
+  .modal-header {
+    background-color: #f9f9f9;
+    border-bottom: 1px solid #dddddd;
+    box-sizing: border-box;
+    height: 50px;
+  }
+  .modal-header h3 {
+    margin: 0;
+    box-sizing: border-box;
+    padding-left: 15px;
+    line-height: 50px;
+    color: #4d4d4d;
+    font-size: 16px;
+    display: inline-block;
+  }
+  .modal-header label {
+    box-sizing: border-box;
+    border-left: 1px solid #dddddd;
+    float: right;
+    line-height: 50px;
+    padding: 0 15px 0 15px;
+    cursor: pointer;
+  }
+  
 </style>
 
