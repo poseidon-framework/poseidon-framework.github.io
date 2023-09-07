@@ -1,5 +1,3 @@
-# Repository Explorer
-
 <div id="app">
   <package-explorer></package-explorer>
 </div>
@@ -15,7 +13,7 @@ const PackageExplorer = {
     const archiveType    = ref('community-archive');
     const mapInstance    = ref(null);
     var   mapMarkers     = [];
-    const markerClusters = L.markerClusterGroup();
+    const markerClusters = L.markerClusterGroup({chunkedLoading: true});
 
     const packageTitles = computed(() => {
       if (!packages.value) { return []; }
@@ -74,8 +72,8 @@ const PackageExplorer = {
         // compile markers
         samplesFiltered.forEach(s => {
           const addCols = s.additionalJannoColumns;
-          const lat = addCols.filter(oneCol => oneCol[0] == "Latitude")[0][1];
-          const lng = addCols.filter(oneCol => oneCol[0] == "Longitude")[0][1];
+          const lat = addCols[0][1];
+          const lng = addCols[1][1];
           const popupContent = `<b>Package:</b> ${s.packageTitle}<br><b>Package Version:</b> ${s.packageVersion}<br><b>Poseidon ID:</b> ${s.poseidonID}`;
           const oneMarker = L.marker([lat, lng]).bindPopup(popupContent);
           mapMarkers.push(oneMarker);
@@ -98,7 +96,7 @@ const PackageExplorer = {
     }
 
     const updateMap = async (requestedPackageTitle) => {
-      resetMarkers();
+      if (markerClusters) { resetMarkers(); }
       addSamplesToMap(requestedPackageTitle);
     };
 
@@ -113,13 +111,12 @@ const PackageExplorer = {
 
     const downloadGenotypeData = (packageTitle) => {
       const downloadLink = document.createElement('a');
-      downloadLink.href = `https://server.poseidon-adna.org/zip_file/${packageTitle}`;
+      downloadLink.href = `https://server.poseidon-adna.org/zip_file/${packageTitle}?archive=${archiveType.value}`;
       downloadLink.download = `${packageTitle}.zip`;
       downloadLink.click();
     };
 
-    // app startup
-    loadAllData();
+    showSelection();
 
     return {
       packages,
@@ -188,7 +185,6 @@ const MapView = {
     const map = L.map('map').setView([30, 10], 2);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { noWrap: true }).addTo(map);
     this.$parent.mapInstance = map;
-    this.$parent.showSelection();
   },
 };
 
