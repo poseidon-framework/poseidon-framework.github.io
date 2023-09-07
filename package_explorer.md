@@ -10,6 +10,7 @@ const { createApp, ref, computed } = Vue;
 const PackageExplorer = {
   setup() {
     const packages       = ref(null);
+    const samples        = ref(null);
     const searchQuery    = ref('');
     const archiveType    = ref('community-archive');
     const mapInstance    = ref(null);
@@ -33,7 +34,7 @@ const PackageExplorer = {
       );
     });
 
-    const loadData = async () => {
+    const loadPackages = async () => {
       try {
         let apiUrl = 'https://server.poseidon-adna.org/packages';
         apiUrl += ('?archive=' + archiveType.value);
@@ -45,32 +46,34 @@ const PackageExplorer = {
       }
     };
 
-    const loadMapData = async () => {
+    const loadSamples = async () => {
+      try {  
+        let apiUrl = 'https://server.poseidon-adna.org/individuals?additionalJannoColumns=Latitude,Longitude';
+        apiUrl += ('&archive=' + archiveType.value);
+        const response_inds = await fetch(apiUrl);
+        const response_inds_json = await response_inds.json();
+        samples.value = response_inds_json.serverResponse.extIndInfo;
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    const addSamplesToMap = async () => {
       try {
         if (!mapInstance.value) { return; }
-        
-        //if (!markers.value.length) {
-          //markers.value = [];
-          //const markerClusters = L.markerClusterGroup();
-          
-          let apiUrl = 'https://server.poseidon-adna.org/individuals?additionalJannoColumns=Latitude,Longitude';
-          apiUrl += ('&archive=' + archiveType.value);
-          const response_inds = await fetch(apiUrl);
-          const response_inds_json = await response_inds.json();
-          const individuals_all = response_inds_json.serverResponse.extIndInfo;
+        if (!samples.value) { return; }
 
-          individuals_all.forEach(ind => {
-            const addCols = ind.additionalJannoColumns;
-            const lat = addCols.filter(oneCol => oneCol[0] == "Latitude")[0][1];
-            const lng = addCols.filter(oneCol => oneCol[0] == "Longitude")[0][1];
+        samples.value.forEach(ind => {
+          const addCols = ind.additionalJannoColumns;
+          const lat = addCols.filter(oneCol => oneCol[0] == "Latitude")[0][1];
+          const lng = addCols.filter(oneCol => oneCol[0] == "Longitude")[0][1];
 
-            if (packageTitles.value.includes(ind.packageTitle.toLowerCase())) {
-              const popupContent = `<b>Package:</b> ${ind.packageTitle}<br><b>Package Version:</b> ${ind.packageVersion}<br><b>Poseidon ID:</b> ${ind.poseidonID}`;
-              const oneMarker = L.marker([lat, lng]).bindPopup(popupContent);
-              mapMarkers.push(oneMarker);
-            }
-          });
-        //}
+          if (packageTitles.value.includes(ind.packageTitle.toLowerCase())) {
+            const popupContent = `<b>Package:</b> ${ind.packageTitle}<br><b>Package Version:</b> ${ind.packageVersion}<br><b>Poseidon ID:</b> ${ind.poseidonID}`;
+            const oneMarker = L.marker([lat, lng]).bindPopup(popupContent);
+            mapMarkers.push(oneMarker);
+          }
+        });
         markerClusters.addLayers(mapMarkers);
         mapInstance.value.addLayer(markerClusters);
       } catch (error) {
@@ -88,33 +91,27 @@ const PackageExplorer = {
     };
 
     const resetMarkers = () => {
-      //markerClusters.value.clearLayers();
-      //markerClusters.value.addLayers(markers.value);
-      //mapInstance.value.eachLayer(function (layer) {
-      //  if(layer['_latlng']!=undefined) {
-      //    mapInstance.value.removeLayer(layer);
-      //  }
-      //});
-      //mapInstance.value.remove();
-      //console.log(mapInstance.value);
       markerClusters.removeLayers(mapMarkers);
       mapMarkers = [];
     };
 
-    const showSelection = () => {
-      loadData();
+    const showSelection = async () => {
+      await loadPackages();
+      await loadSamples();
       resetMarkers();
-      loadMapData();
+      addSamplesToMap();
     };
 
-    loadData();
+    const downloadGenotypeData = (packageTitle) => {
+      const downloadLink = document.createElement('a');
+      downloadLink.href = `https://server.poseidon-adna.org/zip_file/${packageTitle}`;
+      downloadLink.download = `${packageTitle}.zip`;
+      downloadLink.click();
+    };
 
-   const downloadGenotypeData = (packageTitle) => {
-     const downloadLink = document.createElement('a');
-     downloadLink.href = `https://server.poseidon-adna.org/zip_file/${packageTitle}`;
-     downloadLink.download = `${packageTitle}.zip`;
-     downloadLink.click();
-   };
+    // app startup
+    loadPackages();
+
     return {
       packages,
       searchQuery,
@@ -122,7 +119,8 @@ const PackageExplorer = {
       mapInstance,
       filteredPackages,
       showSelection,
-      loadMapData,
+      loadSamples,
+      addSamplesToMap,
       highlightSamples,
       resetMarkers,
       downloadGenotypeData,
@@ -186,7 +184,7 @@ const MapView = {
     const map = L.map('map').setView([30, 10], 2);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { noWrap: true }).addTo(map);
     this.$parent.mapInstance = map;
-    this.$parent.loadMapData();
+    this.$parent.showSelection();
   },
 };
 
