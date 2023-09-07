@@ -5,38 +5,29 @@
 </div>
 
 <script>
-const { createApp, ref, computed, watchEffect } = Vue;
+const { createApp, ref, computed } = Vue;
 
 const PackageExplorer = {
   setup() {
-    const packages = ref(null);
-    const searchQuery = ref('');
-    const archiveType = ref('community-archive');
-    const mapInstance = ref(null);
-    const markers = ref([]);
-    const markerClusters = ref(null);
+    const packages       = ref(null);
+    const searchQuery    = ref('');
+    const archiveType    = ref('community-archive');
+    const mapInstance    = ref(null);
+    var   mapMarkers     = [];
+    const markerClusters = L.markerClusterGroup();
 
     const packageTitles = computed(() => {
-      if (!packages.value) {
-        return [];
-      }
+      if (!packages.value) { return []; }
       return packages.value.map(pac => pac.packageTitle.toLowerCase());
     });
 
     const filteredPackages = computed(() => {
-      if (!packageTitles.value) {
-        return [];
-      }
-
-      if (!searchQuery.value) {
-        return packages.value;
-      }
-
+      if (!packageTitles.value) { return []; }
+      if (!searchQuery.value) { return packages.value; }
       const lowercaseQuery = searchQuery.value.toLowerCase();
       const matchingPackageTitles = packageTitles.value.filter(title =>
         title.includes(lowercaseQuery)
       );
-
       return packages.value.filter(pac =>
         matchingPackageTitles.includes(pac.packageTitle.toLowerCase())
       );
@@ -58,9 +49,9 @@ const PackageExplorer = {
       try {
         if (!mapInstance.value) { return; }
         
-        if (!markers.value.length) {
-          markers.value = [];
-          markerClusters.value = L.markerClusterGroup();
+        //if (!markers.value.length) {
+          //markers.value = [];
+          //const markerClusters = L.markerClusterGroup();
           
           let apiUrl = 'https://server.poseidon-adna.org/individuals?additionalJannoColumns=Latitude,Longitude';
           apiUrl += ('&archive=' + archiveType.value);
@@ -75,43 +66,48 @@ const PackageExplorer = {
 
             if (packageTitles.value.includes(ind.packageTitle.toLowerCase())) {
               const popupContent = `<b>Package:</b> ${ind.packageTitle}<br><b>Package Version:</b> ${ind.packageVersion}<br><b>Poseidon ID:</b> ${ind.poseidonID}`;
-              const marker = L.marker([lat, lng]).bindPopup(popupContent);
-              markerClusters.value.addLayer(marker);
-              markers.value.push(marker);
+              const oneMarker = L.marker([lat, lng]).bindPopup(popupContent);
+              mapMarkers.push(oneMarker);
             }
           });
-        }
-
-        mapInstance.value.addLayer(markerClusters.value);
+        //}
+        markerClusters.addLayers(mapMarkers);
+        mapInstance.value.addLayer(markerClusters);
       } catch (error) {
         console.error(error);
       }
     };
 
     const highlightSamples = (packageTitle) => {
-      markerClusters.value.clearLayers();
-      markers.value.forEach(marker => {
-        if (marker._popup.getContent().includes(packageTitle)) {
-          markerClusters.value.addLayer(marker);
-        }
-      });
+      //markerClusters.value.clearLayers();
+      //markers.value.forEach(marker => {
+      //  if (marker._popup.getContent().includes(packageTitle)) {
+      //    markerClusters.value.addLayer(marker);
+      //  }
+      //});
     };
 
     const resetMarkers = () => {
-      markerClusters.value.clearLayers();
-      markerClusters.value.addLayers(markers.value);
+      //markerClusters.value.clearLayers();
+      //markerClusters.value.addLayers(markers.value);
+      //mapInstance.value.eachLayer(function (layer) {
+      //  if(layer['_latlng']!=undefined) {
+      //    mapInstance.value.removeLayer(layer);
+      //  }
+      //});
+      //mapInstance.value.remove();
+      //console.log(mapInstance.value);
+      markerClusters.removeLayers(mapMarkers);
+      mapMarkers = [];
     };
 
     const showSelection = () => {
       loadData();
+      resetMarkers();
       loadMapData();
     };
 
     loadData();
-
-    watchEffect(() => {
-      loadMapData();
-    });
 
    const downloadGenotypeData = (packageTitle) => {
      const downloadLink = document.createElement('a');
