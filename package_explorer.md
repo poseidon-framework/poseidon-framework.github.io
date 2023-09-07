@@ -74,12 +74,14 @@ const PackageExplorer = {
           const addCols = s.additionalJannoColumns;
           const lat = addCols[0][1];
           const lng = addCols[1][1];
+          if (lat == 0 && lng == 0) { return; }
           const popupContent = `<b>Package:</b> ${s.packageTitle}<br><b>Package Version:</b> ${s.packageVersion}<br><b>Poseidon ID:</b> ${s.poseidonID}`;
           const oneMarker = L.marker([lat, lng]).bindPopup(popupContent);
           mapMarkers.push(oneMarker);
         });
         markerClusters.addLayers(mapMarkers);
         mapInstance.value.addLayer(markerClusters);
+        mapInstance.value.fitBounds(markerClusters.getBounds());
       } catch (error) {
         console.error(error);
       }
@@ -183,7 +185,7 @@ const MapView = {
   `,
   mounted() {
     const map = L.map('map').setView([30, 10], 2);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { noWrap: true }).addTo(map);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {}).addTo(map);
     this.$parent.mapInstance = map;
   },
 };
