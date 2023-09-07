@@ -58,21 +58,27 @@ const PackageExplorer = {
       }
     };
 
-    const addSamplesToMap = async () => {
+    const addSamplesToMap = async (requestedPackageTitle) => {
       try {
+        // check if necessary data and objects are there
         if (!mapInstance.value) { return; }
         if (!samples.value) { return; }
-
-        samples.value.forEach(ind => {
-          const addCols = ind.additionalJannoColumns;
+        // filter to one package, if this is requested
+        if (requestedPackageTitle === undefined) {
+          samplesFiltered = samples.value
+        } else {
+          samplesFiltered = samples.value.filter(s => {
+            return(s.packageTitle === requestedPackageTitle)
+          })
+        }
+        // compile markers
+        samplesFiltered.forEach(s => {
+          const addCols = s.additionalJannoColumns;
           const lat = addCols.filter(oneCol => oneCol[0] == "Latitude")[0][1];
           const lng = addCols.filter(oneCol => oneCol[0] == "Longitude")[0][1];
-
-          if (packageTitles.value.includes(ind.packageTitle.toLowerCase())) {
-            const popupContent = `<b>Package:</b> ${ind.packageTitle}<br><b>Package Version:</b> ${ind.packageVersion}<br><b>Poseidon ID:</b> ${ind.poseidonID}`;
-            const oneMarker = L.marker([lat, lng]).bindPopup(popupContent);
-            mapMarkers.push(oneMarker);
-          }
+          const popupContent = `<b>Package:</b> ${s.packageTitle}<br><b>Package Version:</b> ${s.packageVersion}<br><b>Poseidon ID:</b> ${s.poseidonID}`;
+          const oneMarker = L.marker([lat, lng]).bindPopup(popupContent);
+          mapMarkers.push(oneMarker);
         });
         markerClusters.addLayers(mapMarkers);
         mapInstance.value.addLayer(markerClusters);
@@ -91,9 +97,9 @@ const PackageExplorer = {
       await loadSamples();
     }
 
-    const updateMap = async () => {
+    const updateMap = async (requestedPackageTitle) => {
       resetMarkers();
-      addSamplesToMap();
+      addSamplesToMap(requestedPackageTitle);
     };
 
     const showSelection = async () => {
@@ -101,8 +107,8 @@ const PackageExplorer = {
       updateMap();
     };
 
-    const highlightSamplesInMap = (packageTitle) => {
-      updateMap();
+    const highlightSamplesInMap = (requestedPackageTitle) => {
+      updateMap(requestedPackageTitle);
     };
 
     const downloadGenotypeData = (packageTitle) => {
@@ -135,12 +141,9 @@ const PackageExplorer = {
           <option value="community-archive">Poseidon Community Archive</option>
           <option value="aadr-archive">Poseidon AADR Archive</option>
         </select>
+        <button @click="showSelection">Show Selection</button>
       </div>
-
       <div></div> <!-- Empty div for spacing -->
-
-      <button @click="showSelection">Show Selection</button>
-      <button @click="resetMarkers">Reset Markers</button>
 
       <div v-if="packages">
 
