@@ -81,25 +81,28 @@ const PackageExplorer = {
       }
     };
 
-    const highlightSamples = (packageTitle) => {
-      //markerClusters.value.clearLayers();
-      //markers.value.forEach(marker => {
-      //  if (marker._popup.getContent().includes(packageTitle)) {
-      //    markerClusters.value.addLayer(marker);
-      //  }
-      //});
-    };
-
     const resetMarkers = () => {
       markerClusters.removeLayers(mapMarkers);
       mapMarkers = [];
     };
 
-    const showSelection = async () => {
+    const loadAllData = async () => {
       await loadPackages();
       await loadSamples();
+    }
+
+    const updateMap = async () => {
       resetMarkers();
       addSamplesToMap();
+    };
+
+    const showSelection = async () => {
+      await loadAllData();
+      updateMap();
+    };
+
+    const highlightSamplesInMap = (packageTitle) => {
+      updateMap();
     };
 
     const downloadGenotypeData = (packageTitle) => {
@@ -110,7 +113,7 @@ const PackageExplorer = {
     };
 
     // app startup
-    loadPackages();
+    loadAllData();
 
     return {
       packages,
@@ -119,9 +122,7 @@ const PackageExplorer = {
       mapInstance,
       filteredPackages,
       showSelection,
-      loadSamples,
-      addSamplesToMap,
-      highlightSamples,
+      highlightSamplesInMap,
       resetMarkers,
       downloadGenotypeData,
     };
@@ -164,7 +165,7 @@ const PackageExplorer = {
                 <b>Download genotype data:</b> 
                 <button @click="downloadGenotypeData(pac.packageTitle)">Download</button>
                 <br>
-                <button @click="highlightSamples(pac.packageTitle)">Highlight Samples</button>
+                <button @click="highlightSamplesInMap(pac.packageTitle)">Highlight Samples</button>
               </td>
             </tr>
           </tbody>
