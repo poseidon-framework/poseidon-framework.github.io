@@ -648,12 +648,11 @@ Available options:
 It can be called with a lot of optional arguments:
 
 ```
-trident update -d ... -d ... \
+trident rectify -d ... -d ... \
   --poseidonVersion "X.X.X" \
   --packageVersion Major|Minor|Patch \
   --logText "short description of the update"
   --checksumAll
-  --ignoreGeno
   --newContributors "[Firstname Lastname](Email address);..."
 ```
 

@@ -17,7 +17,7 @@ If you would like to provide a new package, you should prepare it as far as you 
 3. Fill out the newly created [`POSEIDON.yml`](standard?id=the-poseidonyml-file-mandatory) file.
 4. Fill out the newly created `.janno` file. More information about the many columns and how to fill them can be found in the extensive documentation [here](janno_details). You do not necessarily have to fill out all columns - incomplete submissions are fine, as they can be completed later.
 5. Fill out the `.bib` file with the relevant source publications. Some more information on how to do this can be found [here](janno_details?id=context-information).
-6. Add/update the file checksums in the `POSEIDON.yml` file with [`trident update`](trident?id=update-command).
+6. Add/update the file checksums in the `POSEIDON.yml` file with [`trident rectify`](trident?id=rectify-command).
 7. Check if your new Poseidon package passes the validation with [`trident validate`](trident?id=validate-command). This is mandatory.
 
 The public repository has some additional requirements for your package beyond what you would need to simply use the package locally for your own analysis. The following list contains some of these less obvious qualities you should check before submitting:
@@ -60,31 +60,34 @@ size 177553875
 
 If you identify a mistake in any package, be it in the context data (`.janno`-files), package-meta-data (`POSEIDON.yml`), bibliographic information (`.bib` files) or genotype data, we welcome both issues to point them out and contributions to correct them directly.
 
-1. Fork and clone the Github repository that contains the package you want to improve. Unlike for the package submission (see above), it is recommended to make a full clone of the repository with Git LFS (see above, so to clone without `GIT_LFS_SKIP_SMUDGE=1` here). Expert users are asked, though, to reduce their bandwidth requirements as much as possible. Changes in non-genotype data files are well possible with an incomplete clone.
-2. Modify the files you want to change. Remember to also (i) update the md5 checksums in the POSEIDON.yml file, (ii) increment the package version number and (iii) add an informative entry to the changelog file after you are done. This can be done automatically with [`trident update`](trident?id=update-command). Please use its command line arguments to get well documented changes (see the following examples).
+1. Fork and clone the GitHub repository that contains the package you want to improve. Unlike for the package submission (see above), it is recommended to make a full clone of the repository with Git LFS (see above, so to clone without `GIT_LFS_SKIP_SMUDGE=1` here). Expert users are asked, though, to reduce their bandwidth requirements as much as possible. Changes in non-genotype data files are well possible with an incomplete clone.
+2. Modify the files you want to change. Remember to also (i) update the md5 checksums in the POSEIDON.yml file, (ii) increment the package version number and (iii) add an informative entry to the changelog file after you are done. This can be done automatically with [`trident rectify`](trident?id=rectify-command). Please use its command line arguments to get well documented changes (see the following examples).
 
 	- Example 1: You added a radiocarbon date for a sample in the .janno file
 	```
-	trident update \
-	  --versionCompontent "Patch" \
-	  --newContributors "[Firstname Lastname](email@address.com)" \
-	  --logText "Added radiocarbon date AAA-1234 for sample I99362"
+	trident rectify \
+	  --packageVersion "Patch" \
+	  --logText "Added radiocarbon date AAA-1234 for sample I99362" \
+	  --checksumJanno \
+	  --newContributors "[Firstname Lastname](email@address.com)"
 	```
 
 	- Example 2: You added a missing sample to a package and thus had to edit the genotype data and the .janno file
 	```
-	trident update \
-	  --versionComponent "Minor" \
-	  --newContributors "[Firstname Lastname](email@address.com)" \
-	  --logText "Added sample I99363"
+	trident rectify \
+	  --packageVersion "Minor" \
+	  --logText "Added sample I99363" \
+	  --checksumAll \
+	  --newContributors "[Firstname Lastname](email@address.com)"
 	```
 
 	- Example 3: You removed a sample from a package
 	```
-	trident update \
-	  --versionComponent "Major" \
-	  --newContributors "[Firstname Lastname](email@address.com)" \
-	  --logText "Removed sample I99363. The authors removed this sample because ..."
+	trident rectify \
+	  --packageVersion "Major" \
+	  --logText "Removed sample I99363, because ..." \
+	  --checksumAll \
+	  --newContributors "[Firstname Lastname](email@address.com)"
 	```
 
 3. Check if the modified package passes the validation with [`trident validate`](trident?id=validate-command). This is mandatory.
