@@ -1,13 +1,14 @@
 # Version overview table
 
-The following table documents which versions of the Poseidon standard (columns) are compatible with which versions of the software tools (rows).
+The following table documents which versions of the Poseidon standard are compatible with which versions of the software tools.
 
 <script>
   Vue.createApp({
     data () {
      return {
         versionTableRows: null,
-        tools: ["trident", "xerxes", "qjanno", "janno"],
+        tools:    ["trident",   "xerxes",   "qjanno",   "janno"             ],
+        toolURLs: ["#/trident", "#/xerxes", "#/qjanno", "#/janno_r_package" ],
         poseidonVersions: null,
         versionsPerTool: null
       }
@@ -73,17 +74,26 @@ The following table documents which versions of the Poseidon standard (columns) 
           <table class="table-default">
             <thead>
               <tr style="background: none;">
-                <th>v</th>
-                <th v-for="poseidonVersion in poseidonVersions">{{poseidonVersion}}<th>
+                <td></td>
+                <td v-bind:colspan="poseidonVersions.length" style="color: #d3d3d3;">
+                  <a href="#/standard">Poseidon standard versions</a>
+                </td>
+              </tr>
+              <tr style="background: none;">
+                <th style="font-weight: normal; color: #d3d3d3;">
+                  <a v-bind:href="toolURLs[tools.findIndex((t) => t == tool)]">{{tool}}</a>
+                </th>
+                <th v-for="poseidonVersion in poseidonVersions" style="color: #d3d3d3;">
+                  {{poseidonVersion}}
+                <th>
               <tr>
             </thead>
             <tbody>
               <tr v-for="version in versionsPerTool[tools.findIndex((t) => t == tool)]">
-                <td>{{version}}</td>
+                <td style="border-right: 1px dotted #d3d3d3;"><b>{{version}}</b></td>
                 <td v-for="poseidonVersion in poseidonVersions">
-                  <div v-if="exists(versionTableRows,tool,version,poseidonVersion)">
-                    ✅
-                  </div>
+                  <div v-if="exists(versionTableRows,tool,version,poseidonVersion)">✅</div>
+                  <div v-else>☐</div>
                 </td>
               </tr>
             </tbody>
