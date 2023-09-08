@@ -15,7 +15,7 @@ The following table documents which versions of the Poseidon standard are compat
     },
     async mounted () {
       const response = await fetch(
-        "https://raw.githubusercontent.com/poseidon-framework/poseidon-framework.github.io/master/version_table_figure/version_table.tsv"
+        "https://raw.githubusercontent.com/poseidon-framework/poseidon-framework.github.io/master/version_table.tsv"
       );
       const versionTableTSVData = await response.text();
       this.versionTableRows = this.parseTSV(versionTableTSVData);
