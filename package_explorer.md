@@ -141,6 +141,8 @@ const PackageExplorer = {
   template: `
     <div>
       <div>
+        <input type="text" v-model="searchQuery" placeholder="Search Packages" />
+        <div></div>
         <label for="archive_type">Archive type:</label>
         <select id="archive_type" v-model="archiveType">
           <option value="community-archive">Poseidon Community Archive</option>
