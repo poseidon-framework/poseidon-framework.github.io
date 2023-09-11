@@ -3,7 +3,7 @@
 </div>
 
 <script>
-const { createApp, ref, computed } = Vue;
+const { createApp, ref,computed , watch } = Vue;
 
 const PackageExplorer = {
   setup() {
@@ -21,18 +21,23 @@ const PackageExplorer = {
       return packages.value.map(pac => pac.packageTitle.toLowerCase());
     });
 
-    const filteredPackages = computed(() => {
-      if (!packageTitles.value) { return []; }
-      if (!searchQuery.value) { return packages.value; }
-      const lowercaseQuery = searchQuery.value.toLowerCase();
-      const matchingPackageTitles = packageTitles.value.filter(title =>
+    const filteredPackages = ref([]);
+
+    // Watch for changes in searchQuery and update filteredPackages accordingly
+    watch([searchQuery, packageTitles], ([newSearchQuery, newPackageTitles]) => {
+      if (!newPackageTitles || !newSearchQuery) {
+        filteredPackages.value = packages.value;
+        return;
+      }
+      const lowercaseQuery = newSearchQuery.toLowerCase();
+      const matchingPackageTitles = newPackageTitles.filter((title) =>
         title.includes(lowercaseQuery)
       );
-      return packages.value.filter(pac =>
+      filteredPackages.value = packages.value.filter((pac) =>
         matchingPackageTitles.includes(pac.packageTitle.toLowerCase())
       );
     });
-
+    
     const loadPackages = async () => {
       try {
         let apiUrl = 'https://server.poseidon-adna.org/packages';
