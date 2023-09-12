@@ -152,7 +152,9 @@ For all subcommands the general argument `--logMode` defines how trident reports
 
 ##### Duplicates
 
-- If multiple packages in a package repository share the same `title`, then trident will try to select the one with the highest version number. If this is not sufficient to resolve the conflict, trident will stop. An exception for that is the `list` subcommand, which will read and report all packages/groups/individuals in all versions.
+- Multiple packages in a package repository can share the same `title`, if they have different version numbers. Otherwise trident will stop.
+- `trident list` will read and report all packages/groups/individuals in all versions.
+- `trident forge` and `trident fetch` accept packages appended by version numbers, see below.
 - Individual/sample names (`Poseidon_ID`s) within one package have to be unique, or trident will stop.
 - We generally also discourage ID duplicates across packages in package repositories, but trident will generally continue with them after printing a warning. This does not apply for `validate`, by default (you can change this behaviour with `--ignoreDuplicates`), and `forge`. `forge` offers a special mechanism to resolve duplicates within its selection language (see below).
 
@@ -286,7 +288,7 @@ trident fetch -d ... -d ... \
 
 and the entities you want to download must be listed either in a simple string of comma-separated values, which can be passed via `-f`/`--fetchString`, or in a text file (`--fetchFile`). Entities are then combined from these sources.
 
-Entities are specified using a special syntax (see also the documentation of `forge` below): Package titles are wrapped in asterisks: `*package_title*`, group names are spelled as is, and individual names are wrapped in angular brackets, so `<individual1>`. Fetch will figure out which packages need to be downloaded to include all specified entities. `--downloadAll`, which can be given instead of `-f` and `--fetchFile`, causes fetch to download all packages from the server. The downloaded packages are added in the first (!) `-d` directory (which gets created if it doesn't exist), but downloads are only performed if the respective packages are not already present in the latest version in any of the `-d` dirs.
+Entities are specified using a special syntax (see also the documentation of `forge` below): packages are wrapped in asterisks, with or witout version appended after a dash (e.g. `*package_title*` or `*package_title-1.2.3`), group names are spelled as is, and individual names are wrapped in angular brackets (e.g. `<individual1>`). Fetch will figure out which packages need to be downloaded to include all specified entities. `--downloadAll`, which can be given instead of `-f` and `--fetchFile`, causes fetch to download all packages from the server. The downloaded packages are added in the first (!) `-d` directory (which gets created if it doesn't exist), but downloads are only performed if the respective packages are not already present in the latest version in any of the `-d` dirs.
 
 Note that `trident fetch` makes most sense in combination with `trident list --remote`: First one can inspect what is available on the server, then one can create a custom fetch command.
 
@@ -436,31 +438,54 @@ trident forge \
 
 ##### The forge selection language
 
-The text in `--forgeString` and `--forgeFile` are parsed as a domain specific query language that describes precisely which entities should be compiled in the output package of a given `forge` operation. The language has multiple syntactic elements and a specific evaluation logic.
+The text in `--forgeString`, `--forgeFile` (and with limited syntax also in `--fetchString` and `--fetchFile`) are parsed as a domain specific query language that describes precisely which entities should be compiled in the output package of a given `forge` operation. The language has multiple syntactic elements and a specific evaluation logic.
 
 In general a `--forgeString` query consists of multiple entities, separated by `,`. The main entities are Poseidon packages, groups/populations and individuals/samples:
 
 - Each package title is surrounded by `*`: `*package*`. That means if you want all individuals of the Poseidon package `2019_Jeong_InnerEurasia` in the output package you would add `*2019_Jeong_InnerEurasia*` to the query.
 - Groups/populations are not specially marked: `group`. So to get all individuals of the group `Swiss_Roman_period`, you would simply add `Swiss_Roman_period`.
 - Individuals/samples are surrounded by `<` and `>`: `<individual>`. `ALA026` therefore becomes `<ALA026>`. A second way to denote individuals is with the more verbose and specific syntax `<package:group:individual>`. Such defined individuals take precedence over differently defined ones (so: directly with `<individual>` or as a subset of `*package*` or `group`). This allows to resolve duplication issues precisely -- at least in cases where the duplicated individuals differ in source package or primary group.
+- Package versions can be appended to package names, such as `*package-1.2.3*`, or `<package-1.2.3:group:individual>`.
+
 
 In the `--forgeFile` each line is treated as a separate forgeString, empty lines are ignored and `#`s start comments. So this is a valid forgeFile:
 
 ```
 # Packages
-*package1*, *package2*
+*package1*, *package2-1.2.3*
 
 # Groups and individuals from other packages beyond package1 and package2
-group1, <individual1>, group2, <individual2>, <individual3>
+group1, <individual1>, group2, <individual2>, <pac1:group2:individual3>
 
 # group2 has two outlier individuals that should be ignored
--<bad_individual1> # This one has very low coverage
--<bad_individual2> # This one is from a different time period
+-<individual1> # This one has very low coverage
+-<pac2:group3:individual4> # This one is from a different time period
 ```
 
-By prepending `-` to the bad individuals, we can exclude them from the forged package. `forge` figures out the final list of samples to include by executing all forge-entities in order. So an entity list `*PackageA*,-<Individual1>,GroupA` may result in a different outcome than `*PackageA*,GroupA,-<Individual1>`, depending on whether `<Individual1>` belongs to `GroupA` or not. If the forge entity list starts with a negative entity, or if the entity list is empty, `forge` will implicitly assume you want to include all individuals in all packages found in the baseDirs (except the ones explicitly excluded, of course).
+By prepending `-` to entities, we can exclude them from the forged package (this feature is not available for `fetch`). `forge` figures out the final list of samples to include by executing all forge-entities in order. So an entity list `*PackageA*,-<Individual1>,GroupA` may result in a different outcome than `*PackageA*,GroupA,-<Individual1>`, depending on whether `<Individual1>` belongs to `GroupA` or not. If the forge entity list starts with a negative entity, or if the entity list is empty, `forge` will implicitly assume you want to include all individuals in all packages found in the baseDirs (except the ones explicitly excluded, of course).
+
+The specific semantics of the various ways to include or exclude entities are:
+
+###### Inclusion queries
+
+* `*Pac1*`: Select all individuals in the latest version of package "Pac1"
+* `*Pac1-1.0.1*`: Select all individuals in package "Pac1" with version "1.0.1"
+* `Group1`: Select all individuals associated with "Group1" in all latest versions of all packages
+* `<Ind1>`: Select the individual named "Ind1", searching in all latest packages.
+* `<Pac1:Group1:Ind1>`: Select the individual named "Ind1" associated with "Group1" in the latest version of package "Pac1"
+* `<Pac1-1.0.1:Group1:Ind1>`: Select the individual named "Ind1" associated with "Group1" in the package "Pac1" with version "1.0.1"
+
+###### Exclusion queries
+
+* `-*Pac1*`: Remove all individuals in all versions of package "Pac1"
+* `-*Pac1-1.0.1*`: Remove only individuals in package "Pac1" with version "1.0.1" (but leave other versions in)
+* `-Group1`: Remove all individuals associated with "Group1" in all versions of all packages (not just the latest)
+* `-<Ind1>`: Remove all individuals named "Ind1" in all versions of all packages (not just the latest).
+* `-<Pac1:Group1:Ind1>`: Remove the individual named "Ind1" associated with "Group1", searching in all versions of package "Pac1"
+* `-<Pac1-1.0.1:Group1:Ind1>`: Remove the individual named "Ind1" associated with "Group1", but only if they are in "Pac1" with version "1.0.1"
 
 An empty forgeString will therefore merge all available individuals.
+If a query results in multiple individuals with the same name, forge will throw an error.
 
 ##### Treatment of the .janno file while merging
 
@@ -675,10 +700,10 @@ These arguments determine which fields of the POSEIDON.yml file should be modifi
  <summary><i class="fas fa-search"></i> <i class="fas fa-terminal"></i> <b>Click here for command line details</b></summary>
 
 ```
-Usage: trident list ((-d|--baseDir DIR) | --remote [--remoteURL URL]
-                      [--archive STRING])
-                    (--packages | --groups | --individuals
-                      [-j|--jannoColumn COLNAME]) [--raw]
+Usage: trident list ((-d|--baseDir DIR) | --remote [--remoteURL URL] 
+                      [--archive STRING]) 
+                    (--packages | --groups | --individuals 
+                      [-j|--jannoColumn COLNAME]) [--raw] [--onlyLatest]
 
   List packages, groups or individuals from local or remote Poseidon
   repositories
@@ -707,6 +732,10 @@ Available options:
   --raw                    Return the output table as tab-separated values
                            without header. This is useful for piping into grep
                            or awk.
+  --onlyLatest             list only the latest versions of packages, or the
+                           groups/individuals within the latest versions of
+                           packages, respectively
+
 ```
 
 </details>

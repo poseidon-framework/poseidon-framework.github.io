@@ -43,6 +43,7 @@ These lists have the following general structure:
 packageInfo[i]
 ├── packageTitle
 ├── packageVersion
+├── isLatest
 ├── lastModified
 ├── description
 ├── poseidonVersion
@@ -56,6 +57,7 @@ groupInfo[i]
 ├── groupName
 ├── packageTitle
 ├── packageVersion
+├── isLatest
 └── nrIndividuals
 ```
 </td>
@@ -67,6 +69,7 @@ extIndInfo[i]
 ├── groupNames []
 ├── packageTitle
 ├── packageVersion
+├── isLatest
 └── additionalJannoColumns []
 ```
 </td>
