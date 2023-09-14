@@ -52,7 +52,7 @@ const PackageExplorer = {
 
     const loadSamples = async () => {
       try {  
-        let apiUrl = 'https://server.poseidon-adna.org/individuals?additionalJannoColumns=Latitude,Longitude,Country';
+        let apiUrl = 'https://server.poseidon-adna.org/individuals?additionalJannoColumns=Latitude,Longitude,Country,Location,Group_Name';
         apiUrl += ('&archive=' + archiveType.value);
         const response_inds = await fetch(apiUrl);
         const response_inds_json = await response_inds.json();
@@ -84,7 +84,9 @@ const PackageExplorer = {
           const lat = addCols[0][1];
           const lng = addCols[1][1];
           if (lat == 0 && lng == 0) { return; }
-          const popupContent = `<b>Package:</b> ${s.packageTitle}<br><b>Package Version:</b> ${s.packageVersion}<br><b>Poseidon ID:</b> ${s.poseidonID}`;
+          const location = addCols[3][1]
+          const GN = addCols[4][1]
+          const popupContent = `<b>Package:</b> ${s.packageTitle}<br><b>Package Version:</b> ${s.packageVersion}<br><b>Poseidon ID:</b> ${s.poseidonID} <b>Location:</b> ${location} <b>Group_Name:</b> ${GN}`;
           const oneMarker = L.marker([lat, lng]).bindPopup(popupContent);
           mapMarkers.push(oneMarker);
         });
