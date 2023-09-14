@@ -27,6 +27,7 @@ const PackageExplorer = {
     watch([searchQuery, packageTitles], ([newSearchQuery, newPackageTitles]) => {
       if (!newPackageTitles || !newSearchQuery) {
         filteredPackages.value = packages.value;
+        console.log(filteredPackages);
         return;
       }
       const lowercaseQuery = newSearchQuery.toLowerCase();
@@ -173,7 +174,7 @@ const PackageExplorer = {
             <col style="width:6%">
           </colgroup>  
           <tbody>
-            <tr v-for="pac in filteredPackages" :key="pac.packageTitle">
+            <tr v-for="(pac, index) in filteredPackages" :key="index">
               <td>
                 {{ pac.nrIndividuals }}
               </td>
