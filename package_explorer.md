@@ -104,7 +104,11 @@ const PackageExplorer = {
           }
           const location = addCols[3][1];
           const GN = addCols[4][1];
-          const popupContent = `<b>Package:</b> ${s.packageTitle}<br><b>Package Version:</b> ${s.packageVersion}<br><b>Poseidon ID:</b> ${s.poseidonID} <br><b>Location:</b> ${location} <br><b>Group_Name:</b> ${GN}`;
+          const popupContent = `<b>Package:</b> ${s.packageTitle}<br>
+            <b>Package Version:</b> ${s.packageVersion}<br>
+            <b>Poseidon ID:</b> ${s.poseidonID}<br>
+            <b>Location:</b> ${location}<br>
+            <b>Group_Name:</b> ${GN}`;
           const oneMarker = L.marker([lat, lng]).bindPopup(popupContent);
           mapMarkers.push(oneMarker);
         });
