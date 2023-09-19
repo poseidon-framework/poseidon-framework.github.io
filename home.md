@@ -1,11 +1,26 @@
 ![poseidon banner with logo](_media/Poseidon-Logo-WaterGraphicLrg.png)
 
-**Poseidon is a framework offering a standardized way to store and share human archaeogenetic genotype datasets with archaeological context information.** It aims to [fill a desideratum](background.md) in the current handling of research data.
-
-?> New here? Check out our [Getting Started Guide](getting_started.md)
+**Poseidon is a framework to store and share human archaeogenetic genotype data with archaeological context information.** 
 
 <div id="landingPageButtonsOuter">
   <div id="landingPageButtonsInner">
+    <button onclick="window.open(
+      '#/background',
+      '_blank');;"
+      class="button">
+      <span>
+        <i class="fa fa-question-circle" aria-hidden="true"></i> Why?
+      </span>
+    </button>
+    <button onclick="window.open(
+      '#/getting_started',
+      '_blank');;"
+      class="button">
+      <span style="color: #7CFC00">
+        <i class="fa fa-play-circle" aria-hidden="true"></i> Quick start guide
+      </span>
+    </button>
+    &nbsp;
     <button onclick="window.open(
       'https://join.slack.com/t/poseidon-8el7276/shared_invite/zt-14q2wxxmf-pbtNtm5E9DFJbjioyfAyMg',
       '_blank');;"
@@ -68,4 +83,46 @@
   </div>
 </div>
 
+<br>
 
+<script>
+  Vue.createApp({
+    data () {
+     return {
+        toots: null,
+      }
+    },
+    async mounted () {
+      try {
+        const response = await fetch(
+          "https://ecoevo.social/users/poseidon/outbox?min_id=0&page=true"
+        );
+        const response_json = await response.json();
+        this.toots = response_json;
+        console.log(toots);
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    methods: {
+      
+    }
+  }).mount('#tootViewer');
+</script>
+
+<div id="tootViewer">
+
+  <div v-if="toots">
+    <div class="grid-container">
+      <div class="grid-element">
+      </div>
+    </div>
+  </div>
+  
+  <div v-else><i>...fetching data from GitHub</i></div>
+
+</div>
+
+<style>
+
+</style>
