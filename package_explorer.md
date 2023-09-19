@@ -3,22 +3,24 @@
 </div>
 
 <script>
-const { createApp, ref,computed , watch } = Vue;
+const { createApp, ref, computed, watch } = Vue;
 
 const PackageExplorer = {
   setup() {
-    const packages       = ref(null);
-    const samples        = ref(null);
-    const searchQuery    = ref('');
-    const archiveType    = ref('community-archive');
-    const mapInstance    = ref(null);
-    var   mapMarkers     = [];
-    const markerClusters = L.markerClusterGroup({chunkedLoading: true});
-    const modalPackage   = ref('');
+    const packages = ref(null);
+    const samples = ref(null);
+    const searchQuery = ref('');
+    const archiveType = ref('community-archive');
+    const mapInstance = ref(null);
+    var mapMarkers = [];
+    const markerClusters = L.markerClusterGroup({ chunkedLoading: true });
+    const modalPackage = ref('');
 
     const packageTitles = computed(() => {
-      if (!packages.value) { return []; }
-      return packages.value.map(pac => pac.packageTitle.toLowerCase());
+      if (!packages.value) {
+        return [];
+      }
+      return packages.value.map((pac) => pac.packageTitle.toLowerCase());
     });
 
     const filteredPackages = ref([]);
@@ -27,7 +29,6 @@ const PackageExplorer = {
     watch([searchQuery, packageTitles], ([newSearchQuery, newPackageTitles]) => {
       if (!newPackageTitles || !newSearchQuery) {
         filteredPackages.value = packages.value;
-        console.log(filteredPackages);
         return;
       }
       const lowercaseQuery = newSearchQuery.toLowerCase();
@@ -38,11 +39,11 @@ const PackageExplorer = {
         matchingPackageTitles.includes(pac.packageTitle.toLowerCase())
       );
     });
-    
+
     const loadPackages = async () => {
       try {
         let apiUrl = 'https://server.poseidon-adna.org/packages';
-        apiUrl += ('?archive=' + archiveType.value);
+        apiUrl += '?archive=' + archiveType.value;
         const response_pacs = await fetch(apiUrl);
         const response_pacs_json = await response_pacs.json();
         packages.value = response_pacs_json.serverResponse.packageInfo;
@@ -52,9 +53,10 @@ const PackageExplorer = {
     };
 
     const loadSamples = async () => {
-      try {  
-        let apiUrl = 'https://server.poseidon-adna.org/individuals?additionalJannoColumns=Latitude,Longitude,Country,Location,Group_Name';
-        apiUrl += ('&archive=' + archiveType.value);
+      try {
+        let apiUrl =
+          'https://server.poseidon-adna.org/individuals?additionalJannoColumns=Latitude,Longitude,Country,Location,Group_Name';
+        apiUrl += '&archive=' + archiveType.value;
         const response_inds = await fetch(apiUrl);
         const response_inds_json = await response_inds.json();
         samples.value = response_inds_json.serverResponse.extIndInfo;
@@ -63,31 +65,46 @@ const PackageExplorer = {
       }
     };
 
+    // Clear the search query
+    const clearSearchQuery = () => {
+      searchQuery.value = '';
+    };
+
     const getSamplesForPackage = (requestedPackageTitle) => {
-      if (!samples.value) { return; }
-      return(samples.value.filter(s => { return(s.packageTitle === requestedPackageTitle) }))
-    }
+      if (!samples.value) {
+        return;
+      }
+      return samples.value.filter((s) => {
+        return s.packageTitle === requestedPackageTitle;
+      });
+    };
 
     const addSamplesToMap = async (requestedPackageTitle) => {
       try {
         // check if necessary data and objects are there
-        if (!mapInstance.value) { return; }
-        if (!samples.value) { return; }
+        if (!mapInstance.value) {
+          return;
+        }
+        if (!samples.value) {
+          return;
+        }
         // filter to one package, if this is requested
-        if (requestedPackageTitle === undefined) { 
+        if (requestedPackageTitle === undefined) {
           samplesFiltered = samples.value;
         } else {
           samplesFiltered = getSamplesForPackage(requestedPackageTitle);
         }
         // compile markers
-        samplesFiltered.forEach(s => {
+        samplesFiltered.forEach((s) => {
           const addCols = s.additionalJannoColumns;
           const lat = addCols[0][1];
           const lng = addCols[1][1];
-          if (lat == 0 && lng == 0) { return; }
-          const location = addCols[3][1]
-          const GN = addCols[4][1]
-          const popupContent = `<b>Package:</b> ${s.packageTitle}<br><b>Package Version:</b> ${s.packageVersion}<br><b>Poseidon ID:</b> ${s.poseidonID} <b>Location:</b> ${location} <b>Group_Name:</b> ${GN}`;
+          if (lat == 0 && lng == 0) {
+            return;
+          }
+          const location = addCols[3][1];
+          const GN = addCols[4][1];
+          const popupContent = `<b>Package:</b> ${s.packageTitle}<br><b>Package Version:</b> ${s.packageVersion}<br><b>Poseidon ID:</b> ${s.poseidonID} <br><b>Location:</b> ${location} <br><b>Group_Name:</b> ${GN}`;
           const oneMarker = L.marker([lat, lng]).bindPopup(popupContent);
           mapMarkers.push(oneMarker);
         });
@@ -110,7 +127,9 @@ const PackageExplorer = {
     };
 
     const updateMap = async (requestedPackageTitle) => {
-      if (markerClusters) { resetMarkers(); }
+      if (markerClusters) {
+        resetMarkers();
+      }
       addSamplesToMap(requestedPackageTitle);
     };
 
@@ -143,21 +162,26 @@ const PackageExplorer = {
       resetMarkers,
       downloadGenotypeData,
       getSamplesForPackage,
-      modalPackage
+      modalPackage,
+      clearSearchQuery, // Expose the clearSearchQuery function
     };
   },
   template: `
-    <div>
-      <div>
-        <input type="text" v-model="searchQuery" placeholder="Search Packages" />
-        <div></div>
-        <label for="archive_type">Archive type:</label>
-        <select id="archive_type" v-model="archiveType">
-          <option value="community-archive">Poseidon Community Archive</option>
-          <option value="aadr-archive">Poseidon AADR Archive</option>
-        </select>
-        <button @click="showSelection">Show Selection</button>
-      </div>
+  
+  <div class="description-tooltip">
+    <input type="text" v-model="searchQuery" id="searchQuery" placeholder="Search Packages" />
+    <label for="searchQuery" class="description">🛈</label>
+    <span class="description">Search through Poseidon Data</span>
+  </div>
+
+  <div style="margin-top: 20px;">
+    <label for="archive_type">Archive type:</label>
+    <select id="archive_type" v-model="archiveType">
+      <option value="community-archive">Poseidon Community Archive</option>
+      <option value="aadr-archive">Poseidon AADR Archive</option>
+    </select>
+    <button @click="showSelection">Show Selection</button>
+  </div>
       <div></div> <!-- Empty div for spacing -->
 
       <div v-if="packages">
@@ -243,26 +267,86 @@ app.mount('#app');
 
 </script>
 
-<style>
+<style scoped>
 
-  .table-default {
-    width: 100%;
-    display: table !important;
-    table-layout: fixed;
+
+ body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
   }
-  .table-default thead {
-    width: 100%;
-  } 
-  .table-default tbody {
-    width: 100%;
-  } 
-  .table-default tr {
-    width: 100%;
+
+  /* Header Styles */
+
+  .header {
+    background-color: #333;
+    color: white;
+    padding: 20px 0;
+    text-align: center;
   }
-  .table-default th {
+
+  /* Search Bar Styles */
+
+  .search-bar {
+    display: flex;
+    align-items: center;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 5px;
   }
-  .table-default td {
+
+  .search-bar input[type="text"] {
+    flex-grow: 1;
+    border: none;
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 16px;
   }
+
+  .search-bar label.description {
+    margin-left: 10px;
+    color: black; /* Set the font color to black */
+  }
+
+  .clear-button,
+  .search-button {
+    background-color: #ccc;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    margin-left: 5px;
+  }
+
+  .clear-button:hover,
+  .search-button:hover {
+    background-color: #aaa;
+  }
+
+
+ .table-default {
+  width: 100%;
+  display: table !important;
+  table-layout: fixed;
+ }
+
+ .table-default thead {
+  width: 100%;
+ } 
+
+.table-default tbody {
+  width: 100%;
+} 
+
+ .table-default tr {
+  width: 100%;
+ }
+
+ .table-default th {
+ }
+
+ .table-default td {
+ }
 
   .modal-background {
     width: 100%;
@@ -310,6 +394,33 @@ app.mount('#app');
     padding: 0 15px 0 15px;
     cursor: pointer;
   }
+  
+  .description-tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+ .description-tooltip .description {
+  visibility: hidden;
+  width: 160px;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: opacity 0.2s;
+ }
+
+ .description-tooltip:hover .description {
+  visibility: visible;
+  opacity: 1;
+}
   
 </style>
 
