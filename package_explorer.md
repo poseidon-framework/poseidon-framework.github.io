@@ -168,14 +168,14 @@ const PackageExplorer = {
   },
   template: `
   
-  <div class="description-tooltip">
+   <div class="description-tooltip">
     <input type="text" v-model="searchQuery" id="searchQuery" placeholder="Search Packages" />
-    <label for="searchQuery" class="description">🛈</label>
+    <label for="searchQuery" class="description" title="Search through Poseidon Data">🛈</label>
     <span class="description">Search through Poseidon Data</span>
   </div>
 
-  <div style="margin-top: 20px;">
-    <label for="archive_type">Archive type:</label>
+  <div class="archive-type-selection">
+    <label for="archive_type" class="bold-label" title="Select Archives: Poseidon or AADR"><b>Archive type:  </b></label>
     <select id="archive_type" v-model="archiveType">
       <option value="community-archive">Poseidon Community Archive</option>
       <option value="aadr-archive">Poseidon AADR Archive</option>
@@ -421,6 +421,17 @@ app.mount('#app');
   visibility: visible;
   opacity: 1;
 }
+
+ .description-tooltip {
+  margin-bottom: 0.5cm;
+}
   
+  #archive_type {
+  margin-right: 1cm;
+}
+
+ .bold-label {
+  font-weight: bold;
+}
 </style>
 
