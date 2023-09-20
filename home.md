@@ -1,11 +1,28 @@
 ![poseidon banner with logo](_media/Poseidon-Logo-WaterGraphicLrg.png)
 
-**Poseidon is a framework offering a standardized way to store and share human archaeogenetic genotype datasets with archaeological context information.** It aims to [fill a desideratum](background.md) in the current handling of research data.
-
-?> New here? Check out our [Getting Started Guide](getting_started.md)
+<center>
+<b>Poseidon is a framework to work with human aDNA data and its archaeological context information.</b>
+</center>
 
 <div id="landingPageButtonsOuter">
   <div id="landingPageButtonsInner">
+    <button onclick="window.open(
+      '#/background',
+      '_blank');;"
+      class="button">
+      <span>
+        <i class="fa fa-question-circle" aria-hidden="true"></i> Why?
+      </span>
+    </button>
+    <button onclick="window.open(
+      '#/getting_started',
+      '_blank');;"
+      class="button">
+      <span style="color: #7CFC00">
+        <i class="fa fa-play-circle" aria-hidden="true"></i> Quick start guide
+      </span>
+    </button>
+    &nbsp;
     <button onclick="window.open(
       'https://join.slack.com/t/poseidon-8el7276/shared_invite/zt-14q2wxxmf-pbtNtm5E9DFJbjioyfAyMg',
       '_blank');;"
@@ -32,6 +49,48 @@
     </button>
   </div>
 </div>
+
+<style>
+  #landingPageButtonsOuter {
+    width:100%
+  }
+  #landingPageButtonsInner {
+    display: table;
+    margin: 0 auto;
+  }
+  .button {
+    color: white;
+    background-color: #555555;
+    border: 1px solid;
+    border-color: grey;
+    padding: 8px 15px;
+    text-align: center;
+    margin: 4px 2px;
+    cursor: pointer;
+    transition: all 0.5s;
+  }
+  .button span {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+  }
+  .button span:after {
+    content: '\00bb';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: -20px;
+    transition: 0.5s;
+  }
+  .button:hover span {
+    padding-right: 25px;
+  }
+  .button:hover span:after {
+    opacity: 1;
+    right: 0;
+  }
+</style>
 
 <br>
 
@@ -68,4 +127,96 @@
   </div>
 </div>
 
+<style>
+  .grid-container{
+    display: grid;
+    grid-template-columns: repeat( auto-fit, minmax(250px, 1fr) );
+    grid-gap: 10px;
+  }
+  .grid-element{
+    background-color: #555555;
+    border: 1px solid;
+    border-color: grey;
+    text-align: left;
+    padding: 15px;
+  }
+  .grid-symbol {
+    text-align: center;
+    font-size: 30px;
+  }
+</style>
 
+<br>
+
+<script>
+  Vue.createApp({
+    data () {
+     return {
+        toots: null
+      }
+    },
+    async mounted () {
+      const rssResponse = await fetch(
+        "https://ecoevo.social/@poseidon.rss"
+      );
+      const rssData = await rssResponse.text();
+      this.toots = this.parseRSS(rssData);
+    },
+    methods: {
+      parseRSS(xmlString) {
+        const parser = new DOMParser();
+        const xmlDoc = parser.parseFromString(xmlString, 'text/xml');
+        const items = xmlDoc.querySelectorAll('item');
+        const itemArray = Array.from(items).slice(0, 9);
+        const parsedItems = [];
+        itemArray.forEach((item) => {
+          const dateElement = item.querySelector('pubDate');
+          const linkElement = item.querySelector('link');
+          const descriptionElement = item.querySelector('description');
+          if (dateElement && linkElement && descriptionElement) {
+            const date = dateElement.textContent;
+            const link = linkElement.textContent;
+            const description = descriptionElement.textContent;
+            parsedItems.push({
+              date,
+              link,
+              description,
+            });
+          }
+        });
+
+        return parsedItems;
+      }
+    }
+  }).mount('#tootViewer');
+</script>
+
+<div id="tootViewer">
+
+  <div v-if="toots">
+    <div class="grid-container">
+      <div class="news-grid-element" v-for="toot in toots">
+        <div class="news-small-text"><i class="fab fa-mastodon" aria-hidden="true"></i> {{toot.date}}</div>
+        <div class="news-small-text"><a :href=toot.link> {{toot.link}}</a></div>
+        <div v-html="toot.description"></div>
+      </div>
+    </div>
+  </div>
+  
+  <div v-else><i>..fetching data from ecoevo.social</i></div>
+
+</div>
+
+<style>
+  .news-grid-element{
+    border-radius: 25px;
+    border: 1px solid;
+    border-color: grey;
+    text-align: left;
+    padding: 15px;
+    overflow-wrap: break-word;
+  }
+  .news-small-text{
+    font-size: 10px;
+  }
+</style>

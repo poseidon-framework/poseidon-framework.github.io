@@ -5,7 +5,6 @@
 </p>
 
 * [Home](home.md)
-* [News](news.md)
 * [Getting started](getting_started.md)
 * [Background](background.md)
 * **<i class="fas fa-clipboard-list" aria-hidden="true"></i>&nbsp; The Poseidon Standard**
