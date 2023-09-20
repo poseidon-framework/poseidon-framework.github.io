@@ -162,10 +162,10 @@
    <div>
     <div class="search-bar">
       <input type="text" v-model="searchQuery" placeholder="Search Packages" />
-      <span class="description-tooltip" title="Search through Poseidon Data"></span>
+      <label for="search-bar" class="bold-label" title="Search in Poseidon data"></label>
     </div>
     <div class="archive-type">
-      <label for="archive_type" class="bold-label" title="Select Archives: Poseidon or AADR">Archive type:</label>
+      <label for="archive_type" class="bold-label" title="Select Archives: Poseidon or AADR">Archive type:  </label>
       <select id="archive_type" v-model="archiveType">
         <option value="community-archive">Poseidon Community Archive</option>
         <option value="aadr-archive">Poseidon AADR Archive</option>
@@ -180,7 +180,6 @@
 
         <table class="table-default">
           <colgroup>
-            <col style="width:6%">
             <col style="width:24%">
             <col style="width:24%">
             <col style="width:6%">
@@ -191,9 +190,6 @@
           </colgroup>  
           <tbody>
             <tr v-for="(pac, index) in filteredPackages" :key="index">
-              <td>
-                {{ pac.nrIndividuals }}
-              </td>
               <td style="overflow-wrap: break-word;">
                 {{ pac.packageTitle }}
               </td>
@@ -265,7 +261,8 @@
   .search-bar {
     display: flex;
     align-items: center;
-    gap: 1cm; /* Add 1cm space between elements */
+    gap: 1cm; 
+    margin-top: 0.5cm;
   }
 
   .search-bar input[type="text"] {
@@ -358,8 +355,7 @@
     cursor: pointer;
   }
 
-  /* Add a bit of spacing between modal rows */
-  .modal table tbody tr {
+    .modal table tbody tr {
     margin-bottom: 10px;
   }
 
@@ -369,31 +365,37 @@
     font-weight: bold;
   }
   
- .search-bar {
-  display: flex;
-  align-items: center;
-  margin-bottom: 1cm; /* Add spacing between search bar and archive type */
-}
+ search-bar {
+    width: 100%;
+    height: 0.8cm;
+    padding: 0.2cm;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-top: 0.3cm;
+    margin-bottom: 0.3cm;
+  }
 
 .description-tooltip {
   font-size: 18px;
   margin-left: 8px;
   cursor: pointer;
-  color: #000; /* Black color for the tooltip text */
+  color: #000; 
 }
 
 .archive-type {
   display: flex;
   align-items: center;
+  margin-bottom: 0.5cm;
+  margin-top: 0.2cm
 }
 
 .bold-label {
   font-weight: bold; /* Make the label text bold */
 }
 
-/* Add spacing between archive type selection and the "Show Selection" button */
+/* spacing between archive type selection and button */
 button {
-  margin-left: 1cm;
+  margin-left: 0.5cm;
 }
 </style>
 
