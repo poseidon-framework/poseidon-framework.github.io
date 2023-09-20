@@ -1,6 +1,8 @@
 ![poseidon banner with logo](_media/Poseidon-Logo-WaterGraphicLrg.png)
 
-**Poseidon is a framework to store and share human archaeogenetic genotype data with archaeological context information.** 
+<center>
+<b>Poseidon is a framework to work with human aDNA data and its archaeological context information.</b>
+</center>
 
 <div id="landingPageButtonsOuter">
   <div id="landingPageButtonsInner">
@@ -48,6 +50,48 @@
   </div>
 </div>
 
+<style>
+  #landingPageButtonsOuter {
+    width:100%
+  }
+  #landingPageButtonsInner {
+    display: table;
+    margin: 0 auto;
+  }
+  .button {
+    color: white;
+    background-color: #555555;
+    border: 1px solid;
+    border-color: grey;
+    padding: 8px 15px;
+    text-align: center;
+    margin: 4px 2px;
+    cursor: pointer;
+    transition: all 0.5s;
+  }
+  .button span {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+  }
+  .button span:after {
+    content: '\00bb';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: -20px;
+    transition: 0.5s;
+  }
+  .button:hover span {
+    padding-right: 25px;
+  }
+  .button:hover span:after {
+    opacity: 1;
+    right: 0;
+  }
+</style>
+
 <br>
 
 <div class="grid-container">
@@ -83,29 +127,66 @@
   </div>
 </div>
 
+<style>
+  .grid-container{
+    display: grid;
+    grid-template-columns: repeat( auto-fit, minmax(250px, 1fr) );
+    grid-gap: 10px;
+  }
+  .grid-element{
+    background-color: #555555;
+    border: 1px solid;
+    border-color: grey;
+    text-align: left;
+    padding: 15px;
+  }
+  .grid-symbol {
+    text-align: center;
+    font-size: 30px;
+  }
+</style>
+
 <br>
 
 <script>
   Vue.createApp({
     data () {
      return {
-        toots: null,
+        toots: null
       }
     },
     async mounted () {
-      try {
-        const response = await fetch(
-          "https://ecoevo.social/users/poseidon/outbox?min_id=0&page=true"
-        );
-        const response_json = await response.json();
-        this.toots = response_json;
-        console.log(toots);
-      } catch (error) {
-        console.error(error);
-      }
+      const rssResponse = await fetch(
+        "https://ecoevo.social/@poseidon.rss"
+      );
+      const rssData = await rssResponse.text();
+      this.toots = this.parseRSS(rssData);
     },
     methods: {
-      
+      parseRSS(xmlString) {
+        const parser = new DOMParser();
+        const xmlDoc = parser.parseFromString(xmlString, 'text/xml');
+        const items = xmlDoc.querySelectorAll('item');
+        const itemArray = Array.from(items).slice(0, 9);
+        const parsedItems = [];
+        itemArray.forEach((item) => {
+          const dateElement = item.querySelector('pubDate');
+          const linkElement = item.querySelector('link');
+          const descriptionElement = item.querySelector('description');
+          if (dateElement && linkElement && descriptionElement) {
+            const date = dateElement.textContent;
+            const link = linkElement.textContent;
+            const description = descriptionElement.textContent;
+            parsedItems.push({
+              date,
+              link,
+              description,
+            });
+          }
+        });
+
+        return parsedItems;
+      }
     }
   }).mount('#tootViewer');
 </script>
@@ -114,15 +195,28 @@
 
   <div v-if="toots">
     <div class="grid-container">
-      <div class="grid-element">
+      <div class="news-grid-element" v-for="toot in toots">
+        <div class="news-small-text"><i class="fab fa-mastodon" aria-hidden="true"></i> {{toot.date}}</div>
+        <div class="news-small-text"><a :href=toot.link> {{toot.link}}</a></div>
+        <div v-html="toot.description"></div>
       </div>
     </div>
   </div>
   
-  <div v-else><i>...fetching data from GitHub</i></div>
+  <div v-else><i>..fetching data from ecoevo.social</i></div>
 
 </div>
 
 <style>
-
+  .news-grid-element{
+    border-radius: 25px;
+    border: 1px solid;
+    border-color: grey;
+    text-align: left;
+    padding: 15px;
+    overflow-wrap: break-word;
+  }
+  .news-small-text{
+    font-size: 10px;
+  }
 </style>
