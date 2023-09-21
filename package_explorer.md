@@ -161,8 +161,7 @@
     template: `
       <div>
         <div class="search-bar">
-          <input type="text" v-model="searchQuery" placeholder="Search Packages" />
-          <label for="search-bar" class="bold-label" title="Search in Poseidon data"></label>
+          <input type="text" v-model="searchQuery" placeholder="Search through Poseidon Packages" />
         </div>
         <div class="archive-type">
           <label for="archive_type" class="bold-label" title="Select Archives: Poseidon or AADR">Archive type:  </label>
@@ -193,9 +192,7 @@
                 <th>Description</th>
                 <th></th>
                 <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
+                <th></th>              
               </tr>
             </thead>
             <tbody>
@@ -304,11 +301,11 @@
   .description {
     font-size: 14px;
     font-weight: bold;
-    color: black; /* Set the font color to black */
+    color: black; 
   }
 
   .bold-label {
-    font-weight: bold; /* Make the label text bold */
+    font-weight: bold; 
   }
 
   .table-default {
@@ -446,7 +443,7 @@ button {
     font-weight: bold;
   }
 
-/* Style for the "Download" button */
+
 .download-button {
    background-color: #007BFF; 
    color: white; 
@@ -470,8 +467,9 @@ button {
   }
 
 .table-container {
-    max-height: 400px; /* Adjust the height as needed */
+    max-height: 400px; 
     overflow-y: scroll;
+    width: 700px
   }
 </style>
 
