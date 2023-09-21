@@ -127,6 +127,8 @@
   </div>
 </div>
 
+# Latest news
+
 <style>
   .grid-container{
     display: grid;
@@ -167,7 +169,7 @@
         const parser = new DOMParser();
         const xmlDoc = parser.parseFromString(xmlString, 'text/xml');
         const items = xmlDoc.querySelectorAll('item');
-        const itemArray = Array.from(items).slice(0, 9);
+        const itemArray = Array.from(items).slice(0, 3);
         const parsedItems = [];
         itemArray.forEach((item) => {
           const dateElement = item.querySelector('pubDate');
@@ -206,6 +208,8 @@
   <div v-else><i>..fetching data from ecoevo.social</i></div>
 
 </div>
+
+[... read more](news.md)
 
 <style>
   .news-grid-element{
