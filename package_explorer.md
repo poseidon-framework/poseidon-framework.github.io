@@ -159,84 +159,114 @@
       };
     },
     template: `
-   <div>
-    <div class="search-bar">
-      <input type="text" v-model="searchQuery" placeholder="Search Packages" />
-      <label for="search-bar" class="bold-label" title="Search in Poseidon data"></label>
-    </div>
-    <div class="archive-type">
-      <label for="archive_type" class="bold-label" title="Select Archives: Poseidon or AADR">Archive type:  </label>
-      <select id="archive_type" v-model="archiveType">
-        <option value="community-archive">Poseidon Community Archive</option>
-        <option value="aadr-archive">Poseidon AADR Archive</option>
-      </select>
-     <button @click="showSelection">Show Selection</button>
-  </div>
-      <div></div> <!-- Empty div for spacing -->
-
-      <div v-if="packages">
-
-        <map-view></map-view>
-
-        <table class="table-default">
-          <colgroup>
-            <col style="width:24%">
-            <col style="width:24%">
-            <col style="width:6%">
-            <col style="width:6%">
-            <col style="width:6%">
-            <col style="width:6%">
-            <col style="width:6%">
-          </colgroup>  
-          <tbody>
-            <tr v-for="(pac, index) in filteredPackages" :key="index">
-              <td style="overflow-wrap: break-word;">
-                {{ pac.packageTitle }}
-              </td>
-              <td>
-                <details>
-                  <b>Description:</b> {{ pac.description }}<br>
-                  <b>Version:</b> {{ pac.packageVersion }}<br>
-                  <b>Last Modified:</b> {{ pac.lastModified }}<br>
-                  <b>Poseidon Version:</b> {{ pac.poseidonVersion }}<br>
-                  <b>Nr of samples:</b> {{ pac.nrIndividuals }}
-                </details>
-              </td>
-              <td>
-                <button @click="modalPackage = pac.packageTitle"><i class="fas fa-search" aria-hidden="true"></i></button>
-              </td>
-              <td>
-                <button @click="highlightSamplesInMap(pac.packageTitle)"><i class="fas fa-map" aria-hidden="true"></i></button>
-              </td>
-              <td>
-                <button @click="downloadGenotypeData(pac.packageTitle)"><i class="fas fa-download" aria-hidden="true"></i></button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-    <div v-if="modalPackage !== ''" class="modal-background"> 
-      <div class="modal">
-        <div class="modal-header">
-          <h3>{{ modalPackage }}</h3>
-          <label for="modal" @click="modalPackage = ''">close</label>
+      <div>
+        <div class="search-bar">
+          <input type="text" v-model="searchQuery" placeholder="Search Packages" />
+          <label for="search-bar" class="bold-label" title="Search in Poseidon data"></label>
         </div>
-        <table>
-          <tbody>
-            <tr v-for="sample in getSamplesForPackage(modalPackage)">
-              <td>{{ sample.poseidonID }}</td>
-              <td>{{ sample.additionalJannoColumns[2][1] }}</td>
-              <td data-label="Group Name">{{ sample.additionalJannoColumns[4][1] }}</td>
-              <td data-label="Location">{{ sample.additionalJannoColumns[3][1] }}</td>
-              <td data-label="Age">{{ sample.additionalJannoColumns[5][1] }}</td>
-            </tr>
-          </tbody>
-        </table>
+        <div class="archive-type">
+          <label for="archive_type" class="bold-label" title="Select Archives: Poseidon or AADR">Archive type:  </label>
+          <select id="archive_type" v-model="archiveType">
+            <option value="community-archive">Poseidon Community Archive</option>
+            <option value="aadr-archive">Poseidon AADR Archive</option>
+          </select>
+          <button @click="showSelection">Show Selection</button>
+        </div>
+        <div></div> <!-- Empty div for spacing -->
+
+        <div v-if="packages">
+          <map-view></map-view>
+
+          <table class="table-default">
+            <colgroup>
+              <col style="width: 24%" />
+              <col style="width: 24%" />
+              <col style="width: 8%" />
+              <col style="width: 8%" />
+              <col style="width: 8%" />
+              <col style="width: 8%" />
+              <col style="width: 8%" />
+            </colgroup>
+            <thead>
+              <tr>
+                <th>Package Title</th>
+                <th>Description</th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="(pac, index) in filteredPackages" :key="index">
+                <td style="overflow-wrap: break-word;">
+                  {{ pac.packageTitle }}
+                </td>
+                <td>
+                  <details>
+                    <summary class="description-tooltip">
+                      Package Details
+                    </summary>
+                    <div class="details-content">
+                      <b>Description:</b> {{ pac.description }}<br>
+                      <b>Version:</b> {{ pac.packageVersion }}<br>
+                      <b>Last Modified:</b> {{ pac.lastModified }}<br>
+                      <b>Poseidon Version:</b> {{ pac.poseidonVersion }}<br>
+                      <b>Nr of samples:</b> {{ pac.nrIndividuals }}
+                    </div>
+                  </details>
+                </td>
+                <td>
+                  <button @click="modalPackage = pac.packageTitle" title="View package information">
+                    <i class="fas fa-search" aria-hidden="true"></i>
+                  </button>
+                </td>
+                <td>
+                  <button @click="highlightSamplesInMap(pac.packageTitle)" title="Highlight samples on the map">
+                    <i class="fas fa-map" aria-hidden="true"></i>
+                  </button>
+                </td>
+                <td>
+                  <button @click="downloadGenotypeData(pac.packageTitle)" title="Download genotype data for this package">
+                    <i class="fas fa-download" aria-hidden="true"></i>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
-    </div>
-  `,
+
+      <div v-if="modalPackage !== ''" class="modal-background">
+        <div class="modal">
+          <div class="modal-header">
+            <h3>{{ modalPackage }}</h3>
+            <label for="modal" @click="modalPackage = ''">close</label>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>Poseidon ID</th>
+                <th>Description</th>
+                <th data-label="Group Name">Group Name</th>
+                <th data-label="Location">Location</th>
+                <th data-label="Age">Age</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="sample in getSamplesForPackage(modalPackage)">
+                <td>{{ sample.poseidonID }}</td>
+                <td>{{ sample.additionalJannoColumns[2][1] }}</td>
+                <td data-label="Group Name">{{ sample.additionalJannoColumns[4][1] }}</td>
+                <td data-label="Location">{{ sample.additionalJannoColumns[3][1] }}</td>
+                <td data-label="Age">{{ sample.additionalJannoColumns[5][1] }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    `,
   };
 
   const MapView = {
@@ -397,5 +427,42 @@
 button {
   margin-left: 0.5cm;
 }
+ /* Add styles for the table and its headers */
+.table-default {
+    width: 100%;
+    display: table;
+    table-layout: fixed;
+  }
+
+.table-default th,
+.table-default td {
+    padding: 8px;
+    text-align: left;
+  }
+
+.table-default th {
+    background-color: #f5f5dc;
+    font-weight: bold;
+  }
+
+  /* Style for the summary element in the details tag */
+.description-tooltip {
+    font-weight: bold;
+    cursor: pointer;
+    color: #007BFF; /* Change the color to a modern blue */
+  }
+
+  /* Style for the details content */
+.details-content {
+    padding: 8px;
+  }
+@media (max-width: 768px) {
+    .table-default {
+      display: block;
+      width: 100%;
+      overflow-x: auto;
+    }
+  }
+
 </style>
 
