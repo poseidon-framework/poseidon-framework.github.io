@@ -176,7 +176,7 @@
 
         <div v-if="packages">
           <map-view></map-view>
-
+        <div class="table-container">
           <table class="table-default">
             <colgroup>
               <col style="width: 24%" />
@@ -199,7 +199,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="(pac, index) in filteredPackages" :key="index">
+              <tr v-for="(pac, index) in filteredPackages.slice(0,30)" :key="index">
                 <td style="overflow-wrap: break-word;">
                   {{ pac.packageTitle }}
                 </td>
@@ -237,6 +237,7 @@
           </table>
         </div>
       </div>
+    </div>  
 
       <div v-if="modalPackage !== ''" class="modal-background">
         <div class="modal">
@@ -468,5 +469,9 @@ button {
     }
   }
 
+.table-container {
+    max-height: 400px; /* Adjust the height as needed */
+    overflow-y: scroll;
+  }
 </style>
 
