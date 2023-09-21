@@ -205,7 +205,7 @@
                 </td>
                 <td>
                   <details>
-                    <summary class="description-tooltip">
+                    <summary style="color: white">
                       Package Details
                     </summary>
                     <div class="details-content">
@@ -353,8 +353,7 @@
     margin: auto;
     width: 50%;
     height: 50%;
-    background-color: #f5f5dc; /* Background color changed to #f5f5dc */
-    box-sizing: border-box;
+    background-color: #007BFF; 
     z-index: 9999;
     overflow: auto;
   }
@@ -427,7 +426,7 @@
 button {
   margin-left: 0.5cm;
 }
- /* Add styles for the table and its headers */
+ /* styles for the table and its headers */
 .table-default {
     width: 100%;
     display: table;
@@ -435,27 +434,32 @@ button {
   }
 
 .table-default th,
-.table-default td {
+  .table-default td {
     padding: 8px;
     text-align: left;
   }
 
 .table-default th {
-    background-color: #f5f5dc;
+    background-color: #007BFF;
+    color: white;
     font-weight: bold;
   }
 
-  /* Style for the summary element in the details tag */
-.description-tooltip {
-    font-weight: bold;
-    cursor: pointer;
-    color: #007BFF; /* Change the color to a modern blue */
+/* Style for the "Download" button */
+.download-button {
+   background-color: #007BFF; 
+   color: white; 
+   padding: 8px 12px; 
+   border: none;
+   border-radius: 5px;
+   cursor: pointer;
+ }
+ 
+.table-default td button {
+  width: 100%;
   }
+ 
 
-  /* Style for the details content */
-.details-content {
-    padding: 8px;
-  }
 @media (max-width: 768px) {
     .table-default {
       display: block;
