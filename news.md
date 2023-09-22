@@ -21,7 +21,7 @@ Follow us on [Mastodon](https://ecoevo.social/@poseidon)
         const parser = new DOMParser();
         const xmlDoc = parser.parseFromString(xmlString, 'text/xml');
         const items = xmlDoc.querySelectorAll('item');
-        const itemArray = Array.from(items);
+        const itemArray = Array.from(items).slice(0, 30);
         const parsedItems = [];
         itemArray.forEach((item) => {
           const dateElement = item.querySelector('pubDate');
