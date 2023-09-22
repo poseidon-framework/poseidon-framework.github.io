@@ -61,14 +61,15 @@ Last, option `-f` can be used to write the output table into a tab-separated tex
 Usage: xerxes fstats (-d|--baseDir DIR) [-j|--jackknife ARG] 
                      [-e|--excludeChroms ARG] 
                      (--stat ARG | --statConfig ARG | --statFile ARG) 
-                     [-f|--tableOutFile ARG]
+                     [--noTransitions] [-f|--tableOutFile ARG] 
+                     [--blockTableFile ARG]
+
   Compute f-statistics on groups and invidiuals within and across Poseidon
   packages
 
 Available options:
   -h,--help                Show this help text
-  -d,--baseDir DIR         a base directory to search for Poseidon Packages
-                           (could be a Poseidon repository)
+  -d,--baseDir DIR         A base directory to search for Poseidon packages.
   -j,--jackknife ARG       Jackknife setting. If given an integer number, this
                            defines the block size in SNPs. Set to "CHR" if you
                            want jackknife blocks defined as entire chromosomes.
@@ -78,8 +79,9 @@ Available options:
                            chrX, chrY, chrMT, 23,24,90
   --stat ARG               Specify a summary statistic to be computed. Can be
                            given multiple times. Possible options are: F4(a, b,
-                           c, d), F3(a, b, c), F2(a, b), PWM(a, b), FST(a, b),
-                           Het(a) and some more special options described at
+                           c, d), F3(a, b, c), F3star(a, b, c), F2(a, b), PWM(a,
+                           b), FST(a, b), Het(a) and some more special options
+                           described at
                            https://poseidon-framework.github.io/#/xerxes?id=fstats-command.
                            Valid entities used in the statistics are group names
                            as specified in the *.fam, *.ind or *.janno failes,
@@ -97,10 +99,12 @@ Available options:
                            statistics, and no new-line at the end
   --maxSnps ARG            Stop after a maximum nr of snps has been processed.
                            Useful for short test runs
+  --noTransitions          Skip transition SNPs and use only transversions
   -f,--tableOutFile ARG    a file to which results are written as tab-separated
                            file
-  --blockTableFile         a file to which the per-Block results are written as
+  --blockTableFile ARG     a file to which the per-Block results are written as
                            tab-separated file
+
 ```
 
 #### Allowed statistics
@@ -110,7 +114,8 @@ The following statistics are allowed in the `--stat`, `--statFile` and `--statCo
 * `F2vanilla(a, b)`: F2-Statistics - Vanilla version. Computed using `F2vanilla(a, b) = (a-b)^2` across the genome.
 * `F2(a, b)`: F2-Statistics (bias-corrected version). Computed as `F2(a, b) = F2vanilla(a, b) - hA/sA - hB/sB`, where where `sA` is the number of non-missing alleles in entity A, and `hA = nA * nA' / sA * (sA - 1)` is an estimator of half the heterozygosity (see `Het(a)`), and likewise for `sB` and `nB` etc.
 * `F3vanilla(a,b,c)`: F3-Statistics - Vanilla version, recommended if used as Outgroup-F3 statistics or with group c being pseudo-haploid: Are computed as `F3(a, b, c) = (c-a)(c-b)` across all SNPs.
-* `F3(a,b,c)`: F3-Statistics - normalised and bias-corrected version, recommended for Admixture-F3 tests. Are computed by i) first substracting per SNP from the vanilla-F3 statistic a bias-correction term hC/sC, as above for F2, and ii) then normalising the genome-wide estimate by a genome-wide estimate of the heterozygosity of entity C (`Het(c)`), in order to make results comparable between different groups C (see Patterson et al., Genetics, 2012)
+* `F3(a,b,c`: F3-statistics (bias-corrected version). Computed as `F3(a, b, c) = F3vanilla(a, b) - hC/sC`.
+* `F3star(a,b,c)`: F3-Statistics as defined in Patterson et al. 2012 - normalised and bias-corrected version, recommended for Admixture-F3 tests. Are computed by i) first substracting per SNP from the vanilla-F3 statistic a bias-correction term hC/sC, as above for F2, and ii) then normalising the genome-wide estimate by a genome-wide estimate of the heterozygosity of entity C (`Het(c)`), in order to make results comparable between different groups C (see Patterson et al., Genetics, 2012)
 * `F4(a,b,c,d)`: F4 statistics. Are computed by averageing the quantity (a-b)(c-d) across all SNPs. No bias correction is necessary for this statistic.
 * `Het(a)`: An estimate of the heterozygosity across all SNPs, computed as `2*hA`, with `hA` defined as above in `F2`
 * `FST(a, b)`: An estimate of FST across the genome, following the formular from Appendix A in Patterson et al. 2012, which is a ratio of two terms, with numerator being `F2(a, b)` including bias correction, and the denominator being `F2(a, b) + hA + hB` including bias correction and `hA` and `hB` defined as above.
@@ -196,33 +201,28 @@ In addition, every statistic section allows for a definition of an ascertainment
 You can save this into a text file, for example named `fstats_config.yaml`, and load it via `--statConfig fstats_config.yaml`.
 
 
-##### Output
+#### Output
 
 The final output of the `fstats` command looks like this:
 
 ```
-.-----------.------------.------------.-------------.-------------.---------.--------------------.---------------.------------.-----------.------------------------.
-| Statistic |     a      |     b      |      c      |      d      | NrSites |   Asc (Og, Ref)    | Asc (Lo, Up)  |  Estimate  |  StdErr   |        Z score         |
-:===========:============:============:=============:=============:=========:====================:===============:============:===========:========================:
-| F2        | French     | Han        |             |             | 593124  | n/a                | n/a           | 2.7617e-2  | 2.9396e-4 | 93.9481473301681       |
-| F2        | Spanish    | Han        |             |             | 593124  | n/a                | n/a           | 2.7865e-2  | 2.9560e-4 | 94.26775060481035      |
-| F3        | French     | Han        | <Chimp.REF> |             | 580009  | (<Chimp.REF>,CEU2) | (5.0e-2,0.95) | NaN        | NaN       | NaN                    |
-| F3        | French     | CEU2       | <Chimp.REF> |             | 580009  | (<Chimp.REF>,CEU2) | (5.0e-2,0.95) | NaN        | NaN       | NaN                    |
-| F3        | Spanish    | Han        | <Chimp.REF> |             | 580009  | (<Chimp.REF>,CEU2) | (5.0e-2,0.95) | NaN        | NaN       | NaN                    |
-| F3        | Spanish    | CEU2       | <Chimp.REF> |             | 580009  | (<Chimp.REF>,CEU2) | (5.0e-2,0.95) | NaN        | NaN       | NaN                    |
-| F3        | Mbuti      | Han        | <Chimp.REF> |             | 580009  | (<Chimp.REF>,CEU2) | (5.0e-2,0.95) | NaN        | NaN       | NaN                    |
-| F3        | Mbuti      | CEU2       | <Chimp.REF> |             | 580009  | (<Chimp.REF>,CEU2) | (5.0e-2,0.95) | NaN        | NaN       | NaN                    |
-| F4        | <I0156.SG> | <I0156.SG> | CEU2        | <Chimp.REF> | 621857  | ("n/a",CEU.SG)     | (0.0,0.1)     | 0.0000     | 0.0000    | NaN                    |
-| F4        | <I0156.SG> | <I0156.SG> | FIN2        | <Chimp.REF> | 621857  | ("n/a",CEU.SG)     | (0.0,0.1)     | 0.0000     | 0.0000    | NaN                    |
-| F4        | <I0156.SG> | <I0156.SG> | GBR2        | <Chimp.REF> | 621857  | ("n/a",CEU.SG)     | (0.0,0.1)     | 0.0000     | 0.0000    | NaN                    |
-| F4        | <I0156.SG> | <I0156.SG> | IBS2        | <Chimp.REF> | 621857  | ("n/a",CEU.SG)     | (0.0,0.1)     | 0.0000     | 0.0000    | NaN                    |
-| F4        | <I0156.SG> | <I0157.SG> | CEU2        | <Chimp.REF> | 589212  | ("n/a",CEU.SG)     | (0.0,0.1)     | 9.1235e-5  | 1.1259e-4 | 0.8103495849450122     |
-...
+.-----------.-----------.---------------.--------.-------.---------.----------------.--------------------.------------------.---------------------.
+| Statistic |     a     |       b       |   c    |   d   | NrSites | Estimate_Total | Estimate_Jackknife | StdErr_Jackknife |  Z_score_Jackknife  |
+:===========:===========:===============:========:=======:=========:================:====================:==================:=====================:
+| F3        | French    | Italian_North | Mbuti  |       | 593124  | 5.9698e-2      | 5.9698e-2          | 5.1423e-4        | 116.0908951980249   |
+| F3        | French    | Han           | Mbuti  |       | 593124  | 5.0233e-2      | 5.0233e-2          | 5.0324e-4        | 99.81843057232513   |
+| F3        | Sardinian | Pima          | French |       | 593124  | -1.2483e-3     | -1.2483e-3         | 9.2510e-5        | -13.493505348221081 |
+| F4        | French    | Russian       | Han    | Mbuti | 593124  | -1.6778e-3     | -1.6778e-3         | 9.1419e-5        | -18.35262346091248  |
+| F4        | Sardinian | French        | Pima   | Mbuti | 593124  | -1.4384e-3     | -1.4384e-3         | 1.1525e-4        | -12.481084899924868 |
+'-----------'-----------'---------------'--------'-------'---------'----------------'--------------------'------------------'---------------------'
 ```
 
 which lists each statistic, the slots a, b, c and d, the number of sites with non-missing data for that statistic, Ascertainment information (outgroup, reference, lower and upper bound, if given), the genome-wide estimate, its standard error and its Z-score. If you specify an output file using option `--tableOutFile` or `-f`, these results are also written as tab-separated file.
 
 Additionally, an option `--blockOutFile` can be specified, to which then a table with estimates per Jackknife block is written.
+
+#### Whitepaper
+The repository comes with a [detailed whitepaper](https://github.com/poseidon-framework/poseidon-analysis-hs/blob/updates_poseidon_1.4/docs/xerxes_whitepaper.pdf) that describes some more mathematica details of the methods implemented here.
 
 ### RAS (in development)
 
