@@ -127,8 +127,6 @@
   </div>
 </div>
 
-# Latest news
-
 <style>
   .grid-container{
     display: grid;
@@ -147,6 +145,8 @@
     font-size: 30px;
   }
 </style>
+
+### Latest news
 
 <br>
 

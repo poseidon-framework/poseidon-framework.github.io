@@ -1,6 +1,6 @@
 # News
 
-Follow us on [Mastodon](https://ecoevo.social/@poseidon)
+Follow us on <a href=https://ecoevo.social/@poseidon>Mastodon <i class="fab fa-mastodon" aria-hidden="true"></i></a> or via <a href=https://ecoevo.social/@poseidon.rss>RSS <i class="fa fa-rss" aria-hidden="true"></i></a>
 
 <script>
   Vue.createApp({
@@ -49,14 +49,29 @@ Follow us on [Mastodon](https://ecoevo.social/@poseidon)
 
   <div v-if="toots">
     <ul class="grid-container">
-      <li class="news-grid-element" v-for="toot in toots">
-        <div class="news-small-text"><i class="fab fa-mastodon" aria-hidden="true"></i> {{toot.date}}</div>
-        <div class="news-small-text"><a :href=toot.link> {{toot.link}}</a></div>
+      <div class="news-grid-element" v-for="toot in toots">
+        <div class="news-small-text"><i class="fab fa-mastodon" aria-hidden="true"></i> {{toot.date}} | <a :href=toot.link>{{toot.link}}</a></div>
         <div v-html="toot.description"></div>
-      </li>
+      </div>
     </ul>
   </div>
   
   <div v-else><i>..fetching data from ecoevo.social</i></div>
 
 </div>
+
+<style>
+  .news-grid-element{
+    border-radius: 25px;
+    border: 1px solid;
+    border-color: grey;
+    text-align: left;
+    padding: 15px;
+    padding-bottom: 0px;
+    overflow-wrap: break-word;
+    margin-bottom: 10px;
+  }
+  .news-small-text{
+    font-size: 10px;
+  }
+</style>
