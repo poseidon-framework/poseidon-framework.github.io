@@ -13,9 +13,9 @@
       const archiveType = ref('community-archive');
       const mapInstance = ref(null);
       var mapMarkers = [];
-      const markerClusters = L.markerClusterGroup({ chunkedLoading: true });
-      var selectedPackageTitle = ref(null);
-      var selectedPackage = ref(null);
+      var markerClusters = L.markerClusterGroup({ chunkedLoading: true });
+      const selectedPackageTitle = ref(null);
+      const selectedPackage = ref(null);
 
       const packageTitles = computed(() => {
         if (!packages.value) { return []; }
@@ -73,12 +73,8 @@
       const addSamplesToMap = async (requestedPackageTitle) => {
         try {
           // check if necessary data and objects are there
-          if (!mapInstance.value) {
-            return;
-          }
-          if (!samples.value) {
-            return;
-          }
+          if (!mapInstance.value) { return; }
+          if (!samples.value) { return; }
           // filter to one package, if this is requested
           if (requestedPackageTitle === undefined) {
             samplesFiltered = samples.value;
@@ -90,20 +86,24 @@
             const addCols = s.additionalJannoColumns;
             const lat = addCols[0][1];
             const lng = addCols[1][1];
-            if (lat == 0 && lng == 0) {
-              return;
-            }
+            if (lat == 0 && lng == 0) { return; }
             const location = addCols[3][1];
             const groupName = addCols[4][1];
             const age = addCols[5][1];
-            const popupContent = `<b>Package:</b> ${s.packageTitle}<br><b>Package Version:</b> ${s.packageVersion}<br><b>Poseidon ID:</b> ${s.poseidonID}<br><b>Location:</b> ${location}<br><b>Group Name:</b> ${groupName}<br><b>Age:</b> ${age}`;
+            const popupContent =
+              `<b>Poseidon ID:</b> ${s.poseidonID}<br>
+               <b>Package:</b> ${s.packageTitle}<br>
+               <b>Package Version:</b> ${s.packageVersion}<br>
+               <b>Location:</b> ${location}<br>
+               <b>Group Name:</b> ${groupName}<br>
+               <b>Age:</b> ${age}`;
             const oneMarker = L.marker([lat, lng]).bindPopup(popupContent);
             mapMarkers.push(oneMarker);
           });
           markerClusters.addLayers(mapMarkers);
           mapInstance.value.addLayer(markerClusters);
           // zoom
-          const bounds = markerClusters.getBounds();
+          var bounds = markerClusters.getBounds();
           if (bounds.isValid()) {
             mapInstance.value.fitBounds(bounds);
           }
@@ -142,6 +142,7 @@
       const unselectPackage = () => {
         selectedPackageTitle.value = null;
         updateMap();
+        mapInstance.value.setView([30, 10], 1);
       }      
 
       const downloadGenotypeData = (packageTitle) => {
@@ -217,8 +218,9 @@
 
             <table class="table-default">
               <colgroup>
-                <col style="width: 35%" />
+                <col style="width: 30%" />
                 <col style="width: 55%" />
+                <col style="width: 5%" />
                 <col style="width: 5%" />
                 <col style="width: 5%" />
               </colgroup>
@@ -242,12 +244,19 @@
                     </details>
                   </td>
                   <td>
-                    <button @click="selectPackage(pac.packageTitle)" title="View package information">
+                    <button @click="selectPackage(pac.packageTitle)" title="Open the package information page">
                       <i class="fas fa-search" aria-hidden="true"></i>
                     </button>
                   </td>
                   <td>
-                    <button @click="downloadGenotypeData(pac.packageTitle)" title="Download genotype data for this package">
+                    <a :href="'https://github.com/poseidon-framework/' + archiveType + '/tree/master/' + pac.packageTitle" target="_blank">
+                      <button title="This package on GitHub">
+                        <i class="fab fa-github" aria-hidden="true"></i>
+                      </button>
+                    </a>
+                  </td>
+                  <td>
+                    <button @click="downloadGenotypeData(pac.packageTitle)" title="Download this package">
                       <i class="fas fa-download" aria-hidden="true"></i>
                     </button>
                   </td>
@@ -270,7 +279,7 @@
     </div>
     `,
     mounted() {
-      const map = L.map('map').setView([30, 10], 2);
+      const map = L.map('map').setView([30, 10], 1);
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {}).addTo(map);
       this.$parent.mapInstance = map;
     },
