@@ -65,9 +65,7 @@
       };
 
       const getSamplesForPackage = (requestedPackageTitle) => {
-        if (!samples.value) {
-          return;
-        }
+        if (!samples.value) { return; }
         return samples.value.filter((s) => s.packageTitle === requestedPackageTitle);
       };
 
@@ -120,9 +118,7 @@
       };
 
       const updateMap = async (requestedPackageTitle) => {
-        if (markerClusters) {
-          resetMarkers();
-        }
+        if (markerClusters) { resetMarkers(); }
         addSamplesToMap(requestedPackageTitle);
       };
 
@@ -133,9 +129,12 @@
 
       const selectPackage = (requestedPackageTitle) => {
         selectedPackage.value = requestedPackageTitle;
-        console.log(selectedPackage.value);
         updateMap(requestedPackageTitle);
       }
+      const unselectPackage = () => {
+        selectedPackage.value = null;
+        updateMap();
+      }      
 
       const downloadGenotypeData = (packageTitle) => {
         const downloadLink = document.createElement('a');
@@ -157,7 +156,8 @@
         downloadGenotypeData,
         getSamplesForPackage,
         selectPackage,
-        selectedPackage
+        selectedPackage,
+        unselectPackage
       };
     },
     template: `
@@ -169,22 +169,35 @@
           <option value="community-archive">Poseidon Community Archive</option>
           <option value="aadr-archive">Poseidon AADR Archive</option>
         </select>
+      </div>
+      <div v-if="selectedPackage">
+        <button id=go-back-button @click="unselectPackage()" title="Go back">
+          Back!
+        </button>
+      </div>
 
-        <!-- search bar -->
+      <!-- search bar -->
+      <div v-if="!selectedPackage">
         <div class="search-bar">
           <input type="text" v-model="searchQuery" placeholder="Search Poseidon packages by title" />
         </div>
       </div>
 
       <div v-if="packages">
-          <map-view></map-view>
-      </div>          
+        <map-view></map-view>
 
-      <!-- package list view -->
-      <div v-if="!selectedPackage">
+        <!-- package view -->
+        <div v-if="selectedPackage">
 
-        <div v-if="packages">
+          {{selectedPackage.value}}
+
+        </div>
+
+        <!-- overview -->
+        <div v-if="!selectedPackage">
+
           <div class="table-container">
+
             <table class="table-default">
               <colgroup>
                 <col style="width: 35%" />
@@ -233,6 +246,7 @@
                 </tr>
               </tbody>
             </table>
+
           </div>
         </div>
       </div>
@@ -262,6 +276,11 @@
 <style>
 
   #archive-type-select {
+    width: 100%;
+    padding: 5px;
+  }
+
+  #go-back-button {
     width: 100%;
     padding: 5px;
   }
