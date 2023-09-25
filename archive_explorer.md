@@ -14,6 +14,7 @@
       const mapInstance = ref(null);
       var mapMarkers = [];
       const markerClusters = L.markerClusterGroup({ chunkedLoading: true });
+      var selectedPackageTitle = ref(null);
       var selectedPackage = ref(null);
 
       const packageTitles = computed(() => {
@@ -101,7 +102,11 @@
           });
           markerClusters.addLayers(mapMarkers);
           mapInstance.value.addLayer(markerClusters);
-          mapInstance.value.fitBounds(markerClusters.getBounds());
+          // zoom
+          const bounds = markerClusters.getBounds();
+          if (bounds.isValid()) {
+            mapInstance.value.fitBounds(bounds);
+          }
         } catch (error) {
           console.error(error);
         }
@@ -128,11 +133,14 @@
       };
 
       const selectPackage = (requestedPackageTitle) => {
-        selectedPackage.value = requestedPackageTitle;
+        selectedPackageTitle.value = requestedPackageTitle;
+        selectedPackage.value = packages.value.filter((pac) =>
+          pac.packageTitle === selectedPackageTitle.value
+        )[0];
         updateMap(requestedPackageTitle);
       }
       const unselectPackage = () => {
-        selectedPackage.value = null;
+        selectedPackageTitle.value = null;
         updateMap();
       }      
 
@@ -156,6 +164,7 @@
         downloadGenotypeData,
         getSamplesForPackage,
         selectPackage,
+        selectedPackageTitle,
         selectedPackage,
         unselectPackage
       };
@@ -163,21 +172,21 @@
     template: `
     <div>
         
-      <div v-if="!selectedPackage">
+      <div v-if="!selectedPackageTitle">
         <!-- archive selection -->      
         <select id="archive-type-select" v-model="archiveType" @change="showSelection">
           <option value="community-archive">Poseidon Community Archive</option>
           <option value="aadr-archive">Poseidon AADR Archive</option>
         </select>
       </div>
-      <div v-if="selectedPackage">
-        <button id=go-back-button @click="unselectPackage()" title="Go back">
-          Back!
+      <div v-if="selectedPackageTitle">
+        <button id=go-back-button @click="unselectPackage()" title="Go back to package overview.">
+          <i class="fa fa-arrow-left" aria-hidden="true"></i> Back to the package overview page
         </button>
       </div>
 
       <!-- search bar -->
-      <div v-if="!selectedPackage">
+      <div v-if="!selectedPackageTitle">
         <div class="search-bar">
           <input type="text" v-model="searchQuery" placeholder="Search Poseidon packages by title" />
         </div>
@@ -187,14 +196,22 @@
         <map-view></map-view>
 
         <!-- package view -->
-        <div v-if="selectedPackage">
+        <div v-if="selectedPackageTitle">
 
-          {{selectedPackage.value}}
+          <h3> {{ selectedPackageTitle }} </h3>
+
+          <div>
+              <b>Description:</b> {{ selectedPackage.description }}<br>
+              <b>Version:</b> {{ selectedPackage.packageVersion }}<br>
+              <b>Last Modified:</b> {{ selectedPackage.lastModified }}<br>
+              <b>Poseidon Version:</b> {{ selectedPackage.poseidonVersion }}<br>
+              <b>Nr of samples:</b> {{ selectedPackage.nrIndividuals }}
+          </div>
 
         </div>
 
         <!-- overview -->
-        <div v-if="!selectedPackage">
+        <div v-if="!selectedPackageTitle">
 
           <div class="table-container">
 
@@ -205,17 +222,8 @@
                 <col style="width: 5%" />
                 <col style="width: 5%" />
               </colgroup>
-              <thead>
-                <tr>
-                  <th>Package Title</th>
-                  <th>Description</th>
-                  <th></th>
-                  <th></th>
-                  <th></th>              
-                </tr>
-              </thead>
               <tbody>
-                <tr v-for="(pac, index) in filteredPackages.slice(0,30)" :key="index">
+                <tr v-for="(pac, index) in filteredPackages" :key="index">
                   <td style="overflow-wrap: break-word;">
                     {{ pac.packageTitle }}
                   </td>
@@ -283,6 +291,7 @@
   #go-back-button {
     width: 100%;
     padding: 5px;
+    margin-bottom: 10px;
   }
 
   .search-bar {
