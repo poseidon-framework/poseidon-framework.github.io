@@ -17,9 +17,7 @@
       var selectedPackage = ref(null);
 
       const packageTitles = computed(() => {
-        if (!packages.value) {
-          return [];
-        }
+        if (!packages.value) { return []; }
         return packages.value.map((pac) => pac.packageTitle.toLowerCase());
       });
 
@@ -46,7 +44,8 @@
           apiUrl += '?archive=' + archiveType.value;
           const response_pacs = await fetch(apiUrl);
           const response_pacs_json = await response_pacs.json();
-          packages.value = response_pacs_json.serverResponse.packageInfo;
+          const filteredPackages = response_pacs_json.serverResponse.packageInfo.filter((p) => p.isLatest);
+          packages.value = filteredPackages;
         } catch (error) {
           console.error(error);
         }
@@ -58,7 +57,8 @@
           apiUrl += '&archive=' + archiveType.value;
           const response_inds = await fetch(apiUrl);
           const response_inds_json = await response_inds.json();
-          samples.value = response_inds_json.serverResponse.extIndInfo;
+          const filteredSamples = response_inds_json.serverResponse.extIndInfo.filter((p) => p.isLatest);
+          samples.value = filteredSamples;
         } catch (error) {
           console.error(error);
         }
