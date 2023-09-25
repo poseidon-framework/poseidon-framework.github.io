@@ -14,7 +14,7 @@
       const mapInstance = ref(null);
       var mapMarkers = [];
       const markerClusters = L.markerClusterGroup({ chunkedLoading: true });
-      const modalPackage = ref('');
+      const selectedPackage = ref('');
 
       const packageTitles = computed(() => {
         if (!packages.value) {
@@ -155,36 +155,33 @@
         resetMarkers,
         downloadGenotypeData,
         getSamplesForPackage,
-        modalPackage,
+        selectedPackage,
       };
     },
     template: `
       <div>
+        
+        <!-- archive selection -->      
+        <select id="archive-type-select" v-model="archiveType" @change="showSelection">
+          <option value="community-archive">Poseidon Community Archive</option>
+          <option value="aadr-archive">Poseidon AADR Archive</option>
+        </select>
+
+        <!-- search bar -->
         <div class="search-bar">
-          <input type="text" v-model="searchQuery" placeholder="Search through Poseidon Packages" />
+          <input type="text" v-model="searchQuery" placeholder="Search Poseidon packages by title" />
         </div>
-        <div class="archive-type">
-          <label for="archive_type" class="bold-label" title="Select Archives: Poseidon or AADR">Archive type:  </label>
-          <select id="archive_type" v-model="archiveType">
-            <option value="community-archive">Poseidon Community Archive</option>
-            <option value="aadr-archive">Poseidon AADR Archive</option>
-          </select>
-          <button @click="showSelection">Show Selection</button>
-        </div>
-        <div></div> <!-- Empty div for spacing -->
 
         <div v-if="packages">
           <map-view></map-view>
         <div class="table-container">
           <table class="table-default">
             <colgroup>
-              <col style="width: 24%" />
-              <col style="width: 24%" />
-              <col style="width: 8%" />
-              <col style="width: 8%" />
-              <col style="width: 8%" />
-              <col style="width: 8%" />
-              <col style="width: 8%" />
+              <col style="width: 30%" />
+              <col style="width: 55%" />
+              <col style="width: 5%" />
+              <col style="width: 5%" />
+              <col style="width: 5%" />
             </colgroup>
             <thead>
               <tr>
@@ -215,7 +212,7 @@
                   </details>
                 </td>
                 <td>
-                  <button @click="modalPackage = pac.packageTitle" title="View package information">
+                  <button @click="selectedPackage = pac.packageTitle" title="View package information">
                     <i class="fas fa-search" aria-hidden="true"></i>
                   </button>
                 </td>
@@ -235,36 +232,7 @@
         </div>
       </div>
     </div>  
-
-      <div v-if="modalPackage !== ''" class="modal-background">
-        <div class="modal">
-          <div class="modal-header">
-            <h3>{{ modalPackage }}</h3>
-            <label for="modal" @click="modalPackage = ''">close</label>
-          </div>
-          <table>
-            <thead>
-              <tr>
-                <th>Poseidon ID</th>
-                <th>Description</th>
-                <th data-label="Group Name">Group Name</th>
-                <th data-label="Location">Location</th>
-                <th data-label="Age">Age</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="sample in getSamplesForPackage(modalPackage)">
-                <td>{{ sample.poseidonID }}</td>
-                <td>{{ sample.additionalJannoColumns[2][1] }}</td>
-                <td data-label="Group Name">{{ sample.additionalJannoColumns[4][1] }}</td>
-                <td data-label="Location">{{ sample.additionalJannoColumns[3][1] }}</td>
-                <td data-label="Age">{{ sample.additionalJannoColumns[5][1] }}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    `,
+    `
   };
 
   const MapView = {
@@ -286,190 +254,31 @@
 </script>
 
 <style>
-  .search-bar {
-    display: flex;
-    align-items: center;
-    gap: 1cm; 
-    margin-top: 0.5cm;
-  }
 
-  .search-bar input[type="text"] {
-    width: 50%;
+  #archive-type-select {
+    width: 100%;
     padding: 5px;
   }
 
-  .description {
-    font-size: 14px;
-    font-weight: bold;
-    color: black; 
+  .search-bar {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+  .search-bar input[type="text"] {
+    width: 100%;
+    padding: 5px;
   }
 
-  .bold-label {
-    font-weight: bold; 
+  .table-container {
+    max-height: 400px; 
+    overflow-y: scroll;
+    width: 100%;
   }
-
   .table-default {
     width: 100%;
     display: table !important;
     table-layout: fixed;
   }
-
-  .table-default thead {
-    width: 100%;
-  }
-
-  .table-default tbody {
-    width: 100%;
-  }
-
-  .table-default tr {
-    width: 100%;
-  }
-
-  .table-default th {
-  }
-
-  .table-default td {
-  }
-
-  .modal-background {
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 9998;
-  }
-
-  .modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    margin: auto;
-    width: 50%;
-    height: 50%;
-    background-color: #007BFF; 
-    z-index: 9999;
-    overflow: auto;
-  }
-
-  .modal-header {
-    background-color: #f9f9f9;
-    border-bottom: 1px solid #dddddd;
-    box-sizing: border-box;
-    height: 50px;
-  }
-
-  .modal-header h3 {
-    margin: 0;
-    box-sizing: border-box;
-    padding-left: 15px;
-    line-height: 50px;
-    color: #4d4d4d;
-    font-size: 16px;
-    display: inline-block;
-  }
-
-  .modal-header label {
-    box-sizing: border-box;
-    border-left: 1px solid #dddddd;
-    float: right;
-    line-height: 50px;
-    padding: 0 15px 0 15px;
-    cursor: pointer;
-  }
-
-    .modal table tbody tr {
-    margin-bottom: 10px;
-  }
-
-  /* Style for modal table rows */
-  .modal table tbody tr td {
-    padding: 5px 10px;
-    font-weight: bold;
-  }
-  
- search-bar {
-    width: 100%;
-    height: 0.8cm;
-    padding: 0.2cm;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    margin-top: 0.3cm;
-    margin-bottom: 0.3cm;
-  }
-
-.description-tooltip {
-  font-size: 18px;
-  margin-left: 8px;
-  cursor: pointer;
-  color: #000; 
-}
-
-.archive-type {
-  display: flex;
-  align-items: center;
-  margin-bottom: 0.5cm;
-  margin-top: 0.2cm
-}
-
-.bold-label {
-  font-weight: bold; /* Make the label text bold */
-}
-
-/* spacing between archive type selection and button */
-button {
-  margin-left: 0.5cm;
-}
- /* styles for the table and its headers */
-.table-default {
-    width: 100%;
-    display: table;
-    table-layout: fixed;
-  }
-
-.table-default th,
-  .table-default td {
-    padding: 8px;
-    text-align: left;
-  }
-
-.table-default th {
-    background-color: #007BFF;
-    color: white;
-    font-weight: bold;
-  }
-
-
-.download-button {
-   background-color: #007BFF; 
-   color: white; 
-   padding: 8px 12px; 
-   border: none;
-   border-radius: 5px;
-   cursor: pointer;
- }
- 
-.table-default td button {
-  width: 100%;
-  }
- 
-
-@media (max-width: 768px) {
-    .table-default {
-      display: block;
-      width: 100%;
-      overflow-x: auto;
-    }
-  }
-
-.table-container {
-    max-height: 400px; 
-    overflow-y: scroll;
-    width: 700px
-  }
+   
 </style>
 
