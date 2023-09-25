@@ -14,7 +14,7 @@
       const mapInstance = ref(null);
       var mapMarkers = [];
       const markerClusters = L.markerClusterGroup({ chunkedLoading: true });
-      const selectedPackage = ref('');
+      var selectedPackage = ref(null);
 
       const packageTitles = computed(() => {
         if (!packages.value) {
@@ -131,9 +131,11 @@
         updateMap();
       };
 
-      const highlightSamplesInMap = (requestedPackageTitle) => {
+      const selectPackage = (requestedPackageTitle) => {
+        selectedPackage.value = requestedPackageTitle;
+        console.log(selectedPackage.value);
         updateMap(requestedPackageTitle);
-      };
+      }
 
       const downloadGenotypeData = (packageTitle) => {
         const downloadLink = document.createElement('a');
@@ -151,16 +153,17 @@
         mapInstance,
         filteredPackages,
         showSelection,
-        highlightSamplesInMap,
         resetMarkers,
         downloadGenotypeData,
         getSamplesForPackage,
-        selectedPackage,
+        selectPackage,
+        selectedPackage
       };
     },
     template: `
-      <div>
+    <div>
         
+      <div v-if="!selectedPackage">
         <!-- archive selection -->      
         <select id="archive-type-select" v-model="archiveType" @change="showSelection">
           <option value="community-archive">Poseidon Community Archive</option>
@@ -171,68 +174,71 @@
         <div class="search-bar">
           <input type="text" v-model="searchQuery" placeholder="Search Poseidon packages by title" />
         </div>
+      </div>
+
+      <div v-if="packages">
+          <map-view></map-view>
+      </div>          
+
+      <!-- package list view -->
+      <div v-if="!selectedPackage">
 
         <div v-if="packages">
-          <map-view></map-view>
-        <div class="table-container">
-          <table class="table-default">
-            <colgroup>
-              <col style="width: 30%" />
-              <col style="width: 55%" />
-              <col style="width: 5%" />
-              <col style="width: 5%" />
-              <col style="width: 5%" />
-            </colgroup>
-            <thead>
-              <tr>
-                <th>Package Title</th>
-                <th>Description</th>
-                <th></th>
-                <th></th>
-                <th></th>              
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="(pac, index) in filteredPackages.slice(0,30)" :key="index">
-                <td style="overflow-wrap: break-word;">
-                  {{ pac.packageTitle }}
-                </td>
-                <td>
-                  <details>
-                    <summary style="color: white">
-                      Package Details
-                    </summary>
-                    <div class="details-content">
-                      <b>Description:</b> {{ pac.description }}<br>
-                      <b>Version:</b> {{ pac.packageVersion }}<br>
-                      <b>Last Modified:</b> {{ pac.lastModified }}<br>
-                      <b>Poseidon Version:</b> {{ pac.poseidonVersion }}<br>
-                      <b>Nr of samples:</b> {{ pac.nrIndividuals }}
-                    </div>
-                  </details>
-                </td>
-                <td>
-                  <button @click="selectedPackage = pac.packageTitle" title="View package information">
-                    <i class="fas fa-search" aria-hidden="true"></i>
-                  </button>
-                </td>
-                <td>
-                  <button @click="highlightSamplesInMap(pac.packageTitle)" title="Highlight samples on the map">
-                    <i class="fas fa-map" aria-hidden="true"></i>
-                  </button>
-                </td>
-                <td>
-                  <button @click="downloadGenotypeData(pac.packageTitle)" title="Download genotype data for this package">
-                    <i class="fas fa-download" aria-hidden="true"></i>
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+          <div class="table-container">
+            <table class="table-default">
+              <colgroup>
+                <col style="width: 35%" />
+                <col style="width: 55%" />
+                <col style="width: 5%" />
+                <col style="width: 5%" />
+              </colgroup>
+              <thead>
+                <tr>
+                  <th>Package Title</th>
+                  <th>Description</th>
+                  <th></th>
+                  <th></th>
+                  <th></th>              
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="(pac, index) in filteredPackages.slice(0,30)" :key="index">
+                  <td style="overflow-wrap: break-word;">
+                    {{ pac.packageTitle }}
+                  </td>
+                  <td>
+                    <details>
+                      <summary style="color: white">
+                        Package Details
+                      </summary>
+                      <div class="details-content">
+                        <b>Description:</b> {{ pac.description }}<br>
+                        <b>Version:</b> {{ pac.packageVersion }}<br>
+                        <b>Last Modified:</b> {{ pac.lastModified }}<br>
+                        <b>Poseidon Version:</b> {{ pac.poseidonVersion }}<br>
+                        <b>Nr of samples:</b> {{ pac.nrIndividuals }}
+                      </div>
+                    </details>
+                  </td>
+                  <td>
+                    <button @click="selectPackage(pac.packageTitle)" title="View package information">
+                      <i class="fas fa-search" aria-hidden="true"></i>
+                    </button>
+                  </td>
+                  <td>
+                    <button @click="downloadGenotypeData(pac.packageTitle)" title="Download genotype data for this package">
+                      <i class="fas fa-download" aria-hidden="true"></i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
+
     </div>  
-    `
+  `
   };
 
   const MapView = {
