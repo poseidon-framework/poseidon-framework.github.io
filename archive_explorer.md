@@ -230,43 +230,30 @@
   <table class="table-default">
     <colgroup>
       <col style="width: 30%" />
-      <col style="width: 55%" />
-      <col style="width: 5%" />
-      <col style="width: 5%" />
-      <col style="width: 5%" />
+      <col style="width: 54%" />
+      <col style="width: 16%" />
     </colgroup>
     <tbody>
       <tr v-for="(pac, index) in filteredPackages" :key="index">
         <td style="overflow-wrap: break-word;">
-          {{ pac.packageTitle }}
+          <b>{{ pac.packageTitle }}</b><br>
+          v{{ pac.packageVersion }}, Samples: {{ pac.nrIndividuals }}
         </td>
         <td>
-          <details>
-            <summary style="color: white">
-              Package Details
-            </summary>
-            <div class="details-content">
-              <b>Description:</b> {{ pac.description }}<br>
-              <b>Version:</b> {{ pac.packageVersion }}<br>
-              <b>Last Modified:</b> {{ pac.lastModified }}<br>
-              <b>Poseidon Version:</b> {{ pac.poseidonVersion }}<br>
-              <b>Nr of samples:</b> {{ pac.nrIndividuals }}
-            </div>
-          </details>
+          {{ pac.description }}
+          </div>
         </td>
         <td>
           <button @click="selectPackage(pac.packageTitle)" title="Open the package information page">
             <i class="fas fa-search" aria-hidden="true"></i>
           </button>
-        </td>
-        <td>
+          &nbsp;
           <a :href="'https://github.com/poseidon-framework/' + archiveType + '/tree/master/' + pac.packageTitle" target="_blank">
             <button title="This package on GitHub">
               <i class="fab fa-github" aria-hidden="true"></i>
             </button>
           </a>
-        </td>
-        <td>
+          &nbsp;
           <button @click="downloadGenotypeData(pac.packageTitle)" title="Download this package">
             <i class="fas fa-download" aria-hidden="true"></i>
           </button>
