@@ -1,7 +1,3 @@
-<div id="app">
-  <package-explorer></package-explorer>
-</div>
-
 <script>
   const { createApp, ref, computed, watch } = Vue;
 
@@ -169,115 +165,11 @@
         selectedPackage,
         unselectPackage
       };
-    },
-    template: `
-    <div>
-        
-      <div v-if="!selectedPackageTitle">
-        <!-- archive selection -->      
-        <select id="archive-type-select" v-model="archiveType" @change="showSelection">
-          <option value="community-archive">Poseidon Community Archive</option>
-          <option value="aadr-archive">Poseidon AADR Archive</option>
-        </select>
-      </div>
-      <div v-if="selectedPackageTitle">
-        <button id=go-back-button @click="unselectPackage()" title="Go back to package overview.">
-          <i class="fa fa-arrow-left" aria-hidden="true"></i> Back to the package overview page
-        </button>
-      </div>
-
-      <!-- search bar -->
-      <div v-if="!selectedPackageTitle">
-        <div class="search-bar">
-          <input type="text" v-model="searchQuery" placeholder="Search Poseidon packages by title" />
-        </div>
-      </div>
-
-      <div v-if="packages">
-        <map-view></map-view>
-
-        <!-- package view -->
-        <div v-if="selectedPackageTitle">
-
-          <h3> {{ selectedPackageTitle }} </h3>
-
-          <div>
-              <b>Description:</b> {{ selectedPackage.description }}<br>
-              <b>Version:</b> {{ selectedPackage.packageVersion }}<br>
-              <b>Last Modified:</b> {{ selectedPackage.lastModified }}<br>
-              <b>Poseidon Version:</b> {{ selectedPackage.poseidonVersion }}<br>
-              <b>Nr of samples:</b> {{ selectedPackage.nrIndividuals }}
-          </div>
-
-        </div>
-
-        <!-- overview -->
-        <div v-if="!selectedPackageTitle">
-
-          <div class="table-container">
-
-            <table class="table-default">
-              <colgroup>
-                <col style="width: 30%" />
-                <col style="width: 55%" />
-                <col style="width: 5%" />
-                <col style="width: 5%" />
-                <col style="width: 5%" />
-              </colgroup>
-              <tbody>
-                <tr v-for="(pac, index) in filteredPackages" :key="index">
-                  <td style="overflow-wrap: break-word;">
-                    {{ pac.packageTitle }}
-                  </td>
-                  <td>
-                    <details>
-                      <summary style="color: white">
-                        Package Details
-                      </summary>
-                      <div class="details-content">
-                        <b>Description:</b> {{ pac.description }}<br>
-                        <b>Version:</b> {{ pac.packageVersion }}<br>
-                        <b>Last Modified:</b> {{ pac.lastModified }}<br>
-                        <b>Poseidon Version:</b> {{ pac.poseidonVersion }}<br>
-                        <b>Nr of samples:</b> {{ pac.nrIndividuals }}
-                      </div>
-                    </details>
-                  </td>
-                  <td>
-                    <button @click="selectPackage(pac.packageTitle)" title="Open the package information page">
-                      <i class="fas fa-search" aria-hidden="true"></i>
-                    </button>
-                  </td>
-                  <td>
-                    <a :href="'https://github.com/poseidon-framework/' + archiveType + '/tree/master/' + pac.packageTitle" target="_blank">
-                      <button title="This package on GitHub">
-                        <i class="fab fa-github" aria-hidden="true"></i>
-                      </button>
-                    </a>
-                  </td>
-                  <td>
-                    <button @click="downloadGenotypeData(pac.packageTitle)" title="Download this package">
-                      <i class="fas fa-download" aria-hidden="true"></i>
-                    </button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-
-          </div>
-        </div>
-      </div>
-
-    </div>  
-  `
+    }
   };
 
   const MapView = {
-    template: `
-    <div>
-      <div id="map" style="height: 400px;"></div>
-    </div>
-    `,
+    template: `<div id="map" style="height: 400px;"></div>`,
     mounted() {
       const map = L.map('map').setView([30, 10], 1);
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {}).addTo(map);
@@ -287,8 +179,107 @@
 
   const app = createApp(PackageExplorer);
   app.component('map-view', MapView);
-  app.mount('#app');
+  app.mount('#archiveExplorer');
 </script>
+
+<div id="archiveExplorer">
+    
+  <div v-if="!selectedPackageTitle">
+    <!-- archive selection -->      
+    <select id="archive-type-select" v-model="archiveType" @change="showSelection">
+      <option value="community-archive">Poseidon Community Archive</option>
+      <option value="aadr-archive">Poseidon AADR Archive</option>
+    </select>
+  </div>
+  <div v-if="selectedPackageTitle">
+    <button id=go-back-button @click="unselectPackage()" title="Go back to package overview.">
+      <i class="fa fa-arrow-left" aria-hidden="true"></i> Back to the package overview page
+    </button>
+  </div>
+
+  <!-- search bar -->
+  <div v-if="!selectedPackageTitle">
+    <div class="search-bar">
+      <input type="text" v-model="searchQuery" placeholder="Search Poseidon packages by title" />
+    </div>
+  </div>
+
+  <div v-if="packages">
+    <map-view></map-view>
+
+  <!-- package view -->
+  <div v-if="selectedPackageTitle">
+
+  <h3> {{ selectedPackageTitle }} </h3>
+
+  <div>
+      <b>Description:</b> {{ selectedPackage.description }}<br>
+      <b>Version:</b> {{ selectedPackage.packageVersion }}<br>
+      <b>Last Modified:</b> {{ selectedPackage.lastModified }}<br>
+      <b>Poseidon Version:</b> {{ selectedPackage.poseidonVersion }}<br>
+      <b>Nr of samples:</b> {{ selectedPackage.nrIndividuals }}
+  </div>
+
+  </div>
+
+  <!-- overview -->
+  <div v-if="!selectedPackageTitle">
+
+  <div class="table-container">
+
+  <table class="table-default">
+    <colgroup>
+      <col style="width: 30%" />
+      <col style="width: 55%" />
+      <col style="width: 5%" />
+      <col style="width: 5%" />
+      <col style="width: 5%" />
+    </colgroup>
+    <tbody>
+      <tr v-for="(pac, index) in filteredPackages" :key="index">
+        <td style="overflow-wrap: break-word;">
+          {{ pac.packageTitle }}
+        </td>
+        <td>
+          <details>
+            <summary style="color: white">
+              Package Details
+            </summary>
+            <div class="details-content">
+              <b>Description:</b> {{ pac.description }}<br>
+              <b>Version:</b> {{ pac.packageVersion }}<br>
+              <b>Last Modified:</b> {{ pac.lastModified }}<br>
+              <b>Poseidon Version:</b> {{ pac.poseidonVersion }}<br>
+              <b>Nr of samples:</b> {{ pac.nrIndividuals }}
+            </div>
+          </details>
+        </td>
+        <td>
+          <button @click="selectPackage(pac.packageTitle)" title="Open the package information page">
+            <i class="fas fa-search" aria-hidden="true"></i>
+          </button>
+        </td>
+        <td>
+          <a :href="'https://github.com/poseidon-framework/' + archiveType + '/tree/master/' + pac.packageTitle" target="_blank">
+            <button title="This package on GitHub">
+              <i class="fab fa-github" aria-hidden="true"></i>
+            </button>
+          </a>
+        </td>
+        <td>
+          <button @click="downloadGenotypeData(pac.packageTitle)" title="Download this package">
+            <i class="fas fa-download" aria-hidden="true"></i>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  </div>
+  </div>
+  </div>
+
+</div>  
 
 <style>
 
