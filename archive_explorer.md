@@ -265,23 +265,33 @@
   </div>
 
   <div>
-    <table>
+    <table class="table-default">
+      <colgroup>
+        <col style="width: 20%" />
+        <col style="width: 30%" />
+        <col style="width: 50%" />
+      </colgroup>
       <thead>
         <tr>
-          <th>Poseidon ID</th>
-          <th>Description</th>
-          <th>Group Name</th>
-          <th>Location</th>
-          <th>Age</th>
+          <th>Poseidon_ID</th>
+          <th>Groups</th>
+          <th>Details</th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="sample in getSamplesForPackage(selectedPackageTitle)">
           <td>{{ sample.poseidonID }}</td>
-          <td>{{ sample.additionalJannoColumns[2][1] }}</td>
-          <td>{{ sample.additionalJannoColumns[4][1] }}</td>
-          <td>{{ sample.additionalJannoColumns[3][1] }}</td>
-          <td>{{ sample.additionalJannoColumns[5][1] }}</td>
+          <td>{{ sample.groupNames.toString() }}</td>
+          <td>
+            <details>
+              <summary>View sample details</summary>
+              <div v-for="addCol in sample.additionalJannoColumns">
+                <div v-if="addCol[1] !== null">
+                  <b>{{ addCol[0] }}</b>: {{ addCol[1] }}<br>
+                </div>
+              </div>
+            </details>
+          </td>
         </tr>
       </tbody>
     </table>
@@ -366,6 +376,7 @@
     width: 100%;
     display: table !important;
     table-layout: fixed;
+    word-wrap: break-word;
   }
    
 </style>
