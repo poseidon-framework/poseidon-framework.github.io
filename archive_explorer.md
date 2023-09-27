@@ -139,7 +139,29 @@
         selectedPackageTitle.value = null;
         updateMap();
         mapInstance.value.setView([30, 10], 1);
-      }      
+      }
+
+      // primitive attempt to enable a URL selection for packages
+      // has to be done way more professionally
+      // const selectPackageByURL = async () => {
+      //   let uri = window.location.href.split('?');
+      //   if (uri.length == 2) {
+      //     let vars = uri[1].split('&');
+      //     let getVars = {};
+      //     let tmp = '';
+      //     vars.forEach(function(v) {
+      //       tmp = v.split('=');
+      //       if(tmp.length == 2)
+      //         getVars[tmp[0]] = tmp[1];
+      //     });
+      //     if (getVars["package"]) {
+      //       await loadAllData();
+      //       selectPackage(getVars["package"]);
+      //       console.log(selectedPackageTitle.value);
+      //     }
+      //   }
+      // }
+      // selectPackageByURL();
 
       const downloadGenotypeData = (packageTitle) => {
         const downloadLink = document.createElement('a');
