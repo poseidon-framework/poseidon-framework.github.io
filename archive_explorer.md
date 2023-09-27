@@ -7,6 +7,7 @@
       const samples = ref(null);
       const searchQuery = ref('');
       const archiveType = ref('community-archive');
+      const loading = ref(true);
       const mapInstance = ref(null);
       var mapMarkers = [];
       var markerClusters = L.markerClusterGroup({ chunkedLoading: true });
@@ -124,21 +125,27 @@
       };
 
       const showSelection = async () => {
+        loading.value = true;
         await loadAllData();
-        updateMap();
+        await updateMap();
+        loading.value = false;
       };
 
-      const selectPackage = (requestedPackageTitle) => {
+      const selectPackage = async (requestedPackageTitle) => {
+        loading.value = true;
         selectedPackageTitle.value = requestedPackageTitle;
         selectedPackage.value = packages.value.filter((pac) =>
           pac.packageTitle === selectedPackageTitle.value
         )[0];
-        updateMap(requestedPackageTitle);
+        await updateMap(requestedPackageTitle);
+        loading.value = false;
       }
-      const unselectPackage = () => {
+      const unselectPackage = async () => {
+        loading.value = true;
         selectedPackageTitle.value = null;
-        updateMap();
+        await updateMap();
         mapInstance.value.setView([30, 10], 1);
+        loading.value = false;
       }
 
       // primitive attempt to enable a URL selection for packages
@@ -176,6 +183,7 @@
         packages,
         searchQuery,
         archiveType,
+        loading,
         mapInstance,
         filteredPackages,
         showSelection,
@@ -205,7 +213,11 @@
 </script>
 
 <div id="archiveExplorer">
-    
+
+  <div class="page-overlay">
+    <div v-if="loading" class="loading-spinner"></div>
+  </div>
+
   <div v-if="!selectedPackageTitle">
     <!-- archive selection -->      
     <select id="archive-type-select" v-model="archiveType" @change="showSelection">
@@ -213,7 +225,7 @@
       <option value="aadr-archive">Poseidon AADR Archive</option>
     </select>
   </div>
-  <div v-if="selectedPackageTitle">
+  <div v-else>
     <button id=go-back-button @click="unselectPackage()" title="Go back to package overview.">
       <i class="fa fa-arrow-left" aria-hidden="true"></i> Back to the package overview page
     </button>
@@ -347,6 +359,26 @@
 </div>  
 
 <style>
+  .page-overlay {
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%, -50%);
+    z-index: 1000;
+  }
+  .loading-spinner {
+    border: 10px solid rgba(0, 0, 0, 0.4);
+    border-top: 10px solid #0B87DA;
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    animation: spin 2s linear infinite;
+    margin: 20px auto;
+  }
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
 
   #archive-type-select {
     width: 100%;
@@ -379,6 +411,5 @@
     table-layout: fixed;
     word-wrap: break-word;
   }
-   
 </style>
 
