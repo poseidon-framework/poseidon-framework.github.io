@@ -105,8 +105,10 @@
           if (bounds.isValid()) {
             mapInstance.value.fitBounds(bounds);
           }
-          
-          mapLegend.value.update();
+          // fill legend
+          var nrSamples = samplesFiltered.length;
+          var nrSamplesLoaded = mapMarkers.length;
+          mapLegend.value.update(nrSamplesLoaded,nrSamples - nrSamplesLoaded);
         } catch (error) {
           console.error(error);
         }
@@ -214,11 +216,11 @@
       const legend = L.control({ position: 'bottomright' });
       legend.onAdd = function (map) {
         this._div = L.DomUtil.create('div', 'legend');
-        this._div.innerHTML += "not loaded";
+        this._div.innerHTML += "Loading...";
         return this._div;
       };
-      legend.update = function () {
-        this._div.innerHTML = "trööt";
+      legend.update = function (nrLoaded, nrNotLoadable) {
+        this._div.innerHTML = nrLoaded + " samples loaded<br>" + nrNotLoadable + " lat/lon missing<br>";
       };
       legend.addTo(map);
       // store legend and map objects
@@ -427,6 +429,15 @@
     display: table !important;
     table-layout: fixed;
     word-wrap: break-word;
+  }
+
+  .legend {
+    padding: 6px 8px;
+    font: 14px/16px Arial, Helvetica, sans-serif;
+    background: rgba(255,255,255,0.8);
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    border-radius: 5px;
+    color: #777;
   }
 </style>
 
