@@ -217,6 +217,7 @@
     <button id=go-back-button @click="unselectPackage()" title="Go back to package overview.">
       <i class="fa fa-arrow-left" aria-hidden="true"></i> Back to the package overview page
     </button>
+    <h3>Package: {{ selectedPackageTitle }} </h3>
   </div>
 
   <!-- search bar -->
@@ -227,19 +228,63 @@
   </div>
 
   <div v-if="packages">
-    <map-view></map-view>
+
+  <map-view></map-view>
 
   <!-- package view -->
   <div v-if="selectedPackageTitle">
 
-  <h3> {{ selectedPackageTitle }} </h3>
+  <div>
+    <table class="table-default">
+      <colgroup>
+        <col style="width: 20%" />
+        <col style="width: 80%" />
+      </colgroup>
+      <tbody>
+        <tr>
+          <td>Description</td>
+          <td>{{ selectedPackage.description }}</td>
+        </tr>
+        <tr>
+          <td>Package version</td>
+          <td>
+            v{{ selectedPackage.packageVersion }}
+            <span v-if="selectedPackage.isLatest">(that is the latest available version)</span>
+            <span v-else>(that is not the latest available version)</span>
+            for Poseidon v{{ selectedPackage.poseidonVersion }}.
+            <br>
+            It was last modified on {{ selectedPackage.lastModified }}.
+          </td>
+        </tr>
+        <tr>
+          <td>Nr of samples</td>
+          <td>{{ selectedPackage.nrIndividuals }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
   <div>
-      <b>Description:</b> {{ selectedPackage.description }}<br>
-      <b>Version:</b> {{ selectedPackage.packageVersion }}<br>
-      <b>Last Modified:</b> {{ selectedPackage.lastModified }}<br>
-      <b>Poseidon Version:</b> {{ selectedPackage.poseidonVersion }}<br>
-      <b>Nr of samples:</b> {{ selectedPackage.nrIndividuals }}
+    <table>
+      <thead>
+        <tr>
+          <th>Poseidon ID</th>
+          <th>Description</th>
+          <th>Group Name</th>
+          <th>Location</th>
+          <th>Age</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="sample in getSamplesForPackage(selectedPackageTitle)">
+          <td>{{ sample.poseidonID }}</td>
+          <td>{{ sample.additionalJannoColumns[2][1] }}</td>
+          <td>{{ sample.additionalJannoColumns[4][1] }}</td>
+          <td>{{ sample.additionalJannoColumns[3][1] }}</td>
+          <td>{{ sample.additionalJannoColumns[5][1] }}</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 
   </div>
