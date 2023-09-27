@@ -50,7 +50,6 @@
 
       const loadSamples = async () => {
         try {
-          // this can be shortened when https://github.com/poseidon-framework/poseidon-hs/issues/273 is implemented
           let apiUrl = 'https://server.poseidon-adna.org/individuals?additionalJannoColumns=Genetic_Sex,Country,Location,Latitude,Longitude,Date_Type,Date_C14_Labnr,Date_BC_AD_Median,MT_Haplogroup,Y_Haplogroup,Capture_Type,UDG,Library_Built,Genotype_Ploidy,Nr_SNPs,Coverage_on_Target_SNPs,Publication';
           apiUrl += '&archive=' + archiveType.value;
           const response_inds = await fetch(apiUrl);
@@ -81,7 +80,6 @@
           // compile markers
           samplesFiltered.forEach((s) => {
             const addCols = s.additionalJannoColumns;
-            console.log(addCols)
             const lat = addCols[3][1];
             const lng = addCols[4][1];
             if (lat == 0 && lng == 0) { return; }
@@ -292,6 +290,7 @@
                   <b>{{ addCol[0] }}</b>: {{ addCol[1] }}<br>
                 </div>
               </div>
+              <small>*More variables are available in the complete .janno file.</small>
             </details>
           </td>
         </tr>
