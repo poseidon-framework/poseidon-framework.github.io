@@ -8,6 +8,7 @@
       const searchQuery = ref('');
       const archiveType = ref('community-archive');
       const loading = ref(true);
+      const mapLegend = ref(null);
       const mapInstance = ref(null);
       var mapMarkers = [];
       var markerClusters = L.markerClusterGroup({ chunkedLoading: true });
@@ -104,6 +105,8 @@
           if (bounds.isValid()) {
             mapInstance.value.fitBounds(bounds);
           }
+          
+          mapLegend.value.update();
         } catch (error) {
           console.error(error);
         }
@@ -184,6 +187,7 @@
         searchQuery,
         archiveType,
         loading,
+        mapLegend,
         mapInstance,
         filteredPackages,
         showSelection,
@@ -199,10 +203,26 @@
   };
 
   const MapView = {
-    template: `<div id="map" style="height: 400px;"></div>`,
+    template: `
+      <div id="map" style="height: 400px;"></div>
+      <div id="legend" class="leaflet-control leaflet-control-custom"></div>
+    `,
     mounted() {
       const map = L.map('map').setView([30, 10], 1);
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {}).addTo(map);
+      // legend
+      const legend = L.control({ position: 'bottomright' });
+      legend.onAdd = function (map) {
+        this._div = L.DomUtil.create('div', 'legend');
+        this._div.innerHTML += "not loaded";
+        return this._div;
+      };
+      legend.update = function () {
+        this._div.innerHTML = "trööt";
+      };
+      legend.addTo(map);
+      // store legend and map objects
+      this.$parent.mapLegend = legend;
       this.$parent.mapInstance = map;
     },
   };
