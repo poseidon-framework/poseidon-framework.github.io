@@ -206,11 +206,11 @@
 
   const MapView = {
     template: `
-      <div id="map" style="height: 400px;"></div>
+      <div id="map" style="height: 350px;"></div>
       <div id="legend" class="leaflet-control leaflet-control-custom"></div>
     `,
     mounted() {
-      const map = L.map('map').setView([30, 10], 1);
+      const map = L.map('map').setView([37, 10], 1);
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {}).addTo(map);
       // legend
       const legend = L.control({ position: 'bottomright' });
