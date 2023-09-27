@@ -50,7 +50,8 @@
 
       const loadSamples = async () => {
         try {
-          let apiUrl = 'https://server.poseidon-adna.org/individuals?additionalJannoColumns=Latitude,Longitude,Country,Location,Group_Name,Age';
+          // this can be shortened when https://github.com/poseidon-framework/poseidon-hs/issues/273 is implemented
+          let apiUrl = 'https://server.poseidon-adna.org/individuals?additionalJannoColumns=Genetic_Sex,Country,Location,Latitude,Longitude,Date_Type,Date_C14_Labnr,Date_BC_AD_Median,MT_Haplogroup,Y_Haplogroup,Capture_Type,UDG,Library_Built,Genotype_Ploidy,Nr_SNPs,Coverage_on_Target_SNPs,Publication';
           apiUrl += '&archive=' + archiveType.value;
           const response_inds = await fetch(apiUrl);
           const response_inds_json = await response_inds.json();
@@ -80,19 +81,20 @@
           // compile markers
           samplesFiltered.forEach((s) => {
             const addCols = s.additionalJannoColumns;
-            const lat = addCols[0][1];
-            const lng = addCols[1][1];
+            console.log(addCols)
+            const lat = addCols[3][1];
+            const lng = addCols[4][1];
             if (lat == 0 && lng == 0) { return; }
-            const location = addCols[3][1];
-            const groupName = addCols[4][1];
-            const age = addCols[5][1];
+            const location = addCols[2][1];
+            const groupName = s.groupNames;
+            const age = addCols[7][1];
             const popupContent =
               `<b>Poseidon ID:</b> ${s.poseidonID}<br>
+               <b>Group Name:</b> ${groupName}<br>
                <b>Package:</b> ${s.packageTitle}<br>
                <b>Package Version:</b> ${s.packageVersion}<br>
                <b>Location:</b> ${location}<br>
-               <b>Group Name:</b> ${groupName}<br>
-               <b>Age:</b> ${age}`;
+               <b>Age BC/AD:</b> ${age}`;
             const oneMarker = L.marker([lat, lng]).bindPopup(popupContent);
             mapMarkers.push(oneMarker);
           });
