@@ -214,8 +214,12 @@
 
 <div id="archiveExplorer">
 
-  <div class="page-overlay">
-    <div v-if="loading" class="loading-spinner"></div>
+  <!-- loading banner -->
+  <div v-if="loading" class="loading-banner" style="color:#fc8d21;">
+    <span class="loading-spinner">_</span>&nbsp; Loading...
+  </div>
+  <div v-else class="loading-banner" style="color:#7CFC00;">
+    <i class="fa fa-check" aria-hidden="true"></i>
   </div>
 
   <div v-if="!selectedPackageTitle">
@@ -359,21 +363,14 @@
 </div>  
 
 <style>
-  .page-overlay {
-    position:absolute;
-    top:50%;
-    left:50%;
-    transform:translate(-50%, -50%);
-    z-index: 1000;
+  .loading-banner {
+    width: 100%;
+    height: 30px;
+    text-align: right;
   }
   .loading-spinner {
-    border: 10px solid rgba(0, 0, 0, 0.4);
-    border-top: 10px solid #0B87DA;
-    border-radius: 50%;
-    width: 80px;
-    height: 80px;
-    animation: spin 2s linear infinite;
-    margin: 20px auto;
+    display: inline-block;
+    animation: spin 1s infinite linear;
   }
   @keyframes spin {
     0% { transform: rotate(0deg); }
