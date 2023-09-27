@@ -1,37 +1,4 @@
-# trident CLI software <!-- {docsify-ignore-all} -->
-
-`trident` is a command line software tool to work with Poseidon packages and handle various data management tasks. It is written in Haskell and openly available on [GitHub](https://github.com/poseidon-framework/poseidon-hs/).
-
-[![CI](https://github.com/poseidon-framework/poseidon-hs/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/poseidon-framework/poseidon-hs/actions/workflows/main.yml)
-[![Coverage Status](https://img.shields.io/codecov/c/github/poseidon-framework/poseidon-hs/master.svg)](https://codecov.io/github/poseidon-framework/poseidon-hs?branch=master)
-[![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/poseidon-framework/poseidon-hs?include_prereleases) ![GitHub all releases](https://img.shields.io/github/downloads/poseidon-framework/poseidon-hs/total)](https://github.com/poseidon-framework/poseidon-hs/releases)
-[![Install with Bioconda](https://anaconda.org/bioconda/poseidon-trident/badges/version.svg)](https://anaconda.org/bioconda/poseidon-trident) [![Anaconda-Server Badge](https://anaconda.org/bioconda/poseidon-trident/badges/downloads.svg)](https://anaconda.org/bioconda/poseidon-trident)
-
-To download the latest stable release version of `trident` click here:
-[📥 Linux](https://github.com/poseidon-framework/poseidon-hs/releases/latest/download/trident-Linux) |
-[📥 macOS](https://github.com/poseidon-framework/poseidon-hs/releases/latest/download/trident-macOS) |
-[📥 Windows](https://github.com/poseidon-framework/poseidon-hs/releases/latest/download/trident-Windows.exe)
-
-So in Linux you can run the following commands to get started:
-
-```bash
-# download the current stable release binary
-wget https://github.com/poseidon-framework/poseidon-hs/releases/latest/download/trident-Linux
-# make it executable
-chmod +x trident-Linux
-# run it
-./trident-Linux -h
-```
-
-On GitHub you will also find [older release versions](https://github.com/poseidon-framework/poseidon-hs/releases) and [instructions to build trident from source](https://github.com/poseidon-framework/poseidon-hs#for-haskell-developers). The relevant changes from one version to the next are documented in this [changelog](https://github.com/poseidon-framework/poseidon-hs/blob/master/CHANGELOGRELEASE.md).
-
-Beyond the documentation below you can use `trident --help` and `trident <subcommand> --help` to get information about each parameter, including some which we haven't covered in the guide. If you're new to Poseidon and trident, we recommend that you take a look at our [Getting started guide](getting_started) first.
-
-<!-- tabs:start -->
-
-#### **v1.4.0.2**
-
-## Guide for trident v1.4.0.2
+## Guide for trident v1.3.0.4
 
 ### The trident CLI
 
@@ -81,7 +48,7 @@ Inspection commands:
 
 Trident allows to work directly with genotype data (see `-p` below), but its optimized for the interaction with [Poseidon packages](https://poseidon-framework.github.io/#/standard), which wrap and contextualize the data. Most trident subcommands therefore have a central parameter, called `--baseDir` or simply `-d` to specify one or more base directories to look for packages. For example, if all Poseidon packages live inside a repository at `/path/to/poseidon/packages` you would simply say `trident <subcommand> -d /path/to/poseidon/dirs/` and `trident` would automatically search all subdirectories inside of the repository for valid Poseidon packages (as identified by valid `POSEIDON.yml` files).
 
-You can arrange a Poseidon repository in a hierarchical way. For example:
+You can arrange a poseidon repository in a hierarchical way. For example:
 
 ```
 /path/to/poseidon/packages
@@ -150,18 +117,11 @@ For all subcommands the general argument `--logMode` defines how trident reports
 
 `--debug` is short for `--logMode VerboseLog` to activate this important log level more easily.
 
-##### Package duplicates and versions
+##### Duplicates
 
-- For `trident` multiple packages in a set of base directories can share the same `title`, if they have different `packageVersion` numbers. If the version numbers are identical or missing, then `trident` stops with an exception.
-- The `trident` subcommands `genoconvert`, `list`, `rectify`, `survey` and `validate` by default consider all versions of each Poseidon package in the given base directories. The `--onlyLatest` flag causes them to instead only consider the latest versions.
-- `fetch` and `forge` generally consider all package versions and their selection language (see below) allows for detailed version handling.
-- `summarize` always only shows results for the latest package versions.
-
-##### Individual/sample duplicates
-
+- If multiple packages in a package repository share the same `title`, then trident will try to select the one with the highest version number. If this is not sufficient to resolve the conflict, trident will stop. An exception for that is the `list` subcommand, which will read and report all packages/groups/individuals in all versions.
 - Individual/sample names (`Poseidon_ID`s) within one package have to be unique, or trident will stop.
-- We also discourage sample duplicates across packages in package repositories, but trident will generally continue with them. `validate` will fail though, if the `--ignoreDuplicates` flag is not set.
-- `forge` offers a special mechanism to resolve sample duplicates within its selection language.
+- We generally also discourage ID duplicates across packages in package repositories, but trident will generally continue with them after printing a warning. This does not apply for `validate`, by default (you can change this behaviour with `--ignoreDuplicates`), and `forge`. `forge` offers a special mechanism to resolve duplicates within its selection language (see below).
 
 ##### Group names in .fam files
 
@@ -288,12 +248,12 @@ It works with
 
 ```
 trident fetch -d ... -d ... \
-  -f "*package_title_1*,*package_title_2-1.0.1*,group_name,<individual1>"
+  -f "*package_title_1*,*package_title_2*,*package_title_3*,group_name,<individual1>"
 ```
 
 and the entities you want to download must be listed either in a simple string of comma-separated values, which can be passed via `-f`/`--fetchString`, or in a text file (`--fetchFile`). Entities are then combined from these sources.
 
-Entities are specified using a special syntax (see also the documentation of `forge` below): packages are wrapped in asterisks, with or without version appended after a dash (e.g. `*package_title*` or `*package_title-1.2.3`), group names are spelled as is, and individual names are wrapped in angular brackets (e.g. `<individual1>`). Fetch will figure out which packages need to be downloaded to include all specified entities. `--downloadAll`, which can be given instead of `-f` and `--fetchFile`, causes fetch to download all packages from the server. The downloaded packages are added in the first (!) `-d` directory (which gets created if it doesn't exist), but downloads are only performed if the respective packages are not already present in the latest version in any of the `-d` dirs.
+Entities are specified using a special syntax (see also the documentation of `forge` below): Package titles are wrapped in asterisks: `*package_title*`, group names are spelled as is, and individual names are wrapped in angular brackets, so `<individual1>`. Fetch will figure out which packages need to be downloaded to include all specified entities. `--downloadAll`, which can be given instead of `-f` and `--fetchFile`, causes fetch to download all packages from the server. The downloaded packages are added in the first (!) `-d` directory (which gets created if it doesn't exist), but downloads are only performed if the respective packages are not already present in the latest version in any of the `-d` dirs.
 
 Note that `trident fetch` makes most sense in combination with `trident list --remote`: First one can inspect what is available on the server, then one can create a custom fetch command.
 
@@ -301,7 +261,7 @@ Note that `trident fetch` makes most sense in combination with `trident list --r
 
 #### Forge command
 
-`forge` creates new Poseidon packages by extracting and merging packages, populations and individuals/samples from your Poseidon repositories.
+`forge` creates new Poseidon packages by extracting and merging packages, populations and individuals from your Poseidon repositories.
 
 <details>
  <summary><i class="fas fa-search"></i> <i class="fas fa-terminal"></i> <b>Click here for command line details</b></summary>
@@ -443,55 +403,31 @@ trident forge \
 
 ##### The forge selection language
 
-The text in `--forgeString`, `--forgeFile` (and with limited syntax also in `--fetchString` and `--fetchFile`) are parsed as a domain specific query language that describes precisely which entities should be compiled in the output package of a given `forge` operation. The language has multiple syntactic elements and a specific evaluation logic.
+The text in `--forgeString` and `--forgeFile` are parsed as a domain specific query language that describes precisely which entities should be compiled in the output package of a given `forge` operation. The language has multiple syntactic elements and a specific evaluation logic.
 
 In general a `--forgeString` query consists of multiple entities, separated by `,`. The main entities are Poseidon packages, groups/populations and individuals/samples:
 
 - Each package title is surrounded by `*`: `*package*`. That means if you want all individuals of the Poseidon package `2019_Jeong_InnerEurasia` in the output package you would add `*2019_Jeong_InnerEurasia*` to the query.
 - Groups/populations are not specially marked: `group`. So to get all individuals of the group `Swiss_Roman_period`, you would simply add `Swiss_Roman_period`.
 - Individuals/samples are surrounded by `<` and `>`: `<individual>`. `ALA026` therefore becomes `<ALA026>`. A second way to denote individuals is with the more verbose and specific syntax `<package:group:individual>`. Such defined individuals take precedence over differently defined ones (so: directly with `<individual>` or as a subset of `*package*` or `group`). This allows to resolve duplication issues precisely -- at least in cases where the duplicated individuals differ in source package or primary group.
-- Package versions can be appended to package names, such as `*package-1.2.3*`, or `<package-1.2.3:group:individual>`.
 
-
-In the `--forgeFile` each line is treated as a separate forgeString, empty lines are ignored and `#`s start comments. So this is a valid example of a forgeFile:
+In the `--forgeFile` each line is treated as a separate forgeString, empty lines are ignored and `#`s start comments. So this is a valid forgeFile:
 
 ```
 # Packages
-*package1*, *package2-1.2.3*
+*package1*, *package2*
 
 # Groups and individuals from other packages beyond package1 and package2
-group1, <individual1>, group2, <individual2>, <pac1:group2:individual3>
+group1, <individual1>, group2, <individual2>, <individual3>
 
 # group2 has two outlier individuals that should be ignored
--<individual1> # This one has very low coverage
--<pac2:group3:individual4> # This one is from a different time period
+-<bad_individual1> # This one has very low coverage
+-<bad_individual2> # This one is from a different time period
 ```
 
-By prepending `-` to entities, we can exclude them from the forged package (this feature is not available for `fetch`). `forge` figures out the final list of samples to include by executing all forge-entities in order. So an entity list `*PackageA*,-<Individual1>,GroupA` may result in a different outcome than `*PackageA*,GroupA,-<Individual1>`, depending on whether `<Individual1>` belongs to `GroupA` or not.
+By prepending `-` to the bad individuals, we can exclude them from the forged package. `forge` figures out the final list of samples to include by executing all forge-entities in order. So an entity list `*PackageA*,-<Individual1>,GroupA` may result in a different outcome than `*PackageA*,GroupA,-<Individual1>`, depending on whether `<Individual1>` belongs to `GroupA` or not. If the forge entity list starts with a negative entity, or if the entity list is empty, `forge` will implicitly assume you want to include all individuals in all packages found in the baseDirs (except the ones explicitly excluded, of course).
 
-If the forge entity list starts with a negative entity, or if the entity list is empty, `forge` will implicitly assume you want to include all individuals in all **latest** versions of packages found in the base directories (except the ones explicitly excluded, of course).
-
-The specific semantics of the various ways to include or exclude entities are:
-
-###### Inclusion queries
-
-* `*Pac1*`: Select all individuals in the latest version of package "Pac1"
-* `*Pac1-1.0.1*`: Select all individuals in package "Pac1" with version "1.0.1"
-* `Group1`: Select all individuals associated with "Group1" in all latest versions of all packages
-* `<Ind1>`: Select the individual named "Ind1", searching in all latest packages.
-* `<Pac1:Group1:Ind1>`: Select the individual named "Ind1" associated with "Group1" in the latest version of package "Pac1"
-* `<Pac1-1.0.1:Group1:Ind1>`: Select the individual named "Ind1" associated with "Group1" in the package "Pac1" with version "1.0.1"
-
-###### Exclusion queries
-
-* `-*Pac1*`: Remove all individuals in all versions of package "Pac1"
-* `-*Pac1-1.0.1*`: Remove only individuals in package "Pac1" with version "1.0.1" (but leave other versions in)
-* `-Group1`: Remove all individuals associated with "Group1" in all versions of all packages (not just the latest)
-* `-<Ind1>`: Remove all individuals named "Ind1" in all versions of all packages (not just the latest).
-* `-<Pac1:Group1:Ind1>`: Remove the individual named "Ind1" associated with "Group1", searching in all versions of package "Pac1"
-* `-<Pac1-1.0.1:Group1:Ind1>`: Remove the individual named "Ind1" associated with "Group1", but only if they are in "Pac1" with version "1.0.1"
-
-If a query results in multiple individuals with the same name, forge will throw an error.
+An empty forgeString will therefore merge all available individuals.
 
 ##### Treatment of the .janno file while merging
 
@@ -577,7 +513,7 @@ Usage: trident genoconvert ((-d|--baseDir DIR) |
                                --genoFile FILE --snpFile FILE --indFile FILE)
                              [--snpSet SET]) --outFormat FORMAT [--onlyGeno]
                            [-o|--outPackagePath DIR] [--removeOld]
-                           [--outPlinkPopName MODE] [--onlyLatest]
+                           [--outPlinkPopName MODE]
 
   Convert the genotype data in a Poseidon package to a different file format
 
@@ -614,9 +550,6 @@ Available options:
                            file in Plink-format. Three options are possible:
                            asFamily (default) | asPhenotype | asBoth. See also
                            --inPlinkPopName.
-  --onlyLatest             Consider only the latest versions of packages, or the
-                           groups and individuals within the latest versions of
-                           packages, respectively.
 ```
 
 </details>
@@ -653,7 +586,7 @@ Usage: trident rectify (-d|--baseDir DIR) [--ignorePoseidonVersion]
                        [--packageVersion VPART [--logText STRING]]
                        [--checksumAll | [--checksumGeno] [--checksumJanno]
                          [--checksumSSF] [--checksumBib]]
-                       [--newContributors DSL] [--onlyLatest]
+                       [--newContributors DSL]
 
   Adjust POSEIDON.yml files automatically to package changes
 
@@ -675,9 +608,6 @@ Available options:
   --checksumBib            Update .bib file checksum.
   --newContributors DSL    Contributors to add to the POSEIDON.yml file in the
                            form "[Firstname Lastname](Email address);...".
-  --onlyLatest             Consider only the latest versions of packages, or the
-                           groups and individuals within the latest versions of
-                           packages, respectively.
 ```
 
 </details>
@@ -715,7 +645,7 @@ These arguments determine which fields of the POSEIDON.yml file should be modifi
 Usage: trident list ((-d|--baseDir DIR) | --remote [--remoteURL URL]
                       [--archive STRING])
                     (--packages | --groups | --individuals
-                      [-j|--jannoColumn COLNAME]) [--raw] [--onlyLatest]
+                      [-j|--jannoColumn COLNAME]) [--raw]
 
   List packages, groups or individuals from local or remote Poseidon
   repositories
@@ -744,9 +674,6 @@ Available options:
   --raw                    Return the output table as tab-separated values
                            without header. This is useful for piping into grep
                            or awk.
-  --onlyLatest             Consider only the latest versions of packages, or the
-                           groups and individuals within the latest versions of
-                           packages, respectively.
 ```
 
 </details>
@@ -813,7 +740,7 @@ You can use the `--raw` option to output the summary table in a simple, tab-deli
  <summary><i class="fas fa-search"></i> <i class="fas fa-terminal"></i> <b>Click here for command line details</b></summary>
 
 ```
-Usage: trident survey (-d|--baseDir DIR) [--raw] [--onlyLatest]
+Usage: trident survey (-d|--baseDir DIR) [--raw]
 
   Survey the degree of context information completeness for Poseidon packages
 
@@ -823,9 +750,6 @@ Available options:
   --raw                    Return the output table as tab-separated values
                            without header. This is useful for piping into grep
                            or awk.
-  --onlyLatest             Consider only the latest versions of packages, or the
-                           groups and individuals within the latest versions of
-                           packages, respectively.
 ```
 
 </details>
@@ -854,7 +778,6 @@ Usage: trident validate ((-d|--baseDir DIR) [--ignoreGeno] [--fullGeno]
                           --pyml FILE | (-p|--genoOne FILE) | --inFormat FORMAT
                           --genoFile FILE --snpFile FILE --indFile FILE |
                           --janno FILE | --ssf FILE | --bib FILE) [--noExitCode]
-                        [--onlyLatest]
 
   Check Poseidon packages or package components for structural correctness
 
@@ -885,9 +808,6 @@ Available options:
   --ssf FILE               Path to a .ssf file.
   --bib FILE               Path to a .bib file.
   --noExitCode             Do not produce an explicit exit code.
-  --onlyLatest             Consider only the latest versions of packages, or the
-                           groups and individuals within the latest versions of
-                           packages, respectively.
 ```
 
 </details>
@@ -915,45 +835,3 @@ When applied to packages, `validate` tries to ensure that each package adheres t
 In fact much of this validation already runs as part of the general package reading pipeline invoked for other trident subcommands (e.g. `forge`). `validate` is meant to be more thorough/brittle, though, and will explicitly fail if even a single package is broken. For special cases more flexibility can be enabled with the options `--ignoreDuplicates`, `--ignoreChecksums` and `--ignorePoseidonVersion`.
 
 Remember to run `validate` it with `--debug` to get more information in case the default output is not sufficient to analyse an issue.
-
-#### **v1.3.0.4**
-
-[filename](trident_guide_archive/trident_guide_1.3.0.4.md ':include')
-
-#### **v1.2.0.0 to v1.2.1.0**
-
-[filename](trident_guide_archive/trident_guide_1.2.0.0_to_1.2.1.0.md ':include')
-
-#### **v1.1.11.0 to v1.1.12.0**
-
-[filename](trident_guide_archive/trident_guide_1.1.11.0_to_1.1.12.0.md ':include')
-
-#### **v1.1.10.2**
-
-[filename](trident_guide_archive/trident_guide_1.1.10.2.md ':include')
-
-#### **v1.1.7.0**
-
-[filename](trident_guide_archive/trident_guide_1.1.7.0.md ':include')
-
-#### **v1.1.6.0**
-
-[filename](trident_guide_archive/trident_guide_1.1.6.0.md ':include')
-
-#### **v1.1.0.0 to v1.1.4.2**
-
-[filename](trident_guide_archive/trident_guide_1.1.0.0_to_1.1.4.2.md ':include')
-
-#### **v1.0.0.0**
-
-[filename](trident_guide_archive/trident_guide_1.0.0.0.md ':include')
-
-#### **v0.29.0**
-
-[filename](trident_guide_archive/trident_guide_0.29.0.md ':include')
-
-#### **v0.28.0**
-
-[filename](trident_guide_archive/trident_guide_0.28.0.md ':include')
-
-<!-- tabs:end -->

@@ -43,6 +43,7 @@ These lists have the following general structure:
 packageInfo[i]
 ├── packageTitle
 ├── packageVersion
+├── isLatest
 ├── lastModified
 ├── description
 ├── poseidonVersion
@@ -56,6 +57,7 @@ groupInfo[i]
 ├── groupName
 ├── packageTitle
 ├── packageVersion
+├── isLatest
 └── nrIndividuals
 ```
 </td>
@@ -67,6 +69,7 @@ extIndInfo[i]
 ├── groupNames []
 ├── packageTitle
 ├── packageVersion
+├── isLatest
 └── additionalJannoColumns []
 ```
 </td>
@@ -100,7 +103,7 @@ The most imporant argument is `archive=...`, which serves to select the package 
 ?> Download a specific version of a package:<br>
    https://server.poseidon-adna.org/zip_file/AADR_v54_1_p1_1240K_EuropeAncient?archive=aadr-archive&package_version=0.1.2
 
-For `/individuals` the API provides an additional argument: `additionalJannoColumns=...`. It allows to add information from arbitrary .janno file columns into the `additionalJannoColumns` JSON-list.
+For `/individuals` the API provides an additional argument: `additionalJannoColumns=...`. It allows to add information from arbitrary .janno file columns into the `additionalJannoColumns` JSON-list. Note that the precise names of the Column titles in the Janno specification must be used. A list can be found [here](https://github.com/poseidon-framework/poseidon-schema/blob/master/janno_columns.tsv).
 
 ?> Request the individuals list for the default archive, but with information on the origin country of the samples:<br>
    https://server.poseidon-adna.org/individuals?additionalJannoColumns=Country<br>
