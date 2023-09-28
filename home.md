@@ -63,7 +63,7 @@
       <li>A <a href="#archive_overview">guide</a> explains the repositories</li>
       <li>And how to <a href="#archive_submission_guide">contribute data</a></li>
       <li>Our server software provides an open <a href="#web_api">Web-API</a> to access packages</li>
-      <li style="color: #7CFC00">Which enables an <a href="https://poseidon-framework.github.io/community-archive">overview and download</a> page to browse the archives</li>
+      <li style="color: #7CFC00">Which enables an <a href="archive_explorer">overview and download</a> page to browse the archives</li>
     </ul>
   </div>
 </div>
