@@ -299,8 +299,23 @@
           </td>
         </tr>
         <tr>
-          <td>Nr of samples</td>
-          <td>{{ selectedPackage.nrIndividuals }}</td>
+          <td>Resources</td>
+          <td>
+            See this package on GitHub: 
+            <a :href="'https://github.com/poseidon-framework/' + archiveType + '/tree/master/' + selectedPackageTitle" target="_blank">
+              <button title="This package on GitHub">
+                <i class="fab fa-github" aria-hidden="true"></i>
+              </button>
+            </a>
+            Download this package as .zip archive: 
+            <button @click="downloadGenotypeData(selectedPackageTitle)" title="Download this package">
+              <i class="fas fa-download" aria-hidden="true"></i>
+            </button>
+          </td>
+          <tr>
+            <td>Nr of samples</td>
+            <td>{{ selectedPackage.nrIndividuals }}</td>
+          </tr>
         </tr>
       </tbody>
     </table>
@@ -361,7 +376,6 @@
         </td>
         <td>
           {{ pac.description }}
-          </div>
         </td>
         <td>
           <button @click="selectPackage(pac.packageTitle)" title="Open the package information page">
