@@ -3,6 +3,8 @@
 
   const PackageExplorer = {
     setup() {
+      
+      // #### global variables ####
       const packages = ref(null);
       const samples = ref(null);
       const searchQuery = ref('');
@@ -14,15 +16,48 @@
       var markerClusters = L.markerClusterGroup({ chunkedLoading: true });
       const selectedPackageTitle = ref(null);
       const selectedPackage = ref(null);
+      const filteredPackages = ref([]);
 
+      // #### load data ####
+      const loadPackages = async () => {
+        try {
+          let apiUrl = 'https://server.poseidon-adna.org/packages';
+          apiUrl += '?archive=' + archiveType.value;
+          const response_pacs = await fetch(apiUrl);
+          const response_pacs_json = await response_pacs.json();
+          const latestPackages = response_pacs_json.serverResponse.packageInfo.filter((p) => p.isLatest);
+          packages.value = latestPackages;
+        } catch (error) {
+          console.error(error);
+        }
+      };
+      const loadSamples = async () => {
+        try {
+          let apiUrl = 'https://server.poseidon-adna.org/individuals?additionalJannoColumns=Genetic_Sex,Country,Location,Latitude,Longitude,Date_Type,Date_C14_Labnr,Date_BC_AD_Median,MT_Haplogroup,Y_Haplogroup,Capture_Type,UDG,Library_Built,Genotype_Ploidy,Nr_SNPs,Coverage_on_Target_SNPs,Publication';
+          apiUrl += '&archive=' + archiveType.value;
+          const response_inds = await fetch(apiUrl);
+          const response_inds_json = await response_inds.json();
+          const filteredSamples = response_inds_json.serverResponse.extIndInfo.filter((p) => p.isLatest);
+          samples.value = filteredSamples;
+        } catch (error) {
+          console.error(error);
+        }
+      };
+
+      // #### download button ####
+      const downloadGenotypeData = (packageTitle) => {
+        const downloadLink = document.createElement('a');
+        downloadLink.href = `https://server.poseidon-adna.org/zip_file/${packageTitle}?archive=${archiveType.value}`;
+        downloadLink.download = `${packageTitle}.zip`;
+        downloadLink.click();
+      };
+
+      // #### search ####
       const packageTitles = computed(() => {
         if (!packages.value) { return []; }
         return packages.value.map((pac) => pac.packageTitle.toLowerCase());
       });
-
-      const filteredPackages = ref([]);
-
-      // Watch for changes in searchQuery and update filteredPackages accordingly
+      // watch for changes in searchQuery and update filteredPackages accordingly
       watch([searchQuery, packageTitles], ([newSearchQuery, newPackageTitles]) => {
         if (!newPackageTitles || !newSearchQuery) {
           filteredPackages.value = packages.value;
@@ -37,37 +72,7 @@
         );
       });
 
-      const loadPackages = async () => {
-        try {
-          let apiUrl = 'https://server.poseidon-adna.org/packages';
-          apiUrl += '?archive=' + archiveType.value;
-          const response_pacs = await fetch(apiUrl);
-          const response_pacs_json = await response_pacs.json();
-          const filteredPackages = response_pacs_json.serverResponse.packageInfo.filter((p) => p.isLatest);
-          packages.value = filteredPackages;
-        } catch (error) {
-          console.error(error);
-        }
-      };
-
-      const loadSamples = async () => {
-        try {
-          let apiUrl = 'https://server.poseidon-adna.org/individuals?additionalJannoColumns=Genetic_Sex,Country,Location,Latitude,Longitude,Date_Type,Date_C14_Labnr,Date_BC_AD_Median,MT_Haplogroup,Y_Haplogroup,Capture_Type,UDG,Library_Built,Genotype_Ploidy,Nr_SNPs,Coverage_on_Target_SNPs,Publication';
-          apiUrl += '&archive=' + archiveType.value;
-          const response_inds = await fetch(apiUrl);
-          const response_inds_json = await response_inds.json();
-          const filteredSamples = response_inds_json.serverResponse.extIndInfo.filter((p) => p.isLatest);
-          samples.value = filteredSamples;
-        } catch (error) {
-          console.error(error);
-        }
-      };
-
-      const getSamplesForPackage = (requestedPackageTitle) => {
-        if (!samples.value) { return; }
-        return samples.value.filter((s) => s.packageTitle === requestedPackageTitle);
-      };
-
+      // #### map ####
       const addSamplesToMap = async (requestedPackageTitle) => {
         try {
           // check if necessary data and objects are there
@@ -113,29 +118,20 @@
           console.error(error);
         }
       };
-
       const resetMarkers = () => {
         markerClusters.removeLayers(mapMarkers);
         mapMarkers = [];
       };
-
-      const loadAllData = async () => {
-        await loadPackages();
-        await loadSamples();
-      };
-
       const updateMap = async (requestedPackageTitle) => {
         if (markerClusters) { resetMarkers(); }
         addSamplesToMap(requestedPackageTitle);
       };
 
-      const showSelection = async () => {
-        loading.value = true;
-        await loadAllData();
-        await updateMap();
-        loading.value = false;
+      // #### per-package pages ####
+      const getSamplesForPackage = (requestedPackageTitle) => {
+        if (!samples.value) { return; }
+        return samples.value.filter((s) => s.packageTitle === requestedPackageTitle);
       };
-
       const selectPackage = async (requestedPackageTitle) => {
         loading.value = true;
         selectedPackageTitle.value = requestedPackageTitle;
@@ -175,13 +171,19 @@
       // }
       // selectPackageByURL();
 
-      const downloadGenotypeData = (packageTitle) => {
-        const downloadLink = document.createElement('a');
-        downloadLink.href = `https://server.poseidon-adna.org/zip_file/${packageTitle}?archive=${archiveType.value}`;
-        downloadLink.download = `${packageTitle}.zip`;
-        downloadLink.click();
+      // #### general logic ####
+      const loadAllData = async () => {
+        await loadPackages();
+        await loadSamples();
+      };
+      const showSelection = async () => {
+        loading.value = true;
+        await loadAllData();
+        await updateMap();
+        loading.value = false;
       };
 
+      // trigger loading of the website
       showSelection();
 
       return {
@@ -210,9 +212,10 @@
       <div id="legend" class="leaflet-control leaflet-control-custom"></div>
     `,
     mounted() {
+      // prepare base map
       const map = L.map('map').setView([37, 10], 1);
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {}).addTo(map);
-      // legend
+      // map legend
       const legend = L.control({ position: 'bottomright' });
       legend.onAdd = function (map) {
         this._div = L.DomUtil.create('div', 'legend');
@@ -223,7 +226,7 @@
         this._div.innerHTML = nrLoaded + " samples loaded<br>" + nrNotLoadable + " lat/lon missing<br>";
       };
       legend.addTo(map);
-      // store legend and map objects
+      // store legend and map in global variables
       this.$parent.mapLegend = legend;
       this.$parent.mapInstance = map;
     },
