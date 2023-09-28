@@ -237,6 +237,8 @@
   app.mount('#archiveExplorer');
 </script>
 
+
+
 <div id="archiveExplorer">
 
   <!-- loading banner -->
@@ -253,18 +255,17 @@
       <option value="community-archive">Poseidon Community Archive</option>
       <option value="aadr-archive">Poseidon AADR Archive</option>
     </select>
+    <!-- search bar -->
+    <div class="search-bar">
+      <input type="text" v-model="searchQuery" placeholder="Search Poseidon packages by title" />
+    </div>
   </div>
   <div v-else>
     <button id=go-back-button @click="unselectPackage()" title="Go back to package overview.">
       <i class="fa fa-arrow-left" aria-hidden="true"></i> Back to the package overview page
     </button>
-    <h3>Package: {{ selectedPackageTitle }} </h3>
-  </div>
-
-  <!-- search bar -->
-  <div v-if="!selectedPackageTitle">
-    <div class="search-bar">
-      <input type="text" v-model="searchQuery" placeholder="Search Poseidon packages by title" />
+    <div class="package-heading">
+      Package: {{ selectedPackageTitle }}
     </div>
   </div>
 
@@ -348,9 +349,9 @@
 
   <table class="table-default">
     <colgroup>
-      <col style="width: 30%" />
-      <col style="width: 54%" />
-      <col style="width: 16%" />
+      <col style="width: 37%" />
+      <col style="width: 48%" />
+      <col style="width: 15%" />
     </colgroup>
     <tbody>
       <tr v-for="(pac, index) in filteredPackages" :key="index">
@@ -366,13 +367,11 @@
           <button @click="selectPackage(pac.packageTitle)" title="Open the package information page">
             <i class="fas fa-search" aria-hidden="true"></i>
           </button>
-          &nbsp;
           <a :href="'https://github.com/poseidon-framework/' + archiveType + '/tree/master/' + pac.packageTitle" target="_blank">
             <button title="This package on GitHub">
               <i class="fab fa-github" aria-hidden="true"></i>
             </button>
           </a>
-          &nbsp;
           <button @click="downloadGenotypeData(pac.packageTitle)" title="Download this package">
             <i class="fas fa-download" aria-hidden="true"></i>
           </button>
@@ -386,6 +385,8 @@
   </div>
 
 </div>  
+
+
 
 <style>
   .loading-banner {
@@ -420,6 +421,13 @@
   .search-bar input[type="text"] {
     width: 100%;
     padding: 5px;
+  }
+
+  .package-heading {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-weight: bold;
+    font-size: 25px;
   }
 
   .table-container {
