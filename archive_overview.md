@@ -14,11 +14,9 @@ We opted to maintain these archives with [Git](https://git-scm.com) on [GitHub](
 
 We therefore generally do **not** recommend to use the GitHub repositories for end-user-level access to the data. You can explore and download the packages through
 
-- a simple [archive viewer webpage](http://www.poseidon-adna.org/community-archive/)
+- a simple [archive viewer on this webpage](archive_explorer)
 - our [Web API](web_api)
 - the [`fetch`](trident#fetch-command) and [`list --remote`](trident#list-command) commands of trident, which use the API internally
-
-!> At the moment the webpage only includes data from the PCA. The other archives will soon be available.
 
 We do recommend that you work through GitHub, though, if you want to report an issue or suggest changes to the data (as described [here](archive_submission_guide.md)).
 
