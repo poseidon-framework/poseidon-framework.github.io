@@ -85,16 +85,27 @@
             const lat = addCols[3][1];
             const lng = addCols[4][1];
             if (lat == 0 && lng == 0) { return; }
-            const location = addCols[2][1];
-            const groupName = s.groupNames;
-            const age = addCols[7][1];
-            const popupContent =
-              `<b>Poseidon ID:</b> ${s.poseidonID}<br>
-               <b>Group Name:</b> ${groupName}<br>
-               <b>Package:</b> ${s.packageTitle}<br>
-               <b>Package Version:</b> ${s.packageVersion}<br>
-               <b>Location:</b> ${location}<br>
-               <b>Age BC/AD:</b> ${age}`;
+
+            // Create an array to store the content lines for the popup
+            const popupContentLines = [];
+
+            // Add the common information to the popup
+            popupContentLines.push(`<b>Poseidon ID:</b> ${s.poseidonID}`);
+            popupContentLines.push(`<b>Package:</b> ${s.packageTitle}`);
+            popupContentLines.push(`<b>Package Version:</b> ${s.packageVersion}`);
+            popupContentLines.push(`<b>Location:</b> ${addCols[2][1]}`);
+            popupContentLines.push(`<b>Age BC/AD:</b> ${addCols[7][1]}`);
+
+            // Add additional information to the popup, skipping empty fields
+            for (const addCol of addCols) {
+              if (addCol[1] !== null) {
+                popupContentLines.push(`<b>${addCol[0]}:</b> ${addCol[1]}`);
+              }
+            }
+
+            // Join the content lines to create the popup content
+            const popupContent = popupContentLines.join('<br>');
+
             const oneMarker = L.marker([lat, lng]).bindPopup(popupContent);
             mapMarkers.push(oneMarker);
           });
@@ -153,37 +164,15 @@
         loading.value = false;
       }
 
-      // primitive attempt to enable a URL selection for packages
-      // has to be done way more professionally
-      // const selectPackageByURL = async () => {
-      //   let uri = window.location.href.split('?');
-      //   if (uri.length == 2) {
-      //     let vars = uri[1].split('&');
-      //     let getVars = {};
-      //     let tmp = '';
-      //     vars.forEach(function(v) {
-      //       tmp = v.split('=');
-      //       if(tmp.length == 2)
-      //         getVars[tmp[0]] = tmp[1];
-      //     });
-      //     if (getVars["package"]) {
-      //       await loadAllData();
-      //       selectPackage(getVars["package"]);
-      //       console.log(selectedPackageTitle.value);
-      //     }
-      //   }
-      // }
-      // selectPackageByURL();
-
       const downloadGenotypeData = (packageTitle) => {
         const downloadLink = document.createElement('a');
         downloadLink.href = `https://server.poseidon-adna.org/zip_file/${packageTitle}?archive=${archiveType.value}`;
         downloadLink.download = `${packageTitle}.zip`;
         downloadLink.click();
       };
-
+      
       showSelection();
-
+      
       return {
         packages,
         searchQuery,
