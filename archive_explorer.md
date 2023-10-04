@@ -1,3 +1,4 @@
+
 <script>
   const { createApp, ref, computed, watch } = Vue;
 
@@ -88,6 +89,8 @@
 
             // Create an array to store the content lines for the popup
             const popupContentLines = [];
+            const packageLink = `<a href="javascript:void(0);" data-package-title="${s.packageTitle}" style="text-decoration: underline; cursor: pointer;">Package Info</a>`;
+
 
             // Add the common information to the popup
             popupContentLines.push(`<b>Poseidon ID:</b> ${s.poseidonID}`);
@@ -95,6 +98,7 @@
             popupContentLines.push(`<b>Package Version:</b> ${s.packageVersion}`);
             popupContentLines.push(`<b>Location:</b> ${addCols[2][1]}`);
             popupContentLines.push(`<b>Age BC/AD:</b> ${addCols[7][1]}`);
+            popupContentLines.push(`<b>Package Link:</b> ${packageLink}`);
 
             // Add additional information to the popup, skipping empty fields
             for (const addCol of addCols) {
@@ -105,7 +109,8 @@
 
             // Join the content lines to create the popup content
             const popupContent = popupContentLines.join('<br>');
-
+            
+                       
             const oneMarker = L.marker([lat, lng]).bindPopup(popupContent);
             mapMarkers.push(oneMarker);
           });
@@ -124,6 +129,12 @@
           console.error(error);
         }
       };
+      
+      document.addEventListener('click', (event) => {
+          if (event.target.tagName === 'A' && event.target.getAttribute('data-package-title')) {
+             selectPackage(event.target.getAttribute('data-package-title'));
+          }
+      });
 
       const resetMarkers = () => {
         markerClusters.removeLayers(mapMarkers);
@@ -153,6 +164,7 @@
         selectedPackage.value = packages.value.filter((pac) =>
           pac.packageTitle === selectedPackageTitle.value
         )[0];
+        console.log("It does run!")
         await updateMap(requestedPackageTitle);
         loading.value = false;
       }
@@ -170,6 +182,11 @@
         downloadLink.download = `${packageTitle}.zip`;
         downloadLink.click();
       };
+      
+      const navigateToPackagePage = (packageTitle) => {
+           router.push({ name: 'package', params: { title: packageTitle } });
+        };
+        
       
       showSelection();
       
@@ -195,7 +212,7 @@
 
   const MapView = {
     template: `
-      <div id="map" style="height: 350px;"></div>
+      <div id="map" style="height: 450px;"></div>
       <div id="legend" class="leaflet-control leaflet-control-custom"></div>
     `,
     mounted() {
@@ -427,6 +444,20 @@
     box-shadow: 0 0 15px rgba(0,0,0,0.2);
     border-radius: 5px;
     color: #777;
+  }
+
+  /* Style for the package link button */
+  .package-link {
+    background-color: #007BFF;
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    margin: 4px 2px;
+    cursor: pointer;
   }
 </style>
 
