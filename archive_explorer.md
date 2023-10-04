@@ -89,7 +89,9 @@
 
             // Create an array to store the content lines for the popup
             const popupContentLines = [];
-            const packageLink = `<a href="javascript:void(0);" data-package-title="${s.packageTitle}" style="text-decoration: underline; cursor: pointer;">Package Info</a>`;
+            
+            //package link
+            const packageLink = `<a href="javascript:void(0);" data-package-title="${s.packageTitle}" style="text-decoration: underline; cursor: pointer;">Click Here </a>`;
 
 
             // Add the common information to the popup
@@ -98,7 +100,7 @@
             popupContentLines.push(`<b>Package Version:</b> ${s.packageVersion}`);
             popupContentLines.push(`<b>Location:</b> ${addCols[2][1]}`);
             popupContentLines.push(`<b>Age BC/AD:</b> ${addCols[7][1]}`);
-            popupContentLines.push(`<b>Package Link:</b> ${packageLink}`);
+            
 
             // Add additional information to the popup, skipping empty fields
             for (const addCol of addCols) {
@@ -106,6 +108,8 @@
                 popupContentLines.push(`<b>${addCol[0]}:</b> ${addCol[1]}`);
               }
             }
+            
+           popupContentLines.push(`<b>Expand package information :</b> ${packageLink}`);
 
             // Join the content lines to create the popup content
             const popupContent = popupContentLines.join('<br>');
@@ -130,6 +134,7 @@
         }
       };
       
+      //event listner to record the clicks on map pop ups and trigger selectPackage function
       document.addEventListener('click', (event) => {
           if (event.target.tagName === 'A' && event.target.getAttribute('data-package-title')) {
              selectPackage(event.target.getAttribute('data-package-title'));
