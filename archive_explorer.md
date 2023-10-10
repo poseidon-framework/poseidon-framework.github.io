@@ -315,147 +315,147 @@
 
   <div v-if="packages">
 
-    <map-view></map-view>
+  <map-view></map-view>
 
-    <!-- package view -->
-    <div v-if="selectedPackageTitle">
+  <!-- package view -->
+  <div v-if="selectedPackageTitle">
 
-      <div>
-        <table class="table-default">
-          <colgroup>
-            <col style="width: 20%" />
-            <col style="width: 80%" />
-          </colgroup>
-          <tbody>
-            <tr>
-              <td>Description</td>
-              <td>{{ selectedPackage.description }}</td>
-            </tr>
-            <tr>
-              <td>Package version</td>
-              <td>
-                v{{ selectedPackage.packageVersion }}
-                <span v-if="selectedPackage.isLatest">(that is the latest available version)</span>
-                <span v-else>(that is not the latest available version)</span>
-                for Poseidon v{{ selectedPackage.poseidonVersion }}.
-                <br>
-                It was last modified on {{ selectedPackage.lastModified }}.
-              </td>
-            </tr>
-            <tr>
-              <td>Nr of samples</td>
-              <td>{{ selectedPackage.nrIndividuals }}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+  <div>
+    <table class="table-default">
+      <colgroup>
+        <col style="width: 20%" />
+        <col style="width: 80%" />
+      </colgroup>
+      <tbody>
+        <tr>
+          <td>Description</td>
+          <td>{{ selectedPackage.description }}</td>
+        </tr>
+        <tr>
+          <td>Package version</td>
+          <td>
+            v{{ selectedPackage.packageVersion }}
+            <span v-if="selectedPackage.isLatest">(that is the latest available version)</span>
+            <span v-else>(that is not the latest available version)</span>
+            for Poseidon v{{ selectedPackage.poseidonVersion }}.
+            <br>
+            It was last modified on {{ selectedPackage.lastModified }}.
+          </td>
+        </tr>
+        <tr>
+          <td>Nr of samples</td>
+          <td>{{ selectedPackage.nrIndividuals }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
-      <div>
-        <table class="table-default">
-          <colgroup>
-            <col style="width: 20%" />
-            <col style="width: 30%" />
-            <col style="width: 50%" />
-          </colgroup>
-          <thead>
-            <tr>
-              <th>Poseidon_ID</th>
-              <th>Groups</th>
-              <th>Details</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="sample in getSamplesForPackage(selectedPackageTitle)">
-              <td>{{ sample.poseidonID }}</td>
-              <td>{{ sample.groupNames.toString() }}</td>
-              <td>
-                <details>
-                  <summary>View sample details</summary>
-                  <div v-for="addCol in sample.additionalJannoColumns">
-                    <div v-if="addCol[1] !== null">
-                      <b>{{ addCol[0] }}</b>: {{ addCol[1] }}<br>
-                    </div>
-                  </div>
-                  <small>*More variables are available in the complete .janno file.</small>
-                </details>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+  <div>
+    <table class="table-default">
+      <colgroup>
+        <col style="width: 20%" />
+        <col style="width: 30%" />
+        <col style="width: 50%" />
+      </colgroup>
+      <thead>
+        <tr>
+          <th>Poseidon_ID</th>
+          <th>Groups</th>
+          <th>Details</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="sample in getSamplesForPackage(selectedPackageTitle)">
+          <td>{{ sample.poseidonID }}</td>
+          <td>{{ sample.groupNames.toString() }}</td>
+          <td>
+            <details>
+              <summary>View sample details</summary>
+              <div v-for="addCol in sample.additionalJannoColumns">
+                <div v-if="addCol[1] !== null">
+                  <b>{{ addCol[0] }}</b>: {{ addCol[1] }}<br>
+                </div>
+              </div>
+              <small>*More variables are available in the complete .janno file.</small>
+            </details>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
-      <!-- Summary Statistics -->
-      <div>
-        <h4>Summary Statistics</h4>
-        <table class="table-default">
-          <tbody>
-            <tr>
-              <td>Number of Males</td>
-              <td>{{ packageStats.numMale }}</td>
-            </tr>
-            <tr>
-              <td>Number of Females</td>
-              <td>{{ packageStats.numFemale }}</td>
-            </tr>
-            <tr>
-              <td>Average Number of SNPs</td>
-              <td>{{ packageStats.avgSNPs }}</td>
-            </tr>
-            <tr>
-              <td>Number of Modern Samples</td>
-              <td>{{ packageStats.numModern }}</td>
-            </tr>
-            <tr>
-              <td>Number of Ancient Samples</td>
-              <td>{{ packageStats.numAncient }}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      
-    </div>
+  <!-- Summary Statistics -->
+  <div>
+    <h4>Summary Statistics</h4>
+    <table class="table-default">
+      <tbody>
+        <tr>
+          <td>Number of Males</td>
+          <td>{{ packageStats.numMale }}</td>
+        </tr>
+        <tr>
+          <td>Number of Females</td>
+          <td>{{ packageStats.numFemale }}</td>
+        </tr>
+        <tr>
+          <td>Average Number of SNPs</td>
+          <td>{{ packageStats.avgSNPs }}</td>
+        </tr>
+        <tr>
+          <td>Number of Modern Samples</td>
+          <td>{{ packageStats.numModern }}</td>
+        </tr>
+        <tr>
+          <td>Number of Ancient Samples</td>
+          <td>{{ packageStats.numAncient }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+    
+  </div>
 
-    <!-- overview -->
-    <div v-if="!selectedPackageTitle">
+  <!-- overview -->
+  <div v-if="!selectedPackageTitle">
 
-      <div class="table-container">
+  <div class="table-container">
 
-        <table class="table-default">
-          <colgroup>
-            <col style="width: 30%" />
-            <col style="width: 54%" />
-            <col style="width: 16%" />
-          </colgroup>
-          <tbody>
-            <tr v-for="(pac, index) in filteredPackages" :key="index">
-              <td style="overflow-wrap: break-word;">
-                <b>{{ pac.packageTitle }}</b><br>
-                v{{ pac.packageVersion }}, Samples: {{ pac.nrIndividuals }}
-              </td>
-              <td>
-                {{ pac.description }}
-              </td>
-              <td>
-                <button @click="selectPackage(pac.packageTitle)" title="Open the package information page">
-                  <i class="fas fa-search" aria-hidden="true"></i>
-                </button>
-                &nbsp;
-                <a :href="'https://github.com/poseidon-framework/' + archiveType + '/tree/master/' + pac.packageTitle" target="_blank">
-                  <button title="This package on GitHub">
-                    <i class="fab fa-github" aria-hidden="true"></i>
-                  </button>
-                </a>
-                &nbsp;
-                <button @click="downloadGenotypeData(pac.packageTitle)" title="Download this package">
-                  <i class="fas fa-download" aria-hidden="true"></i>
-                </button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+  <table class="table-default">
+    <colgroup>
+      <col style="width: 30%" />
+      <col style="width: 54%" />
+      <col style="width: 16%" />
+    </colgroup>
+    <tbody>
+      <tr v-for="(pac, index) in filteredPackages" :key="index">
+        <td style="overflow-wrap: break-word;">
+          <b>{{ pac.packageTitle }}</b><br>
+          v{{ pac.packageVersion }}, Samples: {{ pac.nrIndividuals }}
+        </td>
+        <td>
+          {{ pac.description }}
+        </td>
+        <td>
+          <button @click="selectPackage(pac.packageTitle)" title="Open the package information page">
+            <i class="fas fa-search" aria-hidden="true"></i>
+          </button>
+          &nbsp;
+          <a :href="'https://github.com/poseidon-framework/' + archiveType + '/tree/master/' + pac.packageTitle" target="_blank">
+            <button title="This package on GitHub">
+              <i class="fab fa-github" aria-hidden="true"></i>
+            </button>
+          </a>
+          &nbsp;
+          <button @click="downloadGenotypeData(pac.packageTitle)" title="Download this package">
+            <i class="fas fa-download" aria-hidden="true"></i>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 
-      </div>
-    </div>
+  </div>
+  </div>
   </div>
 </div>
 
