@@ -1,7 +1,7 @@
 
 <script>
   const { createApp, ref, computed, watch } = Vue;
-
+  
   const PackageExplorer = {
     setup() {
       const packages = ref(null);
@@ -250,6 +250,31 @@
         unselectPackage,
         packageStats, // Include package statistics in return
       };
+
+      const router = VueRouter.createRouter({
+        history: VueRouter.createWebHashHistory(),
+        routes: [
+          {
+            path: '/',
+            component: PackageExplorer,
+          },
+          {
+            path: '/archive_explorer/:packageName',
+            component: PackageExplorer,
+          },
+        ],
+      });
+      const route = VueRouter.useRoute();
+
+      // Load data for the selected package based on the route parameter
+      watch(route, (to, from) => {
+        if (to.params.packageName) {
+          selectPackage(to.params.packageName);
+        } else {
+          unselectPackage();
+        }
+      });
+      
     },
   };
 
@@ -278,8 +303,10 @@
     },
   };
 
+
   const app = createApp(PackageExplorer);
   app.component('map-view', MapView);
+  //app.use(router);
   app.mount('#archiveExplorer');
 </script>
 
