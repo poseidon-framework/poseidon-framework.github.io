@@ -219,7 +219,7 @@
           }
         }
 
-        const avgSNPs = totalSNPs / (selectedPackage.nrIndividuals);
+        const avgSNPs = totalSNPs / selectedPackage.value.nrIndividuals;
 
         return {
           numMale,
