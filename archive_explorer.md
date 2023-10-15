@@ -194,6 +194,7 @@
           const sex = sample.additionalJannoColumns.find((col) => col[0] === 'Genetic_Sex');
           const snps = sample.additionalJannoColumns.find((col) => col[0] === 'Nr_SNPs');
           const dateType = sample.additionalJannoColumns.find((col) => col[0] === 'Date_Type');
+          
 
           if (sex && snps && dateType) {
             const sexValue = sex[1].toLowerCase();
@@ -204,9 +205,9 @@
               totalSNPs += snpsValue;
             }
 
-            if (sexValue === 'male') {
+            if (sexValue === 'm') {
               numMale++;
-            } else if (sexValue === 'female') {
+            } else if (sexValue === 'f') {
               numFemale++;
             }
 
@@ -218,7 +219,7 @@
           }
         }
 
-        const avgSNPs = totalSNPs / (numMale + numFemale);
+        const avgSNPs = totalSNPs / (selectedPackage.nrIndividuals);
 
         return {
           numMale,
