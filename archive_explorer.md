@@ -1,7 +1,7 @@
 
 <script>
   const { createApp, ref, computed, watch } = Vue;
-  
+
   const PackageExplorer = {
     setup() {
       const packages = ref(null);
@@ -89,7 +89,8 @@
 
             // Create an array to store the content lines for the popup
             const popupContentLines = [];
-            const packageLink = `<a href="javascript:void(0);" onclick="selectPackage('${s.packageTitle}')" style="text-decoration: underline; cursor: pointer;">Package Info</a>`;
+            const packageLink = `<a href="javascript:void(0);" data-package-title="${s.packageTitle}" style="text-decoration: underline; cursor: pointer;">Package Info</a>`;
+
 
             // Add the common information to the popup
             popupContentLines.push(`<b>Poseidon ID:</b> ${s.poseidonID}`);
@@ -130,6 +131,13 @@
           console.error(error);
         }
       };
+      
+      document.addEventListener('click', (event) => {
+         if (event.target.tagName === 'A' && event.target.getAttribute('data-package-title')) {
+             selectPackage(event.target.getAttribute('data-package-title'));
+            }
+        });
+
 
       const resetMarkers = () => {
         markerClusters.removeLayers(mapMarkers);
@@ -219,7 +227,7 @@
           }
         }
 
-        const avgSNPs = totalSNPs / (selectedPackage.nrIndividuals);
+        const avgSNPs = totalSNPs / selectedPackage.value.nrIndividuals;
 
         return {
           numMale,
@@ -250,31 +258,6 @@
         unselectPackage,
         packageStats, // Include package statistics in return
       };
-
-      const router = VueRouter.createRouter({
-        history: VueRouter.createWebHashHistory(),
-        routes: [
-          {
-            path: '/',
-            component: PackageExplorer,
-          },
-          {
-            path: '/archive_explorer/:packageName',
-            component: PackageExplorer,
-          },
-        ],
-      });
-      const route = VueRouter.useRoute();
-
-      // Load data for the selected package based on the route parameter
-      watch(route, (to, from) => {
-        if (to.params.packageName) {
-          selectPackage(to.params.packageName);
-        } else {
-          unselectPackage();
-        }
-      });
-      
     },
   };
 
@@ -303,10 +286,8 @@
     },
   };
 
-
   const app = createApp(PackageExplorer);
   app.component('map-view', MapView);
-  //app.use(router);
   app.mount('#archiveExplorer');
 </script>
 
