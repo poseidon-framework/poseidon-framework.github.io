@@ -74,10 +74,10 @@ Set your own fork of the repository as the *head repository* (you may have to cl
 Your PR text will then be filled with the template for adding a package recipe. You will now need to do the following:
   - In the `Closes #XXX` line of the template, change the `XXX` with the issue number of the issue that requested the recipe (if any).
   - Apply the `new package` label to the PR.
-  - Comment `@delphis-bot create recipe` to the PR. This will trigger the delphis-bot to create the rest of the files required for the recipe, and add them to the PR.
+  - Comment `@delphis-bot create recipe` to the PR. This will trigger **delphis-bot** to create the rest of the files required for the recipe, and add them to the PR.
     - This step should be repeated after every change to the SSF file.
 
-Once all additional files have been added to the PR by `delphis-bot`, you will need to verify that each required file is there, and that the contents of each file are correct. You can do this by clicking on the *Files changed* tab of the PR, and reviewing the changes made by `delphis-bot`. If all the files are there, it is time to request a review from the Poseidon Framework team, by clicking on the *Reviewers* tab of the PR, and requesting a review from `poseidon-framework/poseidon-core-team`.
+Once all additional files have been added to the PR by **delphis-bot**, you will need to verify that each required file is there, and that the contents of each file are correct. You can do this by clicking on the *Files changed* tab of the PR, and reviewing the changes made by **delphis-bot**. If all the files are there, it is time to request a review from the Poseidon Framework team, by clicking on the *Reviewers* tab of the PR, and requesting a review from `poseidon-framework/poseidon-core-team`.
 
 Once the Poseidon Framework team has reviewed the PR, and all the files are correct, the PR will be merged, and the recipe will be added to the minotaur-recipes repository. Once processing of the data is finished, the resulting poseidon package will be added to the PMA. Your review of the resulting package may be requested by the Poseidon Framework team, to ensure that the package is correct.
 
