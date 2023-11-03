@@ -86,20 +86,26 @@
           }
           // compile markers
           samplesFiltered.forEach((s) => {
+            // determine spatial coordinates
             const addCols = s.additionalJannoColumns;
             const lat = addCols[3][1];
             const lng = addCols[4][1];
             if (lat == 0 && lng == 0) { return; }
-            const location = addCols[2][1];
-            const groupName = s.groupNames;
-            const age = addCols[7][1];
-            const popupContent =
-              `<b>Poseidon ID:</b> ${s.poseidonID}<br>
-               <b>Group Name:</b> ${groupName}<br>
-               <b>Package:</b> ${s.packageTitle}<br>
-               <b>Package Version:</b> ${s.packageVersion}<br>
-               <b>Location:</b> ${location}<br>
-               <b>Age BC/AD:</b> ${age}`;
+            // prepare popup message
+            const popupContentLines = [];
+            const packageLink = `<a href="javascript:void(0);" data-package-title="${s.packageTitle}" style="text-decoration: underline; cursor: pointer;">Open package <i class="fas fa-search" aria-hidden="true"></i></a>`;
+            popupContentLines.push(`<b>Poseidon ID:</b> ${s.poseidonID}`);
+            popupContentLines.push(`<b>Package:</b> ${s.packageTitle}`);
+            popupContentLines.push(`<b>Package Version:</b> ${s.packageVersion}`);
+            if (addCols[2][1] !== "") {
+              popupContentLines.push(`<b>Location:</b> ${addCols[2][1]}`);
+            }
+            if (addCols[7][1] !== "") {
+              popupContentLines.push(`<b>Age BC/AD:</b> ${addCols[7][1]}`);
+            }
+            popupContentLines.push(`<b>${packageLink}</b>`);
+            // construct marker
+            const popupContent = popupContentLines.join('<br>');
             const oneMarker = L.marker([lat, lng]).bindPopup(popupContent);
             mapMarkers.push(oneMarker);
           });
@@ -126,6 +132,11 @@
         if (markerClusters) { resetMarkers(); }
         addSamplesToMap(requestedPackageTitle);
       };
+      document.addEventListener('click', (event) => {
+        if (event.target.tagName === 'A' && event.target.getAttribute('data-package-title')) {
+            selectPackage(event.target.getAttribute('data-package-title'));
+          }
+      });
 
       // #### per-package pages ####
       const getSamplesForPackage = (requestedPackageTitle) => {
