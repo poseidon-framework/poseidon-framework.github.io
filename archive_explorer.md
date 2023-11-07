@@ -182,6 +182,57 @@
         await updateMap();
         loading.value = false;
       };
+      
+      // computed properties to calculate package statistics
+      const packageStats = computed(() => {
+        if (!selectedPackage.value) return null;
+
+        let numMale = 0;
+        let numFemale = 0;
+        let totalSNPs = 0;
+        let numModern = 0;
+        let numAncient = 0;
+
+        for (const sample of getSamplesForPackage(selectedPackage.value.packageTitle)) {
+          const sex = sample.additionalJannoColumns.find((col) => col[0] === 'Genetic_Sex');
+          const snps = sample.additionalJannoColumns.find((col) => col[0] === 'Nr_SNPs');
+          const dateType = sample.additionalJannoColumns.find((col) => col[0] === 'Date_Type');
+          
+
+          if (sex && snps && dateType) {
+            const sexValue = sex[1].toLowerCase();
+            const snpsValue = parseFloat(snps[1]);
+            const dateTypeValue = dateType[1].toLowerCase();
+
+            if (!isNaN(snpsValue)) {
+              totalSNPs += snpsValue;
+            }
+
+            if (sexValue === 'm') {
+              numMale++;
+            } else if (sexValue === 'f') {
+              numFemale++;
+            }
+
+            if (dateTypeValue === 'modern') {
+              numModern++;
+            } else {
+              numAncient++;
+            }
+          }
+        }
+
+        const avgSNPs = totalSNPs / selectedPackage.value.nrIndividuals;
+
+        return {
+          numMale,
+          numFemale,
+          avgSNPs: isNaN(avgSNPs) ? 0 : avgSNPs.toFixed(2),
+          numModern,
+          numAncient,
+        };
+      });
+
 
       // trigger loading of the website
       showSelection();
@@ -201,7 +252,8 @@
         selectPackage,
         selectedPackageTitle,
         selectedPackage,
-        unselectPackage
+        unselectPackage,
+        packageStats, // Include package statistics in return
       };
     }
   };
@@ -350,6 +402,35 @@
               <small>*More variables are available in the complete .janno file.</small>
             </details>
           </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+  <!-- Summary Statistics -->
+  <div>
+    <h4>Summary Statistics</h4>
+    <table class="table-default">
+      <tbody>
+        <tr>
+          <td>Number of Males</td>
+          <td>{{ packageStats.numMale }}</td>
+        </tr>
+        <tr>
+          <td>Number of Females</td>
+          <td>{{ packageStats.numFemale }}</td>
+        </tr>
+        <tr>
+          <td>Average Number of SNPs</td>
+          <td>{{ packageStats.avgSNPs }}</td>
+        </tr>
+        <tr>
+          <td>Number of Modern Samples</td>
+          <td>{{ packageStats.numModern }}</td>
+        </tr>
+        <tr>
+          <td>Number of Ancient Samples</td>
+          <td>{{ packageStats.numAncient }}</td>
         </tr>
       </tbody>
     </table>
