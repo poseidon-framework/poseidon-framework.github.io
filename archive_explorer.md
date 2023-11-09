@@ -373,6 +373,37 @@
     </table>
   </div>
 
+  <!-- Summary Statistics -->
+  <details>
+  <summary>See more summary statistics</summary>
+  <div>
+    <table class="table-default">
+      <tbody>
+        <tr>
+          <td>Nr of genetically male samples</td>
+          <td>{{ packageStats.numMale }}</td>
+        </tr>
+        <tr>
+          <td>Nr of genetically female samples</td>
+          <td>{{ packageStats.numFemale }}</td>
+        </tr>
+        <tr>
+          <td>Average Nr of SNPs</td>
+          <td>{{ packageStats.avgSNPs }}</td>
+        </tr>
+        <tr>
+          <td>Nr of modern samples</td>
+          <td>{{ packageStats.numModern }}</td>
+        </tr>
+        <tr>
+          <td>Nr of ancient samples</td>
+          <td>{{ packageStats.numAncient }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  </details>
+
   <div>
     <table class="table-default">
       <colgroup>
@@ -407,35 +438,6 @@
     </table>
   </div>
   
-  <!-- Summary Statistics -->
-  <div>
-    <h4>Summary Statistics</h4>
-    <table class="table-default">
-      <tbody>
-        <tr>
-          <td>Number of Males</td>
-          <td>{{ packageStats.numMale }}</td>
-        </tr>
-        <tr>
-          <td>Number of Females</td>
-          <td>{{ packageStats.numFemale }}</td>
-        </tr>
-        <tr>
-          <td>Average Number of SNPs</td>
-          <td>{{ packageStats.avgSNPs }}</td>
-        </tr>
-        <tr>
-          <td>Number of Modern Samples</td>
-          <td>{{ packageStats.numModern }}</td>
-        </tr>
-        <tr>
-          <td>Number of Ancient Samples</td>
-          <td>{{ packageStats.numAncient }}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
   </div>
 
   <!-- overview -->
