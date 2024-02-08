@@ -1,3 +1,5 @@
+<popup :custom-text="'Custom text for this page <a href=\'https://www.w3schools.com\'>Visit W3Schools</a>'"></popup>
+
 # xerxes CLI software <!-- {docsify-ignore-all} -->
 
 `xerxes` is a command line software tool for population genetic analyses of Poseidon packages. It is written in Haskell and openly available on [GitHub](https://github.com/poseidon-framework/poseidon-analysis-hs/).
