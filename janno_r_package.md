@@ -1,3 +1,5 @@
+<popup :custom-text="`<p><a href='https://nevrome.github.io/uni.tuebingen.poseidon.intro.2h.2024'>A short introduction to the Poseidon genotype data management framework</a> by Clemens Schmid: A Poseidon tutorial also covering <a href='https://nevrome.github.io/uni.tuebingen.poseidon.intro.2h.2024/spacetime.html'>the janno R package</a></p>`"></popup>
+
 # janno R package <!-- {docsify-ignore-all} -->
 
 janno (formerly known as poseidonR) is an R package to simplify the interaction with .janno files in Poseidon packages. It provides a dedicated R S3 class `janno` that inherits from `tibble` and allows to tidily read and manipulate the context information stored in them. The code is available on [GitHub](https://github.com/poseidon-framework/janno/).
