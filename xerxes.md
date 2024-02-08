@@ -1,4 +1,4 @@
-<popup :custom-text="'Custom text for this page <a href=\'https://www.w3schools.com\'>Visit W3Schools</a>'"></popup>
+<popup :custom-text="`<ul><li><a href='https://mpi-eva-archaeogenetics.github.io/comp_human_adna_book/fstats.html'>Introduction to F3- and F4-Statistics</a> by Stephan Schiffels: An introduction to F-Statistics with xerxes</li></ul>`"></popup>
 
 # xerxes CLI software <!-- {docsify-ignore-all} -->
 

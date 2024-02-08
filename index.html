@@ -31,7 +31,7 @@
   <meta charset="UTF-8">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/css/theme-simple-dark.css">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
-   <style>
+  <style>
     header {
       text-align: left;
     }
@@ -44,27 +44,23 @@
           bottom: 20px;
           right: 20px;
           background-color: #ffffff;
-          border: 1px solid #cccccc;
+          border: 1px solid #1F282D;
           box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
           padding: 20px;
-          max-width: 300px;
+          max-width: 330px;
           border-radius: 8px;
+          z-index:99999;
       }
       .popup-text {
           margin: 0;
-          color: #333333;
+          color: #1F282D;
       }
-      .popup-button {
-          background-color: #007bff;
-          color: #ffffff;
-          padding: 8px 16px;
-          border: none;
-          border-radius: 4px;
+      .popup-close {
+          position: absolute;
+          top: -12px;
+          right: 15px;
+          font-size: 50px;
           cursor: pointer;
-          margin-top: 10px;
-      }
-      .popup-button:hover {
-          background-color: #0056b3;
       }
   </style>
 </head>
@@ -101,8 +97,13 @@
         'popup': { // {{ customText }} statt <span v-html="customText"> für simple text
           template: `
             <div v-if="popUpOpen" id="custom-popup">
-              <p class="popup-text"><span v-html="customText"></span></p>
-              <button @click="popUpOpen = !popUpOpen" class="popup-button">Close</button>
+              <span class="popup-close" @click="popUpOpen = !popUpOpen">×</span>
+              <p class="popup-text">
+                <i class='fa fa-info' aria-hidden='true'></i>
+                &nbsp;&nbsp;
+                <b>Reading tip for newcomers</b>
+                <span v-html="customText"></span>
+              </p>
             </div>
           `,
           props: ['customText'],
