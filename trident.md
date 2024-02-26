@@ -67,6 +67,8 @@ Package creation and manipulation commands:
                            new Poseidon package from them
   genoconvert              Convert the genotype data in a Poseidon package to a
                            different file format
+  jannocoalesce            Coalesce information from one or multiple janno files
+                           to another one
   rectify                  Adjust POSEIDON.yml files automatically to package
                            changes
 
@@ -108,7 +110,7 @@ Being able to specify one or multiple repositories is often not enough, as you m
 ~/my_project/my_project.ind
 ```
 
-then you can make that to a skeleton Poseidon package with the [`init`](#init-command) command. You can also do it manually by simply adding a `POSEIDON.yml` file, with for example the following content:
+Then you can make that to a skeleton Poseidon package with the [`init`](#init-command) command. You can also do it manually by simply adding a `POSEIDON.yml` file, with for example the following content:
 
 ```
 poseidonVersion: 2.7.1
@@ -157,7 +159,7 @@ For all subcommands the general argument `--logMode` defines how trident reports
 - For `trident` multiple packages in a set of base directories can share the same `title`, if they have different `packageVersion` numbers. If the version numbers are identical or missing, then `trident` stops with an exception.
 - The `trident` subcommands `genoconvert`, `list`, `rectify`, `survey` and `validate` by default consider all versions of each Poseidon package in the given base directories. The `--onlyLatest` flag causes them to instead only consider the latest versions.
 - `fetch` and `forge` generally consider all package versions and their selection language (see below) allows for detailed version handling.
-- `summarize` always only shows results for the latest package versions.
+- `summarize` and `jannocoalesce` always only consider the latest package versions.
 
 ##### Individual/sample duplicates
 
@@ -642,6 +644,66 @@ trident genoconvert \
   -o my_directory
 ```
 
+#### Jannocoalesce command
+
+`jannocoalesce` merges information from one or multiple source `.janno` files into a target `.janno` file.
+
+<details>
+ <summary><i class="fas fa-search"></i> <i class="fas fa-terminal"></i> <b>Click here for command line details</b></summary>
+
+```
+Usage: trident jannocoalesce ((-s|--sourceFile FILE) | (-d|--baseDir DIR))
+                             (-t|--targetFile FILE) [-o|--outFile FILE]
+                             [--includeColumns ARG | --excludeColumns ARG]
+                             [-f|--force] [--sourceKey ARG] [--targetKey ARG]
+                             [--stripIdRegex ARG]
+
+  Coalesce information from one or multiple janno files to another one
+
+Available options:
+  -h,--help                Show this help text
+  -s,--sourceFile FILE     The source .janno file.
+  -d,--baseDir DIR         A base directory to search for Poseidon packages.
+  -t,--targetFile FILE     The target .janno file to fill.
+  -o,--outFile FILE        An optional file to write the results to. If not
+                           specified, change the target file in place.
+                           (default: Nothing)
+  --includeColumns ARG     A comma-separated list of .janno column names to
+                           coalesce. If not specified, all columns that can be
+                           found in the source and target will get filled.
+  --excludeColumns ARG     A comma-separated list of .janno column names NOT to
+                           coalesce. All columns that can be found in the source
+                           and target will get filled, except the ones listed
+                           here.
+  -f,--force               With this option, potential non-missing content in
+                           target columns gets overridden with non-missing
+                           content in source columns. By default, only missing
+                           data gets filled-in.
+  --sourceKey ARG          The .janno column to use as the source key.
+                           (default: "Poseidon_ID")
+  --targetKey ARG          The .janno column to use as the target key.
+                           (default: "Poseidon_ID")
+  --stripIdRegex ARG       An optional regular expression to identify parts of
+                           the IDs to strip before matching between source and
+                           target. Uses POSIX Extended regular expressions.
+```
+
+</details>
+
+A most basic run may just include two arguments:
+
+```
+trident jannocoalesce \
+  --sourceFile path/to/source.janno \
+  --targetFile path/to/target.janno
+```
+
+`jannocoalesce` generally works by reading a source `.janno` file with `-s|--sourceFile` (or all `.janno` files in a `-d|--baseDir`) and a target `.janno` file with `-t|--targetFile`.
+
+It then merges these files by a key column, which can be selected with `--sourceKey` and `--targetKey`. The default for both of these key columns is the `Poseidon_ID`. In case the entries in the key columns slightly and systematically differ, e.g. because the `Poseidon_ID`s in either have a special suffix (for example `_SG`), then the `--stripIdRegex` option allows to strip these with a regular expression to thus match the keys.
+
+`jannocoalesce` generally attempts to fill **all** empty cells in the target `.janno` file with information from the source. `--includeColumns` and `--excludeColumns` allow to select specific columns for which this should be done. In some cases it may be desirable to not just fill empty fields in the target, but overwrite the information already there with the `-f|--force` option. If the target file should be preserved, then the output can be directed to a new output `.janno` file with `-o|--outFile`.
+
 #### Rectify command
 
 `rectify` automatically harmonizes POSEIDON.yml files of one or multiple packages. This is not an automatic update from one Poseidon version to the next, but rather a clean-up wizard after manual modifications.
@@ -684,18 +746,18 @@ Available options:
 
 </details>
 
-It can be called with a lot of optional arguments:
+It can be called with a lot of optional arguments. Note that `rectify` by default does **not** apply any changes if none of these arguments are set.
 
 ```
 trident rectify -d ... -d ... \
   --poseidonVersion "X.X.X" \
   --packageVersion Major|Minor|Patch \
-  --logText "short description of the update"
-  --checksumAll
+  --logText "short description of the update" \
+  --checksumAll \
   --newContributors "[Firstname Lastname](Email address);..."
 ```
 
-These arguments determine which fields of the POSEIDON.yml file should be modified.
+The following arguments determine which fields of the POSEIDON.yml file should be modified:
 
 - `--poseidonVersion` allows a simple change of the `poseidonVersion` field in the POSEIDON.yml file.
 - `--packageVersion` increments the package version number in the first, the second or the third position. It can optionally be called with `--logText`, which appends an entry to the CHANGELOG file for the respecitve package version update. `--logText` also creates a new CHANGELOG file if it does not exist yet.
