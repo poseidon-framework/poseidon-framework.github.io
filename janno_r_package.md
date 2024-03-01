@@ -4,16 +4,18 @@
 
 janno (formerly known as poseidonR) is an R package to simplify the interaction with .janno files in Poseidon packages. It provides a dedicated R S3 class `janno` that inherits from `tibble` and allows to tidily read and manipulate the context information stored in them. The code is available on [GitHub](https://github.com/poseidon-framework/janno/).
 
-## Installation
-
-Install the janno package from GitHub with the following command in R:
+You can install the janno package from GitHub with the following command in R:
 
 ```
 if(!require('remotes')) install.packages('remotes')
 remotes::install_github('poseidon-framework/janno')
 ```
 
-## Quickstart
+The guide below explains the main functions in the package. It is available in .pdf format here:
+
+- [🗎 Guide for the janno R package v1.0.0](janno_R_package.pdf) (shown below)
+
+## Guide for the janno R package v1.0.0
 
 ### Read janno files
 
