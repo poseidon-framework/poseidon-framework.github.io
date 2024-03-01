@@ -1,0 +1,34 @@
+name: convert .md to .pdf (see the pdf_conversion directory)
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Install pandoc
+      run: |
+        sudo apt-get install -y pandoc
+
+    - name: Convert files
+      run: |
+        while read -r src dest
+        do
+            pandoc $src -o $dest -d pdf_conversion/pandoc_pdf_config.yml
+        done < pdf_conversion/pdf_conversion_list.tsv
+
+    - name: Commit files
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add -A
+        if git diff --quiet HEAD; then
+          echo "no changes to commit"
+        else
+          git commit -m "update .pdf documents" -a
+          git push
+        fi
