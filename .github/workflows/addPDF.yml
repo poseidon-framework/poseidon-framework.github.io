@@ -39,7 +39,7 @@ jobs:
         if git diff -- \*.pdf --quiet HEAD; then
           echo "no changes to commit"
         else
-          git commit \*.pdf
+          git add \*.pdf
           git commit -m "update .pdf documents"
           git push
         fi
