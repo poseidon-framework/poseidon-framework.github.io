@@ -27,11 +27,20 @@ chmod +x trident-Linux
 
 On GitHub you will also find [older release versions](https://github.com/poseidon-framework/poseidon-hs/releases) and [instructions to build trident from source](https://github.com/poseidon-framework/poseidon-hs#for-haskell-developers). The relevant changes from one version to the next are documented in this [changelog](https://github.com/poseidon-framework/poseidon-hs/blob/master/CHANGELOGRELEASE.md).
 
-Beyond the documentation below you can use `trident --help` and `trident <subcommand> --help` to get information about each parameter, including some which we haven't covered in the guide. If you're new to Poseidon and trident, we recommend that you take a look at our [Getting started guide](getting_started) first.
+With `trident --help` and `trident <subcommand> --help` you can get information about each subcommand and parameter directly on the command line. The guide below explains the subcommands in more detail. It is available in .pdf format for the current and previous versions here:
 
-<!-- tabs:start -->
-
-#### **v1.4.1.0**
+- [🗎 Guide for trident v1.4.1.0](trident.pdf) (shown below)
+- [🗎 Guide for trident v1.4.0.2 to v1.4.0.3](trident_guide_archive/trident_guide_1.4.0.2_to_1.4.0.3.pdf)
+- [🗎 Guide for trident v1.3.0.4](trident_guide_archive/trident_guide_1.3.0.4.pdf)
+- [🗎 Guide for trident v1.2.0.0 to v1.2.1.0](trident_guide_archive/trident_guide_1.2.0.0_to_1.2.1.0.pdf)
+- [🗎 Guide for trident v1.1.11.0 to v1.1.12.0](trident_guide_archive/trident_guide_1.1.11.0_to_1.1.12.0.pdf)
+- [🗎 Guide for trident v1.1.10.2](trident_guide_archive/trident_guide_1.1.10.2.pdf)
+- [🗎 Guide for trident v1.1.7.0](trident_guide_archive/trident_guide_1.1.7.0.pdf)
+- [🗎 Guide for trident v1.1.6.0](trident_guide_archive/trident_guide_1.1.6.0.pdf)
+- [🗎 Guide for trident v1.1.0.0 to v1.1.4.2](trident_guide_archive/trident_guide_1.1.0.0_to_1.1.4.2.pdf)
+- [🗎 Guide for trident v1.0.0.0](trident_guide_archive/trident_guide_1.0.0.0.pdf)
+- [🗎 Guide for trident v0.29.0](trident_guide_archive/trident_guide_0.29.0.pdf)
+- [🗎 Guide for trident v0.28.0](trident_guide_archive/trident_guide_0.28.0.pdf)
 
 ## Guide for trident v1.4.1.0
 
@@ -982,49 +991,3 @@ When applied to packages, `validate` tries to ensure that each package adheres t
 In fact much of this validation already runs as part of the general package reading pipeline invoked for other trident subcommands (e.g. `forge`). `validate` is meant to be more thorough/brittle, though, and will explicitly fail if even a single package is broken. For special cases more flexibility can be enabled with the options `--ignoreDuplicates`, `--ignoreChecksums` and `--ignorePoseidonVersion`.
 
 Remember to run `validate` it with `--debug` to get more information in case the default output is not sufficient to analyse an issue.
-
-#### **v1.4.0.2 to v1.4.0.3**
-
-[filename](trident_guide_archive/trident_guide_1.4.0.2_to_1.4.0.3.md ':include')
-
-#### **v1.3.0.4**
-
-[filename](trident_guide_archive/trident_guide_1.3.0.4.md ':include')
-
-#### **v1.2.0.0 to v1.2.1.0**
-
-[filename](trident_guide_archive/trident_guide_1.2.0.0_to_1.2.1.0.md ':include')
-
-#### **v1.1.11.0 to v1.1.12.0**
-
-[filename](trident_guide_archive/trident_guide_1.1.11.0_to_1.1.12.0.md ':include')
-
-#### **v1.1.10.2**
-
-[filename](trident_guide_archive/trident_guide_1.1.10.2.md ':include')
-
-#### **v1.1.7.0**
-
-[filename](trident_guide_archive/trident_guide_1.1.7.0.md ':include')
-
-#### **v1.1.6.0**
-
-[filename](trident_guide_archive/trident_guide_1.1.6.0.md ':include')
-
-#### **v1.1.0.0 to v1.1.4.2**
-
-[filename](trident_guide_archive/trident_guide_1.1.0.0_to_1.1.4.2.md ':include')
-
-#### **v1.0.0.0**
-
-[filename](trident_guide_archive/trident_guide_1.0.0.0.md ':include')
-
-#### **v0.29.0**
-
-[filename](trident_guide_archive/trident_guide_0.29.0.md ':include')
-
-#### **v0.28.0**
-
-[filename](trident_guide_archive/trident_guide_0.28.0.md ':include')
-
-<!-- tabs:end -->
