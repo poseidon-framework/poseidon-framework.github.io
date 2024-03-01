@@ -31,14 +31,17 @@ jobs:
             pandoc $src -o $dest -d pdf_conversion/pandoc_pdf_config.yml
         done
 
-    - name: Commit files
+    - name: Commit and push if any .pdf files have changed or new ones have been added
       run: |
-        git config --local user.email "action@github.com"
-        git config --local user.name "GitHub Action"
-        if git diff -- \*.pdf --quiet HEAD; then
-          echo "no changes to commit"
-        else
-          git add \*.pdf
-          git commit -m "update .pdf documents"
+        DIFF=$(git diff --name-only -- '*.pdf')
+        UNTRACKED=$(git ls-files --others --exclude-standard -- '*.pdf')
+        if [ "$DIFF" != "" ] || [ "$UNTRACKED" != "" ]; then
+          echo ".pdf files have been changed or added, commiting changes."
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add "*.pdf"
+          git commit -m "automated .pdf update"
           git push
+        else
+          echo "No changes in PDF files"
         fi
