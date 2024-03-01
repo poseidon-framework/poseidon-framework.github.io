@@ -19,6 +19,7 @@ jobs:
       run: |
         while read -r src dest
         do
+            echo "now rendering:" $src
             pandoc $src -o $dest -d pdf_conversion/pandoc_pdf_config.yml
         done < pdf_conversion/pdf_conversion_list.tsv
 
