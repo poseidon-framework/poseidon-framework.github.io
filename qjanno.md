@@ -24,9 +24,10 @@ chmod +x qjanno-Linux
 
 On GitHub you will also find [older release versions](https://github.com/poseidon-framework/qjanno/releases) and [instructions to build qjanno from source](https://github.com/poseidon-framework/qjanno#for-haskell-developers). The relevant changes from one version to the next are documented in this [changelog](https://github.com/poseidon-framework/qjanno/blob/master/CHANGELOGRELEASE.md).
 
-<!-- tabs:start -->
+The guide below explains the inner workings of qjanno and gives some examples for concrete queries. It is available in .pdf format for the current and previous versions here:
 
-#### **v1.0.0.0**
+- [🗎 Guide for qjanno v1.0.0.0](trident.pdf) (shown below)
+- [🗎 Guide for qjanno v1.0.0](qjanno_guide_archive/qjanno_guide_1.0.0.pdf)
 
 ## Guide for qjanno v1.0.0.0
 
@@ -402,9 +403,3 @@ GROUP BY Date_Type \
 | modern    | 6        | 592986.5     |
 '-----------'----------'--------------'
 ```
-
-#### **v1.0.0**
-
-[filename](qjanno_guide_archive/qjanno_guide_1.0.0.md ':include')
-
-<!-- tabs:end -->
