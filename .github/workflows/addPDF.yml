@@ -1,4 +1,4 @@
-name: convert .md to .pdf (see the pdf_conversion directory)
+name: Convert certain .md to .pdf (see the pdf_conversion directory)
 
 on: [push]
 
@@ -10,7 +10,7 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
 
-    - name: Install pandoc
+    - name: Install pandoc and pdflatex
       run: |
         sudo apt-get update
         sudo apt-get install -y pandoc texlive-latex-extra

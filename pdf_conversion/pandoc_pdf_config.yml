@@ -10,3 +10,5 @@ variables:
     - left=20mm
     - heightrounded
   colorlinks: true
+pdf-engine: pdflatex # relevant for reproducibility, see include-before-body
+include-before-body: pdf_conversion/before_body.tex
