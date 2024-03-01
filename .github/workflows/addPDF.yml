@@ -15,22 +15,30 @@ jobs:
         sudo apt-get update
         sudo apt-get install -y pandoc texlive-latex-extra
 
+    - name: Modify and prepare main documentation files
+      run: |
+        # remove everything up to "## Guide for"
+        sed -i '1,/^\s*## Guide for/ {/## Guide for/ !d}' janno_r_package.md
+        sed -i '1,/^\s*## Guide for/ {/## Guide for/ !d}' qjanno.md
+        sed -i '1,/^\s*## Guide for/ {/## Guide for/ !d}' trident.md
+
     - name: Convert files
       run: |
-        while read -r src dest
+        { cat pdf_conversion/pdf_conversion_list.tsv; echo; } | while read -r src dest
         do
             echo "now rendering:" $src
             pandoc $src -o $dest -d pdf_conversion/pandoc_pdf_config.yml
-        done < pdf_conversion/pdf_conversion_list.tsv
+        done
 
     - name: Commit files
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
         git add -A
-        if git diff --quiet HEAD; then
+        if git diff -- \*.pdf --quiet HEAD; then
           echo "no changes to commit"
         else
-          git commit -m "update .pdf documents" -a
+          git commit \*.pdf
+          git commit -m "update .pdf documents"
           git push
         fi
