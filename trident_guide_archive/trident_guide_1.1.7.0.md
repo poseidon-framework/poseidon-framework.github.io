@@ -763,7 +763,7 @@ You can run it with
 trident validate -d ... -d ...
 ```
 
-and it will either report a success (`Validation passed ✓`) or failure with specific error messages to simplify fixing the issues. 
+and it will either report a success (`Validation passed`) or failure with specific error messages to simplify fixing the issues. 
 
 `validate` tries to ensure that each package in the dataset adheres to the [schema definition](https://github.com/poseidon-framework/poseidon-schema). Here is a list of what is checked:
 
