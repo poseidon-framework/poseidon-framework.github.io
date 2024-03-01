@@ -21,6 +21,7 @@ jobs:
         sed -i '1,/^\s*## Guide for/ {/## Guide for/ !d}' janno_r_package.md
         sed -i '1,/^\s*## Guide for/ {/## Guide for/ !d}' qjanno.md
         sed -i '1,/^\s*## Guide for/ {/## Guide for/ !d}' trident.md
+        sed -i '1,/^\s*## Guide for/ {/## Guide for/ !d}' xerxes.md
 
     - name: Convert files
       run: |
