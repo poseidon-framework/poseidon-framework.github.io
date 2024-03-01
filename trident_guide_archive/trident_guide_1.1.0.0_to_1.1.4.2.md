@@ -304,7 +304,10 @@ Including one or multiple Poseidon packages with `-d` is not the only way to inc
 trident forge \
   -d 2017_GonzalesFortesCurrentBiology \
   -p 2018_VeeramahPNAS/2018_VeeramahPNAS.fam \
-  --inFormat PLINK --genoFile 2017_HaberAJHG/2017_HaberAJHG.bed --snpFile 2017_HaberAJHG/2017_HaberAJHG.bim --indFile 2017_HaberAJHG/2017_HaberAJHG.fam \
+  --inFormat PLINK \
+  --genoFile 2017_HaberAJHG/2017_HaberAJHG.bed \
+  --snpFile 2017_HaberAJHG/2017_HaberAJHG.bim \
+  --indFile 2017_HaberAJHG/2017_HaberAJHG.fam \
   -f "<STR241.SG>,<ERS1790729.SG>,Iberia_HG.SG" \
   -o testpackage \
   --outFormat EIGENSTRAT \

@@ -113,7 +113,7 @@ For all subcommands the general argument `--logMode` defines how trident reports
 - *SimpleLog*: Plain and simple output to stderr.
 - *DefaultLog*: Adds severity indicators before each message. (default setting)
 - *ServerLog*: Additionally adds timestamps before each message.
-- *VerboseLog*: Shows not just messages on the log levels `Info`, `Ẁarning` and `Error` like the other modes, but also on the more verbose level `Debug`. Use this for debugging.
+- *VerboseLog*: Shows not just messages on the log levels `Info`, `Warning` and `Error` like the other modes, but also on the more verbose level `Debug`. Use this for debugging.
 
 `--debug` is short for `--logMode VerboseLog` to activate this important log level more easily.
 
@@ -394,7 +394,10 @@ Including one or multiple Poseidon packages with `-d` is not the only way to inc
 trident forge \
   -d 2017_GonzalesFortesCurrentBiology \
   -p 2018_VeeramahPNAS/2018_VeeramahPNAS.fam \
-  --inFormat PLINK --genoFile 2017_HaberAJHG/2017_HaberAJHG.bed --snpFile 2017_HaberAJHG/2017_HaberAJHG.bim --indFile 2017_HaberAJHG/2017_HaberAJHG.fam \
+  --inFormat PLINK \
+  --genoFile 2017_HaberAJHG/2017_HaberAJHG.bed \
+  --snpFile 2017_HaberAJHG/2017_HaberAJHG.bim \
+  --indFile 2017_HaberAJHG/2017_HaberAJHG.fam \
   -f "<STR241.SG>,<ERS1790729.SG>,Iberia_HG.SG" \
   -o testpackage \
   --outFormat EIGENSTRAT \

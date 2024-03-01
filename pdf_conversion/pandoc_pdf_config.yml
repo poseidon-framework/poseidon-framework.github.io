@@ -1,0 +1,12 @@
+table-of-contents: true
+shift-heading-level-by: -2
+number-sections: true
+highlight-style: tango
+variables:
+  documentclass: article
+  papersize: a4
+  geometry:
+    - top=30mm
+    - left=20mm
+    - heightrounded
+  colorlinks: true
