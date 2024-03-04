@@ -209,15 +209,25 @@ You can save this into a text file, for example named `fstats_config.yaml`, and 
 The final output of the `fstats` command looks like this:
 
 ```
-.-----------.-----------.---------------.--------.-------.---------.----------------.--------------------.------------------.---------------------.
-| Statistic |     a     |       b       |   c    |   d   | NrSites | Estimate_Total | Estimate_Jackknife | StdErr_Jackknife |  Z_score_Jackknife  |
-:===========:===========:===============:========:=======:=========:================:====================:==================:=====================:
-| F3        | French    | Italian_North | Mbuti  |       | 593124  | 5.9698e-2      | 5.9698e-2          | 5.1423e-4        | 116.0908951980249   |
-| F3        | French    | Han           | Mbuti  |       | 593124  | 5.0233e-2      | 5.0233e-2          | 5.0324e-4        | 99.81843057232513   |
-| F3        | Sardinian | Pima          | French |       | 593124  | -1.2483e-3     | -1.2483e-3         | 9.2510e-5        | -13.493505348221081 |
-| F4        | French    | Russian       | Han    | Mbuti | 593124  | -1.6778e-3     | -1.6778e-3         | 9.1419e-5        | -18.35262346091248  |
-| F4        | Sardinian | French        | Pima   | Mbuti | 593124  | -1.4384e-3     | -1.4384e-3         | 1.1525e-4        | -12.481084899924868 |
-'-----------'-----------'---------------'--------'-------'---------'----------------'--------------------'------------------'---------------------'
+.-----------.-----------.---------------.--------.-------.---------.
+| Statistic |     a     |       b       |   c    |   d   | NrSites |
+:===========:===========:===============:========:=======:=========:
+| F3        | French    | Italian_North | Mbuti  |       | 593124  |
+| F3        | French    | Han           | Mbuti  |       | 593124  |
+| F3        | Sardinian | Pima          | French |       | 593124  |
+| F4        | French    | Russian       | Han    | Mbuti | 593124  |
+| F4        | Sardinian | French        | Pima   | Mbuti | 593124  |
+'-----------'-----------'---------------'--------'-------'---------' ->
+
+----------------.--------------------.------------------.---------------------.
+ Estimate_Total | Estimate_Jackknife | StdErr_Jackknife |  Z_score_Jackknife  |
+================:====================:==================:=====================:
+ 5.9698e-2      | 5.9698e-2          | 5.1423e-4        | 116.0908951980249   |
+ 5.0233e-2      | 5.0233e-2          | 5.0324e-4        | 99.81843057232513   |
+ -1.2483e-3     | -1.2483e-3         | 9.2510e-5        | -13.493505348221081 |
+ -1.6778e-3     | -1.6778e-3         | 9.1419e-5        | -18.35262346091248  |
+ -1.4384e-3     | -1.4384e-3         | 1.1525e-4        | -12.481084899924868 |
+----------------'--------------------'------------------'---------------------'
 ```
 
 which lists each statistic, the slots a, b, c and d, the number of sites with non-missing data for that statistic, Ascertainment information (outgroup, reference, lower and upper bound, if given), the genome-wide estimate, its standard error and its Z-score. If you specify an output file using option `--tableOutFile` or `-f`, these results are also written as tab-separated file.

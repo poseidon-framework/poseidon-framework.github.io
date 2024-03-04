@@ -86,7 +86,8 @@ This help can be accessed with `qjanno -h`. Running `qjanno` without any paramet
 A basic, working qjanno query could look like this:
 
 ```
-$ qjanno "SELECT package_title,Poseidon_ID,Country FROM d(2010_RasmussenNature,2012_MeyerScience)"
+$ qjanno "SELECT package_title,Poseidon_ID,Country \
+          FROM d(2010_RasmussenNature,2012_MeyerScience)"
 .----------------------.----------------------.-----------.
 |    package_title     |     Poseidon_ID      |  Country  |
 :======================:======================:===========:
@@ -340,13 +341,21 @@ For `JOIN` operations, SQLite requires table names to specify which columns are 
 $ echo -e "Poseidon_ID,MoreInfo\nInuk.SG,5\nA_French-4.DG,3\n" > test.csv
 
 $ qjanno "SELECT * FROM d(2010_RasmussenNature,2012_MeyerScience)" -c
-.------------------------------.-------------------------------------------.--------------------------------------.
-|            Column            |                   Path                    |          qjanno Table name           |
-:==============================:===========================================:======================================:
-| package_title                | d(2010_RasmussenNature,2012_MeyerScience) | d2010RasmussenNature2012MeyerScience |
-| package_version              | d(2010_RasmussenNature,2012_MeyerScience) | d2010RasmussenNature2012MeyerScience |
-| source_file                  | d(2010_RasmussenNature,2012_MeyerScience) | d2010RasmussenNature2012MeyerScience |
-| Poseidon_ID                  | d(2010_RasmussenNature,2012_MeyerScience) | d2010RasmussenNature2012MeyerScience |
+.------------------------------.-------------------------------------------.
+|            Column            |                   Path                    |
+:==============================:===========================================:
+| package_title                | d(2010_RasmussenNature,2012_MeyerScience) |
+| package_version              | d(2010_RasmussenNature,2012_MeyerScience) |
+| source_file                  | d(2010_RasmussenNature,2012_MeyerScience) |
+| Poseidon_ID                  | d(2010_RasmussenNature,2012_MeyerScience) |
+...
+--------------------------------------.
+          qjanno Table name           |
+======================================:
+ d2010RasmussenNature2012MeyerScience |
+ d2010RasmussenNature2012MeyerScience |
+ d2010RasmussenNature2012MeyerScience |
+ d2010RasmussenNature2012MeyerScience |
 ...
 
 $ qjanno "SELECT * FROM test.csv" -c
@@ -382,12 +391,12 @@ SQLite provides a number of aggregation functions: `avg(X)`, `count(*)`, `count(
 Determine the minimal number of SNPs across all individuals.
 
 ```
-$ qjanno "SELECT min(Nr_SNPs) AS Minimal_number_of_SNPs FROM d(2010_RasmussenNature,2012_MeyerScience)"
-.------------------------.
-| Minimal_number_of_SNPs |
-:========================:
-| 592535                 |
-'------------------------'
+$ qjanno "SELECT min(Nr_SNPs) AS n FROM d(2010_RasmussenNature,2012_MeyerScience)"
+.--------.
+|   n    |
+:========:
+| 592535 |
+'--------'
 ```
 
 Count the number of individuals per Date_Type group and calculate the average Nr_SNPs for both groups.

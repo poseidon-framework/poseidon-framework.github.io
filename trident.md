@@ -191,7 +191,7 @@ While reading the `.janno` file `trident` trims all leading and trailing whitesp
 `init` creates a new, valid Poseidon package from genotype data files. It adds a valid `POSEIDON.yml` file, a dummy .janno file for context information and an empty .bib file for literature references.
 
 <details>
- <summary><i class="fas fa-search"></i> <i class="fas fa-terminal"></i> <b>Click here for command line details</b></summary>
+ <summary><i class="fas fa-search"></i> <i class="fas fa-terminal"></i> <b>Command line details</b></summary>
 
 ```
 Usage: trident init ((-p|--genoOne FILE) | --inFormat FORMAT --genoFile FILE
@@ -258,7 +258,7 @@ The output package of `init` is created as a new directory `-o`, which should no
 `fetch` allows to download Poseidon packages from a remote Poseidon server via a [Web API](web_api). Read more about the data available with it [here](archive_overview).
 
 <details>
- <summary><i class="fas fa-search"></i> <i class="fas fa-terminal"></i> <b>Click here for command line details</b></summary>
+ <summary><i class="fas fa-search"></i> <i class="fas fa-terminal"></i> <b>Command line details</b></summary>
 
 ```
 Usage: trident fetch (-d|--baseDir DIR)
@@ -317,7 +317,7 @@ Note that `trident fetch` makes most sense in combination with `trident list --r
 `forge` creates new Poseidon packages by extracting and merging packages, populations and individuals/samples from your Poseidon repositories.
 
 <details>
- <summary><i class="fas fa-search"></i> <i class="fas fa-terminal"></i> <b>Click here for command line details</b></summary>
+ <summary><i class="fas fa-search"></i> <i class="fas fa-terminal"></i> <b>Command line details</b></summary>
 
 ```
 Usage: trident forge ((-d|--baseDir DIR) |
@@ -466,10 +466,10 @@ In general a `--forgeString` query consists of multiple entities, separated by `
 - Each package title is surrounded by `*`: `*package*`. That means if you want all individuals of the Poseidon package `2019_Jeong_InnerEurasia` in the output package you would add `*2019_Jeong_InnerEurasia*` to the query.
 - Groups/populations are not specially marked: `group`. So to get all individuals of the group `Swiss_Roman_period`, you would simply add `Swiss_Roman_period`.
 - Individuals/samples are surrounded by `<` and `>`: `<individual>`. `ALA026` therefore becomes `<ALA026>`. A second way to denote individuals is with the more verbose and specific syntax `<package:group:individual>`. Such defined individuals take precedence over differently defined ones (so: directly with `<individual>` or as a subset of `*package*` or `group`). This allows to resolve duplication issues precisely -- at least in cases where the duplicated individuals differ in source package or primary group.
-- Package versions can be appended to package names, such as `*package-1.2.3*`, or `<package-1.2.3:group:individual>`.
+- Package versions can be appended to package names, such as `*package-1.2.3*`.
+- This also works with the verbose individual syntax: `<package-1.2.3:group:individual>`.
 
-
-In the `--forgeFile` each line is treated as a separate forgeString, empty lines are ignored and `#`s start comments. So this is a valid example of a forgeFile:
+In the `--forgeFile` each line is treated as a separate forgeString, empty lines are ignored and `#` symbols start comments. So this is a valid example of a forgeFile:
 
 ```
 # Packages
@@ -585,7 +585,7 @@ With `--packagewise` the within-package selection step in forge can be skipped. 
 `genoconvert` converts the genotype data in a Poseidon package to a different file format. The respective entries in the POSEIDON.yml file are changed accordingly. 
 
 <details>
- <summary><i class="fas fa-search"></i> <i class="fas fa-terminal"></i> <b>Click here for command line details</b></summary>
+ <summary><i class="fas fa-search"></i> <i class="fas fa-terminal"></i> <b>Command line details</b></summary>
 
 ```
 Usage: trident genoconvert ((-d|--baseDir DIR) |
@@ -661,7 +661,7 @@ trident genoconvert \
 `jannocoalesce` merges information from one or multiple source `.janno` files into a target `.janno` file.
 
 <details>
- <summary><i class="fas fa-search"></i> <i class="fas fa-terminal"></i> <b>Click here for command line details</b></summary>
+ <summary><i class="fas fa-search"></i> <i class="fas fa-terminal"></i> <b>Command line details</b></summary>
 
 ```
 Usage: trident jannocoalesce ((-s|--sourceFile FILE) | (-d|--baseDir DIR))
@@ -721,7 +721,7 @@ It then merges these files by a key column, which can be selected with `--source
 `rectify` automatically harmonizes POSEIDON.yml files of one or multiple packages. This is not an automatic update from one Poseidon version to the next, but rather a clean-up wizard after manual modifications.
 
 <details>
- <summary><i class="fas fa-search"></i> <i class="fas fa-terminal"></i> <b>Click here for command line details</b></summary>
+ <summary><i class="fas fa-search"></i> <i class="fas fa-terminal"></i> <b>Command line details</b></summary>
 
 ```
 Usage: trident rectify (-d|--baseDir DIR) [--ignorePoseidonVersion]
@@ -785,7 +785,7 @@ The following arguments determine which fields of the POSEIDON.yml file should b
 `list` lists packages, groups and individuals of the datasets you use, or of the packages available on the server.
 
 <details>
- <summary><i class="fas fa-search"></i> <i class="fas fa-terminal"></i> <b>Click here for command line details</b></summary>
+ <summary><i class="fas fa-search"></i> <i class="fas fa-terminal"></i> <b>Command line details</b></summary>
 
 ```
 Usage: trident list ((-d|--baseDir DIR) | --remote [--remoteURL URL]
@@ -854,7 +854,7 @@ Note that if you want a less fancy table, for example because you want to load t
 `summarise` prints some general summary statistics for a given poseidon dataset taken from the .janno files.
 
 <details>
- <summary><i class="fas fa-search"></i> <i class="fas fa-terminal"></i> <b>Click here for command line details</b></summary>
+ <summary><i class="fas fa-search"></i> <i class="fas fa-terminal"></i> <b>Command line details</b></summary>
 
 ```
 Usage: trident summarise (-d|--baseDir DIR) [--raw]
@@ -886,7 +886,7 @@ You can use the `--raw` option to output the summary table in a simple, tab-deli
 `survey` tries to indicate package completeness (mostly focused on `.janno` files) for poseidon datasets.
 
 <details>
- <summary><i class="fas fa-search"></i> <i class="fas fa-terminal"></i> <b>Click here for command line details</b></summary>
+ <summary><i class="fas fa-search"></i> <i class="fas fa-terminal"></i> <b>Command line details</b></summary>
 
 ```
 Usage: trident survey (-d|--baseDir DIR) [--raw] [--onlyLatest]
@@ -921,7 +921,7 @@ Again you can use the `--raw` option to output the survey table in a tab-delimit
 `validate` checks Poseidon packages and indivudual package components for structural correctness.
 
 <details>
- <summary><i class="fas fa-search"></i> <i class="fas fa-terminal"></i> <b>Click here for command line details</b></summary>
+ <summary><i class="fas fa-search"></i> <i class="fas fa-terminal"></i> <b>Command line details</b></summary>
 
 ```
 Usage: trident validate ((-d|--baseDir DIR) [--ignoreGeno] [--fullGeno]

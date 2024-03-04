@@ -1,5 +1,7 @@
 # .janno file details
 
+### Background
+
 The `.janno` file columns are specified [here](https://github.com/poseidon-framework/poseidon-schema/blob/master/janno_columns.tsv). The following documentation includes additional background information about some of the variables. This should make it more easy to compile the necessary information for both published and unpublished data. A `.pdf` version of this page is available [here](janno_details.pdf).
 
 ### Identifiers
@@ -190,8 +192,11 @@ The `Publication` column holds either the value `unpublished` for (yet) unpublis
     volume = {113},
     number = {2},
     pages = {368--373},
-    author = {Lara M. Cassidy and Rui Martiniano and Eileen M. Murphy and Matthew D. Teasdale and James Mallory and Barrie Hartwell and Daniel G. Bradley},
-    title = {Neolithic and Bronze Age migration to Ireland and establishment of the insular Atlantic genome},
+    author = {Lara M. Cassidy and Rui Martiniano and Eileen M. Murphy and 
+    	      Matthew D. Teasdale and James Mallory and Barrie Hartwell 
+    	      and Daniel G. Bradley},
+    title = {Neolithic and Bronze Age migration to Ireland and establishment
+    	     of the insular Atlantic genome},
     journal = {Proceedings of the National Academy of Sciences}
 }
 
@@ -204,8 +209,11 @@ The `Publication` column holds either the value `unpublished` for (yet) unpublis
     volume = {5},
     number = {7},
     pages = {eaax0061},
-    author = {Michal Feldman and Daniel M. Master and Raffaela A. Bianco and Marta Burri and Philipp W. Stockhammer and Alissa Mittnik and Adam J. Aja and Choongwon Jeong and Johannes Krause},
-    title = {Ancient {DNA} sheds light on the genetic origins of early Iron Age Philistines},
+    author = {Michal Feldman and Daniel M. Master and Raffaela A. Bianco and
+    	      Marta Burri and Philipp W. Stockhammer and Alissa Mittnik and
+    	      Adam J. Aja and Choongwon Jeong and Johannes Krause},
+    title = {Ancient {DNA} sheds light on the genetic origins of early Iron Age
+             Philistines},
     journal = {Science Advances}
 }
 ```
