@@ -2,7 +2,7 @@
 
 ### Background
 
-The `.janno` file columns are specified [here](https://github.com/poseidon-framework/poseidon-schema/blob/master/janno_columns.tsv). The following documentation includes additional background information about some of the variables. This should make it more easy to compile the necessary information for both published and unpublished data. A `.pdf` version of this page is available [here](janno_details.pdf).
+The `.janno` file columns are specified [here](https://github.com/poseidon-framework/poseidon-schema/blob/master/janno_columns.tsv). The following documentation includes additional background information about some of the variables. This should make it more easy to compile the necessary information for both published and unpublished data. A `.pdf` version of this page is available [here](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/janno_details.pdf).
 
 ### Identifiers
 

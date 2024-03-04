@@ -13,7 +13,7 @@ remotes::install_github('poseidon-framework/janno')
 
 The guide below explains the main functions in the package. It is available in .pdf format here:
 
-- [🗎 Guide for the janno R package v1.0.0](janno_R_package.pdf) (shown below)
+- [🗎 Guide for the janno R package v1.0.0](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/janno_r_package.pdf) (shown below)
 
 ## Guide for the janno R package v1.0.0
 

@@ -26,8 +26,8 @@ On GitHub you will also find [older release versions](https://github.com/poseido
 
 The guide below explains the inner workings of qjanno and gives some examples for concrete queries. It is available in .pdf format for the current and previous versions here:
 
-- [🗎 Guide for qjanno v1.0.0.0](trident.pdf) (shown below)
-- [🗎 Guide for qjanno v1.0.0](qjanno_guide_archive/qjanno_guide_1.0.0.pdf)
+- [🗎 Guide for qjanno v1.0.0.0](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/qjanno.pdf) (shown below)
+- [🗎 Guide for qjanno v1.0.0](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/qjanno_guide_archive/qjanno_guide_1.0.0.pdf)
 
 ## Guide for qjanno v1.0.0.0
 
