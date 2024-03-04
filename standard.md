@@ -4,7 +4,7 @@
 
 The core idea of Poseidon is to organize genotype data together with relevant meta- and context data in a structured yet flexible, human- and machine-readable format.
 
-This format is the **Poseidon package**, defined in a versioned specification, openly available [here](https://github.com/poseidon-framework/poseidon-schema) and in .pdf format [🗎 here](https://github.com/poseidon-framework/poseidon-schema/blob/master/poseidon_package_specification.pdf). This page mirrors the tables and text in the schema repository.
+This format is the **Poseidon package**, defined in a versioned specification, openly available [here](https://github.com/poseidon-framework/poseidon-schema) and in `.pdf` format [here](https://github.com/poseidon-framework/poseidon-schema/blob/master/poseidon_package_specification.pdf). This page mirrors the tables and text in the schema repository.
 
 1. The pre-defined fields and columns in the `POSEIDON.yml`, `.janno` and `.ssf` file for the latest schema version:
 
