@@ -24,11 +24,13 @@ jobs:
 
     - name: Modify and prepare main documentation files
       run: |
-        # remove everything up to "## Guide for"
+        # remove everything up to "## Guide for" in software guides
         sed -i '1,/^\s*## Guide for/ {/## Guide for/ !d}' janno_r_package.md
         sed -i '1,/^\s*## Guide for/ {/## Guide for/ !d}' qjanno.md
         sed -i '1,/^\s*## Guide for/ {/## Guide for/ !d}' trident.md
         sed -i '1,/^\s*## Guide for/ {/## Guide for/ !d}' xerxes.md
+        # add extra # at the beginning of janno_details.md
+        echo -e "#$(cat janno_details.md)" > janno_details.md
 
     - name: Convert files
       run: |
