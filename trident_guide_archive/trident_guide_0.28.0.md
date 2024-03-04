@@ -287,8 +287,14 @@ Including one or multiple Poseidon packages with `-d` is not the only way to inc
 ```
 trident forge \
   -d 2017_GonzalesFortesCurrentBiology \
-  -r PLINK -g 2017_HaberAJHG/2017_HaberAJHG.bed -s 2017_HaberAJHG/2017_HaberAJHG.bim -i 2017_HaberAJHG/2017_HaberAJHG.fam \
-  -r PLINK -g 2018_VeeramahPNAS/2018_VeeramahPNAS.bed -i 2018_VeeramahPNAS/2018_VeeramahPNAS.fam -s 2018_VeeramahPNAS/2018_VeeramahPNAS.bim \
+  -r PLINK \
+  -g 2017_HaberAJHG/2017_HaberAJHG.bed \
+  -s 2017_HaberAJHG/2017_HaberAJHG.bim \
+  -i 2017_HaberAJHG/2017_HaberAJHG.fam \
+  -r PLINK \
+  -g 2018_VeeramahPNAS/2018_VeeramahPNAS.bed \
+  -i 2018_VeeramahPNAS/2018_VeeramahPNAS.fam \
+  -s 2018_VeeramahPNAS/2018_VeeramahPNAS.bim \
   -f "<STR241.SG>,<ERS1790729.SG>,Iberia_HG.SG" \
   -o testpackage \
   --onlyGeno
@@ -388,7 +394,10 @@ Instead of `-d` to change Poseidon packages, the combination `-r + -g + -s + -i 
 
 ```
 trident genoconvert \
-  -r PLINK -g 2018_Mittnik_Baltic/Mittnik_Baltic.bed -s 2018_Mittnik_Baltic/Mittnik_Baltic.bim -i 2018_Mittnik_Baltic/Mittnik_Baltic.fam \
+  -r PLINK \
+  -g 2018_Mittnik_Baltic/Mittnik_Baltic.bed \
+  -s 2018_Mittnik_Baltic/Mittnik_Baltic.bim \
+  -i 2018_Mittnik_Baltic/Mittnik_Baltic.fam \
   --outFormat EIGENSTRAT
 ```
 
