@@ -304,7 +304,10 @@ Including one or multiple Poseidon packages with `-d` is not the only way to inc
 trident forge \
   -d 2017_GonzalesFortesCurrentBiology \
   -p 2018_VeeramahPNAS/2018_VeeramahPNAS.fam \
-  --inFormat PLINK --genoFile 2017_HaberAJHG/2017_HaberAJHG.bed --snpFile 2017_HaberAJHG/2017_HaberAJHG.bim --indFile 2017_HaberAJHG/2017_HaberAJHG.fam \
+  --inFormat PLINK \
+  --genoFile 2017_HaberAJHG/2017_HaberAJHG.bed \
+  --snpFile 2017_HaberAJHG/2017_HaberAJHG.bim \
+  --indFile 2017_HaberAJHG/2017_HaberAJHG.fam \
   -f "<STR241.SG>,<ERS1790729.SG>,Iberia_HG.SG" \
   -o testpackage \
   --outFormat EIGENSTRAT \
@@ -665,7 +668,7 @@ You can run it with
 trident validate -d ... -d ...
 ```
 
-and it will either report a success (`Validation passed ✓`) or failure with specific error messages to simplify fixing the issues. 
+and it will either report a success (`Validation passed`) or failure with specific error messages to simplify fixing the issues. 
 
 `validate` tries to ensure that each package in the dataset adheres to the [schema definition](https://github.com/poseidon-framework/poseidon-schema). Here is a list of what is checked:
 

@@ -1,0 +1,16 @@
+table-of-contents: true
+shift-heading-level-by: -2
+number-sections: true
+highlight-style: tango
+variables:
+  documentclass: article
+  papersize: a4
+  geometry:
+    - top=30mm
+    - left=20mm
+    - right=25mm
+    - heightrounded
+  colorlinks: true
+pdf-engine: pdflatex # relevant for reproducibility, see include-before-body
+include-before-body: pdf_conversion/before_body.tex
+include-in-header: pdf_conversion/in_header.tex

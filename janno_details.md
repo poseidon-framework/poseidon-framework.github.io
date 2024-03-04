@@ -1,8 +1,10 @@
 # .janno file details
 
-The Janno file format is specified [here](https://github.com/poseidon-framework/poseidon-schema/blob/master/janno_columns.tsv). This documentation includes additional background information about some of the columns in the `.janno` file. This should make it more easy to compile the necessary information for both published and unpublished data.
+### Background
 
-# Identifiers
+The `.janno` file columns are specified [here](https://github.com/poseidon-framework/poseidon-schema/blob/master/janno_columns.tsv). The following documentation includes additional background information about some of the variables. This should make it more easy to compile the necessary information for both published and unpublished data. A `.pdf` version of this page is available [here](janno_details.pdf).
+
+### Identifiers
 
 The `Poseidon_ID` column has to represent each sample with a world-wide unique identifier string ideally equal to the identifier used in the respective accompanying publication. There is no central authority to issue these identifiers, so it remains in the hand of the authors to avoid duplication. We're aware of this inconsistency and hope the aDNA community will come together to establish a mechanism to ensure uniqueness of identifiers.
 
@@ -14,7 +16,7 @@ The `Collection_ID` column stores an additional, secondary identifier as it is o
 
 The `Group_Name` column contains one or multiple group or population names for each individual, separated by `;`. The first entry must be identical to the one used in the [genotype data](genotype_data?id=group-ids) for the respective sample. Assigning group and population names is a hard problem in archeogenetics, so that's why the `.janno` file allows for more than one identifier.
 
-# Relations among samples/individuals
+### Relations among samples/individuals
 
 To systematically document biological relationships uncovered among samples/individuals in one or multiple Poseidon datasets (e.g. with software like [READ or lcMLkin](https://open-archaeo.info/tags/adna-kinship/)), the `.janno` file can be fit with a set of columns featuring the `Relation_*` prefix. They together should be capable to encode all kinds of pairwise, biological relationships an individual might have.
 
@@ -43,7 +45,7 @@ Unlike `Relation_Degree`, `Relation_Type` can be left empty even if there are en
 
 The `Relation_Note` column allows to add free-text information about the relationships of this individual. This might also include information about the method used to infer the degree and type.
 
-# Spatial position
+### Spatial position
 
 The `.janno` file contains five columns to describe the spatial origin of an individual sample:  `Country`, `Location`, `Site` and finally `Latitude` and `Longitude`. 
 
@@ -57,11 +59,11 @@ The `Site` column should contain a site name, ideally in the latin alphabet and 
 
 The `Latitude` and `Longitude` column should contain geographic coordinates (WGS84) in decimal degrees (DD) with a precision of not more than five places after the decimal point. This yields a precision of about [1.1132m at the equator](https://en.wikipedia.org/wiki/Decimal_degrees) which is sufficient to describe the position of an archaeological site. Coordinates in other formats like for example Degrees Minutes Seconds (DMS) or in completely different coordinate reference systems should be transformed. There exist many Open Source software solutions to do that, most based on the [PROJ library](https://proj.org/index.html) e.g. the [The World Coordinate Converter](https://twcc.fr/en/#).
 
-# Temporal position
+### Temporal position
 
 The temporal position of a sample is encoded with seven different columns in the `.janno` file: `Date_C14_Labnr`, `Date_C14_Uncal_BP`, `Date_C14_Uncal_BP_Err`, `Date_BC_AD_Median`, `Date_BC_AD_Start`, `Date_BC_AD_Stop`, `Date_Type`
 
-## General structure
+#### General structure
 
 The `Date_Type` column handles the general distinction between the most common forms of age information:
 
@@ -71,7 +73,7 @@ The `Date_Type` column handles the general distinction between the most common f
 
 So `Date_C14_Labnr`, `Date_C14_Uncal_BP` and `Date_C14_Uncal_BP_Err` only go along with `Date_Type = C14`, whereas `Date_BC_AD_Median`, `Date_BC_AD_Start`, `Date_BC_AD_Stop` complement both `Date_Type = C14` and `Date_Type = contextual`. Radiocarbon dates that only serve as secondary evidence for a contextual dating should not be reported in `Date_C14_Labnr`, `Date_C14_Uncal_BP` and `Date_C14_Uncal_BP_Err`.
 
-## The columns in detail
+#### The columns in detail
 
 Each radiocarbon date has a unique identifier: the "lab number". It consists of a [lab code](http://www.radiocarbon.org/Info/labcodes.html) issued by the journal [Radiocarbon](https://www.cambridge.org/core/journals/radiocarbon) for each laboratory and a serial number. This lab number makes the date well identifiable and should be reported in `Date_C14_Labnr` with the lab code separated from the serial number with a minus symbol.
 
@@ -87,9 +89,9 @@ In the columns `Date_BC_AD_Median`, `Date_BC_AD_Start`, `Date_BC_AD_Stop` ages a
 
 The column `Date_Note` allows to add arbitrary free-text information about the dating of a sample.
 
-# Genetic summary data
+### Genetic summary data
 
-## Individual properties
+#### Individual properties
 
 The `Genetic_Sex` column should encode the biological sex as determined from the DNA read distribution on the X and Y chromosome. It only allows for the entries 
 
@@ -103,7 +105,7 @@ The `MT_Haplogroup` column is meant to store the human mitochondrial DNA haplogr
 
 The `Y_Haplogroup` column holds the respective human Y-chromosome DNA haplogroup in a simple string. The notation should follow a syntax with the main branch + the most terminal derived Y-SNP separated with a minus symbol (e.g. R1b-P312).
 
-## Library properties
+#### Library properties
 
 The `Source_Tissue` column documents the skeletal, soft tissue or other elements from which source material for DNA library preparation have been extracted. If multiple libraries have been taken from different elements, these can be listed separated by `;`. Specific bone names should be reported with an underscore (e.g. bone_phalanx, tooth_molar).
 
@@ -140,7 +142,7 @@ The `Genotype_Ploidy` column stores a characteristic of the aDNA data treatment.
 
 The column `Data_Preparation_Pipeline_URL` should finally store an URL that links to a complete and human-readable description of the computational pipeline (for example a specific configuration for [nf-core/eager](https://nf-co.re/eager)) by which the sample data was processed. One solution to document and publish a computational workflow like this might be through [protocols.io](https://www.protocols.io/).
 
-## Data yield
+#### Data yield
 
 The `Endogenous` column holds the percentage of mapped reads over the total amount of reads that went into the mapping pipeline. That boils down to the DNA percentage of the library that matches the (human) reference. It should be determined from Shotgun libraries (so before any hybridization capture), not on target and without any quality filtering. In case of multiple libraries only the highest value should be reported. The % endogenous DNA can be calculated for example with the [endorS.py](https://github.com/aidaanva/endorS.py) script.
 
@@ -148,11 +150,11 @@ The `Nr_SNPs` column gives the number of SNPs reported in the genotype data file
 
 The `Coverage_on_Target_SNPs` column reports the mean SNP coverage on the target SNP array (e.g. 1240K) for the merged libraries of this sample. To calculate the coverage it is necessary to determine which SNPs are covered how many times by the mapped reads. Individual SNPs might be covered multiple times, whereas others may not be covered at all by the highly deteriorated ancient DNA. The coverage for each SNP is therefore a number between 0 and n. The statistic can be determined for example with the [QualiMap](http://qualimap.conesalab.org/) software package. In case of multiple libraries, the coverage can be given as a mean across all of them.
 
-## Data quality
+#### Data quality
 
 The `Damage` column contains the % damage on the first position of the 5' end for the main Shotgun library used for sequencing or capture. This is an important statistic to verify the age of ancient DNA. In case of multiple libraries you should report a value from the merged read alignment.
 
-### Contamination
+##### Contamination
 
 Contamination of ancient DNA with foreign reads is a major challenge for archaeogenetics. There exist multiple competing ideas, algorithms and software tools to estimate the degree of contamination for individual samples (e.g. [ANGSD](https://github.com/ANGSD/angsd), [contamLD](https://github.com/nathan-nakatsuka/ContamLD) or [hapCon](https://github.com/hyl317/hapROH)), with some methods only applicable under certain circumstances (e.g. popular X-chromosome based approaches only work on male individuals). Also the results of different methods tend to differ both in the degree of contamination they estimate and in the way the output is usually encoded. To cover the multitude of methods in this domain, and to make the results representable in the `.janno` file, we offer the `Contamination_*` column family.
 
@@ -172,7 +174,7 @@ This setup has the consequence that the columns `Contamination`, `Contamination_
 
 The `Contamination_Note` column is a free text field to add additional information about the contamination estimates, e.g. which parameters where used with the respective software tools.
 
-# Context information
+### Context information
 
 The `Genetic_Source_Accession_IDs` column was introduced to link the derived genotype data in Poseidon with the raw sequencing data typically uploaded to archives like the [ENA](https://www.ebi.ac.uk/ena/browser/home) or [SRA](https://www.ncbi.nlm.nih.gov/sra). There projects or even individual samples are given clear identifiers: Accession IDs. This janno column is supposed to store one or multiple of these Accessions IDs for each individual/sample in Poseidon. If multiple are entered, then they should be arranged by descending specificity from left to right (e.g. project id > sample id > sequencing run id).
 
@@ -190,8 +192,11 @@ The `Publication` column holds either the value `unpublished` for (yet) unpublis
     volume = {113},
     number = {2},
     pages = {368--373},
-    author = {Lara M. Cassidy and Rui Martiniano and Eileen M. Murphy and Matthew D. Teasdale and James Mallory and Barrie Hartwell and Daniel G. Bradley},
-    title = {Neolithic and Bronze Age migration to Ireland and establishment of the insular Atlantic genome},
+    author = {Lara M. Cassidy and Rui Martiniano and Eileen M. Murphy and 
+    	      Matthew D. Teasdale and James Mallory and Barrie Hartwell 
+    	      and Daniel G. Bradley},
+    title = {Neolithic and Bronze Age migration to Ireland and establishment
+    	     of the insular Atlantic genome},
     journal = {Proceedings of the National Academy of Sciences}
 }
 
@@ -204,8 +209,11 @@ The `Publication` column holds either the value `unpublished` for (yet) unpublis
     volume = {5},
     number = {7},
     pages = {eaax0061},
-    author = {Michal Feldman and Daniel M. Master and Raffaela A. Bianco and Marta Burri and Philipp W. Stockhammer and Alissa Mittnik and Adam J. Aja and Choongwon Jeong and Johannes Krause},
-    title = {Ancient {DNA} sheds light on the genetic origins of early Iron Age Philistines},
+    author = {Michal Feldman and Daniel M. Master and Raffaela A. Bianco and
+    	      Marta Burri and Philipp W. Stockhammer and Alissa Mittnik and
+    	      Adam J. Aja and Choongwon Jeong and Johannes Krause},
+    title = {Ancient {DNA} sheds light on the genetic origins of early Iron Age
+             Philistines},
     journal = {Science Advances}
 }
 ```

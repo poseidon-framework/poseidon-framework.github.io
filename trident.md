@@ -27,11 +27,20 @@ chmod +x trident-Linux
 
 On GitHub you will also find [older release versions](https://github.com/poseidon-framework/poseidon-hs/releases) and [instructions to build trident from source](https://github.com/poseidon-framework/poseidon-hs#for-haskell-developers). The relevant changes from one version to the next are documented in this [changelog](https://github.com/poseidon-framework/poseidon-hs/blob/master/CHANGELOGRELEASE.md).
 
-Beyond the documentation below you can use `trident --help` and `trident <subcommand> --help` to get information about each parameter, including some which we haven't covered in the guide. If you're new to Poseidon and trident, we recommend that you take a look at our [Getting started guide](getting_started) first.
+With `trident --help` and `trident <subcommand> --help` you can get information about each subcommand and parameter directly on the command line. The guide below explains the subcommands in more detail. It is available in .pdf format for the current and previous versions here:
 
-<!-- tabs:start -->
-
-#### **v1.4.1.0**
+- [🗎 Guide for trident v1.4.1.0](trident.pdf) (shown below)
+- [🗎 Guide for trident v1.4.0.2 to v1.4.0.3](trident_guide_archive/trident_guide_1.4.0.2_to_1.4.0.3.pdf)
+- [🗎 Guide for trident v1.3.0.4](trident_guide_archive/trident_guide_1.3.0.4.pdf)
+- [🗎 Guide for trident v1.2.0.0 to v1.2.1.0](trident_guide_archive/trident_guide_1.2.0.0_to_1.2.1.0.pdf)
+- [🗎 Guide for trident v1.1.11.0 to v1.1.12.0](trident_guide_archive/trident_guide_1.1.11.0_to_1.1.12.0.pdf)
+- [🗎 Guide for trident v1.1.10.2](trident_guide_archive/trident_guide_1.1.10.2.pdf)
+- [🗎 Guide for trident v1.1.7.0](trident_guide_archive/trident_guide_1.1.7.0.pdf)
+- [🗎 Guide for trident v1.1.6.0](trident_guide_archive/trident_guide_1.1.6.0.pdf)
+- [🗎 Guide for trident v1.1.0.0 to v1.1.4.2](trident_guide_archive/trident_guide_1.1.0.0_to_1.1.4.2.pdf)
+- [🗎 Guide for trident v1.0.0.0](trident_guide_archive/trident_guide_1.0.0.0.pdf)
+- [🗎 Guide for trident v0.29.0](trident_guide_archive/trident_guide_0.29.0.pdf)
+- [🗎 Guide for trident v0.28.0](trident_guide_archive/trident_guide_0.28.0.pdf)
 
 ## Guide for trident v1.4.1.0
 
@@ -150,7 +159,7 @@ For all subcommands the general argument `--logMode` defines how trident reports
 - *SimpleLog*: Plain and simple output to stderr.
 - *DefaultLog*: Adds severity indicators before each message. (default setting)
 - *ServerLog*: Additionally adds timestamps before each message.
-- *VerboseLog*: Shows not just messages on the log levels `Info`, `Ẁarning` and `Error` like the other modes, but also on the more verbose level `Debug`. Use this for debugging.
+- *VerboseLog*: Shows not just messages on the log levels `Info`, `Warning` and `Error` like the other modes, but also on the more verbose level `Debug`. Use this for debugging.
 
 `--debug` is short for `--logMode VerboseLog` to activate this important log level more easily.
 
@@ -182,7 +191,7 @@ While reading the `.janno` file `trident` trims all leading and trailing whitesp
 `init` creates a new, valid Poseidon package from genotype data files. It adds a valid `POSEIDON.yml` file, a dummy .janno file for context information and an empty .bib file for literature references.
 
 <details>
- <summary><i class="fas fa-search"></i> <i class="fas fa-terminal"></i> <b>Click here for command line details</b></summary>
+ <summary><i class="fas fa-search"></i> <i class="fas fa-terminal"></i> <b>Command line details</b></summary>
 
 ```
 Usage: trident init ((-p|--genoOne FILE) | --inFormat FORMAT --genoFile FILE
@@ -249,7 +258,7 @@ The output package of `init` is created as a new directory `-o`, which should no
 `fetch` allows to download Poseidon packages from a remote Poseidon server via a [Web API](web_api). Read more about the data available with it [here](archive_overview).
 
 <details>
- <summary><i class="fas fa-search"></i> <i class="fas fa-terminal"></i> <b>Click here for command line details</b></summary>
+ <summary><i class="fas fa-search"></i> <i class="fas fa-terminal"></i> <b>Command line details</b></summary>
 
 ```
 Usage: trident fetch (-d|--baseDir DIR)
@@ -308,7 +317,7 @@ Note that `trident fetch` makes most sense in combination with `trident list --r
 `forge` creates new Poseidon packages by extracting and merging packages, populations and individuals/samples from your Poseidon repositories.
 
 <details>
- <summary><i class="fas fa-search"></i> <i class="fas fa-terminal"></i> <b>Click here for command line details</b></summary>
+ <summary><i class="fas fa-search"></i> <i class="fas fa-terminal"></i> <b>Command line details</b></summary>
 
 ```
 Usage: trident forge ((-d|--baseDir DIR) |
@@ -438,7 +447,10 @@ Including one or multiple Poseidon packages with `-d` is not the only way to inc
 trident forge \
   -d 2017_GonzalesFortesCurrentBiology \
   -p 2018_VeeramahPNAS/2018_VeeramahPNAS.fam \
-  --inFormat PLINK --genoFile 2017_HaberAJHG/2017_HaberAJHG.bed --snpFile 2017_HaberAJHG/2017_HaberAJHG.bim --indFile 2017_HaberAJHG/2017_HaberAJHG.fam \
+  --inFormat PLINK \
+  --genoFile 2017_HaberAJHG/2017_HaberAJHG.bed \
+  --snpFile 2017_HaberAJHG/2017_HaberAJHG.bim \
+  --indFile 2017_HaberAJHG/2017_HaberAJHG.fam \
   -f "<STR241.SG>,<ERS1790729.SG>,Iberia_HG.SG" \
   -o testpackage \
   --outFormat EIGENSTRAT \
@@ -454,10 +466,10 @@ In general a `--forgeString` query consists of multiple entities, separated by `
 - Each package title is surrounded by `*`: `*package*`. That means if you want all individuals of the Poseidon package `2019_Jeong_InnerEurasia` in the output package you would add `*2019_Jeong_InnerEurasia*` to the query.
 - Groups/populations are not specially marked: `group`. So to get all individuals of the group `Swiss_Roman_period`, you would simply add `Swiss_Roman_period`.
 - Individuals/samples are surrounded by `<` and `>`: `<individual>`. `ALA026` therefore becomes `<ALA026>`. A second way to denote individuals is with the more verbose and specific syntax `<package:group:individual>`. Such defined individuals take precedence over differently defined ones (so: directly with `<individual>` or as a subset of `*package*` or `group`). This allows to resolve duplication issues precisely -- at least in cases where the duplicated individuals differ in source package or primary group.
-- Package versions can be appended to package names, such as `*package-1.2.3*`, or `<package-1.2.3:group:individual>`.
+- Package versions can be appended to package names, such as `*package-1.2.3*`.
+- This also works with the verbose individual syntax: `<package-1.2.3:group:individual>`.
 
-
-In the `--forgeFile` each line is treated as a separate forgeString, empty lines are ignored and `#`s start comments. So this is a valid example of a forgeFile:
+In the `--forgeFile` each line is treated as a separate forgeString, empty lines are ignored and `#` symbols start comments. So this is a valid example of a forgeFile:
 
 ```
 # Packages
@@ -573,7 +585,7 @@ With `--packagewise` the within-package selection step in forge can be skipped. 
 `genoconvert` converts the genotype data in a Poseidon package to a different file format. The respective entries in the POSEIDON.yml file are changed accordingly. 
 
 <details>
- <summary><i class="fas fa-search"></i> <i class="fas fa-terminal"></i> <b>Click here for command line details</b></summary>
+ <summary><i class="fas fa-search"></i> <i class="fas fa-terminal"></i> <b>Command line details</b></summary>
 
 ```
 Usage: trident genoconvert ((-d|--baseDir DIR) |
@@ -649,7 +661,7 @@ trident genoconvert \
 `jannocoalesce` merges information from one or multiple source `.janno` files into a target `.janno` file.
 
 <details>
- <summary><i class="fas fa-search"></i> <i class="fas fa-terminal"></i> <b>Click here for command line details</b></summary>
+ <summary><i class="fas fa-search"></i> <i class="fas fa-terminal"></i> <b>Command line details</b></summary>
 
 ```
 Usage: trident jannocoalesce ((-s|--sourceFile FILE) | (-d|--baseDir DIR))
@@ -709,7 +721,7 @@ It then merges these files by a key column, which can be selected with `--source
 `rectify` automatically harmonizes POSEIDON.yml files of one or multiple packages. This is not an automatic update from one Poseidon version to the next, but rather a clean-up wizard after manual modifications.
 
 <details>
- <summary><i class="fas fa-search"></i> <i class="fas fa-terminal"></i> <b>Click here for command line details</b></summary>
+ <summary><i class="fas fa-search"></i> <i class="fas fa-terminal"></i> <b>Command line details</b></summary>
 
 ```
 Usage: trident rectify (-d|--baseDir DIR) [--ignorePoseidonVersion]
@@ -773,7 +785,7 @@ The following arguments determine which fields of the POSEIDON.yml file should b
 `list` lists packages, groups and individuals of the datasets you use, or of the packages available on the server.
 
 <details>
- <summary><i class="fas fa-search"></i> <i class="fas fa-terminal"></i> <b>Click here for command line details</b></summary>
+ <summary><i class="fas fa-search"></i> <i class="fas fa-terminal"></i> <b>Command line details</b></summary>
 
 ```
 Usage: trident list ((-d|--baseDir DIR) | --remote [--remoteURL URL]
@@ -842,7 +854,7 @@ Note that if you want a less fancy table, for example because you want to load t
 `summarise` prints some general summary statistics for a given poseidon dataset taken from the .janno files.
 
 <details>
- <summary><i class="fas fa-search"></i> <i class="fas fa-terminal"></i> <b>Click here for command line details</b></summary>
+ <summary><i class="fas fa-search"></i> <i class="fas fa-terminal"></i> <b>Command line details</b></summary>
 
 ```
 Usage: trident summarise (-d|--baseDir DIR) [--raw]
@@ -874,7 +886,7 @@ You can use the `--raw` option to output the summary table in a simple, tab-deli
 `survey` tries to indicate package completeness (mostly focused on `.janno` files) for poseidon datasets.
 
 <details>
- <summary><i class="fas fa-search"></i> <i class="fas fa-terminal"></i> <b>Click here for command line details</b></summary>
+ <summary><i class="fas fa-search"></i> <i class="fas fa-terminal"></i> <b>Command line details</b></summary>
 
 ```
 Usage: trident survey (-d|--baseDir DIR) [--raw] [--onlyLatest]
@@ -909,7 +921,7 @@ Again you can use the `--raw` option to output the survey table in a tab-delimit
 `validate` checks Poseidon packages and indivudual package components for structural correctness.
 
 <details>
- <summary><i class="fas fa-search"></i> <i class="fas fa-terminal"></i> <b>Click here for command line details</b></summary>
+ <summary><i class="fas fa-search"></i> <i class="fas fa-terminal"></i> <b>Command line details</b></summary>
 
 ```
 Usage: trident validate ((-d|--baseDir DIR) [--ignoreGeno] [--fullGeno]
@@ -979,49 +991,3 @@ When applied to packages, `validate` tries to ensure that each package adheres t
 In fact much of this validation already runs as part of the general package reading pipeline invoked for other trident subcommands (e.g. `forge`). `validate` is meant to be more thorough/brittle, though, and will explicitly fail if even a single package is broken. For special cases more flexibility can be enabled with the options `--ignoreDuplicates`, `--ignoreChecksums` and `--ignorePoseidonVersion`.
 
 Remember to run `validate` it with `--debug` to get more information in case the default output is not sufficient to analyse an issue.
-
-#### **v1.4.0.2 to v1.4.0.3**
-
-[filename](trident_guide_archive/trident_guide_1.4.0.2_to_1.4.0.3.md ':include')
-
-#### **v1.3.0.4**
-
-[filename](trident_guide_archive/trident_guide_1.3.0.4.md ':include')
-
-#### **v1.2.0.0 to v1.2.1.0**
-
-[filename](trident_guide_archive/trident_guide_1.2.0.0_to_1.2.1.0.md ':include')
-
-#### **v1.1.11.0 to v1.1.12.0**
-
-[filename](trident_guide_archive/trident_guide_1.1.11.0_to_1.1.12.0.md ':include')
-
-#### **v1.1.10.2**
-
-[filename](trident_guide_archive/trident_guide_1.1.10.2.md ':include')
-
-#### **v1.1.7.0**
-
-[filename](trident_guide_archive/trident_guide_1.1.7.0.md ':include')
-
-#### **v1.1.6.0**
-
-[filename](trident_guide_archive/trident_guide_1.1.6.0.md ':include')
-
-#### **v1.1.0.0 to v1.1.4.2**
-
-[filename](trident_guide_archive/trident_guide_1.1.0.0_to_1.1.4.2.md ':include')
-
-#### **v1.0.0.0**
-
-[filename](trident_guide_archive/trident_guide_1.0.0.0.md ':include')
-
-#### **v0.29.0**
-
-[filename](trident_guide_archive/trident_guide_0.29.0.md ':include')
-
-#### **v0.28.0**
-
-[filename](trident_guide_archive/trident_guide_0.28.0.md ':include')
-
-<!-- tabs:end -->

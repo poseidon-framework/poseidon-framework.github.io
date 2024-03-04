@@ -1,39 +1,4 @@
-<popup :custom-text="`<p><a href='https://mpi-eva-archaeogenetics.github.io/comp_human_adna_book/fstats.html'>Introduction to F3- and F4-Statistics</a> by Stephan Schiffels: An explanation of F-Statistics and how to run them with xerxes</p>`"></popup>
-
-# xerxes CLI software <!-- {docsify-ignore-all} -->
-
-`xerxes` is a command line software tool for population genetic analyses of Poseidon packages. It is written in Haskell and openly available on [GitHub](https://github.com/poseidon-framework/poseidon-analysis-hs/).
-
-[![CI](https://github.com/poseidon-framework/poseidon-analysis-hs/actions/workflows/main.yml/badge.svg)](https://github.com/poseidon-framework/poseidon-analysis-hs/actions/workflows/main.yml)
-[![Coverage Status](https://img.shields.io/codecov/c/github/poseidon-framework/poseidon-analysis-hs/main.svg)](https://codecov.io/github/poseidon-framework/poseidon-analysis-hs?branch=main)
-[![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/poseidon-framework/poseidon-analysis-hs?include_prereleases) ![GitHub all releases](https://img.shields.io/github/downloads/poseidon-framework/poseidon-analysis-hs/total)](https://github.com/poseidon-framework/poseidon-analysis-hs/releases)
-[![Install with Bioconda](https://anaconda.org/bioconda/poseidon-xerxes/badges/version.svg)](https://anaconda.org/bioconda/poseidon-xerxes)
-[![Anaconda-Server Badge](https://anaconda.org/bioconda/poseidon-xerxes/badges/downloads.svg)](https://anaconda.org/bioconda/poseidon-xerxes)
-
-To download the latest stable release version of `xerxes` click here:
-[📥 Linux](https://github.com/poseidon-framework/poseidon-analysis-hs/releases/latest/download/xerxes-Linux) 
-[📥 macOS](https://github.com/poseidon-framework/poseidon-analysis-hs/releases/latest/download/xerxes-macOS) 
-
-
-So in Linux you can run the following commands to get started:
-
-```bash
-# download the current stable release binary
-wget https://github.com/poseidon-framework/poseidon-analysis-hs/releases/latest/download/xerxes-Linux
-# make it executable
-chmod +x xerxes-Linux
-# run it
-./xerxes-Linux -h
-```
-
-On GitHub you will also find [older release versions](https://github.com/poseidon-framework/poseidon-analysis-hs/releases) and [instructions to build xerxes from source](https://github.com/poseidon-framework/poseidon-analysis-hs#for-haskell-developers). The relevant changes from one version to the next are documented in this [changelog](https://github.com/poseidon-framework/poseidon-analysis-hs/blob/main/CHANGELOGRELEASE.md).
-
-With `xerxes --help` and `xerxes <subcommand> --help` you can get information about each subcommand and parameter directly on the command line. The guide below explains the subcommands in more detail. It is available in .pdf format for the current and previous versions here:
-
-- [🗎 Guide for xerxes v1.0.0.2](xerxes.pdf) (shown below)
-- [🗎 Guide for xerxes v0.2.0.0](xerxes_guide_archive/xerxes_guide_0.2.0.0.pdf)
-
-## Guide for xerxes v1.0.0.2
+## Guide for xerxes v0.2.0.0
 
 ### Fstats command
 
@@ -209,25 +174,15 @@ You can save this into a text file, for example named `fstats_config.yaml`, and 
 The final output of the `fstats` command looks like this:
 
 ```
-.-----------.-----------.---------------.--------.-------.---------.
-| Statistic |     a     |       b       |   c    |   d   | NrSites |
-:===========:===========:===============:========:=======:=========:
-| F3        | French    | Italian_North | Mbuti  |       | 593124  |
-| F3        | French    | Han           | Mbuti  |       | 593124  |
-| F3        | Sardinian | Pima          | French |       | 593124  |
-| F4        | French    | Russian       | Han    | Mbuti | 593124  |
-| F4        | Sardinian | French        | Pima   | Mbuti | 593124  |
-'-----------'-----------'---------------'--------'-------'---------' ->
-
-----------------.--------------------.------------------.---------------------.
- Estimate_Total | Estimate_Jackknife | StdErr_Jackknife |  Z_score_Jackknife  |
-================:====================:==================:=====================:
- 5.9698e-2      | 5.9698e-2          | 5.1423e-4        | 116.0908951980249   |
- 5.0233e-2      | 5.0233e-2          | 5.0324e-4        | 99.81843057232513   |
- -1.2483e-3     | -1.2483e-3         | 9.2510e-5        | -13.493505348221081 |
- -1.6778e-3     | -1.6778e-3         | 9.1419e-5        | -18.35262346091248  |
- -1.4384e-3     | -1.4384e-3         | 1.1525e-4        | -12.481084899924868 |
-----------------'--------------------'------------------'---------------------'
+.-----------.-----------.---------------.--------.-------.---------.----------------.--------------------.------------------.---------------------.
+| Statistic |     a     |       b       |   c    |   d   | NrSites | Estimate_Total | Estimate_Jackknife | StdErr_Jackknife |  Z_score_Jackknife  |
+:===========:===========:===============:========:=======:=========:================:====================:==================:=====================:
+| F3        | French    | Italian_North | Mbuti  |       | 593124  | 5.9698e-2      | 5.9698e-2          | 5.1423e-4        | 116.0908951980249   |
+| F3        | French    | Han           | Mbuti  |       | 593124  | 5.0233e-2      | 5.0233e-2          | 5.0324e-4        | 99.81843057232513   |
+| F3        | Sardinian | Pima          | French |       | 593124  | -1.2483e-3     | -1.2483e-3         | 9.2510e-5        | -13.493505348221081 |
+| F4        | French    | Russian       | Han    | Mbuti | 593124  | -1.6778e-3     | -1.6778e-3         | 9.1419e-5        | -18.35262346091248  |
+| F4        | Sardinian | French        | Pima   | Mbuti | 593124  | -1.4384e-3     | -1.4384e-3         | 1.1525e-4        | -12.481084899924868 |
+'-----------'-----------'---------------'--------'-------'---------'----------------'--------------------'------------------'---------------------'
 ```
 
 which lists each statistic, the slots a, b, c and d, the number of sites with non-missing data for that statistic, Ascertainment information (outgroup, reference, lower and upper bound, if given), the genome-wide estimate, its standard error and its Z-score. If you specify an output file using option `--tableOutFile` or `-f`, these results are also written as tab-separated file.

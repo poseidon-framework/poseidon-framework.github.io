@@ -24,11 +24,14 @@ chmod +x qjanno-Linux
 
 On GitHub you will also find [older release versions](https://github.com/poseidon-framework/qjanno/releases) and [instructions to build qjanno from source](https://github.com/poseidon-framework/qjanno#for-haskell-developers). The relevant changes from one version to the next are documented in this [changelog](https://github.com/poseidon-framework/qjanno/blob/master/CHANGELOGRELEASE.md).
 
-<!-- tabs:start -->
+The guide below explains the inner workings of qjanno and gives some examples for concrete queries. It is available in .pdf format for the current and previous versions here:
 
-#### **v1.0.0.0**
+- [🗎 Guide for qjanno v1.0.0.0](trident.pdf) (shown below)
+- [🗎 Guide for qjanno v1.0.0](qjanno_guide_archive/qjanno_guide_1.0.0.pdf)
 
 ## Guide for qjanno v1.0.0.0
+
+### Background
 
 qjanno started as a fork of the [qhs](https://github.com/itchyny/qhs) software tool, which was, in turn, inspired by the CLI tool [q](https://github.com/harelba/q). All of them enable SQL queries on delimiter-separated text files (e.g. .csv or .tsv). For qjanno we copied the source code of qhs v0.3.3 (MIT-License) and adjusted it to provide a smooth experience with a special kind of .tsv file: The Poseidon [.janno](janno_details.md) file.
 
@@ -83,7 +86,8 @@ This help can be accessed with `qjanno -h`. Running `qjanno` without any paramet
 A basic, working qjanno query could look like this:
 
 ```
-$ qjanno "SELECT package_title,Poseidon_ID,Country FROM d(2010_RasmussenNature,2012_MeyerScience)"
+$ qjanno "SELECT package_title,Poseidon_ID,Country \
+          FROM d(2010_RasmussenNature,2012_MeyerScience)"
 .----------------------.----------------------.-----------.
 |    package_title     |     Poseidon_ID      |  Country  |
 :======================:======================:===========:
@@ -337,13 +341,21 @@ For `JOIN` operations, SQLite requires table names to specify which columns are 
 $ echo -e "Poseidon_ID,MoreInfo\nInuk.SG,5\nA_French-4.DG,3\n" > test.csv
 
 $ qjanno "SELECT * FROM d(2010_RasmussenNature,2012_MeyerScience)" -c
-.------------------------------.-------------------------------------------.--------------------------------------.
-|            Column            |                   Path                    |          qjanno Table name           |
-:==============================:===========================================:======================================:
-| package_title                | d(2010_RasmussenNature,2012_MeyerScience) | d2010RasmussenNature2012MeyerScience |
-| package_version              | d(2010_RasmussenNature,2012_MeyerScience) | d2010RasmussenNature2012MeyerScience |
-| source_file                  | d(2010_RasmussenNature,2012_MeyerScience) | d2010RasmussenNature2012MeyerScience |
-| Poseidon_ID                  | d(2010_RasmussenNature,2012_MeyerScience) | d2010RasmussenNature2012MeyerScience |
+.------------------------------.-------------------------------------------.
+|            Column            |                   Path                    |
+:==============================:===========================================:
+| package_title                | d(2010_RasmussenNature,2012_MeyerScience) |
+| package_version              | d(2010_RasmussenNature,2012_MeyerScience) |
+| source_file                  | d(2010_RasmussenNature,2012_MeyerScience) |
+| Poseidon_ID                  | d(2010_RasmussenNature,2012_MeyerScience) |
+...
+--------------------------------------.
+          qjanno Table name           |
+======================================:
+ d2010RasmussenNature2012MeyerScience |
+ d2010RasmussenNature2012MeyerScience |
+ d2010RasmussenNature2012MeyerScience |
+ d2010RasmussenNature2012MeyerScience |
 ...
 
 $ qjanno "SELECT * FROM test.csv" -c
@@ -379,12 +391,12 @@ SQLite provides a number of aggregation functions: `avg(X)`, `count(*)`, `count(
 Determine the minimal number of SNPs across all individuals.
 
 ```
-$ qjanno "SELECT min(Nr_SNPs) AS Minimal_number_of_SNPs FROM d(2010_RasmussenNature,2012_MeyerScience)"
-.------------------------.
-| Minimal_number_of_SNPs |
-:========================:
-| 592535                 |
-'------------------------'
+$ qjanno "SELECT min(Nr_SNPs) AS n FROM d(2010_RasmussenNature,2012_MeyerScience)"
+.--------.
+|   n    |
+:========:
+| 592535 |
+'--------'
 ```
 
 Count the number of individuals per Date_Type group and calculate the average Nr_SNPs for both groups.
@@ -402,9 +414,3 @@ GROUP BY Date_Type \
 | modern    | 6        | 592986.5     |
 '-----------'----------'--------------'
 ```
-
-#### **v1.0.0**
-
-[filename](qjanno_guide_archive/qjanno_guide_1.0.0.md ':include')
-
-<!-- tabs:end -->

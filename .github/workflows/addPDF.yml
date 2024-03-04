@@ -1,0 +1,56 @@
+name: Convert certain .md to .pdf (see the pdf_conversion directory)
+
+# Trigger the workflow on push or pull request, but only for the master branch
+on:
+  pull_request:
+  push:
+    branches: [master]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      # https://github.com/actions/checkout/issues/317
+      with:
+        ref: ${{ github.event.pull_request.head.ref }}
+
+    - name: Install pandoc and pdflatex
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y pandoc texlive-latex-extra
+
+    - name: Modify and prepare main documentation files
+      run: |
+        # remove everything up to "## Guide for" in software guides
+        sed -i '1,/^\s*## Guide for/ {/## Guide for/ !d}' janno_r_package.md
+        sed -i '1,/^\s*## Guide for/ {/## Guide for/ !d}' qjanno.md
+        sed -i '1,/^\s*## Guide for/ {/## Guide for/ !d}' trident.md
+        sed -i '1,/^\s*## Guide for/ {/## Guide for/ !d}' xerxes.md
+        # add extra # at the beginning of janno_details.md
+        echo -e "#$(cat janno_details.md)" > janno_details.md
+
+    - name: Convert files
+      run: |
+        { cat pdf_conversion/pdf_conversion_list.tsv; echo; } | while read -r src dest
+        do
+            echo "now rendering:" $src "->" $dest
+            pandoc $src -o $dest -d pdf_conversion/pandoc_pdf_config.yml
+        done
+
+    - name: Commit and push if any .pdf files have changed or new ones have been added
+      run: |
+        DIFF=$(git diff --name-only -- '*.pdf')
+        UNTRACKED=$(git ls-files --others --exclude-standard -- '*.pdf')
+        if [ "$DIFF" != "" ] || [ "$UNTRACKED" != "" ]; then
+          echo ".pdf files have been changed or added, commiting changes."
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add "*.pdf"
+          git commit -m "automated .pdf update"
+          git push
+        else
+          echo "No changes in PDF files"
+        fi
