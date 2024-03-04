@@ -1,5 +1,7 @@
 ## Guide for qjanno v1.0.0
 
+### Background
+
 qjanno is a fork of the [qhs](https://github.com/itchyny/qhs) software tool, which is, in turn, inspired by the CLI tool [q](https://github.com/harelba/q). All of them enable SQL queries on delimiter-separated text files (e.g. .csv or .tsv). For qjanno we copied the source code of qhs v0.3.3 (MIT-License) and adjusted it to provide a smooth experience with a special kind of .tsv file: The Poseidon [.janno](janno_details.md) file.
 
 Unlike `trident` or `xerxes` qjanno does not have a complete understanding of the .janno-file structure, and (mostly) treats it like a normal .tsv file. It does not validate the files upon reading and takes them at face value. Still .janno files are given special consideration: With the `d(...)` pseudo-function they can be searched recursively and loaded together into one table.
@@ -64,7 +66,7 @@ $ qjanno "SELECT Poseidon_ID,Country FROM d(2010_RasmussenNature,2012_MeyerScien
 '----------------------'-----------'
 ```
 
-qjanno is asked to run the query `SELECT Poseidon_ID,Country FROM d(2010_RasmussenNature,2012_MeyerScience)`, which triggers the following process:
+qjanno is asked to run the query `SELECT ... FROM ...`, which triggers the following process:
 
 1. As `d(...)` is provided in the table name field (`FROM`), qjanno searches recursively for .janno files in the provided base directories `2010_RasmussenNature` and `2012_MeyerScience`.
 2. It finds the .janno files, reads them and merges them (simple row-bind).
@@ -90,7 +92,8 @@ $ qjanno "SELECT Col2 FROM test.csv"
 qjanno automatically tries to detect the relevant separator of files. With `--sep` a delimiter can be specified explicitly, and the shortcut `-t` sets `--sep $'\t'` for tab-separated files. So a .janno file can also be read without `d(...)` using the following syntax:
 
 ```
-$ qjanno "SELECT Poseidon_ID,Country FROM 2010_RasmussenNature/2010_RasmussenNature.janno" -t # -t is optional
+$ qjanno "SELECT Poseidon_ID,Country FROM 2010_RasmussenNature/2010_RasmussenNature.janno" \
+  -t # -t is optional
 .-------------.-----------.
 | Poseidon_ID |  Country  |
 :=============:===========:
@@ -287,10 +290,15 @@ For `JOIN` operations, SQLite requires table names to specify which columns are 
 $ echo -e "Poseidon_ID,MoreInfo\nInuk.SG,5\nA_French-4.DG,3\n" > test.csv
 
 $ qjanno "SELECT * FROM d(2010_RasmussenNature,2012_MeyerScience)" -c
-.------------------------------.-------------------------------------------.--------------------------------------.
-|            Column            |                   Path                    |          qjanno Table name           |
-:==============================:===========================================:======================================:
-| Capture_Type                 | d(2010_RasmussenNature,2012_MeyerScience) | d2010RasmussenNature2012MeyerScience |
+.------------------------------.-------------------------------------------.
+|            Column            |                   Path                    |
+:==============================:===========================================:
+| Capture_Type                 | d(2010_RasmussenNature,2012_MeyerScience) | ->
+...
+--------------------------------------.
+          qjanno Table name           |
+======================================:
+ d2010RasmussenNature2012MeyerScience |
 ...
 
 $ qjanno "SELECT * FROM test.csv" -c
@@ -325,12 +333,12 @@ SQLite provides a number of aggregation functions: `avg(X)`, `count(*)`, `count(
 Determine the minimal number of SNPs across all individuals.
 
 ```
-$ qjanno "SELECT min(Nr_SNPs) AS Minimal_number_of_SNPs FROM d(2010_RasmussenNature,2012_MeyerScience)"
-.------------------------.
-| Minimal_number_of_SNPs |
-:========================:
-| 592535                 |
-'------------------------'
+$ qjanno "SELECT min(Nr_SNPs) AS n FROM d(2010_RasmussenNature,2012_MeyerScience)"
+.--------.
+|   n    |
+:========:
+| 592535 |
+'--------'
 ```
 
 Count the number of individuals per Date_Type group and calculate the average Nr_SNPs for both groups.
