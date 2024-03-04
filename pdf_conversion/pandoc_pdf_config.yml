@@ -8,7 +8,9 @@ variables:
   geometry:
     - top=30mm
     - left=20mm
+    - right=25mm
     - heightrounded
   colorlinks: true
 pdf-engine: pdflatex # relevant for reproducibility, see include-before-body
 include-before-body: pdf_conversion/before_body.tex
+include-in-header: pdf_conversion/in_header.tex
