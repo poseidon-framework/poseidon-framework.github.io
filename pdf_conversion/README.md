@@ -1,4 +1,4 @@
-For automatic `.pdf` generation a GitHub Action [here](../workflows/addPDF.yml) runs upon every push or pull request to the `master` branch. It performs the following steps:
+For automatic `.pdf` generation a GitHub Action [here](../.github/workflows/addPDF.yml) runs upon every push or pull request to the `master` branch. It performs the following steps:
 
 1. Check out the repo.
 2. Install `pandoc` and `pdflatex`.
