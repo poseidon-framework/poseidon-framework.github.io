@@ -30,7 +30,8 @@ On GitHub you will also find [older release versions](https://github.com/poseido
 
 With `xerxes --help` and `xerxes <subcommand> --help` you can get information about each subcommand and parameter directly on the command line. The guide below explains the subcommands in more detail. It is available in .pdf format for the current and previous versions here:
 
-- [🗎 Guide for xerxes v1.0.0.2](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/xerxes.pdf) (shown below)
+- [🗎 Guide for xerxes v1.0.1.0](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/xerxes.pdf) (shown below)
+- [🗎 Guide for xerxes v1.0.0.2](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/xerxes_guide_archive/xerxes_guide_1.0.0.2.pdf)
 - [🗎 Guide for xerxes v0.2.0.0](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/xerxes_guide_archive/xerxes_guide_0.2.0.0.pdf)
 
 ## Guide for xerxes v1.0.1.0
