@@ -239,6 +239,7 @@ Additionally, an option `--blockOutFile` can be specified, to which then a table
 #### Degenerate statistics
 
 Specific cases of statistics are 0 by construction:
+
 - `F2(A, B)`, `F2vanilla(A, B)`, `FST(A, B)` and `FSTvanilla(A, B)` where `A=B`.
 - `F3(A, B, C)` and `F3vanilla(A, B, C)` where `C=A` or `C=B`
 - `F4(A, B, C, D)` where `A=B` or `C=D`
@@ -247,7 +248,7 @@ Even though the bias-correction technically can result in non-zero and even nega
 
 #### Ploidy and illegal cases
 
-Genotype ploidy in input samploes is important for many of the statistics, because the bias-correction terms require the number of chromosomes. Ploidy information is automatically read through the field of `Genotype_Ploidy` in the Janno file. A warning is printed if that information is missing, in which case we assume diploid genotypes. But often with low-coverage data from ancient DNA we create pseudo-haploid genotypes, so in that case it is important to provide that information correctly through the Janno file. 
+Genotype ploidy in input samples is important for many of the statistics, because the bias-correction terms require the number of chromosomes. Ploidy information is automatically read through the field of `Genotype_Ploidy` in the .janno file. A warning is printed if that information is missing, in which case we assume diploid genotypes. But often with low-coverage data from ancient DNA we create pseudo-haploid genotypes, so in that case it is important to provide that information correctly through the .janno file. 
 
 In specific cases, statistics are illegal, in case of only a single haplotype. Specifically:
 
@@ -255,7 +256,7 @@ In specific cases, statistics are illegal, in case of only a single haplotype. S
 - `F3(A, B, C)` is undefined of `C` contains only a single haplotype.
 - `Het(A)` unsurprisingly is undefined if `A` contains only a single haplotype.
 
-These cases are detected and an error is thrown, in case of `F2`, `F3` and `FST` to use the "vanilla" versions of the statistics if that makes sense. This is particularly relevant for so-called "Outgroup-F3-Statistics", where we sometimes use a single haploid reference genome in position `C`. Use `F3vanilla` in that case.
+These cases are detected and an error is thrown. For of `F2`, `F3` and `FST` it suggests to use the "vanilla" versions of the statistics if that makes sense. This is particularly relevant for so-called "Outgroup-F3-Statistics", where we sometimes use a single haploid reference genome in position `C`. Use `F3vanilla` in that case.
 
 #### Whitepaper
 The repository comes with a [detailed whitepaper](https://github.com/poseidon-framework/poseidon-analysis-hs/blob/updates_poseidon_1.4/docs/xerxes_whitepaper.pdf) that describes some more mathematica details of the methods implemented here.
@@ -265,6 +266,7 @@ The repository comes with a [detailed whitepaper](https://github.com/poseidon-fr
 The RAS command computes pairwise RAS statistics between a collection of "left" entities, and a collection of "right" entities. Every Entity is either a group name or an individual, with the similar syntax as in F-statistics above, so `French` is a group, and `<IND001>` is an individual.
 
 The input of left-pops and right-pops uses a YAML file via `--popConfigFile`. Here is an example:
+
 ```
 groupDefs:
   group1: a,b,-c,-<d>
@@ -318,6 +320,8 @@ Available options:
 The output gives both cumulative (up to allele-count k) and and per-allele-frequency RAS (for allele count k) for every pair of left and rights. The standard out contains a pretty-printed table, and in adition, a tab-separated file is written to the file specified using option `-f`. 
 
 `xerxes ras` makes a few important assumptions:
-1) It assumes that the Right Populations are "nearly" completely non-missing. Any allele that is actually missing from the rights is in fact treated as homozygous-reference! A different approach would be to compute the actual frequencies on the non-missing right alleles, but then we cannot anymore nicely accumulate over different ascertainment allele counts.
-2) If no outgroup is specified, the ascertainment operates on minor-allele frequency (as in fstats)
-3) If an outgroup is specified and missing from a SNP, or if the SNP is polymorphic, the SNP is skipped as missing
+
+1. It assumes that the Right Populations are "nearly" completely non-missing. Any allele that is actually missing from the rights is in fact treated as homozygous-reference! A different approach would be to compute the actual frequencies on the non-missing right alleles, but then we cannot anymore nicely accumulate over different ascertainment allele counts.
+2. If no outgroup is specified, the ascertainment operates on minor-allele frequency (as in fstats)
+3. If an outgroup is specified and missing from a SNP, or if the SNP is polymorphic, the SNP is skipped as missing
+
