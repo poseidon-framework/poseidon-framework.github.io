@@ -6,9 +6,9 @@ variables:
   documentclass: article
   papersize: a4
   geometry:
-    - top=30mm
+    - top=20mm
     - left=20mm
-    - right=25mm
+    - right=20mm
     - heightrounded
   colorlinks: true
 pdf-engine: pdflatex # relevant for reproducibility, see include-before-body
