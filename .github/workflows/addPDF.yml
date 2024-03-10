@@ -1,8 +1,7 @@
 name: Convert certain .md to .pdf (see the pdf_conversion directory)
 
-# Trigger the workflow on push or pull request, but only for the master branch
+# Trigger the workflow on push to the master branch
 on:
-  pull_request:
   push:
     branches: [master]
 
