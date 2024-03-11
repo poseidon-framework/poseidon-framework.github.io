@@ -41,7 +41,7 @@ qjanno still supports most features of qhs, so it can still read .csv and .tsv f
 
 ### How does this work?
 
-On startup, qjanno creates an [SQLite](https://www.sqlite.org) database [in memory](https://www.sqlite.org/inmemorydb.html). It then reads the requested, structured text files, attributes each column a type (either character or numeric) and writes the contents of the files to tables in the in-memory database. It finally sends the user-provided SQL query to the database, waits for the result, parses it and returns it on the command line.
+On startup, qjanno creates an [SQLite](https://www.sqlite.org) ([Gaffney et al. 2022](https://doi.org/10.14778/3554821.3554842)) database [in memory](https://www.sqlite.org/inmemorydb.html). It then reads the requested, structured text files, attributes each column a type (either character or numeric) and writes the contents of the files to tables in the in-memory database. It finally sends the user-provided SQL query to the database, waits for the result, parses it and returns it on the command line.
 
 The query gets pre-parsed to extract file names and then forwarded to an SQLite database server via the Haskell library [sqlite-simple](https://hackage.haskell.org/package/sqlite-simple). That means qjanno can parse and understand basic SQLite3 syntax, though not everything. [`PRAGMA` functions](https://www.sqlite.org/pragma.html#syntax), for example, are not available. The examples below show some of the available syntax, but they are not exhaustive. Trial and error is recommended to see what does and what does not work. Please report missing functionality in our [issue board on GitHub](https://github.com/poseidon-framework/qjanno/issues).
 
@@ -205,7 +205,7 @@ This summary also includes the artificial, structurally cleaned table names assi
 
 ### Query examples
 
-The following examples show some of the functionality of the SQLite query language available through qjanno. See the [SQLite syntax documentation](https://www.sqlite.org/lang.html) for more details. They were prepared and tested in a clone of the [Poseidon community archive](archive_overview).
+The following examples show some of the functionality of the SQLite query language available through qjanno. See the [SQLite syntax documentation](https://www.sqlite.org/lang.html) for more details. They were prepared and tested in a clone of the Poseidon community archive.
 
 **Sub-setting with `WHERE`**
 

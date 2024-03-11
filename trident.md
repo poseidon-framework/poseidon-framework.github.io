@@ -92,7 +92,7 @@ Inspection commands:
                            structural correctness
 ```
 
-Trident allows to work directly with genotype data (see `-p` below), but its optimized for the interaction with [Poseidon packages](https://poseidon-framework.github.io/#/standard), which wrap and contextualize the data. Most trident subcommands therefore have a central parameter, called `--baseDir` or simply `-d` to specify one or more base directories to look for packages. For example, if all Poseidon packages live inside a repository at `/path/to/poseidon/packages` you would simply say `trident <subcommand> -d /path/to/poseidon/dirs/` and `trident` would automatically search all subdirectories inside of the repository for valid Poseidon packages (as identified by valid `POSEIDON.yml` files).
+Trident allows to work directly with genotype data (see `-p` below), but its optimized for the interaction with Poseidon packages, which wrap and contextualize the data. Most trident subcommands therefore have a central parameter, called `--baseDir` or simply `-d` to specify one or more base directories to look for packages. For example, if all Poseidon packages live inside a repository at `/path/to/poseidon/packages` you would simply say `trident <subcommand> -d /path/to/poseidon/dirs/` and `trident` would automatically search all subdirectories inside of the repository for valid Poseidon packages (as identified by valid `POSEIDON.yml` files).
 
 You can arrange a Poseidon repository in a hierarchical way. For example:
 
@@ -119,7 +119,7 @@ Being able to specify one or multiple repositories is often not enough, as you m
 ~/my_project/my_project.ind
 ```
 
-Then you can make that to a skeleton Poseidon package with the [`init`](#init-command) command. You can also do it manually by simply adding a `POSEIDON.yml` file, with for example the following content:
+Then you can make that to a skeleton Poseidon package with the `init` command. You can also do it manually by simply adding a `POSEIDON.yml` file, with for example the following content:
 
 ```
 poseidonVersion: 2.7.1
@@ -255,7 +255,7 @@ The output package of `init` is created as a new directory `-o`, which should no
 
 #### Fetch command
 
-`fetch` allows to download Poseidon packages from a remote Poseidon server via a [Web API](web_api). Read more about the data available with it [here](archive_overview).
+`fetch` allows to download Poseidon packages from a remote Poseidon server via a Web API. This server provides all packages in the Poseidon public archives.
 
 <details>
  <summary><i class="fas fa-search"></i> <i class="fas fa-terminal"></i> <b>Command line details</b></summary>
@@ -310,7 +310,7 @@ Entities are specified using a special syntax (see also the documentation of `fo
 
 Note that `trident fetch` makes most sense in combination with `trident list --remote`: First one can inspect what is available on the server, then one can create a custom fetch command.
 
-`fetch` also has the optional arguments `--remote https:://..."` to name an alternative Poseidon server and `--archive` to select a Poseidon archive on the server. Here is a list of the [archives available on the official Poseidon server](archive_overview).
+`fetch` also has the optional arguments `--remote https:://..."` to name an alternative Poseidon server and `--archive` to select a specific Poseidon public archive on the server.
 
 #### Forge command
 
@@ -776,7 +776,7 @@ The following arguments determine which fields of the POSEIDON.yml file should b
 - `--checksumGeno`, `--checksumJanno`, `--checksumSSF` and `--checksumBib` add or modify the respective checksum fields in the POSEIDON.yml file. `--checksumAll` is a wrapper to call all of them at once.
 - `--newContributors` adds new contributors.
 
-:warning: As `rectify` reads and rewrites POSEIDON.yml files, it may change their inner order, layout or even content (e.g. if they have fields which are not in the [POSEIDON.yml definition](standard)). Create a backup of the POSEIDON.yml file before running `rectify` if you are uncertain if this might affect you negatively.
+:warning: As `rectify` reads and rewrites POSEIDON.yml files, it may change their inner order, layout or even content (e.g. if they have fields which are not in the POSEIDON.yml specification). Create a backup of the POSEIDON.yml file before running `rectify` if you are uncertain if this might affect you negatively.
 
 ### Inspection commands
 
@@ -841,7 +841,7 @@ You can use `--remote` to show packages on the remote server. For example
 trident list --packages --remote --archive "community-archive"
 ```
 
-will result in a view of all packages available in one of the [public online archives](archive_overview). Just as for `fetch`, the `--archive` flag allows to choose which public archive to query.
+will result in a view of all packages available in one of the Poseidon public archives. Just as for `fetch`, the `--archive` flag allows to choose which public archive to query.
 
 Independent of whether you query a local or an online archive, you can not just list packages, but also groups, as defined in the third column of EIGENSTRAT `.ind` files (or the first/last column of a PLINK `.fam` file), and individuals with the flags `--groups` and `--individuals` (instead of `--packages`).
 
@@ -978,7 +978,7 @@ to check packages and it will either report a success (`Validation passed`) or f
 
 Instead of validating entire packages with `-d` you can also apply it to individual files and package components: `--pyml` (POSEIDON.yml), `-p | --inFormat + --genoFile + --snpFile + --indFile` (genotype data), `--janno` (.janno file), `--ssf` (.ssf file) or `--bib` (.bib file). In this case `validate` attempts to read and parse the respecitve files individually and reports any issues it encounters. Note that this considers the files in isolation and does not include any cross-file consistency checks.
 
-When applied to packages, `validate` tries to ensure that each package adheres to the [schema definition](standard). Here is a list of what is checked:
+When applied to packages, `validate` tries to ensure that each package adheres to the Poseidon package specification. Here is a list of what is checked:
 
 - Structural correctness of the POSEIDON.yml file.
 - Presence of all files references in the POSEIDON.yml file.
