@@ -18,8 +18,12 @@ jobs:
 
     - name: Install pandoc and pdflatex
       run: |
+        # pdflatex
         sudo apt-get update
-        sudo apt-get install -y pandoc texlive-latex-extra
+        sudo apt-get install -y texlive-latex-extra
+        # pandoc
+        wget https://github.com/jgm/pandoc/releases/download/3.1.12.2/pandoc-3.1.12.2-1-amd64.deb
+        sudo dpkg -i pandoc-3.1.12.2-1-amd64.deb
 
     - name: Modify and prepare main documentation files
       run: |
