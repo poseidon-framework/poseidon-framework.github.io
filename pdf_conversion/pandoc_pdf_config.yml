@@ -14,3 +14,6 @@ variables:
 pdf-engine: pdflatex # relevant for reproducibility, see include-before-body
 include-before-body: pdf_conversion/before_body.tex
 include-in-header: pdf_conversion/in_header.tex
+# for the bibliography
+citeproc: true
+bibliography: references.bib

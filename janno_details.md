@@ -16,7 +16,7 @@ The `Group_Name` column contains one or multiple group or population names for e
 
 ### Relations among samples/individuals
 
-To systematically document biological relationships uncovered among samples/individuals in one or multiple Poseidon datasets (e.g. with software like READ ([Kuhn et al. 2018](https://doi.org/10.1371/journal.pone.0195491)) or BREADR ([Rohrlach et al. 2023](https://doi.org/10.1101/2023.04.17.537144)), the `.janno` file can be fit with a set of columns featuring the `Relation_*` prefix. They together should be capable to encode all kinds of pairwise, biological relationships an individual might have.
+To systematically document biological relationships uncovered among samples/individuals in one or multiple Poseidon datasets (e.g. with software like READ ([Kuhn et al. 2018](https://doi.org/10.1371/journal.pone.0195491)) or BREADR ([@Rohrlach2023](https://doi.org/10.1101/2023.04.17.537144)), the `.janno` file can be fit with a set of columns featuring the `Relation_*` prefix. They together should be capable to encode all kinds of pairwise, biological relationships an individual might have.
 
 `Relation_To` is a string list column (so: multiple values are possible if separated by `;`) that stores the `Poseidon_ID`s of other samples/individuals to which the current individual has some relationship. 
 
@@ -224,3 +224,4 @@ The `Note` column is a free form text field that can contain small amounts of ad
 
 The `Keywords` column was introduced to allow for tagging individuals with arbitrary keywords. This should simplify sorting and filtering in personal Poseidon package repositories. Each keyword is a string and multiple keywords can be separated with `;`.
 
+***
