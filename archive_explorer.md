@@ -193,6 +193,57 @@
         await updateMap();
         loading.value = false;
       };
+      
+      // computed properties to calculate package statistics
+      const packageStats = computed(() => {
+        if (!selectedPackage.value) return null;
+
+        let numMale = 0;
+        let numFemale = 0;
+        let totalSNPs = 0;
+        let numModern = 0;
+        let numAncient = 0;
+
+        for (const sample of getSamplesForPackage(selectedPackage.value.packageTitle)) {
+          const sex = sample.additionalJannoColumns.find((col) => col[0] === 'Genetic_Sex');
+          const snps = sample.additionalJannoColumns.find((col) => col[0] === 'Nr_SNPs');
+          const dateType = sample.additionalJannoColumns.find((col) => col[0] === 'Date_Type');
+          
+
+          if (sex && snps && dateType) {
+            const sexValue = sex[1].toLowerCase();
+            const snpsValue = parseFloat(snps[1]);
+            const dateTypeValue = dateType[1].toLowerCase();
+
+            if (!isNaN(snpsValue)) {
+              totalSNPs += snpsValue;
+            }
+
+            if (sexValue === 'm') {
+              numMale++;
+            } else if (sexValue === 'f') {
+              numFemale++;
+            }
+
+            if (dateTypeValue === 'modern') {
+              numModern++;
+            } else {
+              numAncient++;
+            }
+          }
+        }
+
+        const avgSNPs = totalSNPs / selectedPackage.value.nrIndividuals;
+
+        return {
+          numMale,
+          numFemale,
+          avgSNPs: isNaN(avgSNPs) ? 0 : avgSNPs.toFixed(2),
+          numModern,
+          numAncient,
+        };
+      });
+
 
       // trigger loading of the website
       showSelection();
@@ -212,7 +263,8 @@
         selectPackage,
         selectedPackageTitle,
         selectedPackage,
-        unselectPackage
+        unselectPackage,
+        packageStats, // Include package statistics in return
       };
     }
   };
@@ -332,6 +384,37 @@
     </table>
   </div>
 
+  <!-- Summary Statistics -->
+  <details>
+  <summary>See more summary statistics</summary>
+  <div>
+    <table class="table-default">
+      <tbody>
+        <tr>
+          <td>Nr of genetically male samples</td>
+          <td>{{ packageStats.numMale }}</td>
+        </tr>
+        <tr>
+          <td>Nr of genetically female samples</td>
+          <td>{{ packageStats.numFemale }}</td>
+        </tr>
+        <tr>
+          <td>Average Nr of SNPs</td>
+          <td>{{ packageStats.avgSNPs }}</td>
+        </tr>
+        <tr>
+          <td>Nr of modern samples</td>
+          <td>{{ packageStats.numModern }}</td>
+        </tr>
+        <tr>
+          <td>Nr of ancient samples</td>
+          <td>{{ packageStats.numAncient }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  </details>
+
   <div>
     <table class="table-default">
       <colgroup>
@@ -365,7 +448,7 @@
       </tbody>
     </table>
   </div>
-
+  
   </div>
 
   <!-- overview -->
