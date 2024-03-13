@@ -22,6 +22,30 @@
         <i class="fa fa-play-circle" aria-hidden="true"></i> Quick start guide
       </span>
     </button>
+    <button onclick="window.open(
+      'https://github.com/poseidon-framework',
+      '_blank');;"
+      class="button">
+      <span>
+        <i class="fab fa-github" aria-hidden="true"></i> GitHub
+      </span>
+    </button>
+    <button onclick="window.open(
+      'https://ecoevo.social/@poseidon',
+      '_blank');;"
+      class="button">
+      <span>
+        <i class="fab fa-mastodon" aria-hidden="true"></i> Mastodon
+      </span>
+    </button>
+    <button onclick="window.open(
+      'https://app.gitter.im/#/room/!TycQipeBdEPTHWqilU:gitter.im',
+      '_blank');;"
+      class="button">
+      <span>
+        <i class="fab fa-gitter" aria-hidden="true"></i> Gitter
+      </span>
+    </button>
   </div>
 </div>
 
@@ -67,7 +91,7 @@
   }
 </style>
 
-<br>
+<p></p>
 
 <div class="grid-container">
   <div class="grid-element">
@@ -121,49 +145,20 @@
   }
 </style>
 
-### Community
+<p></p>
 
-<div id="landingPageButtonsOuter">
-  <div id="landingPageButtonsInner">
-  Find us on
-    <button onclick="window.open(
-      'https://github.com/poseidon-framework',
-      '_blank');;"
-      class="button">
-      <span>
-        <i class="fab fa-github" aria-hidden="true"></i> GitHub
-      </span>
-    </button>
-    <button onclick="window.open(
-      'https://ecoevo.social/@poseidon',
-      '_blank');;"
-      class="button">
-      <span>
-        <i class="fab fa-mastodon" aria-hidden="true"></i> Mastodon
-      </span>
-    </button>
-    <button onclick="window.open(
-      'https://app.gitter.im/#/room/!TycQipeBdEPTHWqilU:gitter.im',
-      '_blank');;"
-      class="button">
-      <span>
-        <i class="fab fa-gitter" aria-hidden="true"></i> Gitter
-      </span>
-    </button>
-  </div>
-</div>
-
-Poseidon was founded and been mainly developed by entusiasts at the [Max Planck Institute for Evolutionary Anthropology in Leipzig](https://www.eva.mpg.de/archaeogenetics/projects/poseidon/), but it seeks to foster a growing community of users, package maintainers and developers. There are multiple ways you can get involved:
+<div class="grid-element">
+<div class="grid-symbol"><i class="fa fa-users" aria-hidden="true"></i></div>
+Poseidon fosters a <b>growing community</b> of users, package maintainers and developers
 
 * Join our [Gitter channel](https://app.gitter.im/#/room/!TycQipeBdEPTHWqilU:gitter.im) to ask questions or make suggestions
-* Use our software and report issues on github, for example for trident [here](https://github.com/poseidon-framework/poseidon-hs/issues) and for xerxes [here](https://github.com/poseidon-framework/poseidon-analysis-hs/issues)
-* Use our data and report issues on github for the [Poseidon Community Archive](https://github.com/poseidon-framework/community-archive/issues), the [Poseidon Minotaur archive](https://github.com/poseidon-framework/minotaur-archive/issues) and the [Poseidon AADR archive](https://github.com/poseidon-framework/aadr-archive/issues).
-* Contribute packages to the Community Archive (see [Contribution Guide](archive_submission_guide.md)) or fix issues with existing packages, or contribute new recipes for Minotaur (see [recipes repository](https://github.com/poseidon-framework/minotaur-recipes))
-* Join the growing [HAAM community](https://haam-community.github.io) to meet other researchers interested in archaeogenetic data analyses.
+* Use our software and report issues on GitHub, for example for trident [here](https://github.com/poseidon-framework/poseidon-hs/issues) or for xerxes [here](https://github.com/poseidon-framework/poseidon-analysis-hs/issues)
+* Use our data and report issues on GitHub for the [Poseidon Community Archive](https://github.com/poseidon-framework/community-archive/issues), the [Poseidon Minotaur archive](https://github.com/poseidon-framework/minotaur-archive/issues) and the [Poseidon AADR archive](https://github.com/poseidon-framework/aadr-archive/issues).
+* [Contribute packages]((archive_submission_guide.md) or fix issues with existing packages, or add [new recipes for Minotaur]((https://github.com/poseidon-framework/minotaur-recipes)
+* Join the growing [HAAM community](https://haam-community.github.io) to meet other researchers interested in archaeogenetics
+</div>
 
 ### Latest news
-
-<br>
 
 <script>
   Vue.createApp({
