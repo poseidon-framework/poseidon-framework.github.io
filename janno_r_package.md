@@ -110,10 +110,10 @@ janno::quickcalibrate(ages, sds)
 
 `quickcalibrate(list(1000, c(2000, 2200)), list(20, c(30, 40)))` for example returns a data.frame like this: 
 
-| Date_BC_AD_Start_2Sigma| Date_BC_AD_Start_1Sigma| Date_BC_AD_Median| Date_BC_AD_Stop_1Sigma| Date_BC_AD_Stop_2Sigma|
-|-----------------------:|-----------------------:|-----------------:|----------------------:|----------------------:|
-|                     994|                     996|              1029|                   1113|                   1149|
-|                    -383|                    -354|               -88|                     65|                    117|
+| Date_BC_AD_Start_2Sigma| ... | Date_BC_AD_Median| ... | Date_BC_AD_Stop_2Sigma|
+|-----------------------:|----:|-----------------:|----:|----------------------:|
+|                     994| ... |              1029| ... |                   1149|
+|                    -383| ... |               -88| ... |                    117|
 
 This output can be copied to the new `.janno` file, where `Date_BC_AD_Start_2Sigma` corresponds to `Date_BC_AD_Start`, and `Date_BC_AD_Stop_2Sigma` to `Date_BC_AD_Stop`.
 
