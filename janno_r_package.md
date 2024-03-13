@@ -31,11 +31,11 @@ my_janno_object <- janno::read_janno(
 
 The path argument takes one or multiple file paths or directory paths. `read_janno()` searches recursively for `.janno` files in the directory paths.
 
-Before loading the `.janno` files are validated with `janno::validate_janno()`. You can avoid this potentially time consuming step with `validate = FALSE`.
+Before loading the `.janno` files they are validated with `janno::validate_janno()`. You can avoid this potentially time consuming step with `validate = FALSE`.
 
 Usually the `.janno` files are loaded as normal `.tsv` files with every column type set to `character` and then the columns are transformed to the intended types. This transformation can be turned off with `to_janno = FALSE`.
 
-`read_janno()` returns an object of class `janno`. `janno` objects are derived tibbles, so all tidyverse operations can be applied to them. As long as the data layout does not change, they will remain `janno` objects and not be transformed to default tibbles.
+`read_janno()` returns an object of class `janno`. `janno` objects are derived [`tibble`s](https://tibble.tidyverse.org/), which integrate well with the tidyverse ([@Wickham2019](https://doi.org/10.21105/joss.01686)) and its packages, e.g. `dplyr` or `ggplot2`. As long as the data layout does not change, they will remain `janno` objects and not be transformed to default tibbles.
 
 ### Validate janno files
 
@@ -60,7 +60,7 @@ janno::write_janno(
 
 ### Process age information in janno objects
 
-`.janno` files contain age information in multiple different columns. The function `janno::process_age()` works with this age information to calculate different derived columns, which are then added to the input `janno` object. 
+`.janno` files contain age information in multiple different columns. See the .janno file documentation for a detailed explanation of these variables. The function `janno::process_age()` works with this age information to calculate different derived columns, which are then added to the input `janno` object.
 
 You can run it with
 
@@ -68,15 +68,18 @@ You can run it with
 janno::process_age(
   my_janno_object,
   choices = c("Date_BC_AD_Prob", "Date_BC_AD_Median_Derived", "Date_BC_AD_Sample"),
-  n = 100
+  n = 100,
+  cal_curve = "intcal20"
 )
 ```
 
-The `choices` argument contains the list of columns that should be calculated and added. `n` is the number of samples that should be drawn for `Date_BC_AD_Sample`.
+`janno::process_age` includes calibration of radiocarbon dates with the Bchron R package ([@Haslett2008](https://doi.org/10.1111/j.1467-9876.2008.00623.x)). The calibration curve set in `cal_curve` is applied for every date in the `janno` object. If there are multiple radiocarbon dates for one sample they are automatically combined as the normalized sum of all individual post-calibration probability distributions. 
+
+The `choices` argument contains the list of columns that should be calculated and added by `janno::process_age`. `n` is the number of samples that should be drawn for `Date_BC_AD_Sample`.
 
 #### Output column `Date_BC_AD_Prob`
 
-`Date_BC_AD_Prob` is a list column with a data.frame for each `janno` row ("samples"). This data.frame stores a density distribution (`sum_dens`) over a set of years (`age`) with the information of a given year is within two standard deviations (`two_sigma`) from the median age (`center`). 
+`Date_BC_AD_Prob` is a list column with a data.frame for each `janno` row, so each sample. This data.frame stores a density distribution (`sum_dens`) over a set of years BC/AD (`age`) with the information of a given year is within two standard deviations (`two_sigma`) from the median age (`center`). 
 
 | age   | sum_dens   | two_sigma | center |
 |-------|------------|-----------|--------|
@@ -89,28 +92,29 @@ The density distributions are either the result of (sum) calibration on radiocar
 
 #### Output column `Date_BC_AD_Median_Derived`
 
-`Date_BC_AD_Median_Derived` is a simple integer column with the median age (in years) as determined for `Date_BC_AD_Prob`.
+`Date_BC_AD_Median_Derived` is a simple integer column with the median age (in years BC/AD) as determined from `Date_BC_AD_Prob`.
 
 #### Output column `Date_BC_AD_Sample`
 
-`Date_BC_AD_Sample` is again a list column with a vector of `n` ages (in years) for each sample. These ages are drawn with `sample(prob = ...)` considering the probability distribution calculated for `Date_BC_AD_Prob`.
+`Date_BC_AD_Sample` is again a list column with a vector of `n` ages (in years BC/AD) for each sample. These ages are randomly drawn with `base::sample(prob = ...)` considering the probability distribution calculated for `Date_BC_AD_Prob`.
 
 ### General helper functions
 
-When you're preparing a `.janno` file and want to determine the entries for the columns `Date_BC_AD_Median`, `Date_BC_AD_Start` and `Date_BC_AD_Stop` from radiocarbon dates, then `janno::quickcalibrate()` might come in handy.
+When you are preparing a `.janno` file and want to determine the entries for the columns `Date_BC_AD_Median`, `Date_BC_AD_Start` and `Date_BC_AD_Stop` from radiocarbon dates, then `janno::quickcalibrate()` might come in handy.
 
 ```
 janno::quickcalibrate(ages, sds)
 ```
 
-`ages` takes a list of uncalibrated ages BP and `sds` a list of standard deviations. If multiple ages are provided for one sample, then the function automatically performs a sum calibration. 
+`ages` takes a list of uncalibrated C14 ages BP and `sds` a list of the respective standard deviations. If multiple ages are provided for one sample, then the function automatically performs a sum calibration. 
 
 `quickcalibrate(list(1000, c(2000, 2200)), list(20, c(30, 40)))` for example returns a data.frame like this: 
 
-| Date_BC_AD_Median | Date_BC_AD_Start | Date_BC_AD_Stop |
-|-------------------|------------------|-----------------|
-| 1029              | 996              | 1144            |
-| -88               | -364             | 98              |
+| Date_BC_AD_Start_2Sigma| Date_BC_AD_Start_1Sigma| Date_BC_AD_Median| Date_BC_AD_Stop_1Sigma| Date_BC_AD_Stop_2Sigma|
+|-----------------------:|-----------------------:|-----------------:|----------------------:|----------------------:|
+|                     994|                     996|              1029|                   1113|                   1149|
+|                    -383|                    -354|               -88|                     65|                    117|
 
-This output can be copied to the new `.janno` file.
+This output can be copied to the new `.janno` file, where `Date_BC_AD_Start_2Sigma` corresponds to `Date_BC_AD_Start`, and `Date_BC_AD_Stop_2Sigma` to `Date_BC_AD_Stop`.
 
+***
