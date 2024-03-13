@@ -1,40 +1,4 @@
-<popup :custom-text="`<p><a href='https://mpi-eva-archaeogenetics.github.io/comp_human_adna_book/fstats.html'>Introduction to F3- and F4-Statistics</a> by Stephan Schiffels: An explanation of F-Statistics and how to run them with xerxes</p>`"></popup>
-
-# xerxes CLI software <!-- {docsify-ignore-all} -->
-
-`xerxes` is a command line software tool for population genetic analyses of Poseidon packages. It is written in Haskell and openly available on [GitHub](https://github.com/poseidon-framework/poseidon-analysis-hs/).
-
-[![CI](https://github.com/poseidon-framework/poseidon-analysis-hs/actions/workflows/main.yml/badge.svg)](https://github.com/poseidon-framework/poseidon-analysis-hs/actions/workflows/main.yml)
-[![Coverage Status](https://img.shields.io/codecov/c/github/poseidon-framework/poseidon-analysis-hs/main.svg)](https://codecov.io/github/poseidon-framework/poseidon-analysis-hs?branch=main)
-[![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/poseidon-framework/poseidon-analysis-hs?include_prereleases) ![GitHub all releases](https://img.shields.io/github/downloads/poseidon-framework/poseidon-analysis-hs/total)](https://github.com/poseidon-framework/poseidon-analysis-hs/releases)
-[![Install with Bioconda](https://anaconda.org/bioconda/poseidon-xerxes/badges/version.svg)](https://anaconda.org/bioconda/poseidon-xerxes)
-[![Anaconda-Server Badge](https://anaconda.org/bioconda/poseidon-xerxes/badges/downloads.svg)](https://anaconda.org/bioconda/poseidon-xerxes)
-
-To download the latest stable release version of `xerxes` click here:
-[📥 Linux](https://github.com/poseidon-framework/poseidon-analysis-hs/releases/latest/download/xerxes-Linux) 
-[📥 macOS](https://github.com/poseidon-framework/poseidon-analysis-hs/releases/latest/download/xerxes-macOS) 
-
-
-So in Linux you can run the following commands to get started:
-
-```bash
-# download the current stable release binary
-wget https://github.com/poseidon-framework/poseidon-analysis-hs/releases/latest/download/xerxes-Linux
-# make it executable
-chmod +x xerxes-Linux
-# run it
-./xerxes-Linux -h
-```
-
-On GitHub you will also find [older release versions](https://github.com/poseidon-framework/poseidon-analysis-hs/releases) and [instructions to build xerxes from source](https://github.com/poseidon-framework/poseidon-analysis-hs#for-haskell-developers). The relevant changes from one version to the next are documented in this [changelog](https://github.com/poseidon-framework/poseidon-analysis-hs/blob/main/CHANGELOGRELEASE.md).
-
-With `xerxes --help` and `xerxes <subcommand> --help` you can get information about each subcommand and parameter directly on the command line. The guide below explains the subcommands in more detail. It is available in .pdf format for the current and previous versions here:
-
-- [🗎 Guide for xerxes v1.0.1.0](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/xerxes.pdf) (shown below)
-- [🗎 Guide for xerxes v1.0.0.2](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/xerxes_guide_archive/xerxes_guide_1.0.0.2.pdf)
-- [🗎 Guide for xerxes v0.2.0.0](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/xerxes_guide_archive/xerxes_guide_0.2.0.0.pdf)
-
-## Guide for xerxes v1.0.1.0
+## Guide for xerxes v1.0.0.2
 
 ### Fstats command
 
@@ -122,11 +86,10 @@ The following statistics are allowed in the `--stat`, `--statFile` and `--statCo
 * `F3star(a,b,c)`: F3-Statistics as defined in Patterson et al. 2012 - normalised and bias-corrected version, recommended for Admixture-F3 tests. Are computed by i) first substracting per SNP from the vanilla-F3 statistic a bias-correction term hC/sC, as above for F2, and ii) then normalising the genome-wide estimate by a genome-wide estimate of the heterozygosity of entity C (`Het(c)`), in order to make results comparable between different groups C (see Patterson et al., Genetics, 2012)
 * `F4(a,b,c,d)`: F4 statistics. Are computed by averageing the quantity (a-b)(c-d) across all SNPs. No bias correction is necessary for this statistic.
 * `Het(a)`: An estimate of the heterozygosity across all SNPs, computed as `2*hA`, with `hA` defined as above in `F2`
-* `FST(a, b)`: An estimate of FST across the genome, following the estimator presented in Bhatia et al. 2013 and implemented in the ADMIXTOOLS package. This amounts to a ratio of genome-wide agerages, where the numerator is an unbiased estimate of `F2` (see above), and the denominator is `PWM(a, b)`, see below.
-* `FSTvanilla(a, b)`: Similar to `FST(a, b)` but without the bias correction in the numerator, mainly useful for teaching and learning.
+* `FST(a, b)`: An estimate of FST across the genome, following the formular from Appendix A in Patterson et al. 2012, which is a ratio of two terms, with numerator being `F2(a, b)` including bias correction, and the denominator being `F2(a, b) + hA + hB` including bias correction and `hA` and `hB` defined as above.
 * `PWM(a, b)`: The pairwise mismatch rate between entities a and b, computed from allele frequencies as `a (1 - b) + (1 - a) b`.
 
-Most of these equations can also be found in Patterson, Nick, Priya Moorjani, Yontao Luo, Swapan Mallick, Nadin Rohland, Yiping Zhan, Teri Genschoreck, Teresa Webster, and David Reich. 2012. “Ancient Admixture in Human History.” Genetics 192 (3): 1065–93. See also Appendix A of this paper for the unbiased estimators used above.
+All of these equations are from Patterson, Nick, Priya Moorjani, Yontao Luo, Swapan Mallick, Nadin Rohland, Yiping Zhan, Teri Genschoreck, Teresa Webster, and David Reich. 2012. “Ancient Admixture in Human History.” Genetics 192 (3): 1065–93. See also Appendix A of this paper for the unbiased estimators used above.
 
 For each of the "slots" A, B, C or D, you can enter:
 * Individuals, using the syntax `<Individual_Name>`
@@ -236,37 +199,14 @@ which lists each statistic, the slots a, b, c and d, the number of sites with no
 
 Additionally, an option `--blockOutFile` can be specified, to which then a table with estimates per Jackknife block is written.
 
-#### Degenerate statistics
-
-Specific cases of statistics are 0 by construction:
-
-- `F2(A, B)`, `F2vanilla(A, B)`, `FST(A, B)` and `FSTvanilla(A, B)` where `A=B`.
-- `F3(A, B, C)` and `F3vanilla(A, B, C)` where `C=A` or `C=B`
-- `F4(A, B, C, D)` where `A=B` or `C=D`
-
-Even though the bias-correction technically can result in non-zero and even negative values, we automatically detect these cases and output identical 0 for them. This can be useful for example when looping over pairs of populations for a pairwise matrix of FST, where we then want the diagonal to be zero to yield a proper distance matrix.
-
-#### Ploidy and illegal cases
-
-Genotype ploidy in input samples is important for many of the statistics, because the bias-correction terms require the number of chromosomes. Ploidy information is automatically read through the field of `Genotype_Ploidy` in the .janno file. A warning is printed if that information is missing, in which case we assume diploid genotypes. But often with low-coverage data from ancient DNA we create pseudo-haploid genotypes, so in that case it is important to provide that information correctly through the .janno file. 
-
-In specific cases, statistics are illegal, in case of only a single haplotype. Specifically:
-
-- `F2(A, B)` and `FST(A, B)` is undefined if either one of `A` or `B` contains only a single haplotype.
-- `F3(A, B, C)` is undefined of `C` contains only a single haplotype.
-- `Het(A)` unsurprisingly is undefined if `A` contains only a single haplotype.
-
-These cases are detected and an error is thrown. For of `F2`, `F3` and `FST` it suggests to use the "vanilla" versions of the statistics if that makes sense. This is particularly relevant for so-called "Outgroup-F3-Statistics", where we sometimes use a single haploid reference genome in position `C`. Use `F3vanilla` in that case.
-
 #### Whitepaper
-The repository comes with a [detailed whitepaper](https://github.com/poseidon-framework/poseidon-analysis-hs/blob/main/docs/xerxes_whitepaper.pdf) that describes some more mathematica details of the methods implemented here.
+The repository comes with a [detailed whitepaper](https://github.com/poseidon-framework/poseidon-analysis-hs/blob/updates_poseidon_1.4/docs/xerxes_whitepaper.pdf) that describes some more mathematica details of the methods implemented here.
 
 ### RAS (in development)
 
 The RAS command computes pairwise RAS statistics between a collection of "left" entities, and a collection of "right" entities. Every Entity is either a group name or an individual, with the similar syntax as in F-statistics above, so `French` is a group, and `<IND001>` is an individual.
 
 The input of left-pops and right-pops uses a YAML file via `--popConfigFile`. Here is an example:
-
 ```
 groupDefs:
   group1: a,b,-c,-<d>
@@ -320,8 +260,6 @@ Available options:
 The output gives both cumulative (up to allele-count k) and and per-allele-frequency RAS (for allele count k) for every pair of left and rights. The standard out contains a pretty-printed table, and in adition, a tab-separated file is written to the file specified using option `-f`. 
 
 `xerxes ras` makes a few important assumptions:
-
-1. It assumes that the Right Populations are "nearly" completely non-missing. Any allele that is actually missing from the rights is in fact treated as homozygous-reference! A different approach would be to compute the actual frequencies on the non-missing right alleles, but then we cannot anymore nicely accumulate over different ascertainment allele counts.
-2. If no outgroup is specified, the ascertainment operates on minor-allele frequency (as in fstats)
-3. If an outgroup is specified and missing from a SNP, or if the SNP is polymorphic, the SNP is skipped as missing
-
+1) It assumes that the Right Populations are "nearly" completely non-missing. Any allele that is actually missing from the rights is in fact treated as homozygous-reference! A different approach would be to compute the actual frequencies on the non-missing right alleles, but then we cannot anymore nicely accumulate over different ascertainment allele counts.
+2) If no outgroup is specified, the ascertainment operates on minor-allele frequency (as in fstats)
+3) If an outgroup is specified and missing from a SNP, or if the SNP is polymorphic, the SNP is skipped as missing
