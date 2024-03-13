@@ -143,7 +143,7 @@
       </span>
     </button>
     <button onclick="window.open(
-      'https://matrix.to/#/#poseidon-adna:gitter.im',
+      'https://app.gitter.im/#/room/!TycQipeBdEPTHWqilU:gitter.im',
       '_blank');;"
       class="button">
       <span>
@@ -155,7 +155,7 @@
 
 Poseidon was founded and been mainly developed by entusiasts at the [Max Planck Institute for Evolutionary Anthropology in Leipzig](https://www.eva.mpg.de/archaeogenetics/projects/poseidon/), but it seeks to foster a growing community of users, package maintainers and developers. There are multiple ways you can get involved:
 
-* Join our [Gitter channel](https://matrix.to/#/#poseidon-adna:gitter.im) to ask questions or make suggestions
+* Join our [Gitter channel](https://app.gitter.im/#/room/!TycQipeBdEPTHWqilU:gitter.im) to ask questions or make suggestions
 * Use our software and report issues on github, for example for trident [here](https://github.com/poseidon-framework/poseidon-hs/issues) and for xerxes [here](https://github.com/poseidon-framework/poseidon-analysis-hs/issues)
 * Use our data and report issues on github for the [Poseidon Community Archive](https://github.com/poseidon-framework/community-archive/issues), the [Poseidon Minotaur archive](https://github.com/poseidon-framework/minotaur-archive/issues) and the [Poseidon AADR archive](https://github.com/poseidon-framework/aadr-archive/issues).
 * Contribute packages to the Community Archive (see [Contribution Guide](archive_submission_guide.md)) or fix issues with existing packages, or contribute new recipes for Minotaur (see [recipes repository](https://github.com/poseidon-framework/minotaur-recipes))
