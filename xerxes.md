@@ -259,7 +259,7 @@ In specific cases, statistics are illegal, in case of only a single haplotype. S
 These cases are detected and an error is thrown. For of `F2`, `F3` and `FST` it suggests to use the "vanilla" versions of the statistics if that makes sense. This is particularly relevant for so-called "Outgroup-F3-Statistics", where we sometimes use a single haploid reference genome in position `C`. Use `F3vanilla` in that case.
 
 #### Whitepaper
-The repository comes with a [detailed whitepaper](https://github.com/poseidon-framework/poseidon-analysis-hs/blob/updates_poseidon_1.4/docs/xerxes_whitepaper.pdf) that describes some more mathematica details of the methods implemented here.
+The repository comes with a [detailed whitepaper](https://github.com/poseidon-framework/poseidon-analysis-hs/blob/main/docs/xerxes_whitepaper.pdf) that describes some more mathematica details of the methods implemented here.
 
 ### RAS (in development)
 
