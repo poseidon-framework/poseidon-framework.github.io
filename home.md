@@ -24,14 +24,6 @@
     </button>
     &nbsp;
     <button onclick="window.open(
-      'https://join.slack.com/t/poseidon-8el7276/shared_invite/zt-14q2wxxmf-pbtNtm5E9DFJbjioyfAyMg',
-      '_blank');;"
-      class="button">
-      <span>
-        <i class="fab fa-slack" aria-hidden="true"></i> Slack
-      </span>
-    </button>
-    <button onclick="window.open(
       'https://github.com/poseidon-framework',
       '_blank');;"
       class="button">
