@@ -22,23 +22,6 @@
         <i class="fa fa-play-circle" aria-hidden="true"></i> Quick start guide
       </span>
     </button>
-    &nbsp;
-    <button onclick="window.open(
-      'https://github.com/poseidon-framework',
-      '_blank');;"
-      class="button">
-      <span>
-        <i class="fab fa-github" aria-hidden="true"></i> GitHub
-      </span>
-    </button>
-    <button onclick="window.open(
-      'https://ecoevo.social/@poseidon',
-      '_blank');;"
-      class="button">
-      <span>
-        <i class="fab fa-mastodon" aria-hidden="true"></i> Mastodon
-      </span>
-    </button>
   </div>
 </div>
 
@@ -137,6 +120,37 @@
     font-size: 30px;
   }
 </style>
+
+### Community
+
+<div id="landingPageButtonsOuter">
+  <div id="landingPageButtonsInner">
+    <button onclick="window.open(
+      'https://github.com/poseidon-framework',
+      '_blank');;"
+      class="button">
+      <span>
+        <i class="fab fa-github" aria-hidden="true"></i> GitHub
+      </span>
+    </button>
+    <button onclick="window.open(
+      'https://ecoevo.social/@poseidon',
+      '_blank');;"
+      class="button">
+      <span>
+        <i class="fab fa-mastodon" aria-hidden="true"></i> Mastodon
+      </span>
+    </button>
+  </div>
+</div>
+
+Poseidon was founded and been mainly developed by entusiasts at the [Max Planck Institute for Evolutionary Anthropology in Leipzig](https://www.eva.mpg.de/archaeogenetics/projects/poseidon/), but it seeks to foster a growing community of users, package maintainers and developers. There are multiple ways you can get involved:
+
+1.) Join our Gitter channel (...) to ask questions or make suggestions
+2.) Use our software and report issues on github, for example for trident [here](https://github.com/poseidon-framework/poseidon-hs/issues) and for xerxes [here](https://github.com/poseidon-framework/poseidon-analysis-hs/issues)
+3.) Use our data and report issues on github for the [Poseidon Community Archive](https://github.com/poseidon-framework/community-archive/issues), the [Poseidon Minotaur archive](https://github.com/poseidon-framework/minotaur-archive/issues) and the [Poseidon AADR archive](https://github.com/poseidon-framework/aadr-archive/issues).
+4.) Contribute packages to the Community Archive (see [Contribution Guide](archive_submission_guide.md)) or fix issues with existing packages, or contribute new recipes for Minotaur (see [recipes repository](https://github.com/poseidon-framework/minotaur-recipes))
+5.) Join the growing [HAAM community](https://haam-community.github.io) to meet other researchers interested in archaeogenetic data analyses.
 
 ### Latest news
 
