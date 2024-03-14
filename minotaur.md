@@ -75,7 +75,7 @@ While most fields of the SSF file have been filled-in automatically with informa
   - The `udg` column MUST be filled with the UDG treatment of the samples (`plus`, `half` or `minus`)
   - The `library_built` column MUST be filled with the strandedness of each library (`ds` or `ss`)
   - The `poseidon_IDs` column MUST be filled with the Poseidon IDs that this set of data should be associated with. If one set of reads should be associated with multiple Poseidon IDs, these should be separated by a semi-colon (e.g. `GUP001;GUP001_SG`)
-  - The optional `notes` field, where you SHOULD record any notes you might have about the data, or the decisions you made if any (e.g. `Data in the FastQ is actually a mix of UDG-half and non-UDG libraries. Setting to udg to "none".`)
+  - The optional `notes` field, where you SHOULD record any notes you might have about the data, or the decisions you made if any (e.g. ***Data in the FastQ is actually a mix of UDG-half and non-UDG libraries. Setting to udg to "none".***)
 
 In most cases, the `poseidon_Ids` field will be a single Poseidon ID, but associating multiple Poseidon IDs to a single set of reads might be useful in some cases. For example, if the contamination estimate of one library of individual `ABC001` was reported as borderline in the publication, users might want to have two versions of an individual in the resulting poseidon package: one using all available data, and one where that library is excluded. In this scenario, all data from that individual should have `poseidon_Ids` set to `ABC001;ABC001_all_libraries`, except for the library that should be excluded from the `ABC001` poseidon Id, which would only get the ID `ABC001_all_libraries` in that column.
 
