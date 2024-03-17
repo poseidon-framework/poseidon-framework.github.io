@@ -17,6 +17,10 @@ The guide below explains the main functions in the package. It is available in .
 
 ## Guide for the janno R package v1.0.0
 
+### Installation
+
+See the Poseidon website (<www.poseidon-adna.org/#/janno_r_package>) or the GitHub repository (<www.github.com/poseidon-framework/janno>) for up-to-date installation instructions.
+
 ### Read janno files
 
 You can read `.janno` files with
