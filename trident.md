@@ -46,7 +46,7 @@ With `trident --help` and `trident <subcommand> --help` you can get information 
 
 ### Installation
 
-See the Poseidon website (<https://www.poseidon-adna.org/#/trident>) or the GitHub repository (<https://github.com/poseidon-framework/trident>) for up-to-date installation instructions.
+See the Poseidon website (<https://www.poseidon-adna.org/#/trident>) or the GitHub repository (<https://github.com/poseidon-framework/poseidon-hs>) for up-to-date installation instructions.
 
 ### The trident CLI
 
