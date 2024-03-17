@@ -36,6 +36,10 @@ With `xerxes --help` and `xerxes <subcommand> --help` you can get information ab
 
 ## Guide for xerxes v1.0.1.0
 
+### Installation
+
+See the Poseidon website (<https://www.poseidon-adna.org/#/xerxes>) or the GitHub repository (<https://github.com/poseidon-framework/poseidon-analysis-hs>) for up-to-date installation instructions.
+
 ### Fstats command
 
 Xerxes allows you to analyse genotype data across poseidon packages, including your own, as explained above by "hooking" in your own package via a `--baseDir` (or `-d`) parameter. This has the advantage that you can compute arbitrary F-Statistics across groups and individuals distributed in many packages, without the need to explicitly merge the data first. Xerxes also takes care of merging PLINK and EIGENSTRAT data on the fly. It also takes care of different genotype base sets, like Human-Origins vs. 1240K. It also flips alleles automatically across genotype files, and throws an error if the alleles in different packages are incongruent with each other. Xerxes is also smart enough to select only the packages relevant for the statistics that you need, and then streams through only those genotype data.

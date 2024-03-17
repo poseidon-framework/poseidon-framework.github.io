@@ -45,6 +45,10 @@ On startup, qjanno creates an [SQLite](https://www.sqlite.org) ([@Gaffney2022](h
 
 The query gets pre-parsed to extract file names and then forwarded to an SQLite database server via the Haskell library [sqlite-simple](https://hackage.haskell.org/package/sqlite-simple). That means qjanno can parse and understand basic SQLite3 syntax, though not everything. [`PRAGMA` functions](https://www.sqlite.org/pragma.html#syntax), for example, are not available. The examples below show some of the available syntax, but they are not exhaustive. Trial and error is recommended to see what does and what does not work. Please report missing functionality in our [issue board on GitHub](https://github.com/poseidon-framework/qjanno/issues).
 
+### Installation
+
+See the Poseidon website (<https://www.poseidon-adna.org/#/qjanno>) or the GitHub repository (<https://github.com/poseidon-framework/qjanno>) for up-to-date installation instructions.
+
 ### The CLI interface
 
 This is the CLI interface of qjanno:

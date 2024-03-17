@@ -44,6 +44,10 @@ With `trident --help` and `trident <subcommand> --help` you can get information 
 
 ## Guide for trident v1.4.1.0
 
+### Installation
+
+See the Poseidon website (<https://www.poseidon-adna.org/#/trident>) or the GitHub repository (<https://github.com/poseidon-framework/trident>) for up-to-date installation instructions.
+
 ### The trident CLI
 
 Trident is a command line software tool structured in multiple subcommands. If you installed it properly you can call it on the command line by typing `trident`. This will show an overview of the general options and all subcommands, which are explained in detail below.
