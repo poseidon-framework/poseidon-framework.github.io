@@ -1,8 +1,8 @@
 table-of-contents: true
 shift-heading-level-by: -2
 number-sections: true
+highlight-style: tango
 variables:
-  highlight-style: tango
   documentclass: article
   papersize: a4
   geometry:

@@ -52,7 +52,7 @@ See the Poseidon website (<https://www.poseidon-adna.org/#/trident>) or the GitH
 
 Trident is a command line software tool structured in multiple subcommands. If you installed it properly you can call it on the command line by typing `trident`. This will show an overview of the general options and all subcommands, which are explained in detail below.
 
-```
+```default
 Usage: trident [--version] [--logMode MODE | --debug] [--errLength INT]
                [--inPlinkPopName MODE] (COMMAND | COMMAND)
 
