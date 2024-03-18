@@ -39,7 +39,7 @@ Before loading the `.janno` files they are validated with `janno::validate_janno
 
 Usually the `.janno` files are loaded as normal `.tsv` files with every column type set to `character` and then the columns are transformed to the intended types. This transformation can be turned off with `to_janno = FALSE`.
 
-`read_janno()` returns an object of class `janno`. `janno` objects are derived [`tibble`s](https://tibble.tidyverse.org/), which integrate well with the tidyverse ([@Wickham2019](https://doi.org/10.21105/joss.01686)) and its packages, e.g. `dplyr` or `ggplot2`. As long as the data layout does not change, they will remain `janno` objects and not be transformed to default tibbles.
+`read_janno()` returns an object of class `janno`. `janno` objects are derived [`tibble`s](https://tibble.tidyverse.org/), which integrate well with the tidyverse [@Wickham2019](https://doi.org/10.21105/joss.01686) and its packages, e.g. `dplyr` or `ggplot2`. As long as the data layout does not change, they will remain `janno` objects and not be transformed to default tibbles.
 
 ### Validate janno files
 
@@ -77,7 +77,7 @@ janno::process_age(
 )
 ```
 
-`janno::process_age` includes calibration of radiocarbon dates with the Bchron R package ([@Haslett2008](https://doi.org/10.1111/j.1467-9876.2008.00623.x)). The calibration curve set in `cal_curve` is applied for every date in the `janno` object. If there are multiple radiocarbon dates for one sample they are automatically combined as the normalized sum of all individual post-calibration probability distributions. 
+`janno::process_age` includes calibration of radiocarbon dates with the Bchron R package [@Haslett2008](https://doi.org/10.1111/j.1467-9876.2008.00623.x). The calibration curve set in `cal_curve` is applied for every date in the `janno` object. If there are multiple radiocarbon dates for one sample they are automatically combined as the normalized sum of all individual post-calibration probability distributions. 
 
 The `choices` argument contains the list of columns that should be calculated and added by `janno::process_age`. `n` is the number of samples that should be drawn for `Date_BC_AD_Sample`.
 

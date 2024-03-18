@@ -16,4 +16,5 @@ include-before-body: pdf_conversion/before_body.tex
 include-in-header: pdf_conversion/in_header.tex
 # for the bibliography
 citeproc: true
+csl: pdf_conversion/ieee.csl
 bibliography: references.bib
