@@ -6,7 +6,7 @@ janno (formerly known as poseidonR) is an R package to simplify the interaction 
 
 You can install the janno package from GitHub with the following command in R:
 
-```
+```r
 if(!require('remotes')) install.packages('remotes')
 remotes::install_github('poseidon-framework/janno')
 ```
@@ -25,7 +25,7 @@ See the Poseidon website (<https://www.poseidon-adna.org/#/janno_r_package>) or 
 
 You can read `.janno` files with
 
-```
+```r
 my_janno_object <- janno::read_janno(
   path = "path/to/my/janno_file.janno",
   to_janno = TRUE,
@@ -45,7 +45,7 @@ Usually the `.janno` files are loaded as normal `.tsv` files with every column t
 
 You can validate `.janno` files with
 
-```
+```r
 my_janno_issues <- janno::validate_janno("path/to/my/janno_file.janno")
 ```
 
@@ -55,7 +55,7 @@ my_janno_issues <- janno::validate_janno("path/to/my/janno_file.janno")
 
 `janno` objects usually contain list columns, that can not directly be written to a flat text file like the `.janno` file. The function `write_janno` solves that. It employs a helper function `flatten_janno`, which translates list columns to the string list format in `.janno` files (so: multiple values for one cell separated by `;`). This only works for vector list columns, so when each cell contains a vector of values. If a list column cotains other data structures, e.g. `data.frame`s, they will be dropped and replaced with the NULL value `n/a` in the resulting `.janno` file.
 
-```
+```r
 janno::write_janno(
   my_janno_object,
   path = "path/to/my/new/janno_file.janno"
@@ -68,7 +68,7 @@ janno::write_janno(
 
 You can run it with
 
-```
+```r
 janno::process_age(
   my_janno_object,
   choices = c("Date_BC_AD_Prob", "Date_BC_AD_Median_Derived", "Date_BC_AD_Sample"),
@@ -106,7 +106,7 @@ The density distributions are either the result of (sum) calibration on radiocar
 
 When you are preparing a `.janno` file and want to determine the entries for the columns `Date_BC_AD_Median`, `Date_BC_AD_Start` and `Date_BC_AD_Stop` from radiocarbon dates, then `janno::quickcalibrate()` might come in handy.
 
-```
+```r
 janno::quickcalibrate(ages, sds)
 ```
 

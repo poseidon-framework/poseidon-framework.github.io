@@ -46,7 +46,7 @@ Xerxes allows you to analyse genotype data across poseidon packages, including y
 
 Here is an example command for computing several F-Statistics:
 
-```
+```bash
 xerxes fstats -d ... -d ... \
   --stat "F4(<Chimp.REF>, <Altai_published.DG>, Yoruba, French)" \
   --stat "F3(<Chimp.REF>, <Altai_snpAD.DG>, Spanish)" \
@@ -65,7 +65,7 @@ These three input ways can be mixed and matched, and given multiple times. They 
 
 Last, option `-f` can be used to write the output table into a tab-separated text file, beyond just printing a table into the standard out when the program finishes. Note that there are more options, which you can view using `xerxes fstats --help`:
 
-```
+```default
 Usage: xerxes fstats (-d|--baseDir DIR) [-j|--jackknife ARG] 
                      [-e|--excludeChroms ARG] 
                      (--stat ARG | --statConfig ARG | --statFile ARG) 
@@ -147,7 +147,7 @@ This is the simples option to instruct the program to compute a specified statis
 
 You can prepare a text file, into which you write the above statistics, one statistics per line. Example:
 
-```
+```default
 F4(<Chimp.REF>, <Altai_published.DG>, Yoruba, French)
 F4(<Chimp.REF>, <Altai_snpAD.DG>, Spanish, French)
 F4(Mbuti,Nganasan,Saami.DG,Finnish)
@@ -159,7 +159,7 @@ you can then load these statistics using the option `--statFile fstats.txt`.
 
 This is the most powerful way to input F-Statistics. Here is an example:
 
-```
+```yml
 groupDefs:
   CEU2: ["CEU.SG", "-<NA12889.SG>", "-<NA12890.SG>"]
   FIN2: ["FIN.SG", "-<HG00383.SG>", "-<HG00384.SG>"]
@@ -214,7 +214,7 @@ You can save this into a text file, for example named `fstats_config.yaml`, and 
 
 The final output of the `fstats` command looks like this:
 
-```
+```default
 .-----------.-----------.---------------.--------.-------.---------.
 | Statistic |     a     |       b       |   c    |   d   | NrSites |
 :===========:===========:===============:========:=======:=========:
@@ -271,7 +271,7 @@ The RAS command computes pairwise RAS statistics between a collection of "left" 
 
 The input of left-pops and right-pops uses a YAML file via `--popConfigFile`. Here is an example:
 
-```
+```yml
 groupDefs:
   group1: a,b,-c,-<d>
   group2: e,f,-<g>
@@ -293,7 +293,7 @@ As in [RAScalculator](https://github.com/TCLamnidis/RAStools), the allele freque
 
 The are a couple of optons, as specified in the CLI help (`xerxes ras --help`):
 
-```
+```default
 Usage: xerxes ras (-d|--baseDir DIR) [-j|--jackknife ARG] 
                   [-e|--excludeChroms ARG] --popConfigFile ARG 
                   [-k|--maxAlleleCount ARG] [-m|--maxMissingness ARG]

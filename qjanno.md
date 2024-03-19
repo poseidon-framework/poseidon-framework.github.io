@@ -41,7 +41,7 @@ qjanno still supports most features of qhs, so it can still read .csv and .tsv f
 
 ### How does this work?
 
-On startup, qjanno creates an [SQLite](https://www.sqlite.org) ([@Gaffney2022](https://doi.org/10.14778/3554821.3554842)) database [in memory](https://www.sqlite.org/inmemorydb.html). It then reads the requested, structured text files, attributes each column a type (either character or numeric) and writes the contents of the files to tables in the in-memory database. It finally sends the user-provided SQL query to the database, waits for the result, parses it and returns it on the command line.
+On startup, qjanno creates an [SQLite](https://www.sqlite.org) [@Gaffney2022](https://doi.org/10.14778/3554821.3554842) database [in memory](https://www.sqlite.org/inmemorydb.html). It then reads the requested, structured text files, attributes each column a type (either character or numeric) and writes the contents of the files to tables in the in-memory database. It finally sends the user-provided SQL query to the database, waits for the result, parses it and returns it on the command line.
 
 The query gets pre-parsed to extract file names and then forwarded to an SQLite database server via the Haskell library [sqlite-simple](https://hackage.haskell.org/package/sqlite-simple). That means qjanno can parse and understand basic SQLite3 syntax, though not everything. [`PRAGMA` functions](https://www.sqlite.org/pragma.html#syntax), for example, are not available. The examples below show some of the available syntax, but they are not exhaustive. Trial and error is recommended to see what does and what does not work. Please report missing functionality in our [issue board on GitHub](https://github.com/poseidon-framework/qjanno/issues).
 
@@ -53,7 +53,7 @@ See the Poseidon website (<https://www.poseidon-adna.org/#/qjanno>) or the GitHu
 
 This is the CLI interface of qjanno:
 
-```
+```default
 Usage: qjanno [--version] [QUERY] [-q|--queryFile FILE] [-c|--showColumns]
               [-t|--tabSep] [--sep DELIM] [--noHeader] [--raw] [--noOutHeader]
 
@@ -89,7 +89,7 @@ This help can be accessed with `qjanno -h`. Running `qjanno` without any paramet
 
 A basic, working qjanno query could look like this:
 
-```
+```default
 $ qjanno "SELECT package_title,Poseidon_ID,Country \
           FROM d(2010_RasmussenNature,2012_MeyerScience)"
 .----------------------.----------------------.-----------.
@@ -131,7 +131,7 @@ Multiple of these methods can be combined as a comma-separated list. Each respec
 
 qjanno can not just read .janno files, but also arbitrary .csv and .tsv files. This option is triggered by providing file names (relative paths) in the `FROM` field of the query, not `d(...)`.
 
-```
+```default
 $ echo -e "Col1,Col2\nVal1,Val2\nVal3,Val4\n" > test.csv
 $ qjanno "SELECT * FROM test.csv"
 .-------------.------.------.
@@ -144,7 +144,7 @@ $ qjanno "SELECT * FROM test.csv"
 
 With these non-.janno files qjanno automatically tries to detect the relevant separator. With `--sep` a delimiter can be specified explicitly, and the shortcut `-t` sets `--sep $'\t'` for tab-separated files.
 
-```
+```default
 $ echo -e "Col1\tCol2\nVal1\tVal2\nVal3\tVal4\n" > test.csv
 $ qjanno "SELECT * FROM test.csv" -t # -t is optional
 .--------------.------.------.
@@ -157,7 +157,7 @@ $ qjanno "SELECT * FROM test.csv" -t # -t is optional
 
 The `--noHeader` option allows to read files without headers, so column names. The columns are then automatically named *c1,c2,...cN*:
 
-```
+```default
 $ echo -e "Val1,Val2\nVal3,Val4\n" > test.csv
 $ qjanno "SELECT c1,c2 FROM test.csv" --noHeader
 .------.------.
@@ -170,7 +170,7 @@ $ qjanno "SELECT c1,c2 FROM test.csv" --noHeader
 
 The remaining options concern the output: `--raw` returns the output table not in the neat, human-readable ASCII table layout, but in a simple .tsv format. `--noOutHeader` omits the header line in the output.
 
-```
+```default
 $ echo -e "Col1,Col2\nVal1,Val2\nVal3,Val4\n" > test.csv
 $ qjanno "SELECT * FROM test.csv" --raw --noOutHeader
 test.csv  Val1  Val2
@@ -179,7 +179,7 @@ test.csv  Val3  Val4
 
 Note that these output options allow to directly prepare individual lists in trident's forgeScript selection language format:
 
-```
+```default
 $ qjanno "SELECT '<'||Poseidon_ID||'>' FROM d(2012_MeyerScience)" --raw --noOutHeader
 <A_Mbuti-5.DG>
 <A_Yoruba-4.DG>
@@ -193,7 +193,7 @@ $ qjanno "SELECT '<'||Poseidon_ID||'>' FROM d(2012_MeyerScience)" --raw --noOutH
 
 `-c`/`--showColumns` is a special option that, when activated, makes qjanno return not the result of a given query, but an overview table with the columns available in all loaded tables/files for said query. That is helpful to get an overview what could actually be queried.
 
-```
+```default
 $ echo -e "Col1,Col2\nVal1,Val2\nVal3,Val4\n" > test.csv
 $ qjanno "SELECT * FROM test.csv" -c
 .-------------.----------.-------------------.
@@ -215,7 +215,7 @@ The following examples show some of the functionality of the SQLite query langua
 
 Get all individuals (rows) in two Poseidon packages where UDG is set to 'minus'.
 
-```
+```default
 $ qjanno " \
 SELECT package_title,Poseidon_ID,UDG \
 FROM d(2010_RasmussenNature,2012_MeyerScience) \
@@ -230,7 +230,7 @@ WHERE UDG = 'minus' \
 
 Get all individuals where Genetic_Sex is not 'F' **and** Country is 'Sudan'.
 
-```
+```default
 $ qjanno " \
 SELECT Poseidon_ID,Country \
 FROM d(2010_RasmussenNature,2012_MeyerScience) \
@@ -245,7 +245,7 @@ WHERE Genetic_Sex <> 'F' AND Country = 'Sudan' \
 
 Get all individuals where the the UDG column is not `NULL` **or** the Country is 'Sudan'.
 
-```
+```default
 $ qjanno " \
 SELECT Poseidon_ID,Country \
 FROM d(2010_RasmussenNature,2012_MeyerScience) \
@@ -261,7 +261,7 @@ WHERE UDG IS NOT NULL OR Country = 'Sudan' \
 
 Get all individuals where Nr_SNPs is equal to or bigger than 600,000.
 
-```
+```default
 $ qjanno " \
 SELECT Poseidon_ID,Nr_SNPs \
 FROM d(2010_RasmussenNature,2012_MeyerScience) \
@@ -278,7 +278,7 @@ WHERE Nr_SNPs >= 600000 \
 
 Order all individuals by Nr_SNPs.
 
-```
+```default
 $ qjanno " \
 SELECT Poseidon_ID,Nr_SNPs \
 FROM d(2010_RasmussenNature,2012_MeyerScience) \
@@ -299,7 +299,7 @@ ORDER BY Nr_SNPs \
 
 Order all individuals by Date_BC_AD_Median in a descending (`DESC`) order. Date_BC_AD_Median includes NULL values.
 
-```
+```default
 $ qjanno " \
 SELECT Poseidon_ID,Date_BC_AD_Median \
 FROM d(2010_RasmussenNature,2012_MeyerScience) \
@@ -322,7 +322,7 @@ ORDER BY Date_BC_AD_Median DESC \
 
 Only return the first three result individuals.
 
-```
+```default
 $ qjanno " \
 SELECT Poseidon_ID,Group_Name \
 FROM d(2010_RasmussenNature,2012_MeyerScience) \
@@ -341,7 +341,7 @@ LIMIT 3 \
 
 For `JOIN` operations, SQLite requires table names to specify which columns are meant when combining multiple tables with overlapping column names. See the option `-c`/`--showColumns` to get the relevant table names as generated from the input paths.
 
-```
+```default
 $ echo -e "Poseidon_ID,MoreInfo\nInuk.SG,5\nA_French-4.DG,3\n" > test.csv
 
 $ qjanno "SELECT * FROM d(2010_RasmussenNature,2012_MeyerScience)" -c
@@ -373,7 +373,7 @@ $ qjanno "SELECT * FROM test.csv" -c
 
 Join the .janno files with the information in the test.csv file (by the `Poseidon_ID` column).
 
-```
+```default
 $ qjanno " \
 SELECT d2010RasmussenNature2012MeyerScience.Poseidon_ID,Country,MoreInfo \
 FROM d(2010_RasmussenNature,2012_MeyerScience) \
@@ -394,7 +394,7 @@ SQLite provides a number of aggregation functions: `avg(X)`, `count(*)`, `count(
 
 Determine the minimal number of SNPs across all individuals.
 
-```
+```default
 $ qjanno "SELECT min(Nr_SNPs) AS n FROM d(2010_RasmussenNature,2012_MeyerScience)"
 .--------.
 |   n    |
@@ -405,7 +405,7 @@ $ qjanno "SELECT min(Nr_SNPs) AS n FROM d(2010_RasmussenNature,2012_MeyerScience
 
 Count the number of individuals per Date_Type group and calculate the average Nr_SNPs for both groups.
 
-```
+```default
 $ qjanno " \
 SELECT Date_Type,count(*),avg(Nr_SNPs) \
 FROM d(2010_RasmussenNature,2012_MeyerScience) \

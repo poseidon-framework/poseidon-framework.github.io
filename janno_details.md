@@ -180,7 +180,7 @@ The `Primary_Contact` column is a free form text field that stores the name of t
 
 The `Publication` column holds either the value `unpublished` for (yet) unpublished samples or -- for published data -- one or multiple citation-keys of the form `AuthorJournalYear` without any spaces or special characters. These keys have to be identical to the [BibTeX](http://www.bibtex.org) citation-keys identifying the respective entries in the `.bib` file of the package. BibTeX is a file format to store bibliographic information, where each entry (article, book, website, ...) is defined by a series of parameters (authors, year of publication, journal, ...). Here's an example `.bib` file with two entries for [@Cassidy2015](https://doi.org/10.1073/pnas.1518445113) and [@Feldman2019](https://doi.org/10.1126/sciadv.aax0061):
 
-```
+```default
 @article{Cassidy2015,
     doi = {10.1073/pnas.1518445113},
     url = {https://doi.org/10.1073%2Fpnas.1518445113},
