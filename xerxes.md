@@ -42,7 +42,7 @@ See the Poseidon website (<https://www.poseidon-adna.org/#/xerxes>) or the GitHu
 
 ### Fstats command
 
-Xerxes allows you to analyse genotype data across poseidon packages, including your own, as explained above by "hooking" in your own package via a `--baseDir` (or `-d`) parameter. This has the advantage that you can compute arbitrary F-Statistics across groups and individuals distributed in many packages, without the need to explicitly merge the data first. Xerxes also takes care of merging PLINK and EIGENSTRAT data on the fly. It also takes care of different genotype base sets, like Human-Origins vs. 1240K. It also flips alleles automatically across genotype files, and throws an error if the alleles in different packages are incongruent with each other. Xerxes is also smart enough to select only the packages relevant for the statistics that you need, and then streams through only those genotype data.
+Xerxes allows you to analyse genotype data across Poseidon packages, including your own, as explained above by "hooking" in your own package via a `--baseDir` (or `-d`) parameter. This has the advantage that you can compute arbitrary F-Statistics across groups and individuals distributed in many packages, without the need to explicitly merge the data first. Xerxes also takes care of merging PLINK and EIGENSTRAT data on the fly. It also takes care of different genotype base sets, like Human-Origins vs. 1240K. It also flips alleles automatically across genotype files, and throws an error if the alleles in different packages are incongruent with each other. Xerxes is also smart enough to select only the packages relevant for the statistics that you need, and then streams through only those genotype data.
 
 Here is an example command for computing several F-Statistics:
 
@@ -55,7 +55,7 @@ xerxes fstats -d ... -d ... \
   -f outputfile.txt
 ```
 
-First, the two options `-d ...` exemplify that you need to provide at least one base directory for poseidon packages, but can also give multiple. Second, F-Statistics can be entered in three different ways:
+First, the two options `-d ...` exemplify that you need to provide at least one base directory for Poseidon packages, but can also give multiple. Second, F-Statistics can be entered in three different ways:
 
 1. Directly via the command line using `--stat`.
 2. Using a simple text file using `--statFile`
@@ -123,14 +123,14 @@ The following statistics are allowed in the `--stat`, `--statFile` and `--statCo
 * `F2(a, b)`: F2-Statistics (bias-corrected version). Computed as `F2(a, b) = F2vanilla(a, b) - hA/sA - hB/sB`, where where `sA` is the number of non-missing alleles in entity A, and `hA = nA * nA' / sA * (sA - 1)` is an estimator of half the heterozygosity (see `Het(a)`), and likewise for `sB` and `nB` etc.
 * `F3vanilla(a,b,c)`: F3-Statistics - Vanilla version, recommended if used as Outgroup-F3 statistics or with group c being pseudo-haploid: Are computed as `F3(a, b, c) = (c-a)(c-b)` across all SNPs.
 * `F3(a,b,c`: F3-statistics (bias-corrected version). Computed as `F3(a, b, c) = F3vanilla(a, b) - hC/sC`.
-* `F3star(a,b,c)`: F3-Statistics as defined in Patterson et al. 2012 - normalised and bias-corrected version, recommended for Admixture-F3 tests. Are computed by i) first substracting per SNP from the vanilla-F3 statistic a bias-correction term hC/sC, as above for F2, and ii) then normalising the genome-wide estimate by a genome-wide estimate of the heterozygosity of entity C (`Het(c)`), in order to make results comparable between different groups C (see Patterson et al., Genetics, 2012)
-* `F4(a,b,c,d)`: F4 statistics. Are computed by averageing the quantity (a-b)(c-d) across all SNPs. No bias correction is necessary for this statistic.
+* `F3star(a,b,c)`: F3-Statistics as defined in [@Patterson2012](https://doi.org/10.1534/genetics.112.145037) - normalised and bias-corrected version, recommended for Admixture-F3 tests. Are computed by i) first substracting per SNP from the vanilla-F3 statistic a bias-correction term hC/sC, as above for F2, and ii) then normalising the genome-wide estimate by a genome-wide estimate of the heterozygosity of entity C (`Het(c)`), in order to make results comparable between different groups C.
+* `F4(a,b,c,d)`: F4 statistics. Are computed by averaging the quantity (a-b)(c-d) across all SNPs. No bias correction is necessary for this statistic.
 * `Het(a)`: An estimate of the heterozygosity across all SNPs, computed as `2*hA`, with `hA` defined as above in `F2`
-* `FST(a, b)`: An estimate of FST across the genome, following the estimator presented in Bhatia et al. 2013 and implemented in the ADMIXTOOLS package. This amounts to a ratio of genome-wide agerages, where the numerator is an unbiased estimate of `F2` (see above), and the denominator is `PWM(a, b)`, see below.
+* `FST(a, b)`: An estimate of FST across the genome, following the estimator presented in [@Bhatia2013](https://doi.org/10.1101/gr.154831.113) and implemented in the ADMIXTOOLS package. This amounts to a ratio of genome-wide ranges, where the numerator is an unbiased estimate of `F2` (see above), and the denominator is `PWM(a, b)`, see below.
 * `FSTvanilla(a, b)`: Similar to `FST(a, b)` but without the bias correction in the numerator, mainly useful for teaching and learning.
 * `PWM(a, b)`: The pairwise mismatch rate between entities a and b, computed from allele frequencies as `a (1 - b) + (1 - a) b`.
 
-Most of these equations can also be found in Patterson, Nick, Priya Moorjani, Yontao Luo, Swapan Mallick, Nadin Rohland, Yiping Zhan, Teri Genschoreck, Teresa Webster, and David Reich. 2012. “Ancient Admixture in Human History.” Genetics 192 (3): 1065–93. See also Appendix A of this paper for the unbiased estimators used above.
+Most of these equations can also be found in [@Patterson2012](https://doi.org/10.1534/genetics.112.145037). See also Appendix A of this paper for the unbiased estimators used above.
 
 For each of the "slots" A, B, C or D, you can enter:
 * Individuals, using the syntax `<Individual_Name>`
@@ -155,7 +155,7 @@ F4(Mbuti,Nganasan,Saami.DG,Finnish)
 
 you can then load these statistics using the option `--statFile fstats.txt`.
 
-#### Input via a configuraton file
+#### Input via a configuration file
 
 This is the most powerful way to input F-Statistics. Here is an example:
 
@@ -195,7 +195,7 @@ The top level structure of this [YAML](https://en.wikipedia.org/wiki/YAML) file 
 
 ##### Group Definitions
 
-You can specify adhoc group definitions using the syntax above. Every group consists of a name (used as object key) and then a JSON- or YAML-list of signed entities, following the same syntax of `trident forge` (see [trident](trident.md)). Briefly: Individuals, Groups and Packages can be added or excluded (prefixed by a `-`) in order. In the example above, two individuals are removed from each group.
+You can specify ad-hoc group definitions using the syntax above. Every group consists of a name (used as object key) and then a JSON- or YAML-list of signed entities, following the same syntax as `trident forge`. Briefly: Individuals, Groups and Packages can be added or excluded (prefixed by a `-`) in order. In the example above, two individuals are removed from each group.
 
 Note that currently, groups can be defined only independently, so not incremental to each other. That means, you cannot currently use an already defined new group name in the entity list of a following group name.
 
@@ -208,7 +208,6 @@ Each statistic defined in the `fstats` section of the YAML file, actually define
 In addition, every statistic section allows for a definition of an ascertainment specification, using a special key `ascertainment:`, which is optional. If given, you can specify an optional `outgroup`, a `reference` group in which to ascertain SNPs, and `lower` and `upper` allele frequency bounds. If specified, only SNPs for which the `reference` group has an allele frequency within the given bounds are used to compute the statistic (note that normalisation is still using all non-missing SNPs for that given statistic). If an `outgroup` is defined, then the outgroup-polarised derived allele frequency is used. If no `outgroup` is defined, then the minor allele frequency is used instead. If an outgroup is defined, any sites where the outgroup is polymorphic are treated as missing.
 
 You can save this into a text file, for example named `fstats_config.yaml`, and load it via `--statConfig fstats_config.yaml`.
-
 
 #### Output
 
@@ -263,7 +262,8 @@ In specific cases, statistics are illegal, in case of only a single haplotype. S
 These cases are detected and an error is thrown. For of `F2`, `F3` and `FST` it suggests to use the "vanilla" versions of the statistics if that makes sense. This is particularly relevant for so-called "Outgroup-F3-Statistics", where we sometimes use a single haploid reference genome in position `C`. Use `F3vanilla` in that case.
 
 #### Whitepaper
-The repository comes with a [detailed whitepaper](https://github.com/poseidon-framework/poseidon-analysis-hs/blob/main/docs/xerxes_whitepaper.pdf) that describes some more mathematica details of the methods implemented here.
+
+The repository comes with a [detailed whitepaper](https://github.com/poseidon-framework/poseidon-analysis-hs/blob/main/docs/xerxes_whitepaper.pdf) that describes some more mathematical details of the methods implemented here.
 
 ### RAS (in development)
 
@@ -289,9 +289,9 @@ outgroup: <Chimp.REF>
 
 In this case, two groups are defined on the fly: `group1` comprises groups `a` and `b`, but excludes group `c` and individual `d`. Note that inclusions and exclusions are executed in order. `group2` comprises of group `e` and group `f`, but excludes individual `<g>`.
 
-As in [RAScalculator](https://github.com/TCLamnidis/RAStools), the allele frequency ascertainment is done across right populations only. 
+As in [RAScalculator](https://github.com/TCLamnidis/RAStools) [@Flegontov2019](https://doi.org/10.1038/s41586-019-1251-y), the allele frequency ascertainment is done across right populations only.
 
-The are a couple of optons, as specified in the CLI help (`xerxes ras --help`):
+The are a couple of options, as specified in the CLI help (`xerxes ras --help`):
 
 ```default
 Usage: xerxes ras (-d|--baseDir DIR) [-j|--jackknife ARG] 
@@ -321,11 +321,12 @@ Available options:
                            tab-separated file
 ```
 
-The output gives both cumulative (up to allele-count k) and and per-allele-frequency RAS (for allele count k) for every pair of left and rights. The standard out contains a pretty-printed table, and in adition, a tab-separated file is written to the file specified using option `-f`. 
+The output gives both cumulative (up to allele-count k) and and per-allele-frequency RAS (for allele count k) for every pair of left and rights. The standard out contains a pretty-printed table, and in addition, a tab-separated file is written to the file specified using option `-f`.
 
 `xerxes ras` makes a few important assumptions:
 
-1. It assumes that the Right Populations are "nearly" completely non-missing. Any allele that is actually missing from the rights is in fact treated as homozygous-reference! A different approach would be to compute the actual frequencies on the non-missing right alleles, but then we cannot anymore nicely accumulate over different ascertainment allele counts.
+1. It assumes that the Right Populations are "nearly" completely non-missing. Any allele that is actually missing from the rights is in fact treated as homozygous-reference! A different approach would be to compute the actual frequencies on the non-missing right alleles, but then we cannot any more nicely accumulate over different ascertainment allele counts.
 2. If no outgroup is specified, the ascertainment operates on minor-allele frequency (as in fstats)
 3. If an outgroup is specified and missing from a SNP, or if the SNP is polymorphic, the SNP is skipped as missing
 
+***
