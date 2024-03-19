@@ -100,7 +100,7 @@ Trident allows to work directly with genotype data (see `-p` below), but its opt
 
 You can arrange a Poseidon repository in a hierarchical way. For example:
 
-```
+```default
 /path/to/poseidon/packages
     /modern
         /2019_poseidon_package1
@@ -117,7 +117,7 @@ You can use this structure to select only the level of packages you're intereste
 
 Being able to specify one or multiple repositories is often not enough, as you may have your own data to co-analyse with the main repository. This is easy to do, as you simply need to provide your own genotype data as yet another Poseidon package to be added to your `trident` command. For example, let's say you have genotype data in `EIGENSTRAT` format (`trident` supports `EIGENSTRAT` and `PLINK` as formats.):
 
-```
+```default
 ~/my_project/my_project.geno
 ~/my_project/my_project.snp
 ~/my_project/my_project.ind
@@ -125,7 +125,7 @@ Being able to specify one or multiple repositories is often not enough, as you m
 
 Then you can make that to a skeleton Poseidon package with the `init` command. You can also do it manually by simply adding a `POSEIDON.yml` file, with for example the following content:
 
-```
+```yml
 poseidonVersion: 2.7.1
 title: My_awesome_project
 description: Unpublished genetic data from my awesome project
@@ -147,7 +147,7 @@ Two remarks: 1) all file paths are considered _relative_ to the directory in whi
 
 Once you have set up your own Poseidon package (which is really only a skeleton so far), you can add it to your `trident` analysis, by simply adding your project directory to the command using `-d`, for example:
 
-```
+```bash
 trident list -d /path/to/poseidon/packages/modern \
   -d /path/to/poseidon/packages/ReferenceGenomes
   -d ~/my_project --packages
@@ -197,7 +197,7 @@ While reading the `.janno` file `trident` trims all leading and trailing whitesp
 <details>
  <summary><i class="fas fa-search"></i> <i class="fas fa-terminal"></i> <b>Command line details</b></summary>
 
-```
+```default
 Usage: trident init ((-p|--genoOne FILE) | --inFormat FORMAT --genoFile FILE
                       --snpFile FILE --indFile FILE) [--snpSet SET]
                     (-o|--outPackagePath DIR) [-n|--outPackageName STRING]
@@ -237,7 +237,7 @@ Available options:
 
 The command
 
-```
+```bash
 trident init \
   --inFormat EIGENSTRAT/PLINK \
   --genoFile path/to/geno_file \
@@ -264,7 +264,7 @@ The output package of `init` is created as a new directory `-o`, which should no
 <details>
  <summary><i class="fas fa-search"></i> <i class="fas fa-terminal"></i> <b>Command line details</b></summary>
 
-```
+```default
 Usage: trident fetch (-d|--baseDir DIR)
                      (--downloadAll |
                        (--fetchFile FILE | (-f|--fetchString DSL)))
@@ -303,7 +303,7 @@ Available options:
 
 It works with 
 
-```
+```bash
 trident fetch -d ... -d ... \
   -f "*package_title_1*,*package_title_2-1.0.1*,group_name,<individual1>"
 ```
@@ -323,7 +323,7 @@ Note that `trident fetch` makes most sense in combination with `trident list --r
 <details>
  <summary><i class="fas fa-search"></i> <i class="fas fa-terminal"></i> <b>Command line details</b></summary>
 
-```
+```default
 Usage: trident forge ((-d|--baseDir DIR) |
                        ((-p|--genoOne FILE) | --inFormat FORMAT --genoFile FILE
                          --snpFile FILE --indFile FILE) [--snpSet SET])
@@ -437,7 +437,7 @@ Available options:
 
 `forge` can be used with
 
-```
+```bash
 trident forge -d ... -d ... \
   -f "*package_name*, group_id, <individual_id>" \
   -o path/to/new_package_name
@@ -447,7 +447,7 @@ where the entities (packages, groups/populations, individuals/samples) you want 
 
 Including one or multiple Poseidon packages with `-d` is not the only way to include data for a forge operation. It is also possible to consider unpackaged genotype data directly with `-p (+ --snpSet)` or `--inFormat + --genoFile + --snpFile + --indFile (+ --snpSet)`. This makes the following example possible, where we merge data from one Poseidon package and two genotype datasets to get a new EIGENSTRAT dataset.
 
-```
+```bash
 trident forge \
   -d 2017_GonzalesFortesCurrentBiology \
   -p 2018_VeeramahPNAS/2018_VeeramahPNAS.fam \
@@ -475,7 +475,7 @@ In general a `--forgeString` query consists of multiple entities, separated by `
 
 In the `--forgeFile` each line is treated as a separate forgeString, empty lines are ignored and `#` symbols start comments. So this is a valid example of a forgeFile:
 
-```
+```default
 # Packages
 *package1*, *package2-1.2.3*
 
@@ -601,7 +601,7 @@ With `--packagewise` the within-package selection step in forge can be skipped. 
 <details>
  <summary><i class="fas fa-search"></i> <i class="fas fa-terminal"></i> <b>Command line details</b></summary>
 
-```
+```default
 Usage: trident genoconvert ((-d|--baseDir DIR) |
                              ((-p|--genoOne FILE) | --inFormat FORMAT
                                --genoFile FILE --snpFile FILE --indFile FILE)
@@ -653,7 +653,7 @@ Available options:
 
 With the default setting
 
-```
+```bash
 trident genoconvert -d ... -d ... --outFormat EIGENSTRAT|PLINK
 ```
 
@@ -663,7 +663,7 @@ The "old" data is not deleted, but kept around. That means conversion can result
 
 Instead of `-d` to change Poseidon packages, the `-p (+ --snpSet)` or `--inFormat + --genoFile + --snpFile + --indFile (+ --snpSet)` allow to directly convert genotype data that is not wrapped in a Poseidon package and store it to a directory given in `-o`. See this example:
 
-```
+```bash
 trident genoconvert \
   -p 2018_Mittnik_Baltic/Mittnik_Baltic.bed \
   --outFormat EIGENSTRAT
@@ -677,7 +677,7 @@ trident genoconvert \
 <details>
  <summary><i class="fas fa-search"></i> <i class="fas fa-terminal"></i> <b>Command line details</b></summary>
 
-```
+```default
 Usage: trident jannocoalesce ((-s|--sourceFile FILE) | (-d|--baseDir DIR))
                              (-t|--targetFile FILE) [-o|--outFile FILE]
                              [--includeColumns ARG | --excludeColumns ARG]
@@ -718,7 +718,7 @@ Available options:
 
 A most basic run may just include two arguments:
 
-```
+```bash
 trident jannocoalesce \
   --sourceFile path/to/source.janno \
   --targetFile path/to/target.janno
@@ -737,7 +737,7 @@ It then merges these files by a key column, which can be selected with `--source
 <details>
  <summary><i class="fas fa-search"></i> <i class="fas fa-terminal"></i> <b>Command line details</b></summary>
 
-```
+```default
 Usage: trident rectify (-d|--baseDir DIR) [--ignorePoseidonVersion]
                        [--poseidonVersion ?.?.?]
                        [--packageVersion VPART [--logText STRING]]
@@ -774,7 +774,7 @@ Available options:
 
 It can be called with a lot of optional arguments. Note that `rectify` by default does **not** apply any changes if none of these arguments are set.
 
-```
+```bash
 trident rectify -d ... -d ... \
   --poseidonVersion "X.X.X" \
   --packageVersion Major|Minor|Patch \
@@ -801,7 +801,7 @@ The following arguments determine which fields of the POSEIDON.yml file should b
 <details>
  <summary><i class="fas fa-search"></i> <i class="fas fa-terminal"></i> <b>Command line details</b></summary>
 
-```
+```default
 Usage: trident list ((-d|--baseDir DIR) | --remote [--remoteURL URL]
                       [--archive STRING])
                     (--packages | --groups | --individuals
@@ -843,7 +843,7 @@ Available options:
 
 To list packages from your local repositories, as seen above you can run
 
-```
+```bash
 trident list -d ... -d ... --packages
 ```
 
@@ -851,7 +851,7 @@ This will yield a nicely formatted table of all packages, their version and the 
 
 You can use `--remote` to show packages on the remote server. For example
 
-```
+```bash
 trident list --packages --remote --archive "community-archive"
 ```
 
@@ -870,7 +870,7 @@ Note that if you want a less fancy table, for example because you want to load t
 <details>
  <summary><i class="fas fa-search"></i> <i class="fas fa-terminal"></i> <b>Command line details</b></summary>
 
-```
+```default
 Usage: trident summarise (-d|--baseDir DIR) [--raw]
 
   Get an overview over the content of one or multiple Poseidon packages
@@ -887,7 +887,7 @@ Available options:
 
 You can run it with
 
-```
+```bash
 trident summarise -d ... -d ...
 ```
 
@@ -902,7 +902,7 @@ You can use the `--raw` option to output the summary table in a simple, tab-deli
 <details>
  <summary><i class="fas fa-search"></i> <i class="fas fa-terminal"></i> <b>Command line details</b></summary>
 
-```
+```default
 Usage: trident survey (-d|--baseDir DIR) [--raw] [--onlyLatest]
 
   Survey the degree of context information completeness for Poseidon packages
@@ -922,7 +922,7 @@ Available options:
 
 Running
 
-```
+```bash
 trident survey -d ... -d ...
 ```
 
@@ -937,7 +937,7 @@ Again you can use the `--raw` option to output the survey table in a tab-delimit
 <details>
  <summary><i class="fas fa-search"></i> <i class="fas fa-terminal"></i> <b>Command line details</b></summary>
 
-```
+```default
 Usage: trident validate ((-d|--baseDir DIR) [--ignoreGeno] [--fullGeno]
                           [--ignoreDuplicates] [-c|--ignoreChecksums]
                           [--ignorePoseidonVersion] |
@@ -984,7 +984,7 @@ Available options:
 
 You can run it with
 
-```
+```bash
 trident validate -d ... -d ...
 ```
 
