@@ -60,17 +60,17 @@ The `Latitude` and `Longitude` columns should contain geographic coordinates (WG
 
 ### Temporal position
 
-The temporal position of a sample is encoded with seven different columns in the `.janno` file: `Date_C14_Labnr`, `Date_C14_Uncal_BP`, `Date_C14_Uncal_BP_Err`, `Date_BC_AD_Median`, `Date_BC_AD_Start`, `Date_BC_AD_Stop`, `Date_Type`
+The temporal position of a sample is encoded with seven different columns in the `.janno` file: `Date_C14_Labnr`, `Date_C14_Uncal_BP`, `Date_C14_Uncal_BP_Err`, `Date_BC_AD_Median`, `Date_BC_AD_Start`, `Date_BC_AD_Stop`, `Date_Type`.
 
 #### General structure
 
 The `Date_Type` column handles the general distinction between the most common forms of age information:
 
-- `modern`: Applies to present day reference samples, so not ancient DNA.
+- `modern`: Applies to present-day reference samples, so not ancient DNA.
 - `C14`: Applies if there is a set of radiocarbon dates explicitly listed in the columns `Date_C14_Labnr`, `Date_C14_Uncal_BP` and `Date_C14_Uncal_BP_Err` whose post-calibration probability distribution is a meaningful prior for the individual’s year of death. The dates do not always have to be directly from the individual's tissue, but they should be immediately relevant for their year of death (e.g. a date from a grain kernel recovered from the individual's grave).
 - `contextual`: Applies in all other cases if the columns `Date_BC_AD_Median`, `Date_BC_AD_Start`, `Date_BC_AD_Stop` can be filled. This includes age attribution based on the archaeologically determined stratigraphy or typological information. `contextual` should also be chosen if the sample is dated very indirectly with radiocarbon dating (e.g. radiocarbon dates from other, unrelated features of the same site) or dated with other physical or chemical dating methods (e.g. dendrochronology or optically stimulated luminescence).
 
-So `Date_C14_Labnr`, `Date_C14_Uncal_BP` and `Date_C14_Uncal_BP_Err` only go along with `Date_Type = C14`, whereas `Date_BC_AD_Median`, `Date_BC_AD_Start`, `Date_BC_AD_Stop` complement both `Date_Type = C14` and `Date_Type = contextual`. Radiocarbon dates that only serve as secondary evidence for a contextual dating should not be reported in `Date_C14_Labnr`, `Date_C14_Uncal_BP` and `Date_C14_Uncal_BP_Err`.
+So `Date_C14_Labnr`, `Date_C14_Uncal_BP` and `Date_C14_Uncal_BP_Err` only go along with `Date_Type = C14`, whereas `Date_BC_AD_Median`, `Date_BC_AD_Start`, `Date_BC_AD_Stop` complement both `Date_Type = C14` and `Date_Type = contextual`. Radiocarbon dates that only serve as secondary evidence for a contextual dating should NOT be reported in `Date_C14_Labnr`, `Date_C14_Uncal_BP` and `Date_C14_Uncal_BP_Err`.
 
 #### The columns in detail
 
