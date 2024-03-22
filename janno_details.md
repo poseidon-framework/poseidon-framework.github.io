@@ -132,7 +132,7 @@ The `Library_Built` column describes the library preparation method regarding si
 
 - `ds`: Double-stranded library preparation.
 - `ss`: Single-stranded library preparation.
-- `mixed`: If multiple libraries with different strandedness were combined. It is preferred that in such cases, this column is formatted as a list column, specifying the strandedness of each individual library, in the order used in `Library_Names`. See also the Sequencing Source File in the Poseidon package as a way to provide details.
+- `mixed`: If multiple libraries with different strandedness were combined. See also the Sequencing Source File in the Poseidon package as a way to provide details.
 
 The `Genotype_Ploidy` column stores a characteristic of the aDNA genotyping procedure. Humans have two complete sets of chromosomes in their cells and hence are diploid organisms. For many computational aDNA applications it is more practical, though, to work with "pseudo-haploid" data. This is a procedure, where a haploid genotype call is produced (often through a random-draw procedure) and then "doubled" to create the diploid genotype of the individual. Confusingly, genotypes produced in this way are also referred to as "pseudo-diploid". The `Genotype_Ploidy` column can contain one of the following values:
 
