@@ -102,7 +102,7 @@ This limitation stems from the genotype data formats by Plink and the Eigensoft 
 
 The `MT_Haplogroup` column is meant to store the human mitochondrial DNA haplogroup for the respective individual in a simple string. The entry can be arbitrarily precise. A software tool to determine the MT haplogroup is for example Haplogrep [@Schnoeherr2023](https://doi.org/10.1093/nar/gkad284).
 
-The `Y_Haplogroup` column holds the respective human Y-chromosome DNA haplogroup in a simple string. The notation should follow a syntax with the main branch + the most terminal derived Y-SNP separated with a minus symbol (e.g. R1b-P312).
+The `Y_Haplogroup` column holds the respective human Y-chromosome DNA haplogroup in a simple string. The notation should follow a syntax with the main branch + the most terminal derived Y-SNP separated with a minus symbol (e.g. R1b-P312), following XXXX naming system.
 
 #### Library properties
 
