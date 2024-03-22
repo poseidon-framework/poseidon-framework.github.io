@@ -33,7 +33,7 @@ The guide below explains the inner workings of qjanno and gives some examples fo
 
 ### Background
 
-qjanno started as a fork of the [qhs](https://github.com/itchyny/qhs) software tool, which was, in turn, inspired by the CLI tool [q](https://github.com/harelba/q). All of them enable SQL queries on delimiter-separated text files (e.g. .csv or .tsv). For qjanno we copied the source code of qhs v0.3.3 (MIT-License) and adjusted it to provide a smooth experience with a special kind of .tsv file: The Poseidon [.janno](janno_details.md) file.
+qjanno started as a fork of the [qhs](https://github.com/itchyny/qhs) software tool, which was, in turn, inspired by the CLI tool [q](https://github.com/harelba/q). All of them enable SQL queries on delimiter-separated text files (e.g. .csv or .tsv). For qjanno, we copied the source code of qhs v0.3.3 (MIT-License) and adjusted it to provide a smooth experience with a special kind of .tsv file: The Poseidon [.janno](janno_details.md) file.
 
 Unlike `trident` or `xerxes` qjanno does not have a complete understanding of the .janno-file structure, and (mostly) treats it like a normal .tsv file. It does not validate the files upon reading and takes them at face value. Still .janno files are given special consideration: With a set of pseudo-functions in the `FROM` field of the SQL query they can be searched recursively and loaded together into one table.
 
@@ -41,7 +41,7 @@ qjanno still supports most features of qhs, so it can still read .csv and .tsv f
 
 ### How does this work?
 
-On startup, qjanno creates an [SQLite](https://www.sqlite.org) [@Gaffney2022](https://doi.org/10.14778/3554821.3554842) database [in memory](https://www.sqlite.org/inmemorydb.html). It then reads the requested, structured text files, attributes each column a type (either character or numeric) and writes the contents of the files to tables in the in-memory database. It finally sends the user-provided SQL query to the database, waits for the result, parses it and returns it on the command line.
+On startup, qjanno creates an [SQLite](https://www.sqlite.org) [@Gaffney2022](https://doi.org/10.14778/3554821.3554842) database [in memory](https://www.sqlite.org/inmemorydb.html). It then reads the requested, structured text files and attributes each column a type (either character or numeric). With this annotation the contents of the files can be written to tables in the in-memory database. qjanno finally sends the user-provided SQL query to said database, waits for the result, parses it and returns it on the command line.
 
 The query gets pre-parsed to extract file names and then forwarded to an SQLite database server via the Haskell library [sqlite-simple](https://hackage.haskell.org/package/sqlite-simple). That means qjanno can parse and understand basic SQLite3 syntax, though not everything. [`PRAGMA` functions](https://www.sqlite.org/pragma.html#syntax), for example, are not available. The examples below show some of the available syntax, but they are not exhaustive. Trial and error is recommended to see what does and what does not work. Please report missing functionality in our [issue board on GitHub](https://github.com/poseidon-framework/qjanno/issues).
 

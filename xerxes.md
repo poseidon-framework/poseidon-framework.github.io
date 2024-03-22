@@ -267,7 +267,7 @@ The repository comes with a [detailed whitepaper](https://github.com/poseidon-fr
 
 ### RAS (in development)
 
-The RAS command computes pairwise RAS statistics between a collection of "left" entities, and a collection of "right" entities. Every Entity is either a group name or an individual, with the similar syntax as in F-statistics above, so `French` is a group, and `<IND001>` is an individual.
+The RAS command computes pairwise RAS statistics between a collection of "left" entities, and a collection of "right" entities. Every Entity is either a group name or an individual, with the similar syntax as in F-Statistics above, so `French` is a group, and `<IND001>` is an individual.
 
 The input of left-pops and right-pops uses a YAML file via `--popConfigFile`. Here is an example:
 
