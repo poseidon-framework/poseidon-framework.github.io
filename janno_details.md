@@ -46,9 +46,9 @@ The `Relation_Note` column allows to add free-text information about the relatio
 
 ### Spatial position
 
-The `.janno` file contains six columns to describe the spatial origin of an individual sample:  `Country`, `Country_ISO`, `Location`, `Site` and finally `Latitude` and `Longitude`. 
+The `.janno` file contains six columns to describe the spatial origin of an individual sample: `Country`, `Country_ISO`, `Location`, `Site` and finally `Latitude` and `Longitude`.
 
-The `Country` column should contain a present-day political country name following the `English short name` in [ISO 3166](https://www.iso.org/iso-3166-country-codes.html). 
+The `Country` column should contain a present-day political country name following the `English short name` in [ISO 3166](https://www.iso.org/iso-3166-country-codes.html).
 
 The `Country_ISO` column should contain the present-day political country of origin of the sample, expressed in codes using the standard [ISO 3166-1](https://www.iso.org/iso-3166-country-codes.html) alpha-2 code, i.e. "AR" for Argentina or "NO" for Norway.
 
@@ -92,11 +92,11 @@ The column `Date_Note` allows to add arbitrary free-text information about the d
 
 #### Individual properties
 
-The `Genetic_Sex` column should encode the biological sex as determined from the DNA read distribution on the X and Y chromosome. It only allows for the entries 
+The `Genetic_Sex` column should encode the biological sex as determined from the DNA read distribution on the X and Y chromosome. It only allows for the entries
 
 - `F`: female
 - `M`: male
-- `U`: unknown 
+- `U`: unknown
 
 This limitation stems from the genotype data formats by Plink and the Eigensoft software package. Edge cases (e.g. XXY, XYY, X0, ...) can not be expressed with this format and should be reported as `U` with an additional comment in the free text `Note` field. Genetic sex determination for ancient DNA can be performed for example with Sex.DetERRmine [@Lamnidis2018](https://doi.org/10.1038/s41467-018-07483-5).
 
@@ -191,8 +191,8 @@ The `Publication` column holds either the value `unpublished` for (yet) unpublis
     volume = {113},
     number = {2},
     pages = {368--373},
-    author = {Lara M. Cassidy and Rui Martiniano and Eileen M. Murphy and 
-    	      Matthew D. Teasdale and James Mallory and Barrie Hartwell 
+    author = {Lara M. Cassidy and Rui Martiniano and Eileen M. Murphy and
+    	      Matthew D. Teasdale and James Mallory and Barrie Hartwell
     	      and Daniel G. Bradley},
     title = {Neolithic and Bronze Age migration to Ireland and establishment
     	     of the insular Atlantic genome},
@@ -217,7 +217,7 @@ The `Publication` column holds either the value `unpublished` for (yet) unpublis
 }
 ```
 
-The string `CassidyPNAS2015` is the citation-key of the first entry. To cite both publications in the `Publication` column, one would enter `CassidyPNAS2015;FeldmanScienceAdvances2019`. 
+The string `CassidyPNAS2015` is the citation-key of the first entry. To cite both publications in the `Publication` column, one would enter `CassidyPNAS2015;FeldmanScienceAdvances2019`.
 
 When creating a new Poseidon package the `.bib` file should be filled together with the `Publication` column. One of the most simple ways to obtain the BibTeX entries may be to request them with the doi from the [doi2bib](https://doi2bib.org) wep app. It could be necessary to adjust the result manually, though. The citation-key, for example, has to be replaced by the one used in the `Publication` column.
 
@@ -225,4 +225,4 @@ The `Note` column is a free form text field that can contain small amounts of ad
 
 The `Keywords` column was introduced to allow for tagging individuals with arbitrary keywords. This should simplify sorting and filtering in personal Poseidon package repositories. Each keyword is a string and multiple keywords can be separated with `;`.
 
-***
+---
