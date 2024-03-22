@@ -25,7 +25,7 @@ chmod +x trident-Linux
 ./trident-Linux -h
 ```
 
-On GitHub you will also find [older release versions](https://github.com/poseidon-framework/poseidon-hs/releases) and [instructions to build `.trident` from source](https://github.com/poseidon-framework/poseidon-hs#for-haskell-developers). The relevant changes from one version to the next are documented in this [changelog](https://github.com/poseidon-framework/poseidon-hs/blob/master/CHANGELOGRELEASE.md).
+On GitHub you will also find [older release versions](https://github.com/poseidon-framework/poseidon-hs/releases) and [instructions to build `trident` from source](https://github.com/poseidon-framework/poseidon-hs#for-haskell-developers). The relevant changes from one version to the next are documented in this [changelog](https://github.com/poseidon-framework/poseidon-hs/blob/master/CHANGELOGRELEASE.md).
 
 With `trident --help` and `trident <subcommand> --help` you can get information about each subcommand and parameter directly on the command line. The guide below explains the subcommands in more detail. It is available in .pdf format for the current and previous versions here:
 
@@ -96,7 +96,7 @@ Inspection commands:
                            structural correctness
 ```
 
-`.trident` allows to work directly with genotype data (see `-p` below), but it is optimized for the interaction with Poseidon packages, which wrap and contextualize the data. Most `.trident` subcommands therefore have a central parameter, called `--baseDir` or simply `-d` to specify one or more base directories to look for packages. For example, if all Poseidon packages live inside a repository at `/path/to/poseidon/packages` you would simply say `trident <subcommand> -d /path/to/poseidon/dirs/` and `trident` would automatically search all subdirectories inside of the repository for valid Poseidon packages (as identified by valid POSEIDON.yml files).
+`trident` allows to work directly with genotype data (see `-p` below), but it is optimized for the interaction with Poseidon packages, which wrap and contextualize the data. Most `trident` subcommands therefore have a central parameter, called `--baseDir` or simply `-d` to specify one or more base directories to look for packages. For example, if all Poseidon packages live inside a repository at `/path/to/poseidon/packages` you would simply say `trident <subcommand> -d /path/to/poseidon/dirs/` and `trident` would automatically search all subdirectories inside of the repository for valid Poseidon packages (as identified by valid POSEIDON.yml files).
 
 You can arrange a Poseidon repository in a hierarchical way. For example:
 
@@ -156,7 +156,7 @@ trident list -d /path/to/poseidon/packages/modern \
 
 ##### Logging and command line output
 
-For all subcommands the general argument `--logMode` defines how `.trident` reports messages (to stderr) on the command line:
+For all subcommands the general argument `--logMode` defines how `trident` reports messages (to stderr) on the command line:
 
 - *NoLog*: Hides all messages.
 - *SimpleLog*: Plain and simple output.
@@ -175,8 +175,8 @@ For all subcommands the general argument `--logMode` defines how `.trident` repo
 
 ##### Individual/Sample duplicates
 
-- `Poseidon_ID`s (so individual/sample names) within one package have to be unique, or `.trident` will stop.
-- We also discourage sample duplicates across packages in package repositories, but `.trident` will generally continue with them. `validate` will fail though, if the `--ignoreDuplicates` flag is not set.
+- `Poseidon_ID`s (so individual/sample names) within one package have to be unique, or `trident` will stop.
+- We also discourage sample duplicates across packages in package repositories, but `trident` will generally continue with them. `validate` will fail though, if the `--ignoreDuplicates` flag is not set.
 - `forge` offers a special mechanism to resolve sample duplicates within its selection language.
 
 ##### Group names in `.fam` files
@@ -1012,6 +1012,6 @@ When applied to packages, `validate` tries to ensure that each package adheres t
 - Correspondence of sample IDs in `.janno` and .ssf.
 - Correspondence of sample and group IDs in `.janno` and genotype data files.
 
-In fact much of this validation already runs as part of the general package reading pipeline invoked for other `.trident` subcommands (e.g. `forge`). `validate` is meant to be more thorough and brittle, though, and will explicitly fail if even a single package is broken. For special cases more flexibility can be enabled with the options `--ignoreDuplicates`, `--ignoreChecksums` and `--ignorePoseidonVersion`.
+In fact much of this validation already runs as part of the general package reading pipeline invoked for other `trident` subcommands (e.g. `forge`). `validate` is meant to be more thorough and brittle, though, and will explicitly fail if even a single package is broken. For special cases more flexibility can be enabled with the options `--ignoreDuplicates`, `--ignoreChecksums` and `--ignorePoseidonVersion`.
 
 Remember to run `validate` with `--debug` to get more information in case the default output is not sufficient to analyse an issue.
