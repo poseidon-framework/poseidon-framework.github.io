@@ -37,6 +37,7 @@ For each entry in `Relation_To` there must be a corresponding entry in `Relation
 - `father_of`: This individual is likely the father of the partner individual
 - `grandchild_of`: This individual is likely the grandchild of the partner individual
 - `mother_or_daughter_of`: This individual is likely either the mother or daughter of the partner individual (which might be unclear, in case of imprecise archaeological dating)
+- `unknown`: The relationship is unclear or not yet determined. This is the default state and does not have to be expressed, unless multiple relationships are present and some but not all are known.
 - `...`
 
 Unlike `Relation_Degree`, `Relation_Type` can be left empty even if there are entries in `Relation_To`. But if it is filled, then the number of values must be equal to the number of entries in both `Relation_To` and `Relation_Degree`.
