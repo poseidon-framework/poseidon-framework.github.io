@@ -10,7 +10,7 @@ The `Poseidon_ID` column represents each sample with an ideally world-wide uniqu
 
 The column `Alternative_IDs` provides a way to list other IDs used for the respective individual. These might for example be names used in different publications or popular names like "Iceman", "Ötzi", "Girl of the Uchter Moor", "Tollund Man", etc.. The `Relation_*` columns described below allow to more precisely express the relationship type "identical" among samples in a Poseidon package.
 
-The `Collection_ID` column stores an additional, secondary identifier as it is often provided by collaboration partners (archaeologists, museums, collections) that provide the specimen for archaeogenetic research. These identifiers can have a very heterogenous structure and may not be unique across different projects or institutions. The `Collection_ID` column is therefore a free form text field.
+The `Collection_ID` column stores an additional, secondary identifier as it is often provided by collaboration partners (archaeologists, museums, collections) that provide the specimen for archaeogenetic research. These identifiers can have a very heterogenous structure and may not be unique across different projects or institutions. The `Collection_ID` column is therefore a free-form text field.
 
 The `Group_Name` column contains one or multiple group or population names for each individual, separated by `;`. The first entry must be identical to the one used in the genotype data for the respective sample in a Poseidon package, and whitespace is not allowed in any of the entries. Assigning group and population names is a hard problem in archeogenetics [@Eisenmann2018](https://doi.org/10.1038/s41598-018-31123-z), so the `.janno` file allows for more than one identifier.
 
@@ -42,7 +42,7 @@ For each entry in `Relation_To` there must be a corresponding entry in `Relation
 
 Unlike `Relation_Degree`, `Relation_Type` can be left empty even if there are entries in `Relation_To`. But if it is filled, then the number of values must be equal to the number of entries in both `Relation_To` and `Relation_Degree`.
 
-The `Relation_Note` column allows to add free-text information about the relationships of this individual. This might also include information about the method used to infer the degree and type.
+The `Relation_Note` column allows to add free-form text information about the relationships of this individual. This might also include information about the method used to infer the degree and type.
 
 ### Spatial position
 
@@ -52,7 +52,7 @@ The `Country` column should contain a present-day political country name followi
 
 The `Country_ISO` column should contain the present-day political country of origin of the sample, expressed in codes using the standard [ISO 3166-1](https://www.iso.org/iso-3166-country-codes.html) alpha-2 code, i.e. "AR" for Argentina or "NO" for Norway.
 
-The `Location` column allows for free form text entry and can contain further, unspecified location information. This might be the name of an administrative or geographic region, or an arbitrary unit of reference like a mountain, lake or city close to the point of discovery of the respective sample.
+The `Location` column allows for free-form text entry and can contain further, unspecified location information. This might be the name of an administrative or geographic region, or an arbitrary unit of reference like a mountain, lake or city close to the point of discovery of the respective sample.
 
 The `Site` column should contain a site name, ideally in the latin alphabet and ideally the name that is commonly used in publications.
 
@@ -86,7 +86,7 @@ In the columns `Date_BC_AD_Median`, `Date_BC_AD_Start`, `Date_BC_AD_Stop` ages a
 - If only contextual (e.g. from archaeological typology) age information is available (`Date_Type = contextual`): `Date_BC_AD_Start` and `Date_BC_AD_Stop` should simply report the approximate start and end date determined by the respective source of scientific authority (e.g. an archaeologist knowledgable about the relevant typological sequences). In this case `Date_BC_AD_Median` should be calculated as the mean of `Date_BC_AD_Start` and `Date_BC_AD_Stop` rounded to an integer value.
 - If the sample is a modern reference sample (`Date_Type = modern`): `Date_BC_AD_Median`, `Date_BC_AD_Start`, `Date_BC_AD_Stop` should all be set to the value 2000, for 2000 AD.
 
-The column `Date_Note` stores arbitrary free-text information about the dating of a sample.
+The column `Date_Note` stores arbitrary free-form text information about the dating of a sample.
 
 ### Genetic summary data
 
@@ -175,9 +175,9 @@ The `Contamination_Note` column is a free text field to add additional informati
 
 ### Context information
 
-The `Genetic_Source_Accession_IDs` column was introduced to link the derived genotype data in Poseidon with the raw sequencing data typically uploaded to archives like the ENA [@Burgin2022](https://doi.org/10.1093/nar/gkac1051) or SRA [@Katz2021](https://doi.org/10.1093/nar/gkab1053). There projects or even individual samples are given clear identifiers: Accession IDs. This janno column is supposed to store one or multiple of these Accessions IDs for each individual/sample in Poseidon. If multiple are entered, then they should be arranged by descending specificity from left to right (e.g. project id > sample id > sequencing run id).
+The `Genetic_Source_Accession_IDs` column was introduced to link the derived genotype data in Poseidon with the raw sequencing data typically uploaded to archives like the ENA [@Burgin2022](https://doi.org/10.1093/nar/gkac1051) or SRA [@Katz2021](https://doi.org/10.1093/nar/gkab1053). There, projects and individual samples are given clear unique identifiers: Accession IDs. This janno column is supposed to store one or multiple of these Accessions IDs for each individual/sample in Poseidon. If multiple are entered, then they should be arranged by descending specificity from left to right (e.g. project id > sample id > sequencing run id).
 
-The `Primary_Contact` column is a free form text field that stores the name of the main or the corresponding author of the respective paper for published data.
+The `Primary_Contact` column is a free-form text field that stores the name of the main or the corresponding author of the respective paper for published data.
 
 The `Publication` column holds either the value `unpublished` for (yet) unpublished samples or -- for published data -- one or multiple citation-keys of the form `AuthorJournalYear` without any spaces or special characters. These keys have to be identical to the [BibTeX](http://www.bibtex.org) citation-keys identifying the respective entries in the `.bib` file of the package. BibTeX is a file format to store bibliographic information, where each entry (article, book, website, ...) is defined by a series of parameters (authors, year of publication, journal, ...). Here's an example `.bib` file with two entries for [@Cassidy2015](https://doi.org/10.1073/pnas.1518445113) and [@Feldman2019](https://doi.org/10.1126/sciadv.aax0061):
 
@@ -221,7 +221,7 @@ The string `CassidyPNAS2015` is the citation-key of the first entry. To cite bot
 
 When creating a new Poseidon package the `.bib` file should be filled together with the `Publication` column. One of the most simple ways to obtain the BibTeX entries may be to request them with the doi from the [doi2bib](https://doi2bib.org) wep app. It could be necessary to adjust the result manually, though. The citation-key, for example, has to be replaced by the one used in the `Publication` column.
 
-The `Note` column is a free form text field that can contain small amounts of additional information that is not yet expressed in a more systematic form in the the other `.janno` file columns.
+The `Note` column is a free-form text field that can contain small amounts of additional information that is not yet expressed in a more systematic form in the the other `.janno` file columns.
 
 The `Keywords` column was introduced to allow for tagging individuals with arbitrary keywords. This should simplify sorting and filtering in personal Poseidon package repositories. Each keyword is a string and multiple keywords can be separated with `;`.
 
