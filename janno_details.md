@@ -225,4 +225,6 @@ The `Note` column is a free-form text field that can contain small amounts of ad
 
 The `Keywords` column was introduced to allow for tagging individuals with arbitrary keywords. This should simplify sorting and filtering in personal Poseidon package repositories. Each keyword is a string and multiple keywords can be separated with `;`.
 
+Arbitrary additional columns can be included in a `.janno` file, but they should be named in a way that they do not conflict with the Poseidon package specification. These columns will not be validated (assumed free-form text), but they will be preserved in the Poseidon package, and propagated during operations with `trident forge`.
+
 ---
