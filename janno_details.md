@@ -106,40 +106,40 @@ The `Y_Haplogroup` column holds the respective human Y-chromosome DNA haplogroup
 
 #### Library properties
 
-The `Source_Tissue` column documents the skeletal, soft tissue or other elements from which source material for DNA library preparation have been extracted. If multiple libraries have been taken from different elements, these can be listed separated by `;`. Specific bone names should be reported with an underscore (e.g. bone_phalanx, tooth_molar).
+The `Source_Tissue` column documents the skeletal, soft tissue or other elements from which source material for DNA library preparation was extracted. If multiple samples have been taken from different elements, these can be listed separated by `;`. Specific bone names should be reported with an underscore (e.g. bone_phalanx, tooth_molar).
 
 The `Nr_Libraries` column holds a simple integer value of the number of libraries that have been prepared for an individual.
 
-The `Capture_Type` column specifies the general pre-sequencing preparation methods that have been applied to the library. See [@Knapp2010](https://doi.org/10.3390/genes1020227) for a review of the different techniques (not including younger developments). This field can hold one of multiple different values, but also multiple of these separated by `;` if different methods have been applied for different libraries.
+The `Library_Names` column should list the names for the libraries as used in the publication, separated by `;`.
 
-- `Shotgun`: Sequencing without any enrichment (whole genome sequencing, screening etc.)
-- `1240k`: Target enrichment with hybridization capture optimised for sequences covering the 1240k SNP array [@Fu2015](https://doi.org/10.1038/nature14558), [@Haak2015](https://doi.org/10.1038/nature14317), [@Mathieson2015](https://doi.org/10.1038/nature16152)
-- `ArborComplete`, `ArborPrimePlus`, `ArborAncestralPlus`: Target enrichment with hybridization capture as provided by Arbor Biosciences in three different kits branded [myBaits Expert Human Affinities](https://arborbiosci.com/genomics/targeted-sequencing/mybaits/mybaits-expert/mybaits-expert-human-affinities)
-- `TwistAncientDNA`: Target enrichment with hybridization capture as provided by Twist Bioscience [@Rohland2022](https://doi.org/10.1101/gr.276728.122)
-- `OtherCapture`: Target enrichment with hybridization capture for any other set of sequences
-- `ReferenceGenome`: Modern reference genomes where aDNA fragmentation is not an issue and other sample preparation techniques apply
+The `Capture_Type` column specifies the general pre-sequencing preparation methods that have been applied to the library. See [@Knapp2010](https://doi.org/10.3390/genes1020227) for a review of the different techniques (not including newer developments). This field can hold one of multiple different values, but also multiple of these separated by `;` if different methods have been applied for different libraries.
 
-The `UDG` column documents if the libraries for the respective individual went through UDG (USER enzyme) treatment. This wet lab protocol step removes molecular damage in the form of deaminated cytosines characteristic of ancient DNA.
+- `Shotgun`: Sequencing without any enrichment (whole genome sequencing, screening etc.).
+- `1240k`: Target enrichment with hybridization capture optimised for sequences covering the 1240k SNP array [@Fu2015](https://doi.org/10.1038/nature14558), [@Haak2015](https://doi.org/10.1038/nature14317), [@Mathieson2015](https://doi.org/10.1038/nature16152).
+- `ArborComplete`, `ArborPrimePlus`, `ArborAncestralPlus`: Target enrichment with hybridization capture as provided by Arbor Biosciences in three different kits branded [myBaits Expert Human Affinities](https://arborbiosci.com/genomics/targeted-sequencing/mybaits/mybaits-expert/mybaits-expert-human-affinities).
+- `TwistAncientDNA`: Target enrichment with hybridization capture as provided by Twist Bioscience [@Rohland2022](https://doi.org/10.1101/gr.276728.122).
+- `OtherCapture`: Target enrichment with hybridization capture for any other set of sequences.
+- `ReferenceGenome`: Modern reference genomes where aDNA fragmentation is not an issue and other sample preparation techniques apply.
 
-- `minus`: A protocol without UDG treatment (e.g. [@Aron2019](https://doi.org/10.17504/protocols.io.bakricv6))
-- `half`: A protocol with UDG-half treatment (e.g. [@Aron2020a](https://doi.org/10.17504/protocols.io.bmh6k39e))
-- `plus`: A protocol with UDG-full treatment (e.g. [@Aron2020b](https://doi.org/10.17504/protocols.io.bqbpmsmn))
-- `mixed`: Multiple later merged libraries went through different UDG treatment approaches
+The `UDG` column documents if the libraries for the respective individual went through UDG (or USER enzyme) treatment. This wet lab protocol step removes molecular damage in the form of deaminated cytosines characteristic of ancient DNA.
 
-The `Library_Names` column should contain the names for the library as used in the publication.
+- `minus`: A protocol without UDG treatment (e.g. [@Aron2019](https://doi.org/10.17504/protocols.io.bakricv6)).
+- `half`: A protocol with UDG-half treatment (e.g. [@Aron2020a](https://doi.org/10.17504/protocols.io.bmh6k39e)).
+- `plus`: A protocol with UDG-full treatment (e.g. [@Aron2020b](https://doi.org/10.17504/protocols.io.bqbpmsmn)).
+- `mixed`: Multiple libraries that went through different UDG treatment approaches, and whose data were later merged. It is preferred that in such cases, this column is formatted as a list column, specifying the udg treatment of each individual library, in the order used in `Library_Names`.
 
 The `Library_Built` column describes the library preparation method regarding single- or double-stranded protocols. See e.g. [@Gansauge2013](https://doi.org/10.1038/nprot.2013.038) for more information.
 
-- `ds`: Double-stranded library preparation
-- `ss`: Single-stranded library preparation
-- `mixed`: If multiple libraries with different strandedness were used. See also the Sequencing Source File in the Poseidon package as a way to provide details.
+- `ds`: Double-stranded library preparation.
+- `ss`: Single-stranded library preparation.
+- `mixed`: If multiple libraries with different strandedness were combined. It is preferred that in such cases, this column is formatted as a list column, specifying the strandedness of each individual library, in the order used in `Library_Names`. See also the Sequencing Source File in the Poseidon package as a way to provide details.
 
-The `Genotype_Ploidy` column stores a characteristic of the aDNA data treatment. Humans have two complete sets of chromosomes in their cells and hence are diploid organisms. For many computational aDNA applications it is more practical, though, to work with pseudo-haploid data, so data were only one read per position is selected by a random sampling process.
+The `Genotype_Ploidy` column stores a characteristic of the aDNA genotyping procedure. Humans have two complete sets of chromosomes in their cells and hence are diploid organisms. For many computational aDNA applications it is more practical, though, to work with "pseudo-haploid" data. This is a procedure, where a haploid genotype call is produced (often through a random-draw procedure) and then "doubled" to create the diploid genotype of the individual. Confusingly, genotypes produced in this way are also referred to as "pseudo-diploid". The `Genotype_Ploidy` column can contain one of the following values:
 
-- `diploid`: No random read selection
-- `haploid`: Random read selection to produce pseudo-haploid data
+- `diploid`: True diploid genotype calls were made.
+- `haploid`: Haploid genotypes were called and then doubled.
 
-The column `Data_Preparation_Pipeline_URL` should finally store an URL that links to a complete and human-readable description of the computational pipeline (for example a specific configuration for nf-core/eager [@FellowsYates2021](https://doi.org/10.7717/peerj.10947) by which the sample data was processed.
+The column `Data_Preparation_Pipeline_URL` should finally store an URL that links to a complete and human-readable description of the computational pipeline (for example a specific configuration for nf-core/eager [@FellowsYates2021](https://doi.org/10.7717/peerj.10947)) by which the sample data was processed.
 
 #### Data yield
 
