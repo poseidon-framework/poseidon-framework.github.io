@@ -10,15 +10,15 @@ The `Poseidon_ID` column represents each sample with an ideally world-wide uniqu
 
 The column `Alternative_IDs` provides a way to list other IDs used for the respective individual. These might for example be names used in different publications or popular names like "Iceman", "Ötzi", "Girl of the Uchter Moor", "Tollund Man", etc.. The `Relation_*` columns described below allow to more precisely express the relationship type "identical" among samples in a Poseidon package.
 
-The `Collection_ID` column stores an additional, secondary identifier as it is often provided by collaboration partners (archaeologists, museums, collections) that provide specimen for archaeogenetic research. These identifiers might have a very heterogenous structure and may not be unique across different projects or institutions. The `Collection_ID` column is therefore a free form text field.
+The `Collection_ID` column stores an additional, secondary identifier as it is often provided by collaboration partners (archaeologists, museums, collections) that provide the specimen for archaeogenetic research. These identifiers can have a very heterogenous structure and may not be unique across different projects or institutions. The `Collection_ID` column is therefore a free form text field.
 
-The `Group_Name` column contains one or multiple group or population names for each individual, separated by `;`. The first entry must be identical to the one used in the genotype data for the respective sample in a Poseidon package. Assigning group and population names is a hard problem in archeogenetics [@Eisenmann2018](https://doi.org/10.1038/s41598-018-31123-z), so the `.janno` file allows for more than one identifier.
+The `Group_Name` column contains one or multiple group or population names for each individual, separated by `;`. The first entry must be identical to the one used in the genotype data for the respective sample in a Poseidon package, and whitespace is not allowed in any of the entries. Assigning group and population names is a hard problem in archeogenetics [@Eisenmann2018](https://doi.org/10.1038/s41598-018-31123-z), so the `.janno` file allows for more than one identifier.
 
 ### Relations among samples/individuals
 
-To systematically document biological relationships uncovered among samples/individuals in one or multiple Poseidon datasets (e.g. with software like READ [@MonroyKuhn2018](https://doi.org/10.1371/journal.pone.0195491) or BREADR [@Rohrlach2023](https://doi.org/10.1101/2023.04.17.537144)), the `.janno` file can be fit with a set of columns featuring the `Relation_*` prefix. They together should be capable to encode all kinds of pairwise, biological relationships an individual might have.
+To systematically document biological relationships uncovered among samples/individuals in one or multiple Poseidon datasets (e.g. with software like READ [@MonroyKuhn2018](https://doi.org/10.1371/journal.pone.0195491) or BREADR [@Rohrlach2023](https://doi.org/10.1101/2023.04.17.537144)), the `.janno` file can be fit with a set of columns featuring the `Relation_*` prefix. Across these columns it should be possible to encode all kinds of pairwise, biological relationships an individual might have.
 
-`Relation_To` is a string list column (so: multiple values are possible if separated by `;`) that stores the `Poseidon_ID`s of other samples/individuals to which the current individual has some relationship. 
+`Relation_To` is a string list column (so: multiple values are possible if separated by `;`) that stores the `Poseidon_ID`s of other samples/individuals to which the current individual has some relationship.
 
 `Relation_Degree` stores a formal description of the closeness of this relationship as measured purely from aDNA data. It is therefore also a list column that can hold the following values for each relationship:
 
