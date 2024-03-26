@@ -134,7 +134,7 @@ The `Library_Built` column describes the library preparation method regarding si
 - `ss`: Single-stranded library preparation.
 - `mixed`: If multiple libraries with different strandedness were combined. See also the Sequencing Source File in the Poseidon package as a way to provide details.
 
-The `Genotype_Ploidy` column stores a characteristic of the aDNA genotyping procedure. Humans have two complete sets of chromosomes in their cells and hence are diploid organisms. For many computational aDNA applications it is more practical, though, to work with "pseudo-haploid" data. This is a procedure, where a haploid genotype call is produced (often through a random-draw procedure) and then "doubled" to create the diploid genotype of the individual. Confusingly, genotypes produced in this way are also referred to as "pseudo-diploid". The `Genotype_Ploidy` column can contain one of the following values:
+The `Genotype_Ploidy` column stores whether the genotype calls for this individual are originally haploid or diploid. Even for diploid organisms, it is often useful to represent genotypes by single haploid alleles (so-called pseudo-haploid genotypes), for example to generate relatively unbiased genotype calls from low coverage data. Because both the PLINK and EIGENSTRAT genotyping formats always _encode_ genotype calls as diploid (by "doubling" the pseudo-haploid genotypes), the information on the original Ploidy of the call gets lost. This column is therefore used to record the underlying calling procedure. This becomes important, for example, when sample sizes are queried to compute bias-correction factors when computing F-Statistics or FST.  The `Genotype_Ploidy` column can contain one of the following values:
 
 - `diploid`: True diploid genotype calls were made.
 - `haploid`: Haploid genotypes were called and then doubled.
@@ -147,7 +147,7 @@ The `Endogenous` column holds the percentage of mapped reads over the total amou
 
 The `Nr_SNPs` column gives the number of SNPs reported in the genotype data files for this individual.
 
-The `Coverage_on_Target_SNPs` column reports the mean fold coverage on the SNP set of the genotype dataset (e.g. 1240K) for the merged libraries of this sample. To calculate the coverage it is necessary to determine which SNPs are covered how many times by the mapped reads. Individual SNPs might be covered multiple times, whereas others may not be covered at all by the highly deteriorated ancient DNA. The coverage for each SNP is therefore a number between 0 and n. The statistic can be determined for example with the QualiMap [@Okonechnikov2015](https://doi.org/10.1093/bioinformatics/btv566) software package. In case of multiple libraries, the coverage can be given as a mean across all of them.
+The `Coverage_on_Target_SNPs` column reports the mean fold coverage on the SNP set of the genotype dataset (e.g. 1240K) for the merged libraries of this sample. To calculate the coverage it is necessary to determine which SNPs are covered how many times by the mapped reads. Individual SNPs might be covered multiple times, whereas others may not be covered at all by the highly deteriorated ancient DNA. The coverage for each SNP is therefore a number between 0 and n. The statistic can be determined for example with the QualiMap [@Okonechnikov2015](https://doi.org/10.1093/bioinformatics/btv566) software package. In case of multiple libraries, the total coverage should be given across all libraries.
 
 #### Data quality
 
