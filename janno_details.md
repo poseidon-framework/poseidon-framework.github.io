@@ -6,7 +6,7 @@ The `.janno` file columns are specified in the Poseidon package specification [h
 
 ### Identifiers
 
-The `Poseidon_ID` column represents each sample with an ideally world-wide unique identifier string often equal to the identifier used in the respective accompanying publication. There is no central authority to issue these identifiers, so it remains in the hand of the authors to avoid duplication. We're aware of this inconsistency and hope the aDNA community will eventually come together to establish a mechanism to ensure uniqueness of identifiers. If there are multiple samples from one individual, then they have to be clearly distinguished with relevant suffixes added to the `Poseidon_ID`. `Poseidon_ID`s are also employed in the genetic data files in a Poseidon package and therefore have to adhere to certain constraints.
+The `Poseidon_ID` column represents each sample with an ideally world-wide unique identifier string often equal to the identifier used in the respective accompanying publication. There is no central authority to issue these identifiers, so it remains in the hand of the authors to avoid duplication. We are aware of this inconsistency and hope the aDNA community will eventually come together to establish a mechanism to ensure uniqueness of identifiers. If there are multiple samples from one individual, then they have to be clearly distinguished with relevant suffixes added to the `Poseidon_ID`. `Poseidon_ID`s are also employed in the genetic data files in a Poseidon package and therefore have to adhere to certain constraints.
 
 The column `Alternative_IDs` provides a way to list other IDs used for the respective individual. These might for example be names used in different publications or popular names like "Iceman", "Ötzi", "Girl of the Uchter Moor", "Tollund Man", etc.. The `Relation_*` columns described below allow to more precisely express the relationship type "identical" among samples in a Poseidon package.
 
@@ -126,7 +126,7 @@ The `UDG` column documents if the libraries for the respective individual went t
 - `minus`: A protocol without UDG treatment (e.g. [@Aron2019](https://doi.org/10.17504/protocols.io.bakricv6)).
 - `half`: A protocol with UDG-half treatment (e.g. [@Aron2020a](https://doi.org/10.17504/protocols.io.bmh6k39e)).
 - `plus`: A protocol with UDG-full treatment (e.g. [@Aron2020b](https://doi.org/10.17504/protocols.io.bqbpmsmn)).
-- `mixed`: Multiple libraries that went through different UDG treatment approaches, and whose data were later merged. It is preferred that in such cases, this column is formatted as a list column, specifying the udg treatment of each individual library, in the order used in `Library_Names`.
+- `mixed`: Multiple libraries that went through different UDG treatment approaches, and whose data were later merged.
 
 The `Library_Built` column describes the library preparation method regarding single- or double-stranded protocols. See e.g. [@Gansauge2013](https://doi.org/10.1038/nprot.2013.038) for more information.
 
