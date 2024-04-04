@@ -34,6 +34,8 @@ For each entry in `Relation_To` there must be a corresponding entry in `Relation
 
 `Relation_Type` allows to add more verbose details about the relationship type, if it was possible to reconstruct that from the archaeological or historical context. Because there are too many possible permutations, there is no pre-defined set of values for what can and cannot be entered here. It is advisable, though, to stick to a general scheme like the following, which describes a given relationship from the point of view of the current individual:
 
+- `same_as`: This sample is from the same inividual as another sample
+- `identical_twin_of`: This individual is likely an identical twin of another individual
 - `father_of`: This individual is likely the father of the partner individual
 - `grandchild_of`: This individual is likely the grandchild of the partner individual
 - `mother_or_daughter_of`: This individual is likely either the mother or daughter of the partner individual (which might be unclear, in case of imprecise archaeological dating)
