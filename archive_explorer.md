@@ -254,6 +254,7 @@
     <select id="archive-type-select" v-model="archiveType" @change="showSelection">
       <option value="community-archive">Poseidon Community Archive</option>
       <option value="aadr-archive">Poseidon AADR Archive</option>
+      <option value="minotaur-archive">Poseidon Minotaur Archive</option>
     </select>
     <!-- search bar -->
     <div class="search-bar">

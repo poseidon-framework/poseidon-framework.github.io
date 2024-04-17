@@ -1,0 +1,25 @@
+{
+  "name": "poseidon-framework.github.io",
+  "version": "1.0.0",
+  "description": "Repository for the [poseidon-framework.github.io](https://poseidon-framework.github.io) website. Built with [Docsify](https://docsify.js.org).",
+  "main": "index.js",
+  "dependencies": {
+    "http-server": "^14.1.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "http-server . -p 8080" 
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/poseidon-framework/poseidon-framework.github.io.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/poseidon-framework/poseidon-framework.github.io/issues"
+  },
+  "homepage": "https://github.com/poseidon-framework/poseidon-framework.github.io#readme"
+}
