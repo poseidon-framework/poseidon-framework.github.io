@@ -102,7 +102,7 @@ The `Genetic_Sex` column should encode the biological sex as determined from the
 
 This limitation stems from the genotype data formats by Plink and the Eigensoft software package. Edge cases (e.g. XXY, XYY, X0, ...) can not be expressed with this format and should be reported as `U` with an additional comment in the free text `Note` field. Genetic sex determination for ancient DNA can be performed for example with Sex.DetERRmine [@Lamnidis2018](https://doi.org/10.1038/s41467-018-07483-5).
 
-The `MT_Haplogroup` column is meant to store the human mitochondrial DNA haplogroup for the respective individual in a simple string. The entry can be arbitrarily precise. A software tool to determine the MT haplogroup is for example Haplogrep [@Schnoeherr2023](https://doi.org/10.1093/nar/gkad284).
+The `MT_Haplogroup` column is meant to store the human mitochondrial DNA haplogroup for the respective individual in a simple string. The entry can be arbitrarily precise. A software tool to determine the MT haplogroup is for example Haplogrep [@Schoenherr2023](https://doi.org/10.1093/nar/gkad284).
 
 The `Y_Haplogroup` column holds the respective human Y-chromosome DNA haplogroup in a simple string. To avoid confusion from using different haplotype naming systems, the notation should follow a syntax with the main branch + the most terminal derived Y-SNP separated with a minus symbol (e.g. R1b-P312), similar to that used by [Yfull](https://www.yfull.com/sc/tree/).
 
