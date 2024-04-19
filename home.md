@@ -93,6 +93,13 @@
 
 <p></p>
 
+<div class="paper-element">
+<i class="fas fas fa-newspaper" aria-hidden="true"></i>
+A manuscript about Poseidon is available as a preprint on <a href="https://www.biorxiv.org/content/10.1101/2024.04.12.589180">bioRxiv</a> [2024-04-16]
+</div>
+
+<p></p>
+
 <div class="grid-container">
   <div class="grid-element">
     <div class="grid-symbol"><i class="fas fa-clipboard-list" aria-hidden="true"></i></div>
@@ -142,6 +149,13 @@
   .grid-symbol {
     text-align: center;
     font-size: 30px;
+  }
+  .paper-element{
+    background-color: #451515;
+    border: 1px solid;
+    border-color: #bf1515;
+    text-align: center;
+    padding: 10px;
   }
 </style>
 
