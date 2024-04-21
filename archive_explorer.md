@@ -237,8 +237,6 @@
   app.mount('#archiveExplorer');
 </script>
 
-
-
 <div id="archiveExplorer">
 
   <!-- loading banner -->
@@ -269,6 +267,7 @@
       Package: {{ selectedPackageTitle }}
     </div>
   </div>
+
 
   <div v-if="packages">
 
