@@ -43,7 +43,7 @@ With `trident --help` and `trident <subcommand> --help` you can get information 
 - [🗎 Guide for trident v0.29.0](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident_guide_archive/trident_guide_0.29.0.pdf)
 - [🗎 Guide for trident v0.28.0](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident_guide_archive/trident_guide_0.28.0.pdf)
 
-## Guide for trident v1.4.1.0
+## Guide for trident v1.4.1.0 to v1.5.0.1
 
 ### Installation
 

@@ -11,9 +11,10 @@
 [![Anaconda-Server Badge](https://anaconda.org/bioconda/poseidon-xerxes/badges/downloads.svg)](https://anaconda.org/bioconda/poseidon-xerxes)
 
 To download the latest stable release version of `xerxes` click here:
-[📥 Linux](https://github.com/poseidon-framework/poseidon-analysis-hs/releases/latest/download/xerxes-Linux) 
-[📥 macOS](https://github.com/poseidon-framework/poseidon-analysis-hs/releases/latest/download/xerxes-macOS) 
-
+[📥 Linux](https://github.com/poseidon-framework/poseidon-analysis-hs/releases/latest/download/xerxes-Linux) |
+[📥 macOS (ARM64)](https://github.com/poseidon-framework/poseidon-analysis-hs/releases/latest/download/xerxes-macOS-ARM64) |
+[📥 macOS (X64)](https://github.com/poseidon-framework/poseidon-analysis-hs/releases/latest/download/xerxes-macOS-X64) |
+[📥 Windows](https://github.com/poseidon-framework/poseidon-analysis-hs/releases/latest/download/xerxes-Windows.exe)
 
 So in Linux you can run the following commands to get started:
 
@@ -30,11 +31,11 @@ On GitHub you will also find [older release versions](https://github.com/poseido
 
 With `xerxes --help` and `xerxes <subcommand> --help` you can get information about each subcommand and parameter directly on the command line. The guide below explains the subcommands in more detail. It is available in .pdf format for the current and previous versions here:
 
-- [🗎 Guide for xerxes v1.0.1.0](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/xerxes.pdf) (shown below)
+- [🗎 Guide for xerxes v1.0.1.0 to v1.0.1.1](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/xerxes.pdf) (shown below)
 - [🗎 Guide for xerxes v1.0.0.2](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/xerxes_guide_archive/xerxes_guide_1.0.0.2.pdf)
 - [🗎 Guide for xerxes v0.2.0.0](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/xerxes_guide_archive/xerxes_guide_0.2.0.0.pdf)
 
-## Guide for xerxes v1.0.1.0
+## Guide for xerxes v1.0.1.0 to v1.0.1.1
 
 ### Installation
 
