@@ -8,6 +8,7 @@
 * [News](news.md)
 * [<i class="fa fa-comments" aria-hidden="true"></i> Blog](http://blog.poseidon-adna.org)
 * [Getting started](getting_started.md)
+* [Tutorials](tutorials.md)
 * [Background](background.md)
 * **<i class="fas fa-clipboard-list" aria-hidden="true"></i>&nbsp; The Poseidon Standard**
 	* [Package definition](standard.md)
