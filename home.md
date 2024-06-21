@@ -95,7 +95,7 @@
 
 <div class="paper-element">
 <i class="fas fas fa-newspaper" aria-hidden="true"></i>
-A manuscript about Poseidon is available as a preprint on <a href="https://www.biorxiv.org/content/10.1101/2024.04.12.589180">bioRxiv</a> [2024-04-16]
+An article about Poseidon has been published in <a href="https://elifesciences.org/reviewed-preprints/98317">eLife</a> [2024-06-19]
 </div>
 
 <p></p>
