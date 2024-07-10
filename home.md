@@ -151,9 +151,9 @@ An article about Poseidon has been published in <a href="https://elifesciences.o
     font-size: 30px;
   }
   .paper-element{
-    background-color: #451515;
+    background-color: #366e00;
     border: 1px solid;
-    border-color: #bf1515;
+    border-color: #7CFC00;
     text-align: center;
     padding: 10px;
   }
