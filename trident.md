@@ -68,9 +68,9 @@ Available options:
                            DefaultLog, ServerLog or VerboseLog.
                            (default: DefaultLog)
   --debug                  Short for --logMode VerboseLog.
-  --errLength INT          After how many characters should a potential error
-                           message be truncated. "Inf" for no truncation.
-                           (default: CharCount 1500)
+  --errLength INT          After how many characters should a potential genotype
+                           data parsing error message be truncated. "Inf" for no
+                           truncation. (default: CharCount 1500)
   --inPlinkPopName MODE    Where to read the population/group name from the FAM
                            file in Plink-format. Three options are possible:
                            asFamily (default) | asPhenotype | asBoth.
@@ -345,9 +345,9 @@ Usage: trident forge ((-d|--baseDir DIR) |
                          --snpFile FILE --indFile FILE) [--snpSet SET])
                      [--forgeFile FILE | (-f|--forgeString DSL)]
                      [--selectSnps FILE] [--intersect] [--outFormat FORMAT]
-                     [--minimal] [--onlyGeno] (-o|--outPackagePath DIR)
-                     [-n|--outPackageName STRING] [--packagewise]
-                     [--outPlinkPopName MODE]
+                     [--onlyGeno | --minimal | --preservePyml]
+                     (-o|--outPackagePath DIR) [-n|--outPackageName STRING]
+                     [--packagewise] [--outPlinkPopName MODE] [--ordered]
 
   Select packages, groups or individuals and create a new Poseidon package from
   them
@@ -418,10 +418,16 @@ Available options:
                            typically have fewer SNPs, but less missingness.
   --outFormat FORMAT       The format of the output genotype data: EIGENSTRAT or
                            PLINK. (default: PLINK)
-  --minimal                Should the output data be reduced to a necessary
-                           minimum and omit empty scaffolding?
   --onlyGeno               Should only the resulting genotype data be returned?
                            This means the output will not be a Poseidon package.
+  --minimal                Should the output Poseidon package be reduced to a
+                           necessary minimum?
+  --preservePyml           Should the output Poseidon package mimic the input
+                           package? With this option some fields of the source
+                           package's POSEIDON.yml file, its README file and its
+                           CHANGELOG file (if available) are copied to the
+                           output package. Only works for a singular source
+                           package.
   -o,--outPackagePath DIR  Path to the output package directory.
   -n,--outPackageName STRING
                            The output package name. This is optional: If no name
@@ -447,6 +453,8 @@ Available options:
                            file in Plink-format. Three options are possible:
                            asFamily (default) | asPhenotype | asBoth. See also
                            --inPlinkPopName.
+  --ordered                With this option, the output of forge is ordered
+                           according to the entities given.
 ```
 
 </details>
@@ -529,6 +537,38 @@ The specific semantics of the various ways to include or exclude entities are as
 
 If a query results in multiple individuals with the same name, forge will throw an error.
 
+##### Ordered output
+
+By default the order of samples in a Poseidon package created with `forge` depends on the order in which the relevant source packages are discovered by `trident` (e.g. when it crawls for packages in the `-d` base directories) and then the sample order within these packages.
+
+The option `--ordered` gives more control over the output order. It causes `trident` to output the resulting package with samples ordered according to the selection in `-f` or `--forgeFile`. This works through an alternative, slower sample selection algorithm that loops through the list of entities and checks for each entity which samples it adds or removes respectively from the final selection.
+
+For simple, positive selection, packages, groups and samples are added as expected. Negative selection removes samples from the list again. If an entity is selected twice via positive selection, then its first occurrence is considered for the ordering.
+
+###### Reordering samples in a package
+
+One particular application of `--ordered` is the reordering of samples in an existing Poseidon package, here for example `MyPac`. We suggest the following workflow for this application:
+
+1. Generate a `--forgeFile` with the desired order of the samples in `MyPac`. This can be done manually or with any suitable tool. Here is an example, where we employ `qjanno` to generate a `forge` selection so that the samples are ordered alphabetically by their `Poseidon_ID`:
+
+```bash
+qjanno "SELECT '<'||Poseidon_ID||'>' FROM d(MyPac) ORDER BY Poseidon_ID" --raw --noOutHeader > myOrder.txt
+```
+
+2. Use `trident forge` with `--ordered` and `--preservePyml` (see below) to create the package with the specified order:
+
+```bash
+trident forge -d MyPac --forgeFile myOrder.txt -o MyPac2 --ordered --preservePyml
+```
+
+3. Apply `trident rectify` to increment the package version number and document the reordering:
+
+```bash
+trident rectify -d MyPac2 --packageVersion Minor --logText "reordered the samples alphabetically by Poseidon_ID"
+```
+
+`MyPac2` then acts as a stand-in replacement for `MyPac` that only differs in the order of samples (and maybe the order of variables/fields in the `POSEIDON.yml`, `.janno`, `.ssf` or `.bib` files).
+
 ##### Treatment of the genotype data while merging
 
 Forge performs a series of steps to merge the genotype data of multiple source files:
@@ -586,11 +626,40 @@ The Sequencing Source File (short `.ssf` file) is forged in exactly the same way
 
 In the forge process all relevant samples for the output package are determined. This includes their `.janno` entries and therefore the information on the publication keys documented for them in the `.janno` `Publication` column. The output `.bib` file compiles only the relevant references for the samples in the output package. It includes the references exactly once and is sorted alphabetically by key.
 
-##### Other options
+##### Output modes
 
-Just as for `init` the output package of `forge` is created as a new directory `-o`. The title can also be explicitly defined with `-n`.
-  
-`--minimal` allows for the creation of a minimal output package without `.bib` and `.janno`. This is especially useful for data analysis pipelines, where only the genotype data is required. Even more basic output comes with `--onlyGeno`, which means that only the genotype data is returned without any Poseidon package.
+The output package of `forge` is created as a new directory `-o`. The title can also be explicitly defined with `-n`.
+
+`forge` by default returns a new output package with a generic `POSEIDON.yml` file, the genotype data as created from the input and the selection, and a `.janno` file. If the input includes `.bib` or `.ssf` files, the output will as well.
+
+Other output formats can be selected with these mutually exclusive flags:
+
+**`--onlyGeno`:**
+
+Only the genotype data is returned without any Poseidon package wrapping around it. This is especially useful for data analysis pipelines, where only the genotype data is required.
+
+**`--minimal`:**
+
+A minimal output package without `.janno`, `.bib` and `.ssf`. This wraps the genotype data in a very basic Poseidon package.
+
+**`--preservePyml`:**
+
+A full Poseidon package just as the default, but with various settings copied from the source package. This only works in case of a single source package.
+
+For the specific task of sub-setting or reordering (see above) a singular, existing Poseidon package it can be useful to preserve some fields of the `POSEIDON.yml` file of this input package, as well as supplementary information in the `README.md` and the `CHANGELOG.md` file. These are typically discarded by `forge`, but can be copied over to the output package with the new `--preservePyml` output mode.
+
+`--preservePyml` specifically preserves the following `POSEIDON.yml` fields:
+
+- `description`
+- `contributor`
+- `packageVersion`
+- `lastModified`
+- `readmeFile`
+- `changelogFile`
+
+This does not include the package `title`, which can be easily set to be identical to the source with `-n` or `-o` if it is desired. The `poseidonVersion` field is also not copied, because `trident` can only ever produce output packages with the latest Poseidon schema version.
+
+##### Other options
 
 `forge` has a an optional flag `--intersect`, that defines, if the genotype data from different packages should be merged with a union or an intersect operation. See *Treatment of the genotype data while merging* above.
 
@@ -817,7 +886,8 @@ As `rectify` reads and rewrites POSEIDON.yml files, it may change their inner or
 Usage: trident list ((-d|--baseDir DIR) | --remote [--remoteURL URL]
                       [--archive STRING])
                     (--packages | --groups | --individuals
-                      [-j|--jannoColumn COLNAME]) [--raw] [--onlyLatest]
+                      [--fullJanno | [-j|--jannoColumn COLNAME]]) [--raw]
+                    [--onlyLatest]
 
   List packages, groups or individuals from local or remote Poseidon
   repositories
@@ -840,6 +910,7 @@ Available options:
   --groups                 List all groups, ignoring any group names after the
                            first as specified in the .janno-file.
   --individuals            List all individuals/samples.
+  --fullJanno              output all Janno Columns
   -j,--jannoColumn COLNAME List additional fields from the janno files, using
                            the .janno column heading name, such as "Country",
                            "Site", "Date_C14_Uncal_BP", etc..
@@ -871,7 +942,7 @@ will result in a view of all packages available in one of the public Poseidon ar
 
 Independent of whether you query a local or an online archive, you can not just list packages, but also groups, as defined in the third column of EIGENSTRAT `.ind` files (or the first/last column of a PLINK `.fam` file), and individuals with the flags `--groups` and `--individuals` (instead of `--packages`).
 
-The `--individuals` flag additionally provides a way to immediately access information from `.janno` files on the command line. This works with the `-j|--jannoColumn` option. For example adding `-j Country -j Date_C14_Uncal_BP` to the commands above will add the `Country` and the `Date_C14_Uncal_BP` columns to the respective output tables.
+The `--individuals` flag additionally provides a way to immediately access information from `.janno` files on the command line. This works with the `-j|--jannoColumn` option. For example adding `-j Country -j Date_C14_Uncal_BP` to the commands above will add the `Country` and the `Date_C14_Uncal_BP` columns to the respective output tables. `--fullJanno` outputs all available columns.
 
 Note that if you want a less ornate table, for example because you want to load this into Excel, or pipe into another command that cannot deal with the table layout, you can use the `--raw` option to output that table as a simple tab-delimited stream.
 
