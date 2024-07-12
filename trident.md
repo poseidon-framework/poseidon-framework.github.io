@@ -541,7 +541,7 @@ If a query results in multiple individuals with the same name, forge will throw 
 
 By default the order of samples in a Poseidon package created with `forge` depends on the order in which the relevant source packages are discovered by `trident` (e.g. when it crawls for packages in the `-d` base directories) and then the sample order within these packages.
 
-The option `--ordered` gives more control over the output order. It causes `trident` to output the resulting package with samples ordered according to the selection in `-f` or `--forgeFile`. This works through an alternative, slower sample selection algorithm that loops through the list of entities and checks for each entity which samples it adds or removes respectively from the final selection.
+The option `--ordered` gives more control over the output order. It causes `trident` to output the resulting package with samples ordered according to the selection in `-f` or `--forgeFile`. This works through an alternative, slower sample selection algorithm that loops through the list of entities and checks for each entity which samples it adds or removes respectively to and from the final selection.
 
 For simple, positive selection, packages, groups and samples are added as expected. Negative selection removes samples from the list again. If an entity is selected twice via positive selection, then its first occurrence is considered for the ordering.
 
@@ -552,7 +552,8 @@ One particular application of `--ordered` is the reordering of samples in an exi
 1. Generate a `--forgeFile` with the desired order of the samples in `MyPac`. This can be done manually or with any suitable tool. Here is an example, where we employ `qjanno` to generate a `forge` selection so that the samples are ordered alphabetically by their `Poseidon_ID`:
 
 ```bash
-qjanno "SELECT '<'||Poseidon_ID||'>' FROM d(MyPac) ORDER BY Poseidon_ID" --raw --noOutHeader > myOrder.txt
+qjanno "SELECT '<'||Poseidon_ID||'>' FROM d(MyPac) ORDER BY Poseidon_ID" \
+  --raw --noOutHeader > myOrder.txt
 ```
 
 2. Use `trident forge` with `--ordered` and `--preservePyml` (see below) to create the package with the specified order:
@@ -564,7 +565,8 @@ trident forge -d MyPac --forgeFile myOrder.txt -o MyPac2 --ordered --preservePym
 3. Apply `trident rectify` to increment the package version number and document the reordering:
 
 ```bash
-trident rectify -d MyPac2 --packageVersion Minor --logText "reordered the samples alphabetically by Poseidon_ID"
+trident rectify -d MyPac2 --packageVersion Minor \
+  --logText "reordered the samples alphabetically by Poseidon_ID"
 ```
 
 `MyPac2` then acts as a stand-in replacement for `MyPac` that only differs in the order of samples (and maybe the order of variables/fields in the `POSEIDON.yml`, `.janno`, `.ssf` or `.bib` files).

@@ -85,6 +85,8 @@ With `/zip_file/<package_name>`, one can download a package as a zip-file.
 
 The endpoints can be accessed directly, or with additional arguments. These have to be listed after `?`, and must be separated by `&`. See the documentation of individual arguments below.
 
+**`archive=...`:**
+
 The most imporant argument is `archive=...`, which serves to select the package archive a given query should be applied to. See the overview [here](archive_overview) for the currently available options `community-archive`, `minotaur-archive` and `aadr-archive`. The archive names are identical to the respecitve GitHub repository names. If `archive=...` is not provided, then the query will target the default `community-archive`.
 
 ?> Request a list of packages in the `aadr-archive`:<br>
@@ -92,16 +94,22 @@ The most imporant argument is `archive=...`, which serves to select the package 
    Download a package from this archive:<br>
    https://server.poseidon-adna.org/zip_file/AADR_v54_1_p1_1240K_EuropeAncient?archive=aadr-archive
 
+**`client_version=...`:**
+
 `client_version=...` is an argument for `/packages`, `/groups`, and `/individuals` to check client-server compatibility (primarily for the trident subcommand `list`). It defaults to the trident version of the server, so usually the latest release version of trident. If the client has a version that is not supported by the server the connection attempt is rejected.
 
 ?> Request a list of packages with an old client version:<br>
    https://server.poseidon-adna.org/packages?archive=aadr-archive&client_version=1.2.0.0<br>
    (note how the two arguments were appended here with `&`)
 
+**`package_version=...`:**
+
 `/zip_file/<package_name>` allows to specify a version of the requested package by appending `?package_version=...`. It defaults to the latest available version of a given package.
 
 ?> Download a specific version of a package:<br>
    https://server.poseidon-adna.org/zip_file/AADR_v54_1_p1_1240K_EuropeAncient?archive=aadr-archive&package_version=0.1.2
+
+**`additionalJannoColumns=...`:**
 
 For `/individuals` the API provides an additional argument: `additionalJannoColumns=...`. It allows to add information from arbitrary .janno file columns into the `additionalJannoColumns` JSON-list. Note that the precise names of the Column titles in the Janno specification must be used. A list can be found [here](https://github.com/poseidon-framework/poseidon-schema/blob/master/janno_columns.tsv).
 
@@ -110,6 +118,7 @@ For `/individuals` the API provides an additional argument: `additionalJannoColu
    This also works for multiple variables at once, which can be given in a comma-separated list:<br>
    https://server.poseidon-adna.org/individuals?additionalJannoColumns=Latitude,Longitude
 
+To request all available columns at once the special key word `ALL` can be used: `?additionalJannoColumns=ALL`.
 
 ## The server implementation
 
