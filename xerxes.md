@@ -1,6 +1,6 @@
 <popup :custom-text="`<p><a href='https://mpi-eva-archaeogenetics.github.io/comp_human_adna_book/fstats.html'>Introduction to F3- and F4-Statistics</a> by Stephan Schiffels: An explanation of F-Statistics and how to run them with xerxes</p>`"></popup>
 
-# xerxes CLI software <!-- {docsify-ignore-all} -->
+# xerxes CLI software
 
 `xerxes` is a command line software tool for population genetic analyses of Poseidon packages. It is written in Haskell and openly available on [GitHub](https://github.com/poseidon-framework/poseidon-analysis-hs/).
 
@@ -35,13 +35,11 @@ With `xerxes --help` and `xerxes <subcommand> --help` you can get information ab
 - [🗎 Guide for xerxes v1.0.0.2](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/xerxes_guide_archive/xerxes_guide_1.0.0.2.pdf)
 - [🗎 Guide for xerxes v0.2.0.0](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/xerxes_guide_archive/xerxes_guide_0.2.0.0.pdf)
 
-## Guide for xerxes v1.0.1.0 to v1.0.1.1
-
-### Installation
+## Installation
 
 See the Poseidon website (<https://www.poseidon-adna.org/#/xerxes>) or the GitHub repository (<https://github.com/poseidon-framework/poseidon-analysis-hs>) for up-to-date installation instructions.
 
-### Fstats command
+## Fstats command
 
 Xerxes allows you to analyse genotype data across Poseidon packages, including your own, by pre-loading sets of packages via a `--baseDir` (or `-d`) parameter. From the pre-loaded packages it selects the ones relevant for the statistics you requested, and then streams through only these. It thus computes arbitrary F-Statistics across groups and individuals distributed in many packages, without the need to explicitly merge data first.
 
@@ -117,7 +115,7 @@ Available options:
                            tab-separated file
 ```
 
-#### Allowed statistics
+### Allowed statistics
 
 The following statistics are allowed in the `--stat`, `--statFile` and `--statConfig` options. In all of the following, the symbols `a`, `b`, `c` or `d` stand for arbitrary entities allowed in Poseidon, so groups (such as `French`), individuals (such as `<MA1.SG>`) or packages (such as `*2012_PattersonGenetics*`).
 
@@ -140,13 +138,13 @@ For each of the "slots" A, B, C or D, you can enter:
 * Groups, using no special syntax `Group_Name`
 * Packages, using syntax `*Package_Name*` (This can be useful, for example, if you happen to have a homogenous set of individuals from multiple groups in one package and want to consider all of these as one group.)
 
-#### Defining statistics directly via `--stat`
+### Defining statistics directly via `--stat`
 
 This is the simplest option to instruct the program to compute a specified statistic. Each statistic requires a separate input using `--stat` using this input method. Example:
 
 `xerxes fstats -d ... -d ... --stat "F3(French, Spanish, <Chimp.REF>) --stat "FST(French, Spanish)"`
 
-#### Defining statistics in a simple text file
+### Defining statistics in a simple text file
 
 You can prepare a text file, e.g. `fstats.txt`, into which you write the above statistics, one statistic per line. Example:
 
@@ -158,7 +156,7 @@ F4(Mbuti,Nganasan,Saami.DG,Finnish)
 
 You can then load these statistics using the option `--statFile fstats.txt`.
 
-#### Input via a configuration file
+### Input via a configuration file
 
 This is the most powerful way to input F-Statistics. Example:
 
@@ -198,21 +196,21 @@ You can save this into a text file, for example named `fstats_config.yaml`, and 
 
 The top level structure of this [YAML](https://en.wikipedia.org/wiki/YAML) file is an object with two fields: `groupDefs` (which is optional) and `fstats` (which is mandatory).
 
-##### Group Definitions
+#### Group Definitions
 
 You can specify ad-hoc group definitions using the syntax above. Every group consists of a name (used as object key) and then a JSON- or YAML-list of signed entities, following the same syntax as `trident forge`. Briefly: Individuals, Groups and Packages can be added or excluded (prefixed by a `-`) in order. In the example above, two individuals are removed from each group.
 
 Note that currently, groups can be defined only independently, so not incremental to each other. That means, you cannot currently use an already defined new group name in the entity list of a following group name.
 
-##### Statistic input using YAML
+#### Statistic input using YAML
 
 Each statistic defined in the `fstats` section of the YAML file, actually defines a loop over multiple populations in each statistic. In the example above, there are 6 F3-Statistics, each using a different combination of the input groups defined in each of the `a:`, `b:` and `c:` slots. There are also 100 (!) F4 statistics, following all combinations of 5x5x4x1 slots defined in `a:`, `b:`, `c:` and `d:`.
 
-##### Ascertainment (experimental feature)
+#### Ascertainment (experimental feature)
 
 In addition, every statistic section allows for a definition of an ascertainment specification, using a special key `ascertainment:`, which is optional. If given, you can specify an optional `outgroup`, a `reference` group in which to ascertain SNPs, and `lower` and `upper` allele frequency bounds. If specified, only SNPs for which the `reference` group has an allele frequency within the given bounds are used to compute the statistic (note that normalisation is still using all non-missing SNPs for that given statistic). If an `outgroup` is defined, then the outgroup-polarised derived allele frequency is used. If no `outgroup` is defined, then the minor allele frequency is used instead. If an outgroup is defined, any sites where the outgroup is polymorphic are treated as missing.
 
-#### Output
+### Output
 
 The final output of the `fstats` command looks like this:
 
@@ -242,7 +240,7 @@ This output table lists each statistic, the slots `a`, `b`, `c` and `d`, the num
 
 Additionally, an option `--blockOutFile` can be specified. This creates a file to which a table with estimates per Jackknife block is written.
 
-#### Degenerate statistics
+### Degenerate statistics
 
 Specific cases of statistics yield zero by construction:
 
@@ -252,7 +250,7 @@ Specific cases of statistics yield zero by construction:
 
 Even though the bias-correction technically can result in non-zero and even negative values, we automatically detect these cases and output zero for them. This can be useful, for example, when looping over pairs of populations for a pairwise matrix of `FST`, where we then want the diagonal to be zero to yield a proper distance matrix.
 
-#### Ploidy and illegal cases
+### Ploidy and illegal cases
 
 Genotype ploidy in input samples is important for many of the statistics, because the bias-correction terms require the number of chromosomes. Ploidy information is automatically read through the field of `Genotype_Ploidy` in the `.janno` file. A warning is printed if that information is missing, in which case we assume diploid genotypes. But often with low-coverage data from ancient DNA we create pseudo-haploid genotypes, so in that case it is important to provide that information correctly through the `.janno` file. 
 
@@ -264,11 +262,11 @@ In specific cases statistics are illegal with only a single haplotype. Specifica
 
 These cases are detected and an error is thrown. For `F2`, `F3` and `FST` you can use the "vanilla" versions of the statistics if that makes sense. This is particularly relevant for so-called "Outgroup-F3-Statistics", where we sometimes use a single haploid reference genome in position `c`. Use `F3vanilla` in that case.
 
-#### Whitepaper
+### Whitepaper
 
 The repository comes with a [detailed whitepaper](https://github.com/poseidon-framework/poseidon-analysis-hs/blob/main/docs/xerxes_whitepaper.pdf) that describes some more mathematical details of the methods implemented here.
 
-### RAS command (in development)
+## RAS command (in development)
 
 The RAS command computes pairwise RAS statistics between a collection of "left" entities, and a collection of "right" entities. Every entity is either a group name or an individual, with similar syntax as for the F-Statistics above, so `French` is a group, and `<IND001>` is an individual.
 

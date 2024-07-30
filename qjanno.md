@@ -1,4 +1,4 @@
-# qjanno CLI software <!-- {docsify-ignore-all} -->
+# qjanno CLI software
 
 `qjanno` is a command line tool to run SQL queries on `.janno` (and arbitrary .csv and .tsv) files. This is an adjusted version and hard fork of the qsh package (https://github.com/itchyny/qhs). It is written in Haskell and openly available on [GitHub](https://github.com/poseidon-framework/qjanno/).
 
@@ -29,9 +29,7 @@ The guide below explains the inner workings of qjanno and gives some examples fo
 - [🗎 Guide for qjanno v1.0.0.0 to v1.0.0.1](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/qjanno.pdf) (shown below)
 - [🗎 Guide for qjanno v1.0.0](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/qjanno_guide_archive/qjanno_guide_1.0.0.pdf)
 
-## Guide for qjanno v1.0.0.0 to v1.0.0.1
-
-### Background
+## Background
 
 Qjanno started as a fork of the [qhs](https://github.com/itchyny/qhs) software tool, which was, in turn, inspired by the command line tool [q](https://github.com/harelba/q). All of them enable SQL queries on delimiter-separated text files (e.g. .csv or .tsv). For `qjanno`, we copied the source code of qhs v0.3.3 (MIT-License) and adjusted it to provide a smooth experience with a special kind of .tsv file: The Poseidon `.janno` file.
 
@@ -39,17 +37,17 @@ Unlike `trident` or `xerxes`, `qjanno` does not have a complete understanding of
 
 `qjanno` still supports most features of qhs, so it can still read arbitrary .csv and .tsv files independently or in conjunction with `.janno` files (e.g. for `JOIN` operations).
 
-### How does this work?
+## How does this work?
 
 On startup, `qjanno` creates an [SQLite](https://www.sqlite.org) [@Gaffney2022](https://doi.org/10.14778/3554821.3554842) database [in memory](https://www.sqlite.org/inmemorydb.html). It then reads the requested, structured text files and attributes each column a type (either character or numeric). With this annotation  it can write the contents of the files to tables in the in-memory database. `qjanno` finally sends the user-provided SQL query to said database, waits for the result, parses it and returns it on the command line.
 
 The SQL query gets pre-parsed to extract file names and then forwarded to an SQLite database server via the Haskell library [sqlite-simple](https://hackage.haskell.org/package/sqlite-simple). That means `qjanno` can parse and understand basic SQLite3 syntax, though not everything. [`PRAGMA` functions](https://www.sqlite.org/pragma.html#syntax), for example, are not available. The examples below show some of the available syntax, but they are not exhaustive. Trial and error is recommended to see what does and what does not work. Please report missing expected functionality at our [issue board on GitHub](https://github.com/poseidon-framework/qjanno/issues).
 
-### Installation
+## Installation
 
 See the Poseidon website (<https://www.poseidon-adna.org/#/qjanno>) or the GitHub repository (<https://github.com/poseidon-framework/qjanno>) for up-to-date installation instructions.
 
-### The CLI interface
+## The CLI interface
 
 This is the CLI interface of `qjanno`:
 
@@ -85,7 +83,7 @@ Available options:
 
 This help can be accessed with `qjanno -h`. Running `qjanno` without any parameters does not work: The `QUERY` parameter is mandatory and without it the tool will fail with the exception `Query cannot be empty`.
 
-#### A basic example
+### A basic example
 
 A basic, working `qjanno` query could look like this:
 
@@ -127,7 +125,7 @@ Multiple of these methods can be combined as a comma-separated list. Each respec
 
 Note that the `FROM` field must not include any spaces -- even in a comma-separated list. `qjanno` parses the `QUERY` using space as a separator.
 
-#### CLI details
+### CLI details
 
 `qjanno` can not just read `.janno` files, but also arbitrary .csv and .tsv files. This option is triggered by providing file names (relative paths) in the `FROM` field of the query.
 
@@ -189,7 +187,7 @@ $ qjanno "SELECT '<'||Poseidon_ID||'>' FROM d(2012_MeyerScience)" --raw --noOutH
 <A_Ju_hoan_North-5.DG>
 ```
 
-#### The `-c|--showColumns` option
+### The `-c|--showColumns` option
 
 `-c|--showColumns` is a special option that, when activated, makes `qjanno` return not the result of a given query, but an overview table with the columns available in all selected files for said query. That is helpful to get an overview what could actually be queried.
 
@@ -207,7 +205,7 @@ $ qjanno "SELECT * FROM test.csv" -c
 
 This summary also includes the artificial, structurally cleaned table names assigned by `qjanno` before writing to the SQLite database. Often we can not simply use the file names as table names, because SQLite has strict naming requirements. File names or relative paths are generally invalid as table names and therefore need to be replaced with an adjusted string. These artificially generated names are mostly irrelevant from a user perspective -- except a query involves multiple files, e.g. in a `JOIN` operation. See below for an example.
 
-### Query examples
+## Query examples
 
 The following examples show some of the functionality of the SQLite query language available through `qjanno`. See the [SQLite syntax documentation](https://www.sqlite.org/lang.html) for more details. The examples were prepared and tested in a clone of the Poseidon community archive.
 

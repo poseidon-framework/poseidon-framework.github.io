@@ -1,10 +1,10 @@
 # .janno file details
 
-### Background
+## Background
 
 The `.janno` file columns are specified in the Poseidon package specification [here](https://github.com/poseidon-framework/poseidon-schema/blob/master/janno_columns.tsv). The following documentation includes additional background information for many of the variables. This should make it more easy to compile the necessary information for both published and unpublished data. The `.pdf` version of the latest version of this document is available [here](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/janno_details.pdf).
 
-### Identifiers
+## Identifiers
 
 The `Poseidon_ID` column represents each sample with an ideally world-wide unique identifier string often equal to the identifier used in the respective accompanying publication. There is no central authority to issue these identifiers, so it remains in the hand of the authors to avoid duplication. We are aware of this inconsistency and hope the aDNA community will eventually come together to establish a mechanism to ensure uniqueness of identifiers. If there are multiple samples from one individual, then they have to be clearly distinguished with relevant suffixes added to the `Poseidon_ID`. `Poseidon_ID`s are also employed in the genetic data files in a Poseidon package and therefore have to adhere to certain constraints.
 
@@ -14,7 +14,7 @@ The `Collection_ID` column stores an additional, secondary identifier as it is o
 
 The `Group_Name` column contains one or multiple group or population names for each individual, separated by `;`. The first entry must be identical to the one used in the genotype data for the respective sample in a Poseidon package, and whitespace is not allowed in any of the entries. Assigning group and population names is a hard problem in archeogenetics [@Eisenmann2018](https://doi.org/10.1038/s41598-018-31123-z), so the `.janno` file allows for more than one identifier.
 
-### Relations among samples/individuals
+## Relations among samples/individuals
 
 To systematically document biological relationships uncovered among samples/individuals in one or multiple Poseidon datasets (e.g. with software like READ [@MonroyKuhn2018](https://doi.org/10.1371/journal.pone.0195491) or BREADR [@Rohrlach2023](https://doi.org/10.1101/2023.04.17.537144)), the `.janno` file can be fit with a set of columns featuring the `Relation_*` prefix. Across these columns it should be possible to encode all kinds of pairwise, biological relationships an individual might have.
 
@@ -46,7 +46,7 @@ Unlike `Relation_Degree`, `Relation_Type` can be left empty even if there are en
 
 The `Relation_Note` column allows to add free-form text information about the relationships of this individual. This might also include information about the method used to infer the degree and type.
 
-### Spatial position
+## Spatial position
 
 The `.janno` file contains six columns to describe the spatial origin of an individual sample: `Country`, `Country_ISO`, `Location`, `Site` and finally `Latitude` and `Longitude`.
 
@@ -60,11 +60,11 @@ The `Site` column should contain a site name, ideally in the latin alphabet and 
 
 The `Latitude` and `Longitude` columns should contain geographic coordinates (WGS84) in decimal degrees (DD) with a precision of not more than five places after the decimal point. This yields a precision of about [1.1132m at the equator](https://en.wikipedia.org/wiki/Decimal_degrees) which is sufficient to describe the position of an archaeological site. Coordinates in other formats like for example Degrees Minutes Seconds (DMS) or in completely different coordinate reference systems should be transformed. There exist many open source software solutions to do that, most based on the [PROJ library](https://proj.org) e.g. the [The World Coordinate Converter](https://twcc.fr/en).
 
-### Temporal position
+## Temporal position
 
 The temporal position of a sample is encoded with seven different columns in the `.janno` file: `Date_C14_Labnr`, `Date_C14_Uncal_BP`, `Date_C14_Uncal_BP_Err`, `Date_BC_AD_Median`, `Date_BC_AD_Start`, `Date_BC_AD_Stop`, `Date_Type`.
 
-#### General structure
+### General structure
 
 The `Date_Type` column handles the general distinction between the most common forms of age information:
 
@@ -74,7 +74,7 @@ The `Date_Type` column handles the general distinction between the most common f
 
 So `Date_C14_Labnr`, `Date_C14_Uncal_BP` and `Date_C14_Uncal_BP_Err` only go along with `Date_Type = C14`, whereas `Date_BC_AD_Median`, `Date_BC_AD_Start`, `Date_BC_AD_Stop` complement both `Date_Type = C14` and `Date_Type = contextual`. Radiocarbon dates that only serve as secondary evidence for a contextual dating should NOT be reported in `Date_C14_Labnr`, `Date_C14_Uncal_BP` and `Date_C14_Uncal_BP_Err`.
 
-#### The columns in detail
+### The columns in detail
 
 Each radiocarbon date has a unique identifier: the "lab number". It consists of a lab code issued by the journal [Radiocarbon](https://radiocarbon.org/laboratories) for each laboratory and a serial number. This lab number makes the date well identifiable and should be reported in `Date_C14_Labnr` with the lab code separated from the serial number with a minus symbol.
 
@@ -90,9 +90,9 @@ In the columns `Date_BC_AD_Median`, `Date_BC_AD_Start`, `Date_BC_AD_Stop` ages a
 
 The column `Date_Note` stores arbitrary free-form text information about the dating of a sample.
 
-### Genetic summary data
+## Genetic summary data
 
-#### Individual properties
+### Individual properties
 
 The `Genetic_Sex` column should encode the biological sex as determined from the DNA read distribution on the X and Y chromosome. It only allows for the entries
 
@@ -106,7 +106,7 @@ The `MT_Haplogroup` column is meant to store the human mitochondrial DNA haplogr
 
 The `Y_Haplogroup` column holds the respective human Y-chromosome DNA haplogroup in a simple string. To avoid confusion from using different haplotype naming systems, the notation should follow a syntax with the main branch + the most terminal derived Y-SNP separated with a minus symbol (e.g. R1b-P312), similar to that used by [Yfull](https://www.yfull.com/sc/tree/).
 
-#### Library properties
+### Library properties
 
 The `Source_Tissue` column documents the skeletal, soft tissue or other elements from which source material for DNA library preparation was extracted. If multiple samples have been taken from different elements, these can be listed separated by `;`. Specific bone names should be reported with an underscore (e.g. bone_phalanx, tooth_molar).
 
@@ -143,7 +143,7 @@ The `Genotype_Ploidy` column stores whether the genotype calls for this individu
 
 The column `Data_Preparation_Pipeline_URL` should finally store an URL that links to a complete and human-readable description of the computational pipeline (for example a specific configuration for nf-core/eager [@FellowsYates2021](https://doi.org/10.7717/peerj.10947)) by which the sample data was processed.
 
-#### Data yield
+### Data yield
 
 The `Endogenous` column holds the percentage of mapped reads over the total amount of reads that went into the mapping pipeline. That boils down to the DNA percentage of the library that matches the (human) reference. It should be determined from Shotgun libraries (so before any hybridization capture), not on target (i.e. across the whole genome, not specific positions), and before any mapping quality filtering. In case of multiple libraries only the highest value should be reported. The % endogenous DNA can be calculated for example with the [endorS.py](https://github.com/aidaanva/endorS.py) script.
 
@@ -151,11 +151,9 @@ The `Nr_SNPs` column gives the number of SNPs reported in the genotype data file
 
 The `Coverage_on_Target_SNPs` column reports the mean fold coverage on the SNP set of the genotype dataset (e.g. 1240K) for the merged libraries of this sample. To calculate the coverage it is necessary to determine which SNPs are covered how many times by the mapped reads. Individual SNPs might be covered multiple times, whereas others may not be covered at all by the highly deteriorated ancient DNA. The coverage for each SNP is therefore a number between 0 and n. The statistic can be determined for example with the QualiMap [@Okonechnikov2015](https://doi.org/10.1093/bioinformatics/btv566) software package. In case of multiple libraries, the total coverage should be given across all libraries.
 
-#### Data quality
+### Data quality
 
 The `Damage` column contains the % damage on the first position of the 5' end for the main Shotgun library used for sequencing or capture. This is an important statistic to verify the age of ancient DNA. In case of multiple libraries you should report a value from the merged read alignment.
-
-##### Contamination
 
 Contamination of ancient DNA with foreign reads is a major challenge for archaeogenetics. There exist multiple competing ideas, algorithms and software tools to estimate the degree of contamination for individual samples (e.g. ANGSD [@Korneliussen2014](https://doi.org/10.1186/s12859-014-0356-4), contamLD [@Nakatsuka2020](https://doi.org/10.1186/s13059-020-02111-2) or hapCon [@Huang2022](https://doi.org/10.1093/bioinformatics/btac390)), with some methods only applicable under certain circumstances (e.g. popular X-chromosome based approaches only work on male individuals). Also the results of different methods tend to differ both in the degree of contamination they estimate and in the way the output is usually encoded. To cover the multitude of methods in this domain, and to make the results representable in the `.janno` file, we offer the `Contamination_*` column family.
 
@@ -175,7 +173,7 @@ This setup has the consequence that the columns `Contamination`, `Contamination_
 
 The `Contamination_Note` column is a free text field to add additional information about the contamination estimates, e.g. which parameters where used with the respective software tools.
 
-### Context information
+## Context information
 
 The `Genetic_Source_Accession_IDs` column was introduced to link the derived genotype data in Poseidon with the raw sequencing data typically uploaded to archives like the ENA [@Burgin2022](https://doi.org/10.1093/nar/gkac1051) or SRA [@Katz2021](https://doi.org/10.1093/nar/gkab1053). There, projects and individual samples are given clear unique identifiers: Accession IDs. This janno column is supposed to store one or multiple of these Accessions IDs for each individual/sample in Poseidon. If multiple are entered, then they should be arranged by descending specificity from left to right (e.g. project id > sample id > sequencing run id).
 
