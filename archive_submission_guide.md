@@ -48,7 +48,13 @@ The community archive has some additional requirements for your package beyond w
 
 The procedure for the actual submission is then as follows (a shorter, slightly more hands-on tutorial is available [here](https://mpi-eva-archaeogenetics.github.io/comp_human_adna_book/poseidon.html#contributing-to-the-community-archive)):
 
-**1. Fork and and then clone the GitHub repository for the archive you want to modify.**
+**1. Fork and then clone the GitHub repository for the archive you want to modify.**
+
+You need to be logged into github with your user account. You can then navigate to our github repository: [https://github.com/poseidon-framework/community-archive(https://github.com/poseidon-framework/community-archive) and hit the "Fork" button near the top of the page.
+
+You will then have a copy of the entire repository under your own user name: `https://github.com/<yourGithubUserName>/community-archive`.
+
+For the following to work, you need to have setup your github account in a way that allows you to communicate with github via the command line. For this, you need to configure an SSH public-key, so github really knows it's you. Find out more about it here: [https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent).
 
 To safe our [Git LFS](https://docs.github.com/en/repositories/working-with-files/managing-large-files/about-git-large-file-storage) bandwidth, **we would like to ask you to clone in a way that does not download the large data files from GitHub** (they should be downloaded from our webserver with [`trident fetch`](trident?id=fetch-command)). At the same time you need to be able to add new LFS files. A proper setup for this includes the following steps
 
@@ -70,11 +76,21 @@ size 177553875
 
 **2. Copy your new package into your local clone.**
 
-The directory should include the genotype data. Git (with Git LFS enabled) and GitHub will detect automatically that it should treat them as LFS files. Then commit the changes and push.
+You should now copy your package including the full genotype data into the cloned repository as a new package directory. The directory should include the genotype data. Git (with Git LFS enabled) and GitHub will detect automatically that it should treat them as LFS files. Then commit the changes and push:
+
+```
+git add <pathToNewPackageDirectory>
+git commit -m "added new package named <packageName>"
+git push
+```
 
 If you accidentally pushed the large files as normal files, for example if your LFS setup was incomplete, you can fix this with `git lfs migrate import --no-rewrite path/to/file.bed` (see [here](https://github.com/git-lfs/git-lfs/blob/main/docs/man/git-lfs-migrate.adoc#import-without-rewriting-history)).
 
 **3. Submit a pull request from your fork to merge your updates into our repository.**
+
+Having successfully pushed your branch to your fork on github, you need to now tell github to propose your branch as a submission to our master repository. This is done through [github Pull Requests](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests).
+
+When you navigate now to the community archive github page at [https://github.com/poseidon-framework/community-archive](https://github.com/poseidon-framework/community-archive), you will probably already see a yellow banner on top, with a button to initiate a Pull request. Alternatively, you can directly navigate to our [Pull Request page](https://github.com/poseidon-framework/community-archive/pulls) and hit `New Pull Request`. Fill in your fork as the source, and our master branch as the target, and follow instructions on the emerging Pull Request, and ultimately hit `Open Pull Request`.
 
 We will inspect your submission and contact you on GitHub about necessary changes. When everything is alright and according to our standards, we can merge and add your package. It will then be available from the Web API a couple of days later.
 
