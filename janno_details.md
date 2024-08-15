@@ -117,7 +117,7 @@ The `Library_Names` column should list the names for the libraries as used in th
 The `Capture_Type` column specifies the general pre-sequencing preparation methods that have been applied to the library. See [@Knapp2010](https://doi.org/10.3390/genes1020227) for a review of the different techniques (not including newer developments). This field can hold one of multiple different values, but also multiple of these separated by `;` if different methods have been applied for different libraries.
 
 - `Shotgun`: Sequencing without any enrichment (whole genome sequencing, screening etc.).
-- `1240k`: Target enrichment with hybridization capture optimised for sequences covering the 1240k SNP array [@Fu2015](https://doi.org/10.1038/nature14558), [@Haak2015](https://doi.org/10.1038/nature14317), [@Mathieson2015](https://doi.org/10.1038/nature16152).
+- `1240K`: Target enrichment with hybridization capture optimised for sequences covering the 1240k SNP array [@Fu2015](https://doi.org/10.1038/nature14558), [@Haak2015](https://doi.org/10.1038/nature14317), [@Mathieson2015](https://doi.org/10.1038/nature16152).
 - `ArborComplete`, `ArborPrimePlus`, `ArborAncestralPlus`: Target enrichment with hybridization capture as provided by Arbor Biosciences in three different kits branded [myBaits Expert Human Affinities](https://arborbiosci.com/genomics/targeted-sequencing/mybaits/mybaits-expert/mybaits-expert-human-affinities).
 - `TwistAncientDNA`: Target enrichment with hybridization capture as provided by Twist Bioscience [@Rohland2022](https://doi.org/10.1101/gr.276728.122).
 - `OtherCapture`: Target enrichment with hybridization capture for any other set of sequences.
