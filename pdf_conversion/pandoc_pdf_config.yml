@@ -1,5 +1,5 @@
 table-of-contents: true
-# shift-heading-level-by: -1
+shift-heading-level-by: -1
 number-sections: true
 highlight-style: tango
 variables:
