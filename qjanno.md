@@ -1,4 +1,4 @@
-# qjanno CLI software
+<h1>qjanno CLI software</h1>
 
 `qjanno` is a command line tool to run SQL queries on `.janno` (and arbitrary .csv and .tsv) files. This is an adjusted version and hard fork of the qsh package (https://github.com/itchyny/qhs). It is written in Haskell and openly available on [GitHub](https://github.com/poseidon-framework/qjanno/).
 
@@ -28,6 +28,8 @@ The guide below explains the inner workings of qjanno and gives some examples fo
 
 - [🗎 Guide for qjanno v1.0.0.0 to v1.0.0.1](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/qjanno.pdf) (shown below)
 - [🗎 Guide for qjanno v1.0.0](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/qjanno_guide_archive/qjanno_guide_1.0.0.pdf)
+
+# Guide for qjanno v1.0.0.0 to v1.0.0.1
 
 ## Background
 

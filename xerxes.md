@@ -1,6 +1,6 @@
 <popup :custom-text="`<p><a href='https://mpi-eva-archaeogenetics.github.io/comp_human_adna_book/fstats.html'>Introduction to F3- and F4-Statistics</a> by Stephan Schiffels: An explanation of F-Statistics and how to run them with xerxes</p>`"></popup>
 
-# xerxes CLI software
+<h1>xerxes CLI software</h1>
 
 `xerxes` is a command line software tool for population genetic analyses of Poseidon packages. It is written in Haskell and openly available on [GitHub](https://github.com/poseidon-framework/poseidon-analysis-hs/).
 
@@ -34,6 +34,8 @@ With `xerxes --help` and `xerxes <subcommand> --help` you can get information ab
 - [🗎 Guide for xerxes v1.0.1.0 to v1.0.1.1](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/xerxes.pdf) (shown below)
 - [🗎 Guide for xerxes v1.0.0.2](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/xerxes_guide_archive/xerxes_guide_1.0.0.2.pdf)
 - [🗎 Guide for xerxes v0.2.0.0](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/xerxes_guide_archive/xerxes_guide_0.2.0.0.pdf)
+
+# Guide for xerxes v1.0.1.0 to v1.0.1.1
 
 ## Installation
 

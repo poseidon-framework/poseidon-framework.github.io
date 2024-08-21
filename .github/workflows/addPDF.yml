@@ -33,7 +33,7 @@ jobs:
         sed -i '1,/^\s*## Guide for/ {/## Guide for/ !d}' trident.md
         sed -i '1,/^\s*## Guide for/ {/## Guide for/ !d}' xerxes.md
         # add extra # at the beginning of janno_details.md
-        echo -e "#$(cat janno_details.md)" > janno_details.md
+        # echo -e "#$(cat janno_details.md)" > janno_details.md
 
     - name: Convert files
       run: |
