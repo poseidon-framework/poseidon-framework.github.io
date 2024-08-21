@@ -3,7 +3,7 @@ name: Convert certain .md to .pdf (see the pdf_conversion directory)
 # Trigger the workflow on push to the master branch
 on:
   push:
-    branches: [master]
+    branches: [master, simplified_headings]
 
 jobs:
   build:
