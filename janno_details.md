@@ -4,9 +4,21 @@
 
 The `.janno` file columns are specified in the Poseidon package specification [here](https://github.com/poseidon-framework/poseidon-schema/blob/master/janno_columns.tsv). The following documentation includes additional background information for many of the variables. This should make it more easy to compile the necessary information for both published and unpublished data. The `.pdf` version of the latest version of this document is available [here](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/janno_details.pdf).
 
-## Identifiers
+### The `Poseidon_ID`
 
-The `Poseidon_ID` column represents each sample with an ideally world-wide unique identifier string often equal to the identifier used in the respective accompanying publication. There is no central authority to issue these identifiers, so it remains in the hand of the authors to avoid duplication. We are aware of this inconsistency and hope the aDNA community will eventually come together to establish a mechanism to ensure uniqueness of identifiers. If there are multiple samples from one individual, then they have to be clearly distinguished with relevant suffixes added to the `Poseidon_ID`. `Poseidon_ID`s are also employed in the genetic data files in a Poseidon package and therefore have to adhere to certain constraints.
+The `Poseidon_ID` column assigns each entity in a Poseidon package (so one row of the .janno file) a unique identifier string.
+
+Often the `Poseidon_ID` can be readily taken from the respective accompanying publication introducing a given sample. If there are multiple samples from one ancient human individual, then they may share this identifier in the publication. For the Poseidon package they have to be clearly distinguished with relevant suffixes, though, added to the `Poseidon_ID`. `Poseidon_ID`s are also employed in the genetic data files in a Poseidon package and therefore have to adhere to certain constraints.
+
+#### What does the `Poseidon_ID` represent exactly?
+
+Generally, archaeogenetics operates on burial contexts, e.g. graves, with one or multiple ancient human individuals. Usually, though not always, it is possible to attribute the skeletal remains within these graves to individuals based on the archaeological context and physical-anthropological analysis. Each individual can get sampled one or multiple times, either by directly probing their preserved tissue, mostly bones, or by sampling any reagent that contains their DNA (through whatever pathway or taphonomic process). From one such sample one or multiple extracts can be derived, which can be transformed into one or multiple libraries, which may or may not be subjected to a DNA capture protocol and then sequenced one or multiple times. The raw sequencing data can undergo various different forms of computational processing and eventually genotyping to produce the data relevant for most derived analyses and thus stored in Poseidon.
+
+While the wetlab-processes can be understood as a relatively predictable tree of separate physical and digital products for any given ancient individual, the computational data-processing finally breaks the conceptual tree-ness by allowing for arbitrary conflation of sequencing data obtained through potentially separate means: Data from different libraries can very well be merged if they are from the same individual, even if they are not from the same sample.
+
+A `Poseidon_ID`, and therefore the identifier for the main singular entity in a Poseidon package, could approximately be described as representing one end-point in the data preparation graph laid out above. Typically this end-point corresponds to an optimal result, consciously selected for a given individual, research question and publication. Unfortunately, in reality a `Poseidon_ID` is not suited to uniquely identify exactly one such end-point. The reality in the Poseidon ecosystem is rather that slightly different end-points can have the same `Poseidon_ID`, e.g. across package versions or public Poseidon archives. A single endpoint can only be uniquely identified from a combination of `Poseidon_ID`, Poseidon package and package version.
+
+### Other identifiers
 
 The column `Alternative_IDs` provides a way to list other IDs used for the respective individual. These might for example be names used in different publications or popular names like "Iceman", "Ötzi", "Girl of the Uchter Moor", "Tollund Man", etc.. The `Relation_*` columns described below allow to more precisely express the relationship type "identical" among samples in a Poseidon package.
 
@@ -117,7 +129,7 @@ The `Library_Names` column should list the names for the libraries as used in th
 The `Capture_Type` column specifies the general pre-sequencing preparation methods that have been applied to the library. See [@Knapp2010](https://doi.org/10.3390/genes1020227) for a review of the different techniques (not including newer developments). This field can hold one of multiple different values, but also multiple of these separated by `;` if different methods have been applied for different libraries.
 
 - `Shotgun`: Sequencing without any enrichment (whole genome sequencing, screening etc.).
-- `1240k`: Target enrichment with hybridization capture optimised for sequences covering the 1240k SNP array [@Fu2015](https://doi.org/10.1038/nature14558), [@Haak2015](https://doi.org/10.1038/nature14317), [@Mathieson2015](https://doi.org/10.1038/nature16152).
+- `1240K`: Target enrichment with hybridization capture optimised for sequences covering the 1240k SNP array [@Fu2015](https://doi.org/10.1038/nature14558), [@Haak2015](https://doi.org/10.1038/nature14317), [@Mathieson2015](https://doi.org/10.1038/nature16152).
 - `ArborComplete`, `ArborPrimePlus`, `ArborAncestralPlus`: Target enrichment with hybridization capture as provided by Arbor Biosciences in three different kits branded [myBaits Expert Human Affinities](https://arborbiosci.com/genomics/targeted-sequencing/mybaits/mybaits-expert/mybaits-expert-human-affinities).
 - `TwistAncientDNA`: Target enrichment with hybridization capture as provided by Twist Bioscience [@Rohland2022](https://doi.org/10.1101/gr.276728.122).
 - `OtherCapture`: Target enrichment with hybridization capture for any other set of sequences.
