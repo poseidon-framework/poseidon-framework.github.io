@@ -1,6 +1,6 @@
 <popup :custom-text="`<p><a href='https://nevrome.github.io/uni.tuebingen.poseidon.intro.2h.2024'>A short introduction to the Poseidon genotype data management framework</a> by Clemens Schmid: A Poseidon tutorial showcasing the <a href='https://nevrome.github.io/uni.tuebingen.poseidon.intro.2h.2024/ref_pca.html'>main features of trident</a> among other things</p>`"></popup>
 
-# trident CLI software <!-- {docsify-ignore-all} -->
+<h1>trident CLI software</h1>
 
 `trident` is a command line software tool to work with Poseidon packages and handle various data management tasks. It is written in Haskell and openly available on [GitHub](https://github.com/poseidon-framework/poseidon-hs/).
 
@@ -44,13 +44,13 @@ With `trident --help` and `trident <subcommand> --help` you can get information 
 - [🗎 Guide for trident v0.29.0](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident_guide_archive/trident_guide_0.29.0.pdf)
 - [🗎 Guide for trident v0.28.0](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident_guide_archive/trident_guide_0.28.0.pdf)
 
-## Guide for trident v1.5.4.0
+# Guide for trident v1.5.4.0
 
-### Installation
+## Installation
 
 See the Poseidon website (<https://www.poseidon-adna.org/#/trident>) or the GitHub repository (<https://github.com/poseidon-framework/poseidon-hs>) for up-to-date installation instructions.
 
-### The trident CLI
+## Overview
 
 Trident is a command line software tool structured in multiple subcommands. If you installed it properly you can call it on the command line by typing `trident`. This will show an overview of the general options and all subcommands, which are explained in detail below.
 
@@ -154,9 +154,7 @@ trident list -d /path/to/poseidon/packages/modern \
   --packages
 ```
 
-#### General notes
-
-##### Logging and command line output
+### Logging and command line output
 
 For all subcommands the general argument `--logMode` defines how `trident` reports messages (to stderr) on the command line:
 
@@ -168,30 +166,28 @@ For all subcommands the general argument `--logMode` defines how `trident` repor
 
 `--debug` is short for `--logMode VerboseLog` to activate this important log level more easily.
 
-##### Package duplicates and versions
+### Package duplicates and versions
 
 - For `trident` multiple packages in a set of base directories can share the same `title`, if they have different `packageVersion` numbers. If the version numbers are also identical or missing, then `trident` stops with an exception.
 - The `trident` subcommands `genoconvert`, `list`, `rectify`, `survey` and `validate` by default consider all versions of each Poseidon package in the given base directories. The `--onlyLatest` flag causes them to instead only consider the latest versions.
 - `fetch` and `forge` generally consider all package versions. Their selection language (see below) allows for detailed version handling.
 - `summarize` and `jannocoalesce` consider always only the latest package versions.
 
-##### Individual/Sample duplicates
+### Individual/Sample duplicates
 
 - `Poseidon_ID`s (so individual/sample names) within one package have to be unique, or `trident` will stop.
 - We also discourage sample duplicates across packages in package repositories, but `trident` will generally continue with them. `validate` will fail though, if the `--ignoreDuplicates` flag is not set.
 - `forge` offers a special mechanism to resolve sample duplicates within its selection language.
 
-##### Group names in `.fam` files
+### Group names in `.fam` files
 
 The `.fam` file of PLINK-formatted genotype data is used inconsistently across different popular aDNA software tools to store group/population name information. The (global) `trident` option `--inPlinkPopName` with the arguments `asFamily` (default), `asPhenotype` and `asBoth` allows to control the reading of the population name from PLINK `.fam` files. The subcommands that write genotype data (`forge`, `genoconvert`) have a corresponding option `--outPlinkPopName` to specify this for the output.
 
-##### Whitespaces in the `.janno` file
+### Whitespaces in the `.janno` file
 
 While reading the `.janno` file `trident` trims all leading and trailing whitespaces around individual cells. Also all instances of the `No-Break Space` unicode character will be removed. This means these whitespaces will not be preserved when a package is `forge`d.
 
-### Package creation and manipulation commands
-
-#### Init command
+## Init command
 
 `init` creates a new Poseidon package from genotype data files. It adds a POSEIDON.yml file, a dummy `.janno` file for context information and an empty `.bib` file for literature references.
 
@@ -271,7 +267,7 @@ The output package created by `init` is located in a new directory `-o`, which s
 
 The `--minimal` flag causes `init` to create a minimal package with a very basic POSEIDON.yml and no `.bib` and `.janno` files.
 
-#### Fetch command
+## Fetch command
 
 `fetch` allows to download Poseidon packages from a remote Poseidon server via a Web API. This server provides all packages in the Poseidon public archives.
 
@@ -332,7 +328,7 @@ Note that `trident fetch` is usually used in a workflow with `trident list --rem
 
 `fetch` has the optional arguments `--remote https:://..."` to name an alternative Poseidon server and `--archive` to select a specific Poseidon archive on the server.
 
-#### Forge command
+## Forge command
 
 `forge` creates new Poseidon packages by extracting and merging packages, populations and individuals/samples from Poseidon repositories.
 
@@ -485,7 +481,7 @@ trident forge \
   --onlyGeno
 ```
 
-##### The forge selection language
+### The forge selection language
 
 The text in `--forgeString` and `--forgeFile` (and with a reduced syntax also in `--fetchString` and `--fetchFile`) are parsed as a domain specific query language that describes precisely which entities should be compiled in the output package of a given `forge` operation. The language has multiple syntactic elements and a specific evaluation logic.
 
@@ -517,7 +513,7 @@ If the forge entity list starts with a negative entity, or if the entity list is
 
 The specific semantics of the various ways to include or exclude entities are as follows:
 
-###### Inclusion queries
+#### Inclusion queries
 
 * `*pac1*`: Select all individuals in the latest version of package "pac1"
 * `*pac1-1.0.1*`: Select all individuals in package "pac1" with version "1.0.1"
@@ -526,7 +522,7 @@ The specific semantics of the various ways to include or exclude entities are as
 * `<pac1:group1:ind1>`: Select the individual named "ind1" associated with "group1" in the latest version of package "pac1"
 * `<pac1-1.0.1:group1:ind1>`: Select the individual named "ind1" associated with "group1" in the package "pac1" with version "1.0.1"
 
-###### Exclusion queries
+#### Exclusion queries
 
 * `-*pac1*`: Remove all individuals in all versions of package "pac1"
 * `-*pac1-1.0.1*`: Remove only individuals in package "pac1" with version "1.0.1" (but leave other versions in)
@@ -537,7 +533,7 @@ The specific semantics of the various ways to include or exclude entities are as
 
 If a query results in multiple individuals with the same name, forge will throw an error.
 
-##### Ordered output
+### Ordered output
 
 By default the order of samples in a Poseidon package created with `forge` depends on the order in which the relevant source packages are discovered by `trident` (e.g. when it crawls for packages in the `-d` base directories) and then the sample order within these packages.
 
@@ -545,7 +541,7 @@ The option `--ordered` gives more control over the output order. It causes `trid
 
 For simple, positive selection, packages, groups and samples are added as expected. Negative selection removes samples from the list again. If an entity is selected twice via positive selection, then its first occurrence is considered for the ordering.
 
-###### Reordering samples in a package
+#### Reordering samples in a package
 
 One particular application of `--ordered` is the reordering of samples in an existing Poseidon package, here for example `MyPac`. We suggest the following workflow for this application:
 
@@ -571,7 +567,7 @@ trident rectify -d MyPac2 --packageVersion Minor \
 
 `MyPac2` then acts as a stand-in replacement for `MyPac` that only differs in the order of samples (and maybe the order of variables/fields in the `POSEIDON.yml`, `.janno`, `.ssf` or `.bib` files).
 
-##### Treatment of the genotype data while merging
+### Treatment of the genotype data while merging
 
 Forge performs a series of steps to merge the genotype data of multiple source files:
 
@@ -581,7 +577,7 @@ Forge performs a series of steps to merge the genotype data of multiple source f
 4. SNP IDs, as part of PLINK `.bim` files are checked across the source files. If all SNP IDs for a given SNP are missing, then the result will also be missing. If there is only one SNP ID present in some or all source packages, that ID gets forwarded to the output. In the (unusual) case that there are multiple different non-missing SNP IDs (of the form "rs" followed by a number), then a debug warning is output (which gets printed to the screen when `--debug` is selected), and simply the first value is chosen to be output into the forged `.bim` file. We decided not to throw an error in that case, because we consider the physical position of the SNP (specified by Chromosome and position) to be definitive, and the SNP ID to be of secondary importance.
 5. Genetic positions, as part of PLINK `.bim` files are checked in a similar manner, with "0.0" being interpreted as missing.
 
-##### Treatment of the `.janno` file while merging
+### Treatment of the `.janno` file while merging
 
 `forge` merges and subsets `.janno` files along with the genotype data. If a package lacks a `.janno` file, then a basic one will be created internally an on-the-fly based on the information in the genotype data, and used for the output. Missing columns across packages will be filled with `n/a`. 
 
@@ -620,15 +616,15 @@ The following example illustrates the described behaviour:
 | YYY023      | POP5       | F           | n/a               | K                 | H                 |
 | YYY024      | POP5       | M           | n/a               | L                 | I                 |
 
-##### Treatment of the `.ssf` file while merging
+### Treatment of the `.ssf` file while merging
 
 The Sequencing Source File (short `.ssf` file) is forged in exactly the same way as the `.janno` file. `.ssf` files that are present are included in the forge product, following selection of those entities which are listed in the `poseidon_IDs` columns. Columns that are only present in some packages, including those not defined in the Poseidon package specification, are also included in the forged product in the same way as described for `.janno` files above.
 
-##### Treatment of the `.bib` file while merging
+### Treatment of the `.bib` file while merging
 
 In the forge process all relevant samples for the output package are determined. This includes their `.janno` entries and therefore the information on the publication keys documented for them in the `.janno` `Publication` column. The output `.bib` file compiles only the relevant references for the samples in the output package. It includes the references exactly once and is sorted alphabetically by key.
 
-##### Output modes
+### Output modes
 
 The output package of `forge` is created as a new directory `-o`. The title can also be explicitly defined with `-n`.
 
@@ -661,7 +657,7 @@ For the specific task of sub-setting or reordering (see above) a singular, exist
 
 This does not include the package `title`, which can be easily set to be identical to the source with `-n` or `-o` if it is desired. The `poseidonVersion` field is also not copied, because `trident` can only ever produce output packages with the latest Poseidon schema version.
 
-##### Other options
+### Other options
 
 `forge` has a an optional flag `--intersect`, that defines, if the genotype data from different packages should be merged with a union or an intersect operation. See *Treatment of the genotype data while merging* above.
 
@@ -677,7 +673,7 @@ This does not include the package `title`, which can be easily set to be identic
 
 With `--packagewise` the within-package selection step in forge can be skipped. This will result in outputting all individuals in the relevant packages, and hence a superset of the requested individuals/groups. It may result in better performance in cases where one wants to forge entire packages.
 
-#### Genoconvert command
+## Genoconvert command
 
 `genoconvert` converts the genotype data in a Poseidon package to a different file format. The respective entries in the POSEIDON.yml file are changed accordingly. 
 
@@ -753,7 +749,7 @@ trident genoconvert \
   -o my_directory
 ```
 
-#### Jannocoalesce command
+## Jannocoalesce command
 
 `jannocoalesce` merges information from one or multiple source `.janno` files into a target `.janno` file.
 
@@ -813,7 +809,7 @@ It then merges these files by a key column, which can be selected with `--source
 
 `jannocoalesce` generally attempts to fill **all** empty cells in the target `.janno` file with information from the source. `--includeColumns` and `--excludeColumns` allow to select specific columns for which this should be done. In some cases it may be desirable to not just fill empty fields in the target, but overwrite the information already there with the `-f|--force` option. If the target file should be preserved, then the output can be directed to a new output `.janno` file with `-o|--outFile`.
 
-#### Rectify command
+## Rectify command
 
 `rectify` automatically harmonizes POSEIDON.yml files of one or multiple packages. This is not an automatic update from one Poseidon version to the next, but rather a clean-up wizard after manual modifications.
 
@@ -875,9 +871,7 @@ The following arguments determine which fields of the POSEIDON.yml file should b
 
 As `rectify` reads and rewrites POSEIDON.yml files, it may change their inner order, layout or even content (e.g. if they have fields which are not in the POSEIDON.yml specification). Create a backup of the POSEIDON.yml file before running `rectify` if you are uncertain if this might affect you negatively.
 
-### Inspection commands
-
-#### List command
+## List command
 
 `list` lists packages, groups and individuals of local datasets, or of packages available in the archives on the web server.
 
@@ -948,7 +942,7 @@ The `--individuals` flag additionally provides a way to immediately access infor
 
 Note that if you want a less ornate table, for example because you want to load this into Excel, or pipe into another command that cannot deal with the table layout, you can use the `--raw` option to output that table as a simple tab-delimited stream.
 
-#### Summarise command
+## Summarise command
 
 `summarise` prints some general summary statistics for a given Poseidon dataset taken from the `.janno` files.
 
@@ -980,7 +974,7 @@ which will show you context information like -- among others -- the number of in
 
 You can use the `--raw` option to output the summary table in a simple, tab-delimited layout.
 
-#### Survey command
+## Survey command
 
 `survey` tries to indicate package completeness (mostly focused on `.janno` files) for Poseidon datasets.
 
@@ -1015,7 +1009,7 @@ will yield a table with one row for each package. See `trident survey -h` for a 
 
 Again you can use the `--raw` option to output the survey table in a tab-delimited format.
 
-#### Validate command
+## Validate command
 
 `validate` checks Poseidon packages and individual package components for structural correctness.
 
