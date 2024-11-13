@@ -30,7 +30,8 @@ On GitHub you will also find [older release versions](https://github.com/poseido
 
 With `trident --help` and `trident <subcommand> --help` you can get information about each subcommand and parameter directly on the command line. The guide below explains the subcommands in more detail. It is available in .pdf format for the current and previous versions here:
 
-- [🗎 Guide for trident v1.5.4.0](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident.pdf) (shown below)
+- [🗎 Guide for trident v1.5.7.0 to v1.5.7.3](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident.pdf) (shown below)
+- [🗎 Guide for trident v1.5.4.0](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident_guide_archive/trident_guide_1.5.4.0.pdf)
 - [🗎 Guide for trident v1.4.1.0 to v1.5.0.1](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident_guide_archive/trident_guide_1.4.1.0_to_1.5.0.1.pdf)
 - [🗎 Guide for trident v1.4.0.2 to v1.4.0.3](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident_guide_archive/trident_guide_1.4.0.2_to_1.4.0.3.pdf)
 - [🗎 Guide for trident v1.3.0.4](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident_guide_archive/trident_guide_1.3.0.4.pdf)
@@ -44,7 +45,7 @@ With `trident --help` and `trident <subcommand> --help` you can get information 
 - [🗎 Guide for trident v0.29.0](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident_guide_archive/trident_guide_0.29.0.pdf)
 - [🗎 Guide for trident v0.28.0](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident_guide_archive/trident_guide_0.28.0.pdf)
 
-# Guide for trident v1.5.4.0
+# Guide for trident v1.5.7.0 to v1.5.7.3
 
 ## Installation
 
@@ -115,7 +116,7 @@ You can arrange a Poseidon repository in a hierarchical way. For example:
         /...
 ```
 
-This structure then allows to select only the level of packages you are interested in, even individual ones. `-d` can be given multiple times, which is particularly useful as you may have your own data to co-analyse with external reference data. In this case you simply need to provide your own genotype data as yet another Poseidon package to be added to your `trident` command. For example, you may have genotype data in `EIGENSTRAT` format (`trident` supports `EIGENSTRAT` and `PLINK` as formats.):
+This structure then allows to select only the level of packages you are interested in, even individual ones. `-d` can be given multiple times, which is particularly useful as you may have your own data to co-analyse with external reference data. In this case you simply need to provide your own genotype data as yet another Poseidon package to be added to your `trident` command. For example, you may have genotype data in `EIGENSTRAT` format (`trident` supports `EIGENSTRAT`, `PLINK` and `VCF` as formats):
 
 ```default
 ~/my_project/my_project.geno
@@ -195,25 +196,39 @@ While reading the `.janno` file `trident` trims all leading and trailing whitesp
  <summary><i class="fas fa-search"></i> <i class="fas fa-terminal"></i> <b>Command line details</b></summary>
 
 ```default
-Usage: trident init ((-p|--genoOne FILE) | --inFormat FORMAT --genoFile FILE
-                      --snpFile FILE --indFile FILE) [--snpSet SET]
-                    (-o|--outPackagePath DIR) [-n|--outPackageName STRING]
-                    [--minimal]
+Usage: trident init ((-p|--genoOne FILE) | --genoFile FILE --snpFile FILE
+                      --indFile FILE |
+                      --bedFile FILE --bimFile FILE --famFile FILE | 
+                      --vcfFile FILE) [--snpSet SET] (-o|--outPackagePath DIR) 
+                    [-n|--outPackageName STRING] [--minimal]
 
   Create a new Poseidon package from genotype data
 
 Available options:
   -h,--help                Show this help text
   -p,--genoOne FILE        One of the input genotype data files. Expects .bed,
-                           .bim or .fam for PLINK and .geno, .snp or .ind for
-                           EIGENSTRAT. The other files must be in the same
-                           directory and must have the same base name.
-  --inFormat FORMAT        The format of the input genotype data: EIGENSTRAT or
-                           PLINK. Only necessary for data input with --genoFile
-                           + --snpFile + --indFile.
-  --genoFile FILE          Path to the input geno file.
-  --snpFile FILE           Path to the input snp file.
-  --indFile FILE           Path to the input ind file.
+                           .bed.gz, .bim, .bim.gz or .fam for PLINK, or .geno,
+                           .geno.gz, .snp, .snp.gz or .ind for EIGENSTRAT. The
+                           other files must be in the same directory and must
+                           have the same base name. If a gzipped file is given,
+                           it is assumed that the file pairs (.geno.gz, .snp.gz)
+                           or (.bim.gz, .bed.gz) are both zipped, but not the
+                           .fam or .ind file. If a .ind or .fam file is given,
+                           it is assumed that none of the file triples is
+                           zipped. For VCF please see option --vcfFile
+  --genoFile FILE          Eigenstrat genotype matrix, optionally gzipped.
+                           Accepted file endings are .geno, .geno.gz
+  --snpFile FILE           Eigenstrat snp positions file, optionally gzipped.
+                           Accepted file endings are .snp, .snp.gz
+  --indFile FILE           Eigenstrat individual file. Accepted file endings are
+                           .ind
+  --bedFile FILE           Plink genotype matrix, optionally gzipped. Accepted
+                           file endings are .bed, .bed.gz
+  --bimFile FILE           Plink snp positions file, optionally gzipped.
+                           Accepted file endings are .bim, .bim.gz
+  --famFile FILE           Plink individual file. Accepted file endings are .fam
+  --vcfFile FILE           VCF (Variant Call Format) file, optionall gzipped.
+                           Accepted file endings are .vcf, .vcf.gz
   --snpSet SET             The snpSet of the package: 1240K, HumanOrigins or
                            Other. Only relevant for data input with -p|--genoOne
                            or --genoFile + --snpFile + --indFile, because the
@@ -226,8 +241,8 @@ Available options:
                            is provided, then the package name defaults to the
                            basename of the (mandatory) --outPackagePath
                            argument. (default: Nothing)
-  --minimal                Should the output data be reduced to a necessary
-                           minimum and omit empty scaffolding?
+  --minimal                Should the output Poseidon package be reduced to a
+                           necessary minimum?
 ```
 
 </details>
@@ -236,15 +251,14 @@ The command
 
 ```bash
 trident init \
-  --inFormat EIGENSTRAT/PLINK \
-  --genoFile path/to/genoFile \
-  --snpFile path/to/snpFile \
-  --indFile path/to/indFile \
+  --genoFile path/to/genoFile.geno \
+  --snpFile path/to/snpFile.snp \
+  --indFile path/to/indFile.ind \
   --snpSet 1240K|HumanOrigins|Other \
   -o path/to/new_package_name
 ```
 
-requires the format (`--inFormat`) of your input data (either `EIGENSTRAT` or `PLINK`), the paths to the respective files (`--genoFile`, `--snpFile`, `--indFile`), and optionally the "shape" of these files (`--snpSet`), so if they cover the `1240K`, the `HumanOrigins` or an `Other` SNP set.
+requires the paths to the respective files (`--genoFile --snpFile --indFile | --bedFile --bimFile --famFile | --vcfFile`), and optionally the "shape" of these files (`--snpSet`), so if they cover the `1240K`, the `HumanOrigins` or an `Other` SNP set.
 
 A simpler interface is available with `-p (+ --snpSet)`, which only requires a path to one of the genotype data files and automatically discovers the others if they share the same base name:
 
@@ -257,11 +271,11 @@ trident init \
 
 The following file extensions are expected:
 
-|          | EIGENSTRAT   | PLINK   |
-|----------|--------------|---------|
-| genoFile | `.geno`      | `.bed`  |
-| snpFile  | `.snp`       | `.bim`  |
-| indFile  | `.ind`       | `.fam`  |
+|          | EIGENSTRAT   | PLINK   | VCF    |
+|----------|--------------|---------|--------|
+| genoFile | `.geno`      | `.bed`  | `.vcf` |
+| snpFile  | `.snp`       | `.bim`  |  ---   |
+| indFile  | `.ind`       | `.fam`  |  ---   |
 
 The output package created by `init` is located in a new directory `-o`, which should not already exist when `init` is called, and gets the package title corresponding to the basename of `-o`. You can also set the title explicitly with `-n`.
 
@@ -337,8 +351,10 @@ Note that `trident fetch` is usually used in a workflow with `trident list --rem
 
 ```default
 Usage: trident forge ((-d|--baseDir DIR) |
-                       ((-p|--genoOne FILE) | --inFormat FORMAT --genoFile FILE
-                         --snpFile FILE --indFile FILE) [--snpSet SET])
+                       ((-p|--genoOne FILE) | --genoFile FILE --snpFile FILE
+                         --indFile FILE |
+                         --bedFile FILE --bimFile FILE --famFile FILE |
+                         --vcfFile FILE) [--snpSet SET])
                      [--forgeFile FILE | (-f|--forgeString DSL)]
                      [--selectSnps FILE] [--intersect] [--outFormat FORMAT]
                      [--onlyGeno | --minimal | --preservePyml]
@@ -352,15 +368,28 @@ Available options:
   -h,--help                Show this help text
   -d,--baseDir DIR         A base directory to search for Poseidon packages.
   -p,--genoOne FILE        One of the input genotype data files. Expects .bed,
-                           .bim or .fam for PLINK and .geno, .snp or .ind for
-                           EIGENSTRAT. The other files must be in the same
-                           directory and must have the same base name.
-  --inFormat FORMAT        The format of the input genotype data: EIGENSTRAT or
-                           PLINK. Only necessary for data input with --genoFile
-                           + --snpFile + --indFile.
-  --genoFile FILE          Path to the input geno file.
-  --snpFile FILE           Path to the input snp file.
-  --indFile FILE           Path to the input ind file.
+                           .bed.gz, .bim, .bim.gz or .fam for PLINK, or .geno,
+                           .geno.gz, .snp, .snp.gz or .ind for EIGENSTRAT. The
+                           other files must be in the same directory and must
+                           have the same base name. If a gzipped file is given,
+                           it is assumed that the file pairs (.geno.gz, .snp.gz)
+                           or (.bim.gz, .bed.gz) are both zipped, but not the
+                           .fam or .ind file. If a .ind or .fam file is given,
+                           it is assumed that none of the file triples is
+                           zipped. For VCF please see option --vcfFile
+  --genoFile FILE          Eigenstrat genotype matrix, optionally gzipped.
+                           Accepted file endings are .geno, .geno.gz
+  --snpFile FILE           Eigenstrat snp positions file, optionally gzipped.
+                           Accepted file endings are .snp, .snp.gz
+  --indFile FILE           Eigenstrat individual file. Accepted file endings are
+                           .ind
+  --bedFile FILE           Plink genotype matrix, optionally gzipped. Accepted
+                           file endings are .bed, .bed.gz
+  --bimFile FILE           Plink snp positions file, optionally gzipped.
+                           Accepted file endings are .bim, .bim.gz
+  --famFile FILE           Plink individual file. Accepted file endings are .fam
+  --vcfFile FILE           VCF (Variant Call Format) file, optionall gzipped.
+                           Accepted file endings are .vcf, .vcf.gz
   --snpSet SET             The snpSet of the package: 1240K, HumanOrigins or
                            Other. Only relevant for data input with -p|--genoOne
                            or --genoFile + --snpFile + --indFile, because the
@@ -398,13 +427,14 @@ Available options:
                            "<package:group:individual>".
   --selectSnps FILE        To extract specific SNPs during this forge operation,
                            provide a Snp file. Can be either Eigenstrat (file
-                           ending must be '.snp') or Plink (file ending must be
-                           '.bim'). When this option is set, the output package
-                           will have exactly the SNPs listed in this file. Any
-                           SNP not listed in the file will be excluded. If
-                           option '--intersect' is also set, only the SNPs
-                           overlapping between the SNP file and the forged
-                           packages are output. (default: Nothing)
+                           ending must be '.snp' or '.snp.gz') or Plink (file
+                           ending must be '.bim' or '.bim.gz'). When this option
+                           is set, the output package will have exactly the SNPs
+                           listed in this file. Any SNP not listed in the file
+                           will be excluded. If option '--intersect' is also
+                           set, only the SNPs overlapping between the SNP file
+                           and the forged packages are output.
+                           (default: Nothing)
   --intersect              Whether to output the intersection of the genotype
                            files to be forged. The default (if this option is
                            not set) is to output the union of all SNPs, with
@@ -413,7 +443,7 @@ Available options:
                            With this option set, the forged dataset will
                            typically have fewer SNPs, but less missingness.
   --outFormat FORMAT       The format of the output genotype data: EIGENSTRAT or
-                           PLINK. (default: PLINK)
+                           PLINK. (default: "PLINK")
   --onlyGeno               Should only the resulting genotype data be returned?
                            This means the output will not be a Poseidon package.
   --minimal                Should the output Poseidon package be reduced to a
@@ -465,16 +495,15 @@ trident forge -d ... -d ... \
 
 where the entities (packages, groups/populations, individuals/samples) you want in the output package can be denoted either as a string on the command line (`-f`/`--forgeString`), or in an input text file (`--forgeFile`). See the section below for the syntax of this selection language. Do not forget to wrap the `--forgeString` query in quotes.
 
-Including one or multiple Poseidon packages with `-d` is not the only way to include data for a forge operation. It is also possible to consider unpackaged genotype data directly with `-p (+ --snpSet)` or `--inFormat + --genoFile + --snpFile + --indFile (+ --snpSet)`. This makes the following example possible, where we merge data from one Poseidon package and two unpackaged genotype datasets to get a new EIGENSTRAT dataset.
+Including one or multiple Poseidon packages with `-d` is not the only way to include data for a forge operation. It is also possible to consider unpackaged genotype data directly with `-p (+ --snpSet)`, `--genoFile + --snpFile + --indFile (+ --snpSet)` (for EIGENSTRAT data), `--bedFile + --bimFile + --famFile (+ --snpSet)` (for PLINK data) or `--vcfFile (+ --snpSet)` (for VCF data). This makes the following example possible, where we merge data from one Poseidon package and two unpackaged genotype datasets to get a new EIGENSTRAT dataset.
 
 ```bash
 trident forge \
   -d 2017_GonzalesFortesCurrentBiology \
   -p 2018_VeeramahPNAS/2018_VeeramahPNAS.fam \
-  --inFormat PLINK \
-  --genoFile 2017_HaberAJHG/2017_HaberAJHG.bed \
-  --snpFile 2017_HaberAJHG/2017_HaberAJHG.bim \
-  --indFile 2017_HaberAJHG/2017_HaberAJHG.fam \
+  --bedFile 2017_HaberAJHG/2017_HaberAJHG.bed \
+  --bimFile 2017_HaberAJHG/2017_HaberAJHG.bim \
+  --famFile 2017_HaberAJHG/2017_HaberAJHG.fam \
   -f "<STR241.SG>,<ERS1790729.SG>,Iberia_HG.SG" \
   -o testpackage \
   --outFormat EIGENSTRAT \
@@ -571,10 +600,10 @@ trident rectify -d MyPac2 --packageVersion Minor \
 
 Forge performs a series of steps to merge the genotype data of multiple source files:
 
-1. Genotype data from each package is streamed in parallel. Because our packages may have different SNP locations (specified by chromosome-position pairs) listed in their `.bim`/`.snp` file, we first perform a zipping-operation, whose behaviour depends on whether `--intersect` is set or not. Without `--intersect`, any SNP position listed in any package will be forwarded to the output, with missing values being filled in in all packages that do not list that particular SNP. With `--intersect`, only SNP positions that are present in all packages are considered. Note that relevant for this step is only whether a given SNP position is part of the genotype data, not whether the actual genotypes are missing or not.
+1. Genotype data from each package is streamed in parallel. Because our packages may have different SNP locations (specified by chromosome-position pairs) listed in their `.bim`/`.snp` or `.vcf` file, we first perform a zipping-operation, whose behaviour depends on whether `--intersect` is set or not. Without `--intersect`, any SNP position listed in any package will be forwarded to the output, with missing values being filled in in all packages that do not list that particular SNP. With `--intersect`, only SNP positions that are present in all packages are considered. Note that relevant for this step is only whether a given SNP position is part of the genotype data, not whether the actual genotypes are missing or not.
 2. At each SNP, the consensus alleles are selected, by collecting all reference and alternative alleles from all sources. If more than two non-dummy alleles (alleles different from `N`) are present in that collection, an error is thrown. If exactly two non-dummy alleles are present (which should be the case for binary SNPs), the two alleles are declared "reference" and "alternative" alleles for the output. If only one non-dummy allele is present, it is set to be the reference allele, and "N" is set to be the alternative.
 3. All source genotype data is then read and recoded in terms of the two chosen consensus alleles. This will make sure that source data with flipped reference and alternative allele gets correctly merged in.
-4. SNP IDs, as part of PLINK `.bim` files are checked across the source files. If all SNP IDs for a given SNP are missing, then the result will also be missing. If there is only one SNP ID present in some or all source packages, that ID gets forwarded to the output. In the (unusual) case that there are multiple different non-missing SNP IDs (of the form "rs" followed by a number), then a debug warning is output (which gets printed to the screen when `--debug` is selected), and simply the first value is chosen to be output into the forged `.bim` file. We decided not to throw an error in that case, because we consider the physical position of the SNP (specified by Chromosome and position) to be definitive, and the SNP ID to be of secondary importance.
+4. SNP IDs, as part of PLINK `.bim` and `.vcf` files are checked across the source files. If all SNP IDs for a given SNP are missing, then the result will also be missing. If there is only one SNP ID present in some or all source packages, that ID gets forwarded to the output. In the (unusual) case that there are multiple different non-missing SNP IDs (of the form "rs" followed by a number), then a debug warning is output (which gets printed to the screen when `--debug` is selected), and simply the first value is chosen to be output into the forged `.bim` file. We decided not to throw an error in that case, because we consider the physical position of the SNP (specified by Chromosome and position) to be definitive, and the SNP ID to be of secondary importance.
 5. Genetic positions, as part of PLINK `.bim` files are checked in a similar manner, with "0.0" being interpreted as missing.
 
 ### Treatment of the `.janno` file while merging
@@ -682,9 +711,11 @@ With `--packagewise` the within-package selection step in forge can be skipped. 
 
 ```default
 Usage: trident genoconvert ((-d|--baseDir DIR) |
-                             ((-p|--genoOne FILE) | --inFormat FORMAT
-                               --genoFile FILE --snpFile FILE --indFile FILE)
-                             [--snpSet SET]) --outFormat FORMAT [--onlyGeno]
+                             ((-p|--genoOne FILE) | --genoFile FILE
+                               --snpFile FILE --indFile FILE |
+                               --bedFile FILE --bimFile FILE --famFile FILE |
+                               --vcfFile FILE) [--snpSet SET])
+                           --outFormat FORMAT [--onlyGeno]
                            [-o|--outPackagePath DIR] [--removeOld]
                            [--outPlinkPopName MODE] [--onlyLatest]
 
@@ -694,15 +725,28 @@ Available options:
   -h,--help                Show this help text
   -d,--baseDir DIR         A base directory to search for Poseidon packages.
   -p,--genoOne FILE        One of the input genotype data files. Expects .bed,
-                           .bim or .fam for PLINK and .geno, .snp or .ind for
-                           EIGENSTRAT. The other files must be in the same
-                           directory and must have the same base name.
-  --inFormat FORMAT        The format of the input genotype data: EIGENSTRAT or
-                           PLINK. Only necessary for data input with --genoFile
-                           + --snpFile + --indFile.
-  --genoFile FILE          Path to the input geno file.
-  --snpFile FILE           Path to the input snp file.
-  --indFile FILE           Path to the input ind file.
+                           .bed.gz, .bim, .bim.gz or .fam for PLINK, or .geno,
+                           .geno.gz, .snp, .snp.gz or .ind for EIGENSTRAT. The
+                           other files must be in the same directory and must
+                           have the same base name. If a gzipped file is given,
+                           it is assumed that the file pairs (.geno.gz, .snp.gz)
+                           or (.bim.gz, .bed.gz) are both zipped, but not the
+                           .fam or .ind file. If a .ind or .fam file is given,
+                           it is assumed that none of the file triples is
+                           zipped. For VCF please see option --vcfFile
+  --genoFile FILE          Eigenstrat genotype matrix, optionally gzipped.
+                           Accepted file endings are .geno, .geno.gz
+  --snpFile FILE           Eigenstrat snp positions file, optionally gzipped.
+                           Accepted file endings are .snp, .snp.gz
+  --indFile FILE           Eigenstrat individual file. Accepted file endings are
+                           .ind
+  --bedFile FILE           Plink genotype matrix, optionally gzipped. Accepted
+                           file endings are .bed, .bed.gz
+  --bimFile FILE           Plink snp positions file, optionally gzipped.
+                           Accepted file endings are .bim, .bim.gz
+  --famFile FILE           Plink individual file. Accepted file endings are .fam
+  --vcfFile FILE           VCF (Variant Call Format) file, optionall gzipped.
+                           Accepted file endings are .vcf, .vcf.gz
   --snpSet SET             The snpSet of the package: 1240K, HumanOrigins or
                            Other. Only relevant for data input with -p|--genoOne
                            or --genoFile + --snpFile + --indFile, because the
@@ -740,7 +784,7 @@ all packages in `-d` will be converted to the desired `--outFormat` (either `EIG
 
 The "old" data is not deleted, but kept around. That means conversion can result in a package with both PLINK and EIGENSTRAT data, but only one is linked in the POSEIDON.yml file, and that is what will be used by `trident`. To delete the old data in the conversion you can add the `--removeOld` flag.
 
-`-p (+ --snpSet)` or `--inFormat + --genoFile + --snpFile + --indFile (+ --snpSet)` allow to directly convert genotype data that is not wrapped in a Poseidon package and store it to a directory given in `-o`. See this example:
+`-p (+ --snpSet)`, `--genoFile + --snpFile + --indFile (+ --snpSet)` (for EIGENSTRAT data), `--bedFile + --bimFile + --famFile (+ --snpSet)` (for PLINK data) or `--vcfFile (+ --snpSet)` (for VCF data) allow to directly convert genotype data that is not wrapped in a Poseidon package and store it to a directory given in `-o`. See this example:
 
 ```bash
 trident genoconvert \
@@ -1020,10 +1064,11 @@ Again you can use the `--raw` option to output the survey table in a tab-delimit
 Usage: trident validate ((-d|--baseDir DIR) [--ignoreGeno] [--fullGeno]
                           [--ignoreDuplicates] [-c|--ignoreChecksums]
                           [--ignorePoseidonVersion] |
-                          --pyml FILE | (-p|--genoOne FILE) | --inFormat FORMAT
-                          --genoFile FILE --snpFile FILE --indFile FILE |
-                          --janno FILE | --ssf FILE | --bib FILE) [--noExitCode]
-                        [--onlyLatest]
+                          --pyml FILE | (-p|--genoOne FILE) | --genoFile FILE
+                          --snpFile FILE --indFile FILE |
+                          --bedFile FILE --bimFile FILE --famFile FILE |
+                          --vcfFile FILE | --janno FILE | --ssf FILE |
+                          --bib FILE) [--noExitCode] [--onlyLatest]
 
   Check Poseidon packages or package components for structural correctness
 
@@ -1041,15 +1086,28 @@ Available options:
                            compatible with trident.
   --pyml FILE              Path to a POSEIDON.yml file.
   -p,--genoOne FILE        One of the input genotype data files. Expects .bed,
-                           .bim or .fam for PLINK and .geno, .snp or .ind for
-                           EIGENSTRAT. The other files must be in the same
-                           directory and must have the same base name.
-  --inFormat FORMAT        The format of the input genotype data: EIGENSTRAT or
-                           PLINK. Only necessary for data input with --genoFile
-                           + --snpFile + --indFile.
-  --genoFile FILE          Path to the input geno file.
-  --snpFile FILE           Path to the input snp file.
-  --indFile FILE           Path to the input ind file.
+                           .bed.gz, .bim, .bim.gz or .fam for PLINK, or .geno,
+                           .geno.gz, .snp, .snp.gz or .ind for EIGENSTRAT. The
+                           other files must be in the same directory and must
+                           have the same base name. If a gzipped file is given,
+                           it is assumed that the file pairs (.geno.gz, .snp.gz)
+                           or (.bim.gz, .bed.gz) are both zipped, but not the
+                           .fam or .ind file. If a .ind or .fam file is given,
+                           it is assumed that none of the file triples is
+                           zipped. For VCF please see option --vcfFile
+  --genoFile FILE          Eigenstrat genotype matrix, optionally gzipped.
+                           Accepted file endings are .geno, .geno.gz
+  --snpFile FILE           Eigenstrat snp positions file, optionally gzipped.
+                           Accepted file endings are .snp, .snp.gz
+  --indFile FILE           Eigenstrat individual file. Accepted file endings are
+                           .ind
+  --bedFile FILE           Plink genotype matrix, optionally gzipped. Accepted
+                           file endings are .bed, .bed.gz
+  --bimFile FILE           Plink snp positions file, optionally gzipped.
+                           Accepted file endings are .bim, .bim.gz
+  --famFile FILE           Plink individual file. Accepted file endings are .fam
+  --vcfFile FILE           VCF (Variant Call Format) file, optionall gzipped.
+                           Accepted file endings are .vcf, .vcf.gz
   --janno FILE             Path to a .janno file.
   --ssf FILE               Path to a .ssf file.
   --bib FILE               Path to a .bib file.
@@ -1069,7 +1127,7 @@ trident validate -d ... -d ...
 
 to check packages and it will either report a success (`Validation passed`) or failure with specific error messages.
 
-Instead of validating entire packages with `-d` you can also apply it to individual files and package components: `--pyml` (POSEIDON.yml), `-p | --inFormat + --genoFile + --snpFile + --indFile` (genotype data), `--janno` (.janno file), `--ssf` (.ssf file) or `--bib` (.bib file). In this case `validate` attempts to read and parse the respecitve files individually and reports any issues it encounters. Note that this considers the files in isolation and does not include any cross-file consistency checks.
+Instead of validating entire packages with `-d` you can also apply it to individual files and package components: `--pyml` (POSEIDON.yml), `-p | --genoFile + --snpFile + --indFile | --bedFile + --bimFile + --famFile | --vcfFile` (genotype data), `--janno` (.janno file), `--ssf` (.ssf file) or `--bib` (.bib file). In this case `validate` attempts to read and parse the respecitve files individually and reports any issues it encounters. Note that this considers the files in isolation and does not include any cross-file consistency checks.
 
 When applied to packages, `validate` tries to ensure that each package adheres to the Poseidon package specification. Here is a list of what is checked:
 
