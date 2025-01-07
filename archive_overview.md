@@ -37,13 +37,3 @@ The Poseidon Minotaur Archive mirrors the PCA in that it features publication-wi
 ## The Poseidon AADR Archive (PAA)
 
 The Poseidon AADR Archive is the conceptionally most simple archive. It features **"poseidonized" versions of releases of the [Allen Ancient DNA Resource (AADR)](https://reich.hms.harvard.edu/allen-ancient-dna-resource-aadr-downloadable-genotypes-present-day-and-ancient-dna-data)**. The code and decisions for the cleaning and packaging process are documented [here](https://github.com/poseidon-framework/aadr2poseidon). Due to file size limitations of GitHub's LFS system each AADR dataset is split into smaller sub-packages by data type and geographic origin.
-
-## Archive curation roles
-
-Our archives are open for [New package submissions]() and [Revisions of existing packages](). To manage these processes, we define the following roles:
-
-1.) Assignees: A package is submitted by a single author, with a github account. This user is tagged as "Assignee" in the github interface. The same holds for the modification of an existing package: Here, the "assignee" is the user who authors a Pull Request to change a given package. Assignees are specific per package. 
-
-2.) Reviewers: A Pull request for a new or modified package is reviewed by one or more users. Reviewers will often be recruited from the Poseidon Core Team, but can also encompass other relevant users, for example if they have special knowledge on the package, or otherwise expertise.
-
-3.) Editors: Editors are standing 

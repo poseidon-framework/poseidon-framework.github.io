@@ -6,6 +6,17 @@ We assume you have some basic knowledge about using a command line software like
 
 !> This documentation only covers submissions to the [Poseidon Community Archive](archive_overview). Look [here](minotaur) for the submission process to the [Poseidon Minotaur Archive](archive_overview).
 
+## Archive curation roles
+
+To manage package submissions and mofifications in our archives, we define the following roles, which are synonymous to the respective roles within github:
+
+1. Assignees: A package is submitted by a single author, with a github account. This user is tagged as "Assignee" in the github interface. The same holds for the modification of an existing package: Here, the "assignee" is the user who authors a Pull Request to change a given package. Assignees are specific per package. An assignee is responsible for bringing the package into shape, and responding to review requests.
+
+2. Reviewers: A Pull request for a new or modified package is reviewed by one or more users. Reviewers will often be recruited from the Poseidon Core Team, but can also encompass other relevant users, for example if they have special knowledge on the package, or otherwise expertise. Guidelines for reviewers and assignees overlap, and are summarised below. Reviewers are asked to ensure that all checklist items  
+
+3. Editors: Editors are not assigned per package, but per repository. Currently, editors for the [Community Archive](#the-poseidon-community-archive-pca) are users [@Aygal](https://github.com/AyGhal) and [@nevrome](https://github.com/nevrome). Editor for the [Minotaur Archive](#the-poseidon-minotaur-archive-pma) is user [@TCLamnidis](https://github.com/TCLamnidis).
+
+
 ## Preparing a new package for the community archive
 
 If you would like to provide a new package, you should prepare it as far as you can and then commit it as a pull request to the repository.
@@ -149,3 +160,4 @@ Please do not wait too long (max. 2 weeks) between creation of the fork and subm
 Please note the following submission **checklist** for modified packages:
 
 [](https://raw.githubusercontent.com/poseidon-framework/community-archive/master/.github/PULL_REQUEST_TEMPLATE/modify_package_template.md ':include')
+
