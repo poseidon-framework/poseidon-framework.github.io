@@ -10,7 +10,7 @@ We assume you have some basic knowledge about using a command line software like
 
 To manage package submissions and modifications in our archives, we define the following roles, which are synonymous to the respective roles within github:
 
-1. Assignees: A package is submitted by a single author, with a github account. This user is tagged as "Assignee" in the github interface. The same holds for the modification of an existing package: Here, the "assignee" is the user who authors a Pull Request to change a given package. Assignees are specific per package. An assignee is responsible for bringing the package into shape, and responding to review requests.
+1. Assignees: A package is submitted by a single author, with a github account. This user is tagged as "Assignee" in the github interface. The same holds for the modification of an existing package: Here, the "assignee" is the user who authors a Pull Request to change a given package. Assignees are specific per package. **An assignee is responsible for bringing the package into shape, and responding to review requests.**
 
 2. Reviewers: A Pull request for a new or modified package is reviewed by one or more users. Reviewers will often be recruited from the Poseidon Core Team, but can also encompass other relevant users, for example if they have special knowledge on the package, or otherwise expertise. Guidelines for reviewers and assignees overlap, and are summarised below. **Reviewers are asked to ensure that all checklist items are covered.**
 
