@@ -14,7 +14,7 @@ To manage package submissions and modifications in our archives, we define the f
 
 2. Reviewers: A Pull request for a new or modified package is reviewed by one or more users. Reviewers will often be recruited from the Poseidon Core Team, but can also encompass other relevant users, for example if they have special knowledge on the package, or otherwise expertise. Guidelines for reviewers and assignees overlap, and are summarised below. **Reviewers are asked to ensure that all checklist items are covered.**
 
-3. Editors: Editors are not assigned per package, but per repository. Currently, editors for the [Community Archive](#the-poseidon-community-archive-pca) are users [@Aygal](https://github.com/AyGhal) and [@nevrome](https://github.com/nevrome). Editor for the [Minotaur Archive](#the-poseidon-minotaur-archive-pma) is user [@TCLamnidis](https://github.com/TCLamnidis).
+3. Editors: Editors are not assigned per package, but per repository. **Editors are responsible for merging Pull Requests into their respective archives, and maintaining those archives.** Currently, editors for the [Community Archive](#the-poseidon-community-archive-pca) are users [@Aygal](https://github.com/AyGhal) and [@nevrome](https://github.com/nevrome). Editor for the [Minotaur Archive](#the-poseidon-minotaur-archive-pma) is user [@TCLamnidis](https://github.com/TCLamnidis).
 
 
 ## Preparing a new package for the community archive
