@@ -13,7 +13,7 @@ It is available at `https://server.poseidon-adna.org` and provides the following
 
 ## Endpoints
 
-`/packages`, `/groups`, and `/individuals` return nested JSON-lists that give an overview of the data in the public data archives.
+`/packages`, `/groups`, `/individuals` and `/bibliography` return nested JSON-lists that give an overview of the data in the public data archives.
 
 ?> Access a JSON list of packages:<br>
    https://server.poseidon-adna.org/packages
@@ -27,13 +27,13 @@ These lists have the following general structure:
 │   └── ...
 └── serverResponse
     ├── constructor
-    └── packageInfo | groupInfo | extIndInfo
+    └── packageInfo | groupInfo | extIndInfo | bibInfo
         ├── 0
         ├── 1
         └── ...
 ```
 
-`packageInfo`, `groupInfo`, and `extIndInfo` are lists of objects, where each object has the following fields:
+`packageInfo`, `groupInfo`, `extIndInfo` and `bibInfo` are lists of objects, where each object has the following fields:
 
 <table>
 <tr>
@@ -73,6 +73,24 @@ extIndInfo[i]
 └── additionalJannoColumns []
 ```
 </td>
+
+</td>
+<td style="vertical-align:top">
+
+```
+bibInfo[i]
+├── nrSamples
+├── bibKey
+├── bibTitle
+├── bibAuthor
+├── bibYear
+└── bibJournal
+└── bibDoi
+└── additionalBibEntries []
+```
+</td>
+
+
 </tr>
 </table>
 
@@ -111,7 +129,7 @@ The most imporant argument is `archive=...`, which serves to select the package 
 
 **`additionalJannoColumns=...`:**
 
-For `/individuals` the API provides an additional argument: `additionalJannoColumns=...`. It allows to add information from arbitrary .janno file columns into the `additionalJannoColumns` JSON-list. Note that the precise names of the Column titles in the Janno specification must be used. A list can be found [here](https://github.com/poseidon-framework/poseidon-schema/blob/master/janno_columns.tsv).
+For `/individuals` the API provides an additional argument: `additionalJannoColumns=...`. It allows to add information from arbitrary (comma-separated) .janno file columns into the `additionalJannoColumns` JSON-list. Note that the precise names of the Column titles in the Janno specification must be used. A list can be found [here](https://github.com/poseidon-framework/poseidon-schema/blob/master/janno_columns.tsv).
 
 ?> Request the individuals list for the default archive, but with information on the origin country of the samples:<br>
    https://server.poseidon-adna.org/individuals?additionalJannoColumns=Country<br>
@@ -119,6 +137,10 @@ For `/individuals` the API provides an additional argument: `additionalJannoColu
    https://server.poseidon-adna.org/individuals?additionalJannoColumns=Latitude,Longitude
 
 To request all available columns at once the special key word `ALL` can be used: `?additionalJannoColumns=ALL`.
+
+**`additionalBibColumns=...`:**
+
+For `/bibliography` the APi provices this additional argument. It can contains a comma-separated list of additional fields queried from the BibTex entry of the respective package. The values of these fields are returned via the `additionalBibEntries` field in the returned JSON-objects.
 
 ## The server implementation
 
