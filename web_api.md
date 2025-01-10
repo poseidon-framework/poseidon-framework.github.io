@@ -9,6 +9,7 @@ It is available at `https://server.poseidon-adna.org` and provides the following
 | `/packages`                 | returns a list of all packages                        |
 | `/groups`                   | returns a list of all groups                          |
 | `/individuals`              | returns a list of all samples/individuals             |
+| `/bibliography`             | returns a list of all bibliography items from BibTex  |
 | `/zip_file/<package_name>`  | returns a zip file of the package with the given name |
 
 ## Endpoints
