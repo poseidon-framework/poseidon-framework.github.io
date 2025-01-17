@@ -856,7 +856,7 @@ It then merges these files by a key column, which can be selected with `--source
 
 ## Rectify command
 
-`rectify` automatically harmonizes POSEIDON.yml files of one or multiple packages. This is not an automatic update from one Poseidon version to the next, but rather a clean-up wizard after manual modifications.
+`rectify` automatically harmonizes POSEIDON.yml files of one or multiple packages. This is not an automatic update from one Poseidon version to the next, but rather a clean-up wizard after manual modifications. It also includes additional, automatic package editing features.
 
 <details>
  <summary><i class="fas fa-search"></i> <i class="fas fa-terminal"></i> <b>Command line details</b></summary>
@@ -867,7 +867,8 @@ Usage: trident rectify (-d|--baseDir DIR) [--ignorePoseidonVersion]
                        [--packageVersion VPART [--logText STRING]]
                        [--checksumAll | [--checksumGeno] [--checksumJanno]
                          [--checksumSSF] [--checksumBib]]
-                       [--newContributors DSL] [--onlyLatest]
+                       [--newContributors DSL] [--jannoRemoveEmpty]
+                       [--onlyLatest]
 
   Adjust POSEIDON.yml files automatically to package changes
 
@@ -889,6 +890,9 @@ Available options:
   --checksumBib            Update .bib file checksum.
   --newContributors DSL    Contributors to add to the POSEIDON.yml file in the
                            form "[Firstname Lastname](Email address);...".
+  --jannoRemoveEmpty       Reorder the .janno file and remove empty colums.
+                           Remember to pair this option with --checksumJanno to
+                           also update the checksum.
   --onlyLatest             Consider only the latest versions of packages, or the
                            groups and individuals within the latest versions of
                            packages, respectively.
@@ -904,7 +908,8 @@ trident rectify -d ... -d ... \
   --packageVersion Major|Minor|Patch \
   --logText "short description of the update" \
   --checksumAll \
-  --newContributors "[Firstname Lastname](Email address);..."
+  --newContributors "[Firstname Lastname](Email address);..." \
+  --jannoRemoveEmpty
 ```
 
 The following arguments determine which fields of the POSEIDON.yml file should be modified:
@@ -915,6 +920,8 @@ The following arguments determine which fields of the POSEIDON.yml file should b
 - `--newContributors` adds new contributors.
 
 As `rectify` reads and rewrites POSEIDON.yml files, it may change their inner order, layout or even content (e.g. if they have fields which are not in the POSEIDON.yml specification). Create a backup of the POSEIDON.yml file before running `rectify` if you are uncertain if this might affect you negatively.
+
+`--jannoRemoveEmpty` is the first option that does not edit POSEIDON.yml, but .janno files. It allows to remove empty columns from .janno files, so columns that only feature empty strings or `n/a` values. As part of this process it reorders the columns of the .janno file. Remember to pair this option with `--checksumJanno` or `checksumAll` to automatically update the .janno checksum in the POSEIDON.yml file afterwards.
 
 ## List command
 
