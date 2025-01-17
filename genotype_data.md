@@ -6,11 +6,13 @@ Genotype data in Poseidon packages can be stored in either of two (multi)file fo
 
 |   | PLINK (binary) | EIGENSTRAT |
 |---|---|---|
-| genotype file | [`.bed` (binary biallelic genotype table)](https://www.cog-genomics.org/plink/1.9/formats#bed) | [`.geno` (genotype file)](https://github.com/DReichLab/EIG/blob/fb4fb59065055d3622e0f97f0149588eae630a3e/CONVERTF/README#L67)
-| SNP file  | [`.bim` (extended MAP file)](https://www.cog-genomics.org/plink/1.9/formats#bim) | [`.snp` (snp file)](https://github.com/DReichLab/EIG/blob/fb4fb59065055d3622e0f97f0149588eae630a3e/CONVERTF/README#L67) |
+| genotype file | [`.bed` (binary biallelic genotype table)](https://www.cog-genomics.org/plink/1.9/formats#bed) or `.bed.gz` | [`.geno` (genotype file)](https://github.com/DReichLab/EIG/blob/fb4fb59065055d3622e0f97f0149588eae630a3e/CONVERTF/README#L67) or `.geno.gz`
+| SNP file  | [`.bim` (extended MAP file)](https://www.cog-genomics.org/plink/1.9/formats#bim) or `.bim.gz` | [`.snp` (snp file)](https://github.com/DReichLab/EIG/blob/fb4fb59065055d3622e0f97f0149588eae630a3e/CONVERTF/README#L67) or `.snp.gz` |
 | individual file  | [`.fam` (sample information)](https://www.cog-genomics.org/plink/1.9/formats#fam) | [`.ind` (indiv file)](https://github.com/DReichLab/EIG/blob/fb4fb59065055d3622e0f97f0149588eae630a3e/CONVERTF/README#L67) |
 
 The PLINK file format is a well specified, storage efficient data type compatible with many bioinformatic software tools, which made it an obvious choice for Poseidon. The EIGENSTRAT format is also common within archaeogenetics, compatible with many of the important tools developed by the Reich Lab, e.g. the ones in the [EIGENSOFT](https://github.com/DReichLab/EIG) and [ADMIXTOOLS](https://github.com/DReichLab/AdmixTools). In the future even more formats might be supported (see e.g. [here](https://reich.hms.harvard.edu/software/InputFileFormats)).
+
+The large genotype data files to store SNP definitions and values can be stored in gzipped files (`*.gz`).
 
 The `genotypeData` field in the `POSEIDON.yml` file documents in which format the data for a package is stored and the relative paths to the respective files.
 
@@ -25,8 +27,8 @@ The `genotypeData` field in the `POSEIDON.yml` file documents in which format th
 ```
 genotypeData:
   format: PLINK
-  genoFile: X.bed
-  snpFile: X.bim
+  genoFile: X.bed | X.bed.gz
+  snpFile: X.bim | X.bim.gz
   indFile: X.fam
   snpSet: 1240K
 ```
@@ -36,9 +38,9 @@ genotypeData:
 ```
 genotypeData:
   format: EIGENSTRAT
-  genoFile: X.geno
-  snpFile: X.snp
-  indFile: X.indiv
+  genoFile: X.geno | X.geno.gz
+  snpFile: X.snp | X.snp.gz
+  indFile: X.ind
   snpSet: 1240K
 ```
 </td>
