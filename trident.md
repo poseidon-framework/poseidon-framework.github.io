@@ -691,6 +691,8 @@ For the specific task of sub-setting or reordering (see above) a singular, exist
 
 This does not include the package `title`, which can be easily set to be identical to the source with `-n` or `-o` if it is desired. The `poseidonVersion` field is also not copied, because `trident` can only ever produce output packages with the latest Poseidon schema version.
 
+With `-z|--zip` the genotype data output (independent of the selected output mode) can be wrapped in gzipped archives with the additional file extension `.gz`. `trident` can seamlessly interact with genotype data in this format.
+
 ### Other options
 
 `forge` has a an optional flag `--intersect`, that defines, if the genotype data from different packages should be merged with a union or an intersect operation. See *Treatment of the genotype data while merging* above.
@@ -801,6 +803,8 @@ trident genoconvert \
   --outFormat EIGENSTRAT \
   -o my_directory
 ```
+
+With `-z|--zip` the genotype data output can be wrapped in gzipped archives with the additional file extension `.gz`.
 
 ## Jannocoalesce command
 
