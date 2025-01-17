@@ -199,8 +199,8 @@ While reading the `.janno` file `trident` trims all leading and trailing whitesp
 ```default
 Usage: trident init ((-p|--genoOne FILE) | --genoFile FILE --snpFile FILE
                       --indFile FILE |
-                      --bedFile FILE --bimFile FILE --famFile FILE | 
-                      --vcfFile FILE) [--snpSet SET] (-o|--outPackagePath DIR) 
+                      --bedFile FILE --bimFile FILE --famFile FILE |
+                      --vcfFile FILE) [--snpSet SET] (-o|--outPackagePath DIR)
                     [-n|--outPackageName STRING] [--minimal]
 
   Create a new Poseidon package from genotype data
@@ -208,15 +208,16 @@ Usage: trident init ((-p|--genoOne FILE) | --genoFile FILE --snpFile FILE
 Available options:
   -h,--help                Show this help text
   -p,--genoOne FILE        One of the input genotype data files. Expects .bed,
-                           .bed.gz, .bim, .bim.gz or .fam for PLINK, or .geno,
-                           .geno.gz, .snp, .snp.gz or .ind for EIGENSTRAT. The
-                           other files must be in the same directory and must
-                           have the same base name. If a gzipped file is given,
-                           it is assumed that the file pairs (.geno.gz, .snp.gz)
-                           or (.bim.gz, .bed.gz) are both zipped, but not the
-                           .fam or .ind file. If a .ind or .fam file is given,
-                           it is assumed that none of the file triples is
-                           zipped. For VCF please see option --vcfFile
+                           .bed.gz, .bim, .bim.gz or .fam for PLINK, .geno,
+                           .geno.gz, .snp, .snp.gz or .ind for EIGENSTRAT,
+                           or.vcf or .vcf.gz for VCF. In case of EIGENSTRAT and
+                           PLINK, the two other files must be in the same
+                           directory and must have the same base name. If a
+                           gzipped file is given, it is assumed that the file
+                           pairs (.geno.gz, .snp.gz) or (.bim.gz, .bed.gz) are
+                           both zipped, but not the .fam or .ind file. If a .ind
+                           or .fam file is given, it is assumed that none of the
+                           file triples is zipped.
   --genoFile FILE          Eigenstrat genotype matrix, optionally gzipped.
                            Accepted file endings are .geno, .geno.gz
   --snpFile FILE           Eigenstrat snp positions file, optionally gzipped.
@@ -358,7 +359,7 @@ Usage: trident forge ((-d|--baseDir DIR) |
                          --vcfFile FILE) [--snpSet SET])
                      [--forgeFile FILE | (-f|--forgeString DSL)]
                      [--selectSnps FILE] [--intersect] [--outFormat FORMAT]
-                     [--onlyGeno | --minimal | --preservePyml]
+                     [--onlyGeno | --minimal | --preservePyml] [-z|--zip]
                      (-o|--outPackagePath DIR) [-n|--outPackageName STRING]
                      [--packagewise] [--outPlinkPopName MODE] [--ordered]
 
@@ -369,15 +370,16 @@ Available options:
   -h,--help                Show this help text
   -d,--baseDir DIR         A base directory to search for Poseidon packages.
   -p,--genoOne FILE        One of the input genotype data files. Expects .bed,
-                           .bed.gz, .bim, .bim.gz or .fam for PLINK, or .geno,
-                           .geno.gz, .snp, .snp.gz or .ind for EIGENSTRAT. The
-                           other files must be in the same directory and must
-                           have the same base name. If a gzipped file is given,
-                           it is assumed that the file pairs (.geno.gz, .snp.gz)
-                           or (.bim.gz, .bed.gz) are both zipped, but not the
-                           .fam or .ind file. If a .ind or .fam file is given,
-                           it is assumed that none of the file triples is
-                           zipped. For VCF please see option --vcfFile
+                           .bed.gz, .bim, .bim.gz or .fam for PLINK, .geno,
+                           .geno.gz, .snp, .snp.gz or .ind for EIGENSTRAT,
+                           or.vcf or .vcf.gz for VCF. In case of EIGENSTRAT and
+                           PLINK, the two other files must be in the same
+                           directory and must have the same base name. If a
+                           gzipped file is given, it is assumed that the file
+                           pairs (.geno.gz, .snp.gz) or (.bim.gz, .bed.gz) are
+                           both zipped, but not the .fam or .ind file. If a .ind
+                           or .fam file is given, it is assumed that none of the
+                           file triples is zipped.
   --genoFile FILE          Eigenstrat genotype matrix, optionally gzipped.
                            Accepted file endings are .geno, .geno.gz
   --snpFile FILE           Eigenstrat snp positions file, optionally gzipped.
@@ -455,6 +457,8 @@ Available options:
                            CHANGELOG file (if available) are copied to the
                            output package. Only works for a singular source
                            package.
+  -z,--zip                 Should the resulting genotype- and snp-files be
+                           gzipped?
   -o,--outPackagePath DIR  Path to the output package directory.
   -n,--outPackageName STRING
                            The output package name. This is optional: If no name
@@ -716,9 +720,9 @@ Usage: trident genoconvert ((-d|--baseDir DIR) |
                                --snpFile FILE --indFile FILE |
                                --bedFile FILE --bimFile FILE --famFile FILE |
                                --vcfFile FILE) [--snpSet SET])
-                           --outFormat FORMAT [--onlyGeno]
-                           [-o|--outPackagePath DIR] [--removeOld]
-                           [--outPlinkPopName MODE] [--onlyLatest]
+                           --outFormat FORMAT [-o|--outPackagePath DIR]
+                           [--removeOld] [--outPlinkPopName MODE] [--onlyLatest]
+                           [-z|--zip]
 
   Convert the genotype data in a Poseidon package to a different file format
 
@@ -726,15 +730,16 @@ Available options:
   -h,--help                Show this help text
   -d,--baseDir DIR         A base directory to search for Poseidon packages.
   -p,--genoOne FILE        One of the input genotype data files. Expects .bed,
-                           .bed.gz, .bim, .bim.gz or .fam for PLINK, or .geno,
-                           .geno.gz, .snp, .snp.gz or .ind for EIGENSTRAT. The
-                           other files must be in the same directory and must
-                           have the same base name. If a gzipped file is given,
-                           it is assumed that the file pairs (.geno.gz, .snp.gz)
-                           or (.bim.gz, .bed.gz) are both zipped, but not the
-                           .fam or .ind file. If a .ind or .fam file is given,
-                           it is assumed that none of the file triples is
-                           zipped. For VCF please see option --vcfFile
+                           .bed.gz, .bim, .bim.gz or .fam for PLINK, .geno,
+                           .geno.gz, .snp, .snp.gz or .ind for EIGENSTRAT,
+                           or.vcf or .vcf.gz for VCF. In case of EIGENSTRAT and
+                           PLINK, the two other files must be in the same
+                           directory and must have the same base name. If a
+                           gzipped file is given, it is assumed that the file
+                           pairs (.geno.gz, .snp.gz) or (.bim.gz, .bed.gz) are
+                           both zipped, but not the .fam or .ind file. If a .ind
+                           or .fam file is given, it is assumed that none of the
+                           file triples is zipped.
   --genoFile FILE          Eigenstrat genotype matrix, optionally gzipped.
                            Accepted file endings are .geno, .geno.gz
   --snpFile FILE           Eigenstrat snp positions file, optionally gzipped.
@@ -756,12 +761,13 @@ Available options:
                            (default: Other)
   --outFormat FORMAT       the format of the output genotype data: EIGENSTRAT or
                            PLINK.
-  --onlyGeno               Should only the resulting genotype data be returned?
-                           This means the output will not be a Poseidon package.
-  -o,--outPackagePath DIR  Path to the output package directory. This is
-                           optional: If no path is provided, then the output is
-                           written to the directories where the input genotype
-                           data file (.bed/.geno) is stored. (default: Nothing)
+  -o,--outPackagePath DIR  Path for the converted genotype files to be written
+                           to. If a path is provided, only the converted
+                           genotype files are written out, with no change of the
+                           original package. If no path is provided, genotype
+                           files will be converted in-place, including a change
+                           in the POSEIDON.yml file to yield an updated valid
+                           package (default: Nothing)
   --removeOld              Remove the old genotype files when creating the new
                            ones.
   --outPlinkPopName MODE   Where to write the population/group name into the FAM
@@ -771,6 +777,8 @@ Available options:
   --onlyLatest             Consider only the latest versions of packages, or the
                            groups and individuals within the latest versions of
                            packages, respectively.
+  -z,--zip                 Should the resulting genotype- and snp-files be
+                           gzipped?
 ```
 
 </details>
@@ -1104,15 +1112,16 @@ Available options:
                            compatible with trident.
   --pyml FILE              Path to a POSEIDON.yml file.
   -p,--genoOne FILE        One of the input genotype data files. Expects .bed,
-                           .bed.gz, .bim, .bim.gz or .fam for PLINK, or .geno,
-                           .geno.gz, .snp, .snp.gz or .ind for EIGENSTRAT. The
-                           other files must be in the same directory and must
-                           have the same base name. If a gzipped file is given,
-                           it is assumed that the file pairs (.geno.gz, .snp.gz)
-                           or (.bim.gz, .bed.gz) are both zipped, but not the
-                           .fam or .ind file. If a .ind or .fam file is given,
-                           it is assumed that none of the file triples is
-                           zipped. For VCF please see option --vcfFile
+                           .bed.gz, .bim, .bim.gz or .fam for PLINK, .geno,
+                           .geno.gz, .snp, .snp.gz or .ind for EIGENSTRAT,
+                           or.vcf or .vcf.gz for VCF. In case of EIGENSTRAT and
+                           PLINK, the two other files must be in the same
+                           directory and must have the same base name. If a
+                           gzipped file is given, it is assumed that the file
+                           pairs (.geno.gz, .snp.gz) or (.bim.gz, .bed.gz) are
+                           both zipped, but not the .fam or .ind file. If a .ind
+                           or .fam file is given, it is assumed that none of the
+                           file triples is zipped.
   --genoFile FILE          Eigenstrat genotype matrix, optionally gzipped.
                            Accepted file endings are .geno, .geno.gz
   --snpFile FILE           Eigenstrat snp positions file, optionally gzipped.
