@@ -925,7 +925,7 @@ As `rectify` reads and rewrites POSEIDON.yml files, it may change their inner or
 
 ## List command
 
-`list` lists packages, groups and individuals of local datasets, or of packages available in the archives on the web server.
+`list` lists packages, groups, individuals and bibliography entries of local Poseidon package datasets, or of packages available in the archives on the web server.
 
 <details>
  <summary><i class="fas fa-search"></i> <i class="fas fa-terminal"></i> <b>Command line details</b></summary>
@@ -934,8 +934,9 @@ As `rectify` reads and rewrites POSEIDON.yml files, it may change their inner or
 Usage: trident list ((-d|--baseDir DIR) | --remote [--remoteURL URL]
                       [--archive STRING])
                     (--packages | --groups | --individuals
-                      [--fullJanno | [-j|--jannoColumn COLNAME]]) [--raw]
-                    [--onlyLatest]
+                      [--fullJanno | [-j|--jannoColumn COLNAME]] |
+                      --bibliography [--fullBib | [-b|--bibField BIB-FIELD]])
+                    [--raw] [--onlyLatest]
 
   List packages, groups or individuals from local or remote Poseidon
   repositories
@@ -961,7 +962,14 @@ Available options:
   --fullJanno              output all Janno Columns
   -j,--jannoColumn COLNAME List additional fields from the janno files, using
                            the .janno column heading name, such as "Country",
-                           "Site", "Date_C14_Uncal_BP", etc..
+                           "Site", "Date_C14_Uncal_BP", etc... Can be given
+                           multiple times
+  --bibliography           output bibliography information for packages
+  --fullBib                output all bibliography fields found in any
+                           bibliography item
+  -b,--bibField BIB-FIELD  List information from the given bibliography field,
+                           for example "abstract" or "publisher". Can be given
+                           multiple times.
   --raw                    Return the output table as tab-separated values
                            without header. This is useful for piping into grep
                            or awk.
@@ -988,9 +996,11 @@ trident list --packages --remote --archive "community-archive"
 
 will result in a view of all packages available in one of the public Poseidon archives. Just as for `fetch`, the `--archive` flag allows to choose which public archive to query.
 
-Independent of whether you query a local or an online archive, you can not just list packages, but also groups, as defined in the third column of EIGENSTRAT `.ind` files (or the first/last column of a PLINK `.fam` file), and individuals with the flags `--groups` and `--individuals` (instead of `--packages`).
+Independent of whether you query a local or an online archive, you can not just list packages, but also groups, as defined in the third column of EIGENSTRAT `.ind` files (or the first/last column of a PLINK `.fam` file), and individuals with the flags `--groups` and `--individuals` (instead of `--packages`). `--bibliography` returns publication-wise bibliography information.
 
 The `--individuals` flag additionally provides a way to immediately access information from `.janno` files on the command line. This works with the `-j|--jannoColumn` option. For example adding `-j Country -j Date_C14_Uncal_BP` to the commands above will add the `Country` and the `Date_C14_Uncal_BP` columns to the respective output tables. `--fullJanno` outputs all available columns.
+
+Analogously, with `--bibliography` additional fields from the .bib files can be added to the output table with `-b|--bibField ...` and `--fullBib`. `-b journal`, for example, adds a column with the publication's journal.
 
 Note that if you want a less ornate table, for example because you want to load this into Excel, or pipe into another command that cannot deal with the table layout, you can use the `--raw` option to output that table as a simple tab-delimited stream.
 
