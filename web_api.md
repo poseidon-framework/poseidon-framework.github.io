@@ -141,7 +141,7 @@ To request all available columns at once the special key word `ALL` can be used:
 
 **`additionalBibColumns=...`:**
 
-For `/bibliography` the APi provices this additional argument. It can contains a comma-separated list of additional fields queried from the BibTex entry of the respective package. The values of these fields are returned via the `additionalBibEntries` field in the returned JSON-objects.
+For `/bibliography` the API provices this additional argument. It can contains a comma-separated list of additional fields queried from the BibTeX entry of the respective package. The values of these fields are returned via the `additionalBibEntries` field in the returned JSON-objects.
 
 ## The server implementation
 
