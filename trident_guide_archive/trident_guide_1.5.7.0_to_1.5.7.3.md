@@ -1,52 +1,4 @@
-<popup :custom-text="`<p><a href='https://nevrome.github.io/uni.tuebingen.poseidon.intro.2h.2024'>A short introduction to the Poseidon genotype data management framework</a> by Clemens Schmid: A Poseidon tutorial showcasing the <a href='https://nevrome.github.io/uni.tuebingen.poseidon.intro.2h.2024/ref_pca.html'>main features of trident</a> among other things</p>`"></popup>
-
-<h1>trident CLI software</h1>
-
-`trident` is a command line software tool to work with Poseidon packages and handle various data management tasks. It is written in Haskell and openly available on [GitHub](https://github.com/poseidon-framework/poseidon-hs/).
-
-[![CI](https://github.com/poseidon-framework/poseidon-hs/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/poseidon-framework/poseidon-hs/actions/workflows/main.yml)
-[![Coverage Status](https://img.shields.io/codecov/c/github/poseidon-framework/poseidon-hs/master.svg)](https://codecov.io/github/poseidon-framework/poseidon-hs?branch=master)
-[![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/poseidon-framework/poseidon-hs?include_prereleases) ![GitHub all releases](https://img.shields.io/github/downloads/poseidon-framework/poseidon-hs/total)](https://github.com/poseidon-framework/poseidon-hs/releases)
-[![Install with Bioconda](https://anaconda.org/bioconda/poseidon-trident/badges/version.svg)](https://anaconda.org/bioconda/poseidon-trident) [![Anaconda-Server Badge](https://anaconda.org/bioconda/poseidon-trident/badges/downloads.svg)](https://anaconda.org/bioconda/poseidon-trident)
-
-To download the latest stable release version of `trident` click here:
-[📥 Linux](https://github.com/poseidon-framework/poseidon-hs/releases/latest/download/trident-Linux) |
-[📥 macOS (ARM64)](https://github.com/poseidon-framework/poseidon-hs/releases/latest/download/trident-macOS-ARM64) |
-[📥 macOS (X64)](https://github.com/poseidon-framework/poseidon-hs/releases/latest/download/trident-macOS-X64) |
-[📥 Windows](https://github.com/poseidon-framework/poseidon-hs/releases/latest/download/trident-Windows.exe)
-
-So in Linux you can run the following commands to get started:
-
-```bash
-# download the current stable release binary
-wget https://github.com/poseidon-framework/poseidon-hs/releases/latest/download/trident-Linux
-# make it executable
-chmod +x trident-Linux
-# run it
-./trident-Linux -h
-```
-
-On GitHub you will also find [older release versions](https://github.com/poseidon-framework/poseidon-hs/releases) and [instructions to build `trident` from source](https://github.com/poseidon-framework/poseidon-hs#for-haskell-developers). The relevant changes from one version to the next are documented in this [changelog](https://github.com/poseidon-framework/poseidon-hs/blob/master/CHANGELOGRELEASE.md).
-
-With `trident --help` and `trident <subcommand> --help` you can get information about each subcommand and parameter directly on the command line. The guide below explains the subcommands in more detail. It is available in .pdf format for the current and previous versions here:
-
-- [🗎 Guide for trident v1.6.2.1](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident.pdf) (shown below)
-- [🗎 Guide for trident v1.5.7.0 to v1.5.7.3](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident_guide_archive/trident_guide_1.5.7.0_to_1.5.7.3.pdf)
-- [🗎 Guide for trident v1.5.4.0](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident_guide_archive/trident_guide_1.5.4.0.pdf)
-- [🗎 Guide for trident v1.4.1.0 to v1.5.0.1](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident_guide_archive/trident_guide_1.4.1.0_to_1.5.0.1.pdf)
-- [🗎 Guide for trident v1.4.0.2 to v1.4.0.3](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident_guide_archive/trident_guide_1.4.0.2_to_1.4.0.3.pdf)
-- [🗎 Guide for trident v1.3.0.4](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident_guide_archive/trident_guide_1.3.0.4.pdf)
-- [🗎 Guide for trident v1.2.0.0 to v1.2.1.0](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident_guide_archive/trident_guide_1.2.0.0_to_1.2.1.0.pdf)
-- [🗎 Guide for trident v1.1.11.0 to v1.1.12.0](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident_guide_archive/trident_guide_1.1.11.0_to_1.1.12.0.pdf)
-- [🗎 Guide for trident v1.1.10.2](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident_guide_archive/trident_guide_1.1.10.2.pdf)
-- [🗎 Guide for trident v1.1.7.0](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident_guide_archive/trident_guide_1.1.7.0.pdf)
-- [🗎 Guide for trident v1.1.6.0](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident_guide_archive/trident_guide_1.1.6.0.pdf)
-- [🗎 Guide for trident v1.1.0.0 to v1.1.4.2](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident_guide_archive/trident_guide_1.1.0.0_to_1.1.4.2.pdf)
-- [🗎 Guide for trident v1.0.0.0](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident_guide_archive/trident_guide_1.0.0.0.pdf)
-- [🗎 Guide for trident v0.29.0](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident_guide_archive/trident_guide_0.29.0.pdf)
-- [🗎 Guide for trident v0.28.0](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident_guide_archive/trident_guide_0.28.0.pdf)
-
-# Guide for trident v1.6.2.1
+# Guide for trident v1.5.7.0 to v1.5.7.3
 
 ## Installation
 
@@ -199,8 +151,8 @@ While reading the `.janno` file `trident` trims all leading and trailing whitesp
 ```default
 Usage: trident init ((-p|--genoOne FILE) | --genoFile FILE --snpFile FILE
                       --indFile FILE |
-                      --bedFile FILE --bimFile FILE --famFile FILE |
-                      --vcfFile FILE) [--snpSet SET] (-o|--outPackagePath DIR)
+                      --bedFile FILE --bimFile FILE --famFile FILE | 
+                      --vcfFile FILE) [--snpSet SET] (-o|--outPackagePath DIR) 
                     [-n|--outPackageName STRING] [--minimal]
 
   Create a new Poseidon package from genotype data
@@ -208,16 +160,15 @@ Usage: trident init ((-p|--genoOne FILE) | --genoFile FILE --snpFile FILE
 Available options:
   -h,--help                Show this help text
   -p,--genoOne FILE        One of the input genotype data files. Expects .bed,
-                           .bed.gz, .bim, .bim.gz or .fam for PLINK, .geno,
-                           .geno.gz, .snp, .snp.gz or .ind for EIGENSTRAT,
-                           or.vcf or .vcf.gz for VCF. In case of EIGENSTRAT and
-                           PLINK, the two other files must be in the same
-                           directory and must have the same base name. If a
-                           gzipped file is given, it is assumed that the file
-                           pairs (.geno.gz, .snp.gz) or (.bim.gz, .bed.gz) are
-                           both zipped, but not the .fam or .ind file. If a .ind
-                           or .fam file is given, it is assumed that none of the
-                           file triples is zipped.
+                           .bed.gz, .bim, .bim.gz or .fam for PLINK, or .geno,
+                           .geno.gz, .snp, .snp.gz or .ind for EIGENSTRAT. The
+                           other files must be in the same directory and must
+                           have the same base name. If a gzipped file is given,
+                           it is assumed that the file pairs (.geno.gz, .snp.gz)
+                           or (.bim.gz, .bed.gz) are both zipped, but not the
+                           .fam or .ind file. If a .ind or .fam file is given,
+                           it is assumed that none of the file triples is
+                           zipped. For VCF please see option --vcfFile
   --genoFile FILE          Eigenstrat genotype matrix, optionally gzipped.
                            Accepted file endings are .geno, .geno.gz
   --snpFile FILE           Eigenstrat snp positions file, optionally gzipped.
@@ -359,7 +310,7 @@ Usage: trident forge ((-d|--baseDir DIR) |
                          --vcfFile FILE) [--snpSet SET])
                      [--forgeFile FILE | (-f|--forgeString DSL)]
                      [--selectSnps FILE] [--intersect] [--outFormat FORMAT]
-                     [--onlyGeno | --minimal | --preservePyml] [-z|--zip]
+                     [--onlyGeno | --minimal | --preservePyml]
                      (-o|--outPackagePath DIR) [-n|--outPackageName STRING]
                      [--packagewise] [--outPlinkPopName MODE] [--ordered]
 
@@ -370,16 +321,15 @@ Available options:
   -h,--help                Show this help text
   -d,--baseDir DIR         A base directory to search for Poseidon packages.
   -p,--genoOne FILE        One of the input genotype data files. Expects .bed,
-                           .bed.gz, .bim, .bim.gz or .fam for PLINK, .geno,
-                           .geno.gz, .snp, .snp.gz or .ind for EIGENSTRAT,
-                           or.vcf or .vcf.gz for VCF. In case of EIGENSTRAT and
-                           PLINK, the two other files must be in the same
-                           directory and must have the same base name. If a
-                           gzipped file is given, it is assumed that the file
-                           pairs (.geno.gz, .snp.gz) or (.bim.gz, .bed.gz) are
-                           both zipped, but not the .fam or .ind file. If a .ind
-                           or .fam file is given, it is assumed that none of the
-                           file triples is zipped.
+                           .bed.gz, .bim, .bim.gz or .fam for PLINK, or .geno,
+                           .geno.gz, .snp, .snp.gz or .ind for EIGENSTRAT. The
+                           other files must be in the same directory and must
+                           have the same base name. If a gzipped file is given,
+                           it is assumed that the file pairs (.geno.gz, .snp.gz)
+                           or (.bim.gz, .bed.gz) are both zipped, but not the
+                           .fam or .ind file. If a .ind or .fam file is given,
+                           it is assumed that none of the file triples is
+                           zipped. For VCF please see option --vcfFile
   --genoFile FILE          Eigenstrat genotype matrix, optionally gzipped.
                            Accepted file endings are .geno, .geno.gz
   --snpFile FILE           Eigenstrat snp positions file, optionally gzipped.
@@ -457,8 +407,6 @@ Available options:
                            CHANGELOG file (if available) are copied to the
                            output package. Only works for a singular source
                            package.
-  -z,--zip                 Should the resulting genotype- and snp-files be
-                           gzipped?
   -o,--outPackagePath DIR  Path to the output package directory.
   -n,--outPackageName STRING
                            The output package name. This is optional: If no name
@@ -691,8 +639,6 @@ For the specific task of sub-setting or reordering (see above) a singular, exist
 
 This does not include the package `title`, which can be easily set to be identical to the source with `-n` or `-o` if it is desired. The `poseidonVersion` field is also not copied, because `trident` can only ever produce output packages with the latest Poseidon schema version.
 
-With `-z|--zip` the genotype data output (independent of the selected output mode) can be wrapped in gzipped archives with the additional file extension `.gz`. `trident` can seamlessly interact with genotype data in this format.
-
 ### Other options
 
 `forge` has a an optional flag `--intersect`, that defines, if the genotype data from different packages should be merged with a union or an intersect operation. See *Treatment of the genotype data while merging* above.
@@ -722,9 +668,9 @@ Usage: trident genoconvert ((-d|--baseDir DIR) |
                                --snpFile FILE --indFile FILE |
                                --bedFile FILE --bimFile FILE --famFile FILE |
                                --vcfFile FILE) [--snpSet SET])
-                           --outFormat FORMAT [-o|--outPackagePath DIR]
-                           [--removeOld] [--outPlinkPopName MODE] [--onlyLatest]
-                           [-z|--zip]
+                           --outFormat FORMAT [--onlyGeno]
+                           [-o|--outPackagePath DIR] [--removeOld]
+                           [--outPlinkPopName MODE] [--onlyLatest]
 
   Convert the genotype data in a Poseidon package to a different file format
 
@@ -732,16 +678,15 @@ Available options:
   -h,--help                Show this help text
   -d,--baseDir DIR         A base directory to search for Poseidon packages.
   -p,--genoOne FILE        One of the input genotype data files. Expects .bed,
-                           .bed.gz, .bim, .bim.gz or .fam for PLINK, .geno,
-                           .geno.gz, .snp, .snp.gz or .ind for EIGENSTRAT,
-                           or.vcf or .vcf.gz for VCF. In case of EIGENSTRAT and
-                           PLINK, the two other files must be in the same
-                           directory and must have the same base name. If a
-                           gzipped file is given, it is assumed that the file
-                           pairs (.geno.gz, .snp.gz) or (.bim.gz, .bed.gz) are
-                           both zipped, but not the .fam or .ind file. If a .ind
-                           or .fam file is given, it is assumed that none of the
-                           file triples is zipped.
+                           .bed.gz, .bim, .bim.gz or .fam for PLINK, or .geno,
+                           .geno.gz, .snp, .snp.gz or .ind for EIGENSTRAT. The
+                           other files must be in the same directory and must
+                           have the same base name. If a gzipped file is given,
+                           it is assumed that the file pairs (.geno.gz, .snp.gz)
+                           or (.bim.gz, .bed.gz) are both zipped, but not the
+                           .fam or .ind file. If a .ind or .fam file is given,
+                           it is assumed that none of the file triples is
+                           zipped. For VCF please see option --vcfFile
   --genoFile FILE          Eigenstrat genotype matrix, optionally gzipped.
                            Accepted file endings are .geno, .geno.gz
   --snpFile FILE           Eigenstrat snp positions file, optionally gzipped.
@@ -763,13 +708,12 @@ Available options:
                            (default: Other)
   --outFormat FORMAT       the format of the output genotype data: EIGENSTRAT or
                            PLINK.
-  -o,--outPackagePath DIR  Path for the converted genotype files to be written
-                           to. If a path is provided, only the converted
-                           genotype files are written out, with no change of the
-                           original package. If no path is provided, genotype
-                           files will be converted in-place, including a change
-                           in the POSEIDON.yml file to yield an updated valid
-                           package (default: Nothing)
+  --onlyGeno               Should only the resulting genotype data be returned?
+                           This means the output will not be a Poseidon package.
+  -o,--outPackagePath DIR  Path to the output package directory. This is
+                           optional: If no path is provided, then the output is
+                           written to the directories where the input genotype
+                           data file (.bed/.geno) is stored. (default: Nothing)
   --removeOld              Remove the old genotype files when creating the new
                            ones.
   --outPlinkPopName MODE   Where to write the population/group name into the FAM
@@ -779,8 +723,6 @@ Available options:
   --onlyLatest             Consider only the latest versions of packages, or the
                            groups and individuals within the latest versions of
                            packages, respectively.
-  -z,--zip                 Should the resulting genotype- and snp-files be
-                           gzipped?
 ```
 
 </details>
@@ -803,8 +745,6 @@ trident genoconvert \
   --outFormat EIGENSTRAT \
   -o my_directory
 ```
-
-With `-z|--zip` the genotype data output can be wrapped in gzipped archives with the additional file extension `.gz`.
 
 ## Jannocoalesce command
 
@@ -868,7 +808,7 @@ It then merges these files by a key column, which can be selected with `--source
 
 ## Rectify command
 
-`rectify` automatically harmonizes POSEIDON.yml files of one or multiple packages. This is not an automatic update from one Poseidon version to the next, but rather a clean-up wizard after manual modifications. It also includes additional, automatic package editing features.
+`rectify` automatically harmonizes POSEIDON.yml files of one or multiple packages. This is not an automatic update from one Poseidon version to the next, but rather a clean-up wizard after manual modifications.
 
 <details>
  <summary><i class="fas fa-search"></i> <i class="fas fa-terminal"></i> <b>Command line details</b></summary>
@@ -879,8 +819,7 @@ Usage: trident rectify (-d|--baseDir DIR) [--ignorePoseidonVersion]
                        [--packageVersion VPART [--logText STRING]]
                        [--checksumAll | [--checksumGeno] [--checksumJanno]
                          [--checksumSSF] [--checksumBib]]
-                       [--newContributors DSL] [--jannoRemoveEmpty]
-                       [--onlyLatest]
+                       [--newContributors DSL] [--onlyLatest]
 
   Adjust POSEIDON.yml files automatically to package changes
 
@@ -902,9 +841,6 @@ Available options:
   --checksumBib            Update .bib file checksum.
   --newContributors DSL    Contributors to add to the POSEIDON.yml file in the
                            form "[Firstname Lastname](Email address);...".
-  --jannoRemoveEmpty       Reorder the .janno file and remove empty colums.
-                           Remember to pair this option with --checksumJanno to
-                           also update the checksum.
   --onlyLatest             Consider only the latest versions of packages, or the
                            groups and individuals within the latest versions of
                            packages, respectively.
@@ -920,8 +856,7 @@ trident rectify -d ... -d ... \
   --packageVersion Major|Minor|Patch \
   --logText "short description of the update" \
   --checksumAll \
-  --newContributors "[Firstname Lastname](Email address);..." \
-  --jannoRemoveEmpty
+  --newContributors "[Firstname Lastname](Email address);..."
 ```
 
 The following arguments determine which fields of the POSEIDON.yml file should be modified:
@@ -933,11 +868,9 @@ The following arguments determine which fields of the POSEIDON.yml file should b
 
 As `rectify` reads and rewrites POSEIDON.yml files, it may change their inner order, layout or even content (e.g. if they have fields which are not in the POSEIDON.yml specification). Create a backup of the POSEIDON.yml file before running `rectify` if you are uncertain if this might affect you negatively.
 
-`--jannoRemoveEmpty` is the first option that does not edit POSEIDON.yml, but .janno files. It allows to remove empty columns from .janno files, so columns that only feature empty strings or `n/a` values. As part of this process it reorders the columns of the .janno file. Remember to pair this option with `--checksumJanno` or `checksumAll` to automatically update the .janno checksum in the POSEIDON.yml file afterwards.
-
 ## List command
 
-`list` lists packages, groups, individuals and bibliography entries of local Poseidon package datasets, or of packages available in the archives on the web server.
+`list` lists packages, groups and individuals of local datasets, or of packages available in the archives on the web server.
 
 <details>
  <summary><i class="fas fa-search"></i> <i class="fas fa-terminal"></i> <b>Command line details</b></summary>
@@ -946,9 +879,8 @@ As `rectify` reads and rewrites POSEIDON.yml files, it may change their inner or
 Usage: trident list ((-d|--baseDir DIR) | --remote [--remoteURL URL]
                       [--archive STRING])
                     (--packages | --groups | --individuals
-                      [--fullJanno | [-j|--jannoColumn COLNAME]] |
-                      --bibliography [--fullBib | [-b|--bibField BIB-FIELD]])
-                    [--raw] [--onlyLatest]
+                      [--fullJanno | [-j|--jannoColumn COLNAME]]) [--raw]
+                    [--onlyLatest]
 
   List packages, groups or individuals from local or remote Poseidon
   repositories
@@ -974,14 +906,7 @@ Available options:
   --fullJanno              output all Janno Columns
   -j,--jannoColumn COLNAME List additional fields from the janno files, using
                            the .janno column heading name, such as "Country",
-                           "Site", "Date_C14_Uncal_BP", etc... Can be given
-                           multiple times
-  --bibliography           output bibliography information for packages
-  --fullBib                output all bibliography fields found in any
-                           bibliography item
-  -b,--bibField BIB-FIELD  List information from the given bibliography field,
-                           for example "abstract" or "publisher". Can be given
-                           multiple times.
+                           "Site", "Date_C14_Uncal_BP", etc..
   --raw                    Return the output table as tab-separated values
                            without header. This is useful for piping into grep
                            or awk.
@@ -1008,11 +933,9 @@ trident list --packages --remote --archive "community-archive"
 
 will result in a view of all packages available in one of the public Poseidon archives. Just as for `fetch`, the `--archive` flag allows to choose which public archive to query.
 
-Independent of whether you query a local or an online archive, you can not just list packages, but also groups, as defined in the third column of EIGENSTRAT `.ind` files (or the first/last column of a PLINK `.fam` file), and individuals with the flags `--groups` and `--individuals` (instead of `--packages`). `--bibliography` returns publication-wise bibliography information.
+Independent of whether you query a local or an online archive, you can not just list packages, but also groups, as defined in the third column of EIGENSTRAT `.ind` files (or the first/last column of a PLINK `.fam` file), and individuals with the flags `--groups` and `--individuals` (instead of `--packages`).
 
 The `--individuals` flag additionally provides a way to immediately access information from `.janno` files on the command line. This works with the `-j|--jannoColumn` option. For example adding `-j Country -j Date_C14_Uncal_BP` to the commands above will add the `Country` and the `Date_C14_Uncal_BP` columns to the respective output tables. `--fullJanno` outputs all available columns.
-
-Analogously, with `--bibliography` additional fields from the .bib files can be added to the output table with `-b|--bibField ...` and `--fullBib`. `-b journal`, for example, adds a column with the publication's journal.
 
 Note that if you want a less ornate table, for example because you want to load this into Excel, or pipe into another command that cannot deal with the table layout, you can use the `--raw` option to output that table as a simple tab-delimited stream.
 
@@ -1116,16 +1039,15 @@ Available options:
                            compatible with trident.
   --pyml FILE              Path to a POSEIDON.yml file.
   -p,--genoOne FILE        One of the input genotype data files. Expects .bed,
-                           .bed.gz, .bim, .bim.gz or .fam for PLINK, .geno,
-                           .geno.gz, .snp, .snp.gz or .ind for EIGENSTRAT,
-                           or.vcf or .vcf.gz for VCF. In case of EIGENSTRAT and
-                           PLINK, the two other files must be in the same
-                           directory and must have the same base name. If a
-                           gzipped file is given, it is assumed that the file
-                           pairs (.geno.gz, .snp.gz) or (.bim.gz, .bed.gz) are
-                           both zipped, but not the .fam or .ind file. If a .ind
-                           or .fam file is given, it is assumed that none of the
-                           file triples is zipped.
+                           .bed.gz, .bim, .bim.gz or .fam for PLINK, or .geno,
+                           .geno.gz, .snp, .snp.gz or .ind for EIGENSTRAT. The
+                           other files must be in the same directory and must
+                           have the same base name. If a gzipped file is given,
+                           it is assumed that the file pairs (.geno.gz, .snp.gz)
+                           or (.bim.gz, .bed.gz) are both zipped, but not the
+                           .fam or .ind file. If a .ind or .fam file is given,
+                           it is assumed that none of the file triples is
+                           zipped. For VCF please see option --vcfFile
   --genoFile FILE          Eigenstrat genotype matrix, optionally gzipped.
                            Accepted file endings are .geno, .geno.gz
   --snpFile FILE           Eigenstrat snp positions file, optionally gzipped.
