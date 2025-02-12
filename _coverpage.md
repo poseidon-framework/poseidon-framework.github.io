@@ -2,6 +2,6 @@
 
 > A framework to work with human aDNA data and its archaeological context information.
 
-[Explore our Data](archive_explorer.md)
-[Read the Documentation](home.md)
-[Join our Community](https://app.gitter.im/#/room/!TycQipeBdEPTHWqilU:gitter.im)
+[Explore our Data <i class="fas fa-globe"></i>](archive_explorer.md)
+[Read the Documentation <i class="fab fa-readme"></i>](home.md)
+[Join our Community <i class="fab fa-gitter"></i>](https://app.gitter.im/#/room/!TycQipeBdEPTHWqilU:gitter.im)
