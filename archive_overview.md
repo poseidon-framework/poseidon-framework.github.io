@@ -14,7 +14,7 @@ We opted to maintain these archives with [Git](https://git-scm.com) on [GitHub](
 
 We therefore generally do **not** recommend to use the GitHub repositories for end-user-level access to the data. You can explore and download the packages through
 
-- a simple [archive viewer on this webpage](archive_explorer)
+- an [archive viewer](https://server.poseidon-adna.org) provided by our webserver
 - our [Web API](web_api)
 - the [`fetch`](trident#fetch-command) and [`list --remote`](trident#list-command) commands of trident, which use the API internally
 
