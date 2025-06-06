@@ -28,6 +28,7 @@
 	* [<i class="fas fa-globe-europe" aria-hidden="true"></i> Archive explorer](https://server.poseidon-adna.org)
 	* [Web API](web_api.md)
 	* [Submission guide](archive_submission_guide.md)
+	* [Review guide](archive_reviewer_guide.md)
 	* [Minotaur workflow](minotaur.md)
 * **Context**
 	* [Code of Conduct](conduct.md)
