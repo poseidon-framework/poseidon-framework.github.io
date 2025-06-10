@@ -64,7 +64,7 @@ The file does not have to be complete in the sense that every column specified i
 
 - Does the file have obvious errors, like shifted columns, or unreadable characters? Unreadable characters are often the result of wrong character encoding. This happens, for example, when the package author copy-and-pasted from a localized supplementary material file. All characters in .janno files must be UTF-8 encoded.
 - Are the primary group/population names in `Group_Name` as in the original publication? `Group_Name` is a `;`-separated list column, so alternative names (e.g. from the AADR) can be given as well, just not in the first position.
-- Are the relationship columns circular, so is a relationship between the samples A and B listed for both samples?
+- Are the relationship columns symmetrical, so is a relationship between the samples A and B listed for both samples?
 - Do numerical columns, e.g. latitude/longitude coordinates, show an odd pattern of incrementally increasing last digits? This often happens when package authors used a spreadsheet program to compile the .janno file.
 - Is the dating information correctly given? The `Date_Type` `C14` only applies, if the respective radiocarbon date gives a direct estimate of an individuals year of death, and if the uncalibrated age is known and available.
 - Is the location and dating information correct and as published? Exactly here, where they may have catastrophic consequences, typos tend to happen.
