@@ -25,6 +25,7 @@
 	* [Developer notes](dev_notes.md)
 * **<i class="fas fa-download" aria-hidden="true"></i>&nbsp; The Poseidon Archives**
 	* [Public archives](archive_overview.md)
+	* [Paper Directory](paper-directory.md)
 	* [<i class="fas fa-globe-europe" aria-hidden="true"></i> Archive explorer](https://server.poseidon-adna.org)
 	* [Web API](web_api.md)
 	* [Submission guide](archive_submission_guide.md)
