@@ -1,6 +1,6 @@
 # Developer notes
 
-The Poseidon framework is a highly entangled system of integrated software solutions. Changes in one part of the framework often have consequences for others. Especially changes to the most central component, the Poseidon standard, can have far-reaching ramifications.
+The Poseidon framework is an entangled system of integrated software solutions. Changes in one part of the framework often have consequences for others. Especially changes to the most central component, the Poseidon standard, can have far-reaching ramifications.
 
 ```mermaid
 flowchart TD
@@ -28,7 +28,7 @@ flowchart TD
     poseidonHS --> poseidonAnalysisHS
 
     xerxes["xerxes"]
-    poseidonAnalysisHS -- includes --> xerxes
+    poseidonAnalysisHS --> xerxes
 
     poseidonHS["poseidon-hs library"]
     poseidonYMLDef --> poseidonHS
@@ -38,13 +38,14 @@ flowchart TD
 	ssfDef --> poseidonHS
 
     trident["trident"]
-    poseidonHS -- includes --> trident
+    poseidonHS --> trident
 
     api["Web API"]
-    trident o-- implements and uses --o api
-    PCA -- serves --x api
-    PMA -- serves --x api
-    PAA -- serves --x api
+    trident -- runs and uses --> api
+	api --> explorer
+    PCA --> api
+    PMA --> api
+    PAA --> api
 
     jannoR["janno R package"]
     jannoDef --> jannoR
@@ -57,21 +58,15 @@ flowchart TD
 	ssfDef --> minotaur
 
 	PCA[(Community Archive)]
-	packageDef -- uses --> PCA
 	trident -- validates --> PCA
 
-	viewerWebsite[Repository explorer website]
-	jannoR --> viewerWebsite
-	viewerWebsite o--o PCA
+	explorer[Repository explorer website]
 
 	PMA[(Minotaur Archive)]
-	packageDef -- uses --> PMA
-	PCA -- mirrors --> PMA
 	minotaur -- generates --> PMA
 	trident -- validates --> PMA
 
 	PAA[(AADR Archive)]
-	packageDef -- uses --> PAA
 	trident -- validates --> PAA
 
 	website([Poseidon website])
