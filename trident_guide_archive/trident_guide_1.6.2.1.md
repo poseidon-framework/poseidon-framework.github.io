@@ -1,53 +1,4 @@
-<popup :custom-text="`<p><a href='https://nevrome.github.io/uni.tuebingen.poseidon.intro.2h.2024'>A short introduction to the Poseidon genotype data management framework</a> by Clemens Schmid: A Poseidon tutorial showcasing the <a href='https://nevrome.github.io/uni.tuebingen.poseidon.intro.2h.2024/ref_pca.html'>main features of trident</a> among other things</p>`"></popup>
-
-<h1>trident CLI software</h1>
-
-`trident` is a command line software tool to work with Poseidon packages and handle various data management tasks. It is written in Haskell and openly available on [GitHub](https://github.com/poseidon-framework/poseidon-hs/).
-
-[![CI](https://github.com/poseidon-framework/poseidon-hs/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/poseidon-framework/poseidon-hs/actions/workflows/main.yml)
-[![Coverage Status](https://img.shields.io/codecov/c/github/poseidon-framework/poseidon-hs/master.svg)](https://codecov.io/github/poseidon-framework/poseidon-hs?branch=master)
-[![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/poseidon-framework/poseidon-hs?include_prereleases) ![GitHub all releases](https://img.shields.io/github/downloads/poseidon-framework/poseidon-hs/total)](https://github.com/poseidon-framework/poseidon-hs/releases)
-[![Install with Bioconda](https://anaconda.org/bioconda/poseidon-trident/badges/version.svg)](https://anaconda.org/bioconda/poseidon-trident) [![Anaconda-Server Badge](https://anaconda.org/bioconda/poseidon-trident/badges/downloads.svg)](https://anaconda.org/bioconda/poseidon-trident)
-
-To download the latest stable release version of `trident` click here:
-[📥 Linux](https://github.com/poseidon-framework/poseidon-hs/releases/latest/download/trident-Linux) |
-[📥 macOS (ARM64)](https://github.com/poseidon-framework/poseidon-hs/releases/latest/download/trident-macOS-ARM64) |
-[📥 macOS (X64)](https://github.com/poseidon-framework/poseidon-hs/releases/latest/download/trident-macOS-X64) |
-[📥 Windows](https://github.com/poseidon-framework/poseidon-hs/releases/latest/download/trident-Windows.exe)
-
-So in Linux you can run the following commands to get started:
-
-```bash
-# download the current stable release binary
-wget https://github.com/poseidon-framework/poseidon-hs/releases/latest/download/trident-Linux
-# make it executable
-chmod +x trident-Linux
-# run it
-./trident-Linux -h
-```
-
-On GitHub you will also find [older release versions](https://github.com/poseidon-framework/poseidon-hs/releases) and [instructions to build `trident` from source](https://github.com/poseidon-framework/poseidon-hs#for-haskell-developers). The relevant changes from one version to the next are documented in this [changelog](https://github.com/poseidon-framework/poseidon-hs/blob/master/CHANGELOGRELEASE.md).
-
-With `trident --help` and `trident <subcommand> --help` you can get information about each subcommand and parameter directly on the command line. The guide below explains the subcommands in more detail. It is available in .pdf format for the current and previous versions here:
-
-- [🗎 Guide for trident v1.6.7.1](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident.pdf) (shown below)
-- [🗎 Guide for trident v1.6.2.1](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident_guide_archive/trident_guide_1.6.2.1.pdf)
-- [🗎 Guide for trident v1.5.7.0 to v1.5.7.3](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident_guide_archive/trident_guide_1.5.7.0_to_1.5.7.3.pdf)
-- [🗎 Guide for trident v1.5.4.0](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident_guide_archive/trident_guide_1.5.4.0.pdf)
-- [🗎 Guide for trident v1.4.1.0 to v1.5.0.1](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident_guide_archive/trident_guide_1.4.1.0_to_1.5.0.1.pdf)
-- [🗎 Guide for trident v1.4.0.2 to v1.4.0.3](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident_guide_archive/trident_guide_1.4.0.2_to_1.4.0.3.pdf)
-- [🗎 Guide for trident v1.3.0.4](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident_guide_archive/trident_guide_1.3.0.4.pdf)
-- [🗎 Guide for trident v1.2.0.0 to v1.2.1.0](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident_guide_archive/trident_guide_1.2.0.0_to_1.2.1.0.pdf)
-- [🗎 Guide for trident v1.1.11.0 to v1.1.12.0](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident_guide_archive/trident_guide_1.1.11.0_to_1.1.12.0.pdf)
-- [🗎 Guide for trident v1.1.10.2](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident_guide_archive/trident_guide_1.1.10.2.pdf)
-- [🗎 Guide for trident v1.1.7.0](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident_guide_archive/trident_guide_1.1.7.0.pdf)
-- [🗎 Guide for trident v1.1.6.0](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident_guide_archive/trident_guide_1.1.6.0.pdf)
-- [🗎 Guide for trident v1.1.0.0 to v1.1.4.2](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident_guide_archive/trident_guide_1.1.0.0_to_1.1.4.2.pdf)
-- [🗎 Guide for trident v1.0.0.0](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident_guide_archive/trident_guide_1.0.0.0.pdf)
-- [🗎 Guide for trident v0.29.0](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident_guide_archive/trident_guide_0.29.0.pdf)
-- [🗎 Guide for trident v0.28.0](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident_guide_archive/trident_guide_0.28.0.pdf)
-
-# Guide for trident v1.6.7.1
+# Guide for trident v1.6.2.1
 
 ## Installation
 
@@ -446,8 +397,8 @@ Available options:
                            do not have a SNP that is present in another package.
                            With this option set, the forged dataset will
                            typically have fewer SNPs, but less missingness.
-  --outFormat FORMAT       The format of the output genotype data: EIGENSTRAT,
-                           PLINK or VCF. (default: PLINK)
+  --outFormat FORMAT       The format of the output genotype data: EIGENSTRAT or
+                           PLINK. (default: "PLINK")
   --onlyGeno               Should only the resulting genotype data be returned?
                            This means the output will not be a Poseidon package.
   --minimal                Should the output Poseidon package be reduced to a
@@ -762,8 +713,8 @@ Available options:
                            packages in a -d|--baseDir already have this
                            information in their respective POSEIDON.yml files.
                            (default: Other)
-  --outFormat FORMAT       the format of the output genotype data: EIGENSTRAT,
-                           PLINK or VCF.
+  --outFormat FORMAT       the format of the output genotype data: EIGENSTRAT or
+                           PLINK.
   -o,--outPackagePath DIR  Path for the converted genotype files to be written
                            to. If a path is provided, only the converted
                            genotype files are written out, with no change of the
@@ -946,7 +897,7 @@ As `rectify` reads and rewrites POSEIDON.yml files, it may change their inner or
 ```default
 Usage: trident list ((-d|--baseDir DIR) | --remote [--remoteURL URL]
                       [--archive STRING])
-                    (--packages [--fullOutput] | --groups | --individuals
+                    (--packages | --groups | --individuals
                       [--fullJanno | [-j|--jannoColumn COLNAME]] |
                       --bibliography [--fullBib | [-b|--bibField BIB-FIELD]])
                     [--raw] [--onlyLatest]
@@ -969,8 +920,6 @@ Available options:
                            a list of archives currently available from the
                            official Poseidon Web API. (default: Nothing)
   --packages               List all packages.
-  --fullOutput             extend the output to include information contained
-                           the POSEIDON.yml file
   --groups                 List all groups, ignoring any group names after the
                            first as specified in the .janno-file.
   --individuals            List all individuals/samples.
@@ -1001,7 +950,7 @@ To list packages from your local repositories, as seen above you can run
 trident list -d ... -d ... --packages
 ```
 
-This will yield a nicely formatted table of all packages, their version and the number of individuals in them. With `--fullOutput` the table includes additional fields from the packages' POSEIDON.yml files.
+This will yield a nicely formatted table of all packages, their version and the number of individuals in them.
 
 You can use `--remote` to show packages on the remote server. For example
 
