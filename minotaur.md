@@ -90,7 +90,51 @@ git push
 
 Once again, replacing `<PACKAGE_NAME>` with the name of the package recipe you are adding. If you refresh your branch on GitHub you should now see the SSF file you created.
 
-### 5. Open a Pull Request(PR) to the minotaur-recipes repository
+### 5. (Recommended) Prepare a janno file with relevant metadata
+
+?> If the package recipe you are preparing already exists in the [Poseidon Community Archive (PCA)](https://github.com/poseidon-framework/community-archive), then you can skip this step.
+
+While a janno file is not technically required for Minotaur, we always prioritise processing of package requests that include a janno file.
+To ensure your request is processed without delays and the resulting package becomes available quickly on the PMA, we recommend providing a janno file with the package recipe.
+This janno file should contain information on the following janno columns, that are not dependent on the data processing, and hence not filled automatically by Minotaur.
+One row should be present in the prepared janno file for each `poseidon_ids` specified in the SSF file. 
+The `Poseidon_ID` column of the prepared janno should match those specified in the SSF file of the recipe
+(e.g. if one row in the SSF file was assigned a `poseidon_ids` value of `ind001;ind001_SG`, that corresponds to two rows in the janno file, with `Poseidon_ID`s of `ind001` and `ind001_SG` respectively).
+
+The prepared janno file should include information for as many of the following columns as possible:
+
+- Genetic_Sex
+- Group_Name
+- Alternative_IDs
+- Relation_To
+- Relation_Degree
+- Relation_Type
+- Relation_Note
+- Collection_ID
+- Country
+- Country_ISO
+- Location
+- Site
+- Latitude
+- Longitude
+- Date_Type
+- Date_C14_Labnr
+- Date_C14_Uncal_BP
+- Date_C14_Uncal_BP_Err
+- Date_BC_AD_Start
+- Date_BC_AD_Median
+- Date_BC_AD_Stop
+- Date_Note
+- MT_Haplogroup
+- Y_Haplogroup
+- Source_Tissue
+- Primary_Contact
+- Note
+- Keywords
+
+All other standard janno columns are filled by Minotaur, and will be overwritten if provided.
+
+### 6. Open a Pull Request(PR) to the minotaur-recipes repository
 
 Go to the [*Pull Requests* tab of the minotaur-recipes repository](https://github.com/poseidon-framework/minotaur-recipes/pulls) on GitHub, and click on the *New Pull Request* button.
 

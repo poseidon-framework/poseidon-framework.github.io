@@ -30,7 +30,7 @@ trident list --remote --groups --raw | grep 'French'
 Among the packages listed you should find `2012_PattersonGenetics`. 
 Let's download that one, and let's also add three further packages. We will download them into a new directory named `~/poseidon_repo` right in your home folder:
 
-?> Tipp: You can also use `trident list` to view entities in your own local repository. You can list packages, groups or individuals. Check out `trident list --help` or the [documentation](trident.md)
+?> Tip: You can also use `trident list` to view entities in your own local repository. You can list packages, groups or individuals. Check out `trident list --help` or the [documentation](trident.md)
 
 ```bash
 mkdir -p ~/poseidon_repo
@@ -91,7 +91,7 @@ Here is the result:
 
 You can see that the Z-Score for French being more closely related to the Altai Neanderthal than Yoruba are (an ethnic group from Nigeria) is much larger than 3, suggesting high significance, while the Z-score for either Sardinians or French being more closely related to the Altai Neanderthal is not-significant.
 
-?> Tipp: There are many other statistics that you can compute, such as F2, F3 or FST. Check out `xerxes fstats --help` or the [documentation](xerxes.md)
+?> Tip: There are many other statistics that you can compute, such as F2, F3 or FST. Check out `xerxes fstats --help` or the [documentation](xerxes.md)
 
 ## Creating your own packages
 
