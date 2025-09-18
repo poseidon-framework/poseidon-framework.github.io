@@ -4,7 +4,7 @@ The role of the Poseidon package reviewer is to help ensuring quality standards 
 
 But there are some aspects we cannot check, such as the scientific correctness of the given information. And there are other we don't want to formally check, because they are not included in the core definition of a Poseidon package, but just policy for our public archives. For these, we rely on a checklist every package author has to fill, and finally manual reviews.
 
-!> This documentation primarily applies to reviews for the [Poseidon Community Archive](archive_overview).
+?> This documentation primarily applies to reviews for the [Poseidon Community Archive](archive_overview).
 
 ## GitHub Pull Requests
 

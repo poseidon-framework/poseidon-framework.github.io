@@ -12,13 +12,11 @@ At the moment there are three archives, which are described below:
 
 We opted to maintain these archives with [Git](https://git-scm.com) on [GitHub](https://github.com/poseidon-framework) to ensure clean version management on the file level. The context data in a Poseidon package is text data that can be stored and maintained easily with line-wise version control. Unfortunately that does not hold true for the large genotype data files. They are not suitable to be handled in Git directly. Instead we rely on GitHub's [large file storage system](https://docs.github.com/en/repositories/working-with-files/managing-large-files/about-large-files-on-github), which comes with a number of technical drawbacks both for developers and users of the Poseidon archives.
 
-We therefore generally do **not** recommend to use the GitHub repositories for end-user-level access to the data. You can explore and download the packages through
+We therefore ask you **not** to use the GitHub repositories for end-user-level access to the data, but only if you want to report an issue or suggest changes to the data (as described [here](archive_submission_guide.md)).
 
-- an [archive viewer](https://server.poseidon-adna.org) provided by our webserver
-- our [Web API](web_api)
-- the [`fetch`](trident#fetch-command) and [`list --remote`](trident#list-command) commands of trident, which use the API internally
+!> Never clone the archive repositories without `GIT_LFS_SKIP_SMUDGE=1`. Always clone with `GIT_LFS_SKIP_SMUDGE=1 git clone ...`.
 
-We do recommend that you work through GitHub, though, if you want to report an issue or suggest changes to the data (as described [here](archive_submission_guide.md)).
+You can explore and download the packages through an [archive viewer](https://server.poseidon-adna.org) provided by our webserver, our [Web API](web_api), or the [`fetch`](trident#fetch-command) and [`list --remote`](trident#list-command) commands of trident, which use the API internally.
 
 ## The Poseidon Community Archive (PCA)
 

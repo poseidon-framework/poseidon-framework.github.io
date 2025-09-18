@@ -174,6 +174,8 @@ Poseidon fosters a <b>growing community</b> of users, package maintainers and de
 
 ### Latest news
 
+Follow us on <a href=https://ecoevo.social/@poseidon>Mastodon <i class="fab fa-mastodon" aria-hidden="true"></i></a> or via <a href=https://ecoevo.social/@poseidon.rss>RSS <i class="fa fa-rss" aria-hidden="true"></i></a>
+
 <script>
   Vue.createApp({
     data () {
@@ -193,7 +195,7 @@ Poseidon fosters a <b>growing community</b> of users, package maintainers and de
         const parser = new DOMParser();
         const xmlDoc = parser.parseFromString(xmlString, 'text/xml');
         const items = xmlDoc.querySelectorAll('item');
-        const itemArray = Array.from(items).slice(0, 3);
+        const itemArray = Array.from(items).slice(0, 9);
         const parsedItems = [];
         itemArray.forEach((item) => {
           const dateElement = item.querySelector('pubDate');
@@ -232,8 +234,6 @@ Poseidon fosters a <b>growing community</b> of users, package maintainers and de
   <div v-else><i>..fetching data from ecoevo.social</i></div>
 
 </div>
-
-[... read more](news.md)
 
 <style>
   .news-grid-element{

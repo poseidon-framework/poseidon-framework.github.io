@@ -4,7 +4,9 @@ The Poseidon framework has a strongly decentralized philosophy and relies very m
 
 We assume you have some basic knowledge about using a command line software like [`trident`](trident), and how to handle Git and GitHub. If not, then you can become knowledgable quickly about the latter, for example [here](https://githubtraining.github.io/training-manual).
 
-!> This documentation only covers submissions to the [Poseidon Community Archive](archive_overview). Look [here](minotaur) for the submission process to the [Poseidon Minotaur Archive](archive_overview).
+?> This documentation only covers submissions to the [Poseidon Community Archive](archive_overview). Look [here](minotaur) for the submission process to the [Poseidon Minotaur Archive](archive_overview).
+
+!> Never clone the archive repositories without `GIT_LFS_SKIP_SMUDGE=1`. Always clone with `GIT_LFS_SKIP_SMUDGE=1 git clone ...`.
 
 ## Archive curation roles
 
