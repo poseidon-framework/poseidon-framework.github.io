@@ -1,10 +1,10 @@
+?> This documentation only covers submissions to the [Poseidon Community Archive](archive_overview). Look [here](minotaur) for the submission process to the [Poseidon Minotaur Archive](archive_overview).
+
 # Contributing to our public archives
 
 The Poseidon framework has a strongly decentralized philosophy and relies very much on a community of users willing to prepare and improve the data in the public data repositories. If you want to prepare a Poseidon dataset for one of the repositories or fix mistakes in the data, you should follow the procedures outlined below. To ensure a professional and welcoming atmosphere please respect our [Contributor Code of Conduct](conduct.md) in all interactions with the Poseidon team and other users on GitHub and beyond. If you have questions about the processes, you can post them as an issue on GitHub or contact us directly.
 
 We assume you have some basic knowledge about using a command line software like [`trident`](trident), and how to handle Git and GitHub. If not, then you can become knowledgable quickly about the latter, for example [here](https://githubtraining.github.io/training-manual).
-
-?> This documentation only covers submissions to the [Poseidon Community Archive](archive_overview). Look [here](minotaur) for the submission process to the [Poseidon Minotaur Archive](archive_overview).
 
 !> Never clone the archive repositories without `GIT_LFS_SKIP_SMUDGE=1`. Always clone with `GIT_LFS_SKIP_SMUDGE=1 git clone ...`.
 
@@ -12,11 +12,11 @@ We assume you have some basic knowledge about using a command line software like
 
 To manage package submissions and modifications in our archives, we define the following roles, which are synonymous to the respective roles within github:
 
-1. Assignees: A package is submitted by a single author, with a github account. This user is tagged as "Assignee" in the github interface. The same holds for the modification of an existing package: Here, the "assignee" is the user who authors a Pull Request to change a given package. Assignees are specific per package. **An assignee is responsible for bringing the package into shape, and responding to review requests.**
+1. **Assignees**: A package is submitted by a single author, with a github account. This user is tagged as "Assignee" in the github interface. The same holds for the modification of an existing package: Here, the "assignee" is the user who authors a Pull Request to change a given package. Assignees are specific per package. **An assignee is responsible for bringing the package into shape, and responding to review requests.**
 
-2. Reviewers: A Pull request for a new or modified package is reviewed by one or more users, who are assigned by the respective _editor_. Reviewers will often be recruited from the Poseidon Core Team, but can also encompass other relevant users, for example if they have special knowledge on the package, or otherwise expertise. Guidelines for reviewers and assignees overlap, and are summarised below. **Reviewers are asked to ensure that all checklist items are covered.** Reviewers are asked to make a decision either by the "Request changes" status, or the "Approve" status in their review. It is then up to editors to ensure revisions to be complete.
+2. **Reviewers**: A Pull request for a new or modified package is reviewed by one or more users, who are assigned by the respective _editor_. Reviewers will often be recruited from the Poseidon Core Team, but can also encompass other relevant users, for example if they have special knowledge on the package, or otherwise expertise. Guidelines for reviewers and assignees overlap, and are summarised below. **Reviewers are asked to ensure that all checklist items are covered.** Reviewers are asked to make a decision either by the "Request changes" status, or the "Approve" status in their review. It is then up to editors to ensure revisions to be complete.
 
-3. Editors: Editors are not assigned per package, but per repository. **Editors are responsible for assigning reviewers and eventually merging Pull Requests into their respective archives, and maintaining those archives.** Currently, editors for the [Community Archive](#the-poseidon-community-archive-pca) are users [@AyGhal](https://github.com/AyGhal) and [@nevrome](https://github.com/nevrome). Editor for the [Minotaur Archive](#the-poseidon-minotaur-archive-pma) is user [@TCLamnidis](https://github.com/TCLamnidis).
+3. **Editors**: Editors are not assigned per package, but per repository. **Editors are responsible for assigning reviewers and eventually merging Pull Requests into their respective archives, and maintaining those archives.** Currently, editors for the [Community Archive](#the-poseidon-community-archive-pca) are users [@AyGhal](https://github.com/AyGhal) and [@nevrome](https://github.com/nevrome). Editor for the [Minotaur Archive](#the-poseidon-minotaur-archive-pma) is user [@TCLamnidis](https://github.com/TCLamnidis).
 
 
 ## Preparing a new package for the community archive
@@ -51,29 +51,27 @@ Either manually, or with [`trident rectify`](trident?id=rectify-command).
 
 This is mandatory. Please also run [`trident validate`](trident?id=validate-command) with the `--fullGeno` flag (so `trident validate -d path/to/your/package --fullGeno`) once.
 
-***
-
-The community archive has some additional requirements for your package beyond what you would need to simply use the package locally for your own analysis. So the following submission **checklist** includes some of these less obvious qualities you should consider before submitting the package online, on top of what is technically necessary:
-
-[](https://raw.githubusercontent.com/poseidon-framework/community-archive/master/.github/PULL_REQUEST_TEMPLATE/add_package_template.md ':include')
+!> The community archive has some additional requirements for your package beyond what you would need to simply use the package locally for your own analysis. A [submission checklist](https://raw.githubusercontent.com/poseidon-framework/community-archive/master/.github/PULL_REQUEST_TEMPLATE/add_package_template.md) includes some of these less obvious qualities you should consider before submitting the package online, on top of what is technically necessary:
 
 ### Submitting the package
 
-The procedure for the actual submission is then as follows (a shorter, slightly more hands-on tutorial is available [here](https://mpi-eva-archaeogenetics.github.io/comp_human_adna_book/poseidon.html#contributing-to-the-community-archive)):
+The procedure for the actual submission is then as follows (a shorter, slightly more hands-on tutorial is available [here](https://mpi-eva-archaeogenetics.github.io/comp_human_adna_book/poseidon.html#contributing-to-the-community-archive))
 
 **1. Fork and then clone the GitHub repository for the archive you want to modify.**
 
-You need to be logged into github with your user account. You can then navigate to our github repository: [https://github.com/poseidon-framework/community-archive(https://github.com/poseidon-framework/community-archive) and hit the "Fork" button near the top of the page.
+You need to be logged into github with your user account. You can then navigate to our github repository: <https://github.com/poseidon-framework/community-archive> and hit the "Fork" button near the top of the page.
 
 You will then have a copy of the entire repository under your own user name: `https://github.com/<yourGithubUserName>/community-archive`.
 
-For the following to work, you need to have setup your github account in a way that allows you to communicate with github via the command line. For this, you need to configure an SSH public-key, so github really knows it's you. Find out more about it here: [https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent).
+For the following to work, you need to have setup your github account in a way that allows you to communicate with github via the command line. For this, you need to configure an SSH public-key, so github really knows it's you. Find out more about it here: <https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent>.
 
-To safe our [Git LFS](https://docs.github.com/en/repositories/working-with-files/managing-large-files/about-git-large-file-storage) bandwidth, **we would like to ask you to clone in a way that does not download the large data files from GitHub** (they should be downloaded from our webserver with [`trident fetch`](trident?id=fetch-command)). At the same time you need to be able to add new LFS files. A proper setup for this includes the following steps
+!> To safe our [Git LFS](https://docs.github.com/en/repositories/working-with-files/managing-large-files/about-git-large-file-storage) bandwidth, **please clone in a way that does not download the large data files from GitHub** (they should be downloaded from our webserver with [`trident fetch`](trident?id=fetch-command)).
+
+At the same time you need to be able to add new LFS files. A proper setup for this includes the following steps:
 
 - downloading and [installing Git LFS](https://git-lfs.github.com/),
 - setting it up for your user with `git lfs install`
-- cloning the repo with the `GIT_LFS_SKIP_SMUDGE` environment variable, which prevents downloading the LFS files despite Git LFS being enabled:
+- cloning the repo **with the `GIT_LFS_SKIP_SMUDGE` environment variable**, which prevents downloading the LFS files despite Git LFS being enabled:
 
 ```
 GIT_LFS_SKIP_SMUDGE=1 git clone git@github.com:<yourGitHubUserName>/community-archive.git
@@ -109,17 +107,15 @@ We will inspect your submission and contact you on GitHub about necessary change
 
 ## Modifying existing packages in the community archive
 
-If you identify a mistake in any package, be it in the context data (`.janno` files), package-meta-data (`POSEIDON.yml`), bibliographic information (`.bib` files) or genotype data, we welcome both issues to point them out and contributions to correct them directly.
+If you identify a mistake in any package, be it in the context data (`.janno` files), package metadata (`POSEIDON.yml`), bibliographic information (`.bib` files), or genotype data, we welcome both issues to point them out and contributions to correct them directly. The process is similar to the package submission described above.
 
 **1. Fork and clone the GitHub repository that contains the package you want to improve.**
 
-Unlike for the package submission (see above), it is recommended to make a full clone of the repository with Git LFS (see above, so to clone without `GIT_LFS_SKIP_SMUDGE=1` here). Expert users are asked, though, to reduce their bandwidth requirements as much as possible. Changes in non-genotype data files are well possible with an incomplete clone.
+Just as above described for the package submission, please remember to clone with `GIT_LFS_SKIP_SMUDGE=1`. Individual LFS files can be downloaded with `git lfs pull --include "PATH-TO-FILE"`. This is necessary if you would like to modify not just the context- and meta data, but also the genotype data of a package.
 
 **2. Modify the files you want to change.**
 
 Remember to also i. update the md5 checksums in the POSEIDON.yml file, ii. increment the package version number and iii. add an informative entry to the changelog file after you are done. This can be done automatically with [`trident rectify`](trident?id=rectify-command).
-
-Please use its command line arguments to get well documented changes according to the following examples:
 
 - Example 1: You added a radiocarbon date for a sample in the .janno file
 	```
@@ -148,18 +144,14 @@ Please use its command line arguments to get well documented changes according t
 	  --newContributors "[Firstname Lastname](email@address.com)"
 	```
 
-Make sure to check if the modified package passes the validation with [`trident validate`](trident?id=validate-command).**
+Make sure to check if the modified package passes the validation with [`trident validate`](trident?id=validate-command).
 This is mandatory.
 
 Finally commit and push your changes.
 
 **3. Submit a pull request to merge your updates with our repository.**
 
+!> Just as for the package submission a special [modification checklist](https://raw.githubusercontent.com/poseidon-framework/community-archive/master/.github/PULL_REQUEST_TEMPLATE/modify_package_template.md) covers additional details relevant only for the community archive.
+
 Please do not wait too long (max. 2 weeks) between creation of the fork and submitting the pull request to prevent merge conflicts.
-
-***
-
-Please note the following submission **checklist** for modified packages:
-
-[](https://raw.githubusercontent.com/poseidon-framework/community-archive/master/.github/PULL_REQUEST_TEMPLATE/modify_package_template.md ':include')
 
