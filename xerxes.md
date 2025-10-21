@@ -31,7 +31,7 @@ On GitHub you will also find [older release versions](https://github.com/poseido
 
 With `xerxes --help` and `xerxes <subcommand> --help` you can get information about each subcommand and parameter directly on the command line. The guide below explains the subcommands in more detail. It is available in .pdf format for the current and previous versions here:
 
-- [🗎 Guide for xerxes v1.0.1.0 to v1.0.1.1](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/xerxes.pdf) (shown below)
+- [🗎 Guide for xerxes v1.0.1.0 or higher](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/xerxes.pdf) (shown below)
 - [🗎 Guide for xerxes v1.0.0.2](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/xerxes_guide_archive/xerxes_guide_1.0.0.2.pdf)
 - [🗎 Guide for xerxes v0.2.0.0](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/xerxes_guide_archive/xerxes_guide_0.2.0.0.pdf)
 
@@ -52,7 +52,7 @@ Here is an example command for computing several F-Statistics:
 ```bash
 xerxes fstats -d ... -d ... \
   --stat "F4(<Chimp.REF>, <Altai_published.DG>, Yoruba, French)" \
-  --stat "F3(<Chimp.REF>, <Altai_snpAD.DG>, Spanish)" \
+  --stat "F3(<Altai_snpAD.DG>, Spanish, <Chimp.REF>)" \
   --statFile fstats.txt
   --statConfig fstats.yaml
   -f outputfile.txt
@@ -69,10 +69,13 @@ These three modes of input can be mixed and matched, and even given multiple tim
 Last, the option `-f` can be used to write the output table into a tab-separated text file, beyond just printing a table into the standard out when the program finishes. Note that there are more options, which you can view using `xerxes fstats --help`:
 
 ```default
-Usage: xerxes fstats (-d|--baseDir DIR) [-j|--jackknife ARG]
-                     [-e|--excludeChroms ARG]
-                     (--stat ARG | --statConfig ARG | --statFile ARG)
-                     [--noTransitions] [-f|--tableOutFile ARG]
+xerxes v1.0.1.2 for poseidon v2.5.0, v2.6.0, v2.7.0, v2.7.1
+https://poseidon-framework.github.io
+
+Usage: xerxes fstats (-d|--baseDir DIR) [-j|--jackknife ARG] 
+                     [-e|--excludeChroms ARG] 
+                     (--stat ARG | --statConfig ARG | --statFile ARG) 
+                     [--noTransitions] [-f|--tableOutFile ARG] 
                      [--blockTableFile ARG]
 
   Compute f-statistics on groups and invidiuals within and across Poseidon
