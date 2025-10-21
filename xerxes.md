@@ -127,7 +127,7 @@ The following statistics are allowed in the `--stat`, `--statFile` and `--statCo
 * `F2vanilla(a,b)`: F2-Statistics - Vanilla version. Computed using `F2vanilla(a,b) = (a-b)^2` across the genome.
 * `F2(a,b)`: F2-Statistics (bias-corrected version). Computed as `F2(a, b) = F2vanilla(a,b) - hA/sA - hB/sB`, where `sA` is the number of non-missing alleles in entity `a`, and `hA = nA * nA' / sA * (sA - 1)` is an estimator of half the heterozygosity (see `Het(a)`), and likewise for `sB` and `nB` etc.
 * `F3vanilla(a,b,c)`: F3-Statistics - Vanilla version, recommended if used as Outgroup-F3 statistics or with group `c` being pseudo-haploid: Are computed as `F3(a,b,c) = (c-a)(c-b)` across all SNPs.
-* `F3(a,b,c)`: F3-Statistics (bias-corrected version). Computed as `F3(a,b,c) = F3vanilla(a,b) - hC/sC`.
+* `F3(a,b,c)`: F3-Statistics (bias-corrected version). Computed as `F3(a,b,c) = F3vanilla(a,b,c) - hC/sC`.
 * `F3star(a,b,c)`: F3-Statistics as defined in [@Patterson2012](https://doi.org/10.1534/genetics.112.145037) - normalised and bias-corrected version, recommended for Admixture-F3 tests. Are computed by i) first subtracting per SNP from the vanilla-F3-Statistic a bias-correction term `hC/sC`, as above for F2, and ii) then normalising the genome-wide estimate by a genome-wide estimate of the heterozygosity of entity `c` (`Het(c)`), in order to make results comparable between different groups `c`.
 * `F4(a,b,c,d)`: F4 statistics. Are computed by averaging the quantity `(a-b)(c-d)` across all SNPs. No bias correction is necessary for this statistic.
 * `Het(a)`: An estimate of the heterozygosity across all SNPs, computed as `2*hA`, with `hA` defined as above for `F2`.
