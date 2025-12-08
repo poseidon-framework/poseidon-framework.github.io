@@ -103,6 +103,7 @@ The `Poseidon_ID` column of the prepared janno should match those specified in t
 
 The prepared janno file should include information for as many of the following columns as possible:
 
+- Poseidon_ID
 - Genetic_Sex
 - Group_Name
 - Alternative_IDs
