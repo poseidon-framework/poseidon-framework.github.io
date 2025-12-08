@@ -11,7 +11,7 @@ jobs:
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v5
+      uses: actions/checkout@v6
       # https://github.com/actions/checkout/issues/317
       with:
         ref: ${{ github.event.pull_request.head.ref }}
