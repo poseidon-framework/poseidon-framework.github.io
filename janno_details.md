@@ -6,9 +6,9 @@ The `.janno` file columns are specified in the Poseidon package specification [h
 
 ### The `Poseidon_ID`
 
-The `Poseidon_ID` column assigns each entity in a Poseidon package (so one row of the .janno file) a unique identifier string.
+The `Poseidon_ID` column assigns each entity in a Poseidon package (so one row of the .janno file) a unique identifier string. It links the `.janno` file entries to the genetic data in a Poseidon package.
 
-Often the `Poseidon_ID` can be readily taken from the respective accompanying publication introducing a given sample. If there are multiple samples from one ancient human individual, then they may share this identifier in the publication. For the Poseidon package they have to be clearly distinguished with relevant suffixes, though, added to the `Poseidon_ID`. `Poseidon_ID`s are also employed in the genetic data files in a Poseidon package and therefore have to adhere to certain constraints.
+Often the `Poseidon_ID` can be readily taken from the respective accompanying publication introducing a given sample. If there are multiple samples from one ancient human individual, then they may share this identifier in the publication. For the Poseidon package they have to be clearly distinguished with relevant suffixes, though, added to the `Poseidon_ID`. For good compatibility with Poseidon tooling, e.g. `trident`'s subsetting-and merging language, it is recommended to only use the ASCII characters `A-Za-z0-9_-.` for `Poseidon_ID`s.
 
 #### What does the `Poseidon_ID` represent exactly?
 
@@ -20,7 +20,11 @@ A `Poseidon_ID`, and therefore the identifier for the main singular entity in a 
 
 ### Other identifiers
 
-The column `Alternative_IDs` provides a way to list other IDs used for the respective individual. These might for example be names used in different publications or popular names like "Iceman", "Ötzi", "Girl of the Uchter Moor", "Tollund Man", etc.. The `Relation_*` columns described below allow to more precisely express the relationship type "identical" among samples in a Poseidon package.
+The `Individual_ID` column (introduced in Poseidon v3.0.0) acts as an identifier on the level of (human/animal) individuals in a Poseidon package. That means multiple `Poseidon_ID`s can share an `Individual_ID`. In practice these IDs are often identical for a given sample, or only differ in additional suffixes appended to the `Poseidon_ID`. The distinction of an individual- and analysis endpoint-level ID also exists in the AADR dataset [@Mallick2024](https://doi.org/10.1038/s41597-024-03031-7), e.g. in v62.0, with the `Master ID` and `Genetic ID` columns.
+
+The column `Alternative_IDs` provides a way to list other IDs used for the respective individual. These might for example be names used in different publications or popular names like "Iceman", "Ötzi", "Girl of the Uchter Moor", "Tollund Man", etc.. But these can also be formal identifiers in datasets beyond Poseidon, e.g. `Master ID`s in specific AADR releases.
+
+To document the context of such an `Alternative_IDs` entry, the column `Alternative_IDs_Context` (introduced in Poseidon v3.0.0) allows to provide the necessary context. It is a list column with the same length and order as the `Alternative_IDs` list column, where the name of the respectice source database, e.g. `AADRv62`, must be entered. For common non-scientific names used in media and public discussion, the term `popular` can be entered.
 
 The `Collection_ID` column stores an additional, secondary identifier as it is often provided by collaboration partners (archaeologists, museums, collections) that provide the specimen for archaeogenetic research. These identifiers can have a very heterogenous structure and may not be unique across different projects or institutions. The `Collection_ID` column is therefore a free-form text field.
 
