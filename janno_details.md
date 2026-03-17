@@ -30,11 +30,11 @@ The column `Alternative_IDs` provides a way to list other IDs used for the respe
 
 To document the context of such an `Alternative_IDs` entry, the column `Alternative_IDs_Context` (introduced in Poseidon v3.0.0) allows to provide the necessary context. It is a list column with the same length and order as the `Alternative_IDs` list column, where the name of the respectice source database, e.g. `AADRv62`, must be entered. For common non-scientific names used in media and public discussion, the term `popular` can be entered.
 
-The `Collection_ID` column stores an additional, secondary identifier as it is often provided by collaboration partners (archaeologists, museums, collections) that provide the specimen for archaeogenetic research. These identifiers can have a very heterogenous structure and may not be unique across different projects or institutions. The `Collection_ID` column is therefore a free-form text field.
+The `Collection_ID` column stores additional, secondary identifiers used by collaboration partners (archaeologists, museums, collections) that provide the specimen for archaeogenetic research. These identifiers can have a very heterogenous structure and may not be unique across different projects or institutions. The `Collection_ID` column is therefore a free-form text list column.
 
 The `Group_Name` column contains one or multiple group or population names for each sample, separated by `;`. The first entry must be identical to the one used in the genotype data for the respective sample in a Poseidon package. Especially for the first entry it is recommended to only use the ASCII characters `A-Za-z0-9_-.`. Whitespaces are not allowed in any of the entries. The names can follow the geographic-temporal nomenclature proposed by [@Eisenmann2018](https://doi.org/10.1038/s41598-018-31123-z), or communicate additional categories that are meaningful for groupings in specific analyses, such as cultural labels, outlier status or relatedness to other samples
 
-## The species
+## The sampled species
 
 The `Species` column (introduced in Poseidon v3.0.0) should contain the species of the respective sample. The entry should follow binomial nomenclature as standard in Biology, e.g. `Homo sapiens`.
 
@@ -68,6 +68,16 @@ For each entry in `Relation_To` there must be a corresponding entry in `Relation
 - `...`
 
 Unlike `Relation_Degree`, `Relation_Type` can be left empty even if there are entries in `Relation_To`. But if it is filled, then the number of values must be equal to the number of entries in both `Relation_To` and `Relation_Degree`.
+
+## Archaeological context
+
+Cultural_Era
+
+Cultural_Era_URL
+
+Archaeological_Culture
+
+Archaeological_Culture_URL
 
 ## Spatial position
 
@@ -138,11 +148,11 @@ The `Library_Names` column should list the names for the libraries as used in th
 The `Capture_Type` column specifies the general pre-sequencing preparation methods that have been applied to the library. See [@Knapp2010](https://doi.org/10.3390/genes1020227) for a review of the different techniques (not including newer developments). This field can hold one of multiple different values, but also multiple of these separated by `;` if different methods have been applied for different libraries.
 
 - `Shotgun`: Sequencing without any enrichment (whole genome sequencing, screening etc.).
-- `1240K`: Target enrichment with hybridization capture optimised for sequences covering the 1240k SNP array [@Fu2015](https://doi.org/10.1038/nature14558), [@Haak2015](https://doi.org/10.1038/nature14317), [@Mathieson2015](https://doi.org/10.1038/nature16152).
+- `1240K`: Target enrichment with hybridization capture optimised for sequences covering the 1240k SNP array, see [@Fu2015](https://doi.org/10.1038/nature14558), [@Haak2015](https://doi.org/10.1038/nature14317), [@Mathieson2015](https://doi.org/10.1038/nature16152).
 - `ArborComplete`, `ArborPrimePlus`, `ArborAncestralPlus`: Target enrichment with hybridization capture as provided by Arbor Biosciences in three different kits branded [myBaits Expert Human Affinities](https://arborbiosci.com/genomics/targeted-sequencing/mybaits/mybaits-expert/mybaits-expert-human-affinities).
 - `TwistAncientDNA`: Target enrichment with hybridization capture as provided by Twist Bioscience [@Rohland2022](https://doi.org/10.1101/gr.276728.122).
+- `WISC2013`: Whole genome capture as described by [@Carpenter2013](10.1016/j.ajhg.2013.10.002).
 - `OtherCapture`: Target enrichment with hybridization capture for any other set of sequences.
-- `ReferenceGenome`: Modern reference genomes where aDNA fragmentation is not an issue and other sample preparation techniques apply.
 
 The `UDG` column documents if the libraries for the respective individual went through UDG (or USER enzyme) treatment. This wet lab protocol step removes molecular damage in the form of deaminated cytosines characteristic of ancient DNA.
 
@@ -166,7 +176,7 @@ The column `Data_Preparation_Pipeline_URL` should finally store an URL that link
 
 ### Data yield
 
-The `Endogenous` column holds the percentage of mapped reads over the total amount of reads that went into the mapping pipeline. That boils down to the DNA percentage of the library that matches the (human) reference. It should be determined from Shotgun libraries (so before any hybridization capture), not on target (i.e. across the whole genome, not specific positions), and before any mapping quality filtering. In case of multiple libraries only the highest value should be reported. The % endogenous DNA can be calculated for example with the [endorS.py](https://github.com/aidaanva/endorS.py) script.
+The `Endogenous` column holds the fraction (between 0 and 1, only before Poseidon v3.0.0 between 0 and 100%) of mapped reads over the total amount of reads that went into the mapping pipeline. That boils down to the DNA percentage of the library that matches the (human) reference. It should be determined from Shotgun libraries (so before any hybridization capture), not on target (i.e. across the whole genome, not specific positions), and before any mapping quality filtering. In case of multiple libraries only the highest value should be reported. The endogenous DNA fraction can be calculated for example with the [endorS.py](https://github.com/aidaanva/endorS.py) script.
 
 The `Nr_SNPs` column gives the number of SNPs reported in the genotype data files for this individual.
 
@@ -174,7 +184,7 @@ The `Coverage_on_Target_SNPs` column reports the mean fold coverage on the SNP s
 
 ### Data quality
 
-The `Damage` column contains the % damage on the first position of the 5' end for the main Shotgun library used for sequencing or capture. This is an important statistic to verify the age of ancient DNA. In case of multiple libraries you should report a value from the merged read alignment.
+The `Damage` column contains the fraction (between 0 and 1, only before Poseidon v3.0.0 between 0 and 100%) damage on the first position of the 5' end for the main Shotgun library used for sequencing or capture. This is an important statistic to verify the age of ancient DNA. In case of multiple libraries either report multiple values separated by ;, or a single value from the merged read alignment.
 
 Contamination of ancient DNA with foreign reads is a major challenge for archaeogenetics. There exist multiple competing ideas, algorithms and software tools to estimate the degree of contamination for individual samples (e.g. ANGSD [@Korneliussen2014](https://doi.org/10.1186/s12859-014-0356-4), contamLD [@Nakatsuka2020](https://doi.org/10.1186/s13059-020-02111-2) or hapCon [@Huang2022](https://doi.org/10.1093/bioinformatics/btac390)), with some methods only applicable under certain circumstances (e.g. popular X-chromosome based approaches only work on male individuals). Also the results of different methods tend to differ both in the degree of contamination they estimate and in the way the output is usually encoded. To cover the multitude of methods in this domain, and to make the results representable in the `.janno` file, we offer the `Contamination_*` column family.
 
