@@ -137,9 +137,11 @@ The `MT_Haplogroup` column is meant to store the human mitochondrial DNA haplogr
 
 The `Y_Haplogroup` column holds the respective human Y-chromosome DNA haplogroup in a simple string. To avoid confusion from using different haplotype naming systems, the notation should follow a syntax with the main branch + the most terminal derived Y-SNP separated with a minus symbol (e.g. R1b-P312), similar to that used by [Yfull](https://www.yfull.com/sc/tree/).
 
+The `Chromosomal_Anomalies` column (introduced with Poseidon v3.0.0) allows to note one or multiple genetic chromosomal anomalies detected for the individual, so extra, missing or irregual portions of chromosomal DNA. This includes both gonosomal and autosomal aneuploidies. As there are many such possible anomalies there is no fixed list of valid entries for this column. The following terminology is recommended for some of the most common aneuploidies: `XXY` for Klinefelter syndrome, `XYY` for Jacobs syndrome, `XXX` for Triple X syndrome, `X0` for Monosomy X, `Trisomy21` for Down syndrome, and `Trisomy18` for Edwards syndrome.
+
 ### Library properties
 
-The `Source_Tissue` column documents the skeletal, soft tissue or other elements from which source material for DNA library preparation was extracted. If multiple samples have been taken from different elements, these can be listed separated by `;`. Specific bone names should be reported with an underscore (e.g. bone_phalanx, tooth_molar).
+The `Source_Material` column (formerly `Source_Tissue`, before Poseidon v3.0.0) documents the skeletal, soft tissue or other elements from which source material for DNA library preparation was extracted. The following entries are allowed: `petrous`, `bone`, `tooth`, `hair`, `soft`, `sediment`, and `other`. `soft` encompasses (archaeologically rarely preserved) soft tissues like muscle, tendons, or fat. If multiple DNA libraries have been prepared from different sampled elements, then these can be listed separated by `;` as in other list columns. Further details, e.g. specific bone names, can be reported in a `Source_Material_Note` column.
 
 The `Nr_Libraries` column holds a simple integer value of the number of libraries that have been prepared for an individual.
 
