@@ -6,8 +6,6 @@ The Poseidon framework has a strongly decentralized philosophy and relies very m
 
 We assume you have some basic knowledge about using a command line software like [`trident`](trident), and how to handle Git and GitHub. If not, then you can become knowledgable quickly about the latter, for example [here](https://githubtraining.github.io/training-manual).
 
-!> Never clone the archive repositories without `GIT_LFS_SKIP_SMUDGE=1`. Always clone with `GIT_LFS_SKIP_SMUDGE=1 git clone ...`.
-
 ## Archive curation roles
 
 To manage package submissions and modifications in our archives, we define the following roles, which are synonymous to the respective roles within github:
@@ -55,29 +53,26 @@ This is mandatory. Please also run [`trident validate`](trident?id=validate-comm
 
 ### Submitting the package
 
-The procedure for the actual submission is then as follows (a shorter, slightly more hands-on tutorial is available [here](https://mpi-eva-archaeogenetics.github.io/comp_human_adna_book/poseidon.html#contributing-to-the-community-archive))
+The procedure for the actual submission is then as follows:
 
-**1. Fork and then clone the GitHub repository for the archive you want to modify.**
+**1. Fork the GitHub repository for the archive you want to modify.**
 
 You need to be logged into github with your user account. You can then navigate to our github repository: <https://github.com/poseidon-framework/community-archive> and hit the "Fork" button near the top of the page.
 
 You will then have a copy of the entire repository under your own user name: `https://github.com/<yourGithubUserName>/community-archive`.
 
+**2. Clone (download) your fork.**
+
 For the following to work, you need to have setup your github account in a way that allows you to communicate with github via the command line. For this, you need to configure an SSH public-key, so github really knows it's you. Find out more about it here: <https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent>.
 
-!> To safe our [Git LFS](https://docs.github.com/en/repositories/working-with-files/managing-large-files/about-git-large-file-storage) bandwidth, **please clone in a way that does not download the large data files from GitHub** (they should be downloaded from our webserver with [`trident fetch`](trident?id=fetch-command)).
+You need to be able to add new [Git LFS](https://docs.github.com/en/repositories/working-with-files/managing-large-files/about-git-large-file-storage) files. A proper setup for this includes the following two steps:
 
-At the same time you need to be able to add new LFS files. A proper setup for this includes the following steps:
+1. downloading and [installing Git LFS](https://git-lfs.github.com/),
+2. setting it up for your user with `git lfs install`
 
-- downloading and [installing Git LFS](https://git-lfs.github.com/),
-- setting it up for your user with `git lfs install`
-- cloning the repo **with the `GIT_LFS_SKIP_SMUDGE` environment variable**, which prevents downloading the LFS files despite Git LFS being enabled:
+You can then clone the fork repository.
 
-```
-GIT_LFS_SKIP_SMUDGE=1 git clone git@github.com:<yourGitHubUserName>/community-archive.git
-```
-
-As a consequence the large files will not be downloaded, but only stub files, representing the real files on the LFS server. This clone is only for submission purposes after all -- you can not work with the genotype data in it. `2021_Wang_EastAsia/2021_Wang_EastAsia.bed` for example will look like this:
+To safe some time and storage space on your system, you can clone in a way that does not download the large data files in the repository. You can do so by setting `GIT_LFS_SKIP_SMUDGE` environment variable. As a consequence the large files will not be downloaded, but only stub files, representing the real files on the LFS server. This clone is only for submission purposes after all -- you will probably not work with the genotype data in it. `2021_Wang_EastAsia/2021_Wang_EastAsia.bed` for example will look like this:
 
 ```
 version https://git-lfs.github.com/spec/v1
@@ -85,7 +80,15 @@ oid sha256:766e7c9f79c1659dfb924c901420f01e8720557a0ec37f2a694f6a29cdc0a55e
 size 177553875
 ```
 
-**2. Copy your new package into your local clone.**
+The clone command with `GIT_LFS_SKIP_SMUDGE` set is as follows: 
+
+```
+GIT_LFS_SKIP_SMUDGE=1 git clone git@github.com:<yourGitHubUserName>/community-archive.git
+```
+
+If you want to download the large files as well, then omit `GIT_LFS_SKIP_SMUDGE=1`.
+
+**3. Copy your new package into your local clone.**
 
 You should now copy your package including the full genotype data into the cloned repository as a new package directory. The directory should include the genotype data. Git (with Git LFS enabled) and GitHub will detect automatically that it should treat them as LFS files. Then commit the changes and push:
 
@@ -97,7 +100,7 @@ git push
 
 If you accidentally pushed the large files as normal files, for example if your LFS setup was incomplete, you can fix this with `git lfs migrate import --no-rewrite path/to/file.bed` (see [here](https://github.com/git-lfs/git-lfs/blob/main/docs/man/git-lfs-migrate.adoc#import-without-rewriting-history)).
 
-**3. Submit a pull request from your fork to merge your updates into our repository.**
+**4. Submit a pull request from your fork to merge your updates into our repository.**
 
 Having successfully pushed your branch to your fork on github, you need to now tell github to propose your branch as a submission to our master repository. This is done through [github Pull Requests](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests).
 
@@ -111,7 +114,7 @@ If you identify a mistake in any package, be it in the context data (`.janno` fi
 
 **1. Fork and clone the GitHub repository that contains the package you want to improve.**
 
-Just as above described for the package submission, please remember to clone with `GIT_LFS_SKIP_SMUDGE=1`. Individual LFS files can be downloaded with `git lfs pull --include "PATH-TO-FILE"`. This is necessary if you would like to modify not just the context- and meta data, but also the genotype data of a package.
+Just as described above for the package submission. If you cloned with `GIT_LFS_SKIP_SMUDGE=1` but now want to edit individual LFS files, then you can download them with `git lfs pull --include "PATH-TO-FILE"`.
 
 **2. Modify the files you want to change.**
 
