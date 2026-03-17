@@ -2,7 +2,7 @@
 
 ## Overview
 
-A `.janno` file is a tabular, tab-separated (`.tsv`) file. A base set of `.janno` file columns are specified in the Poseidon package specification [here](https://github.com/poseidon-framework/poseidon-schema/blob/master/janno_columns.tsv), including information on which columns are mandatory, which ones are list columns that can hold multiple entries, and which ones limit the allowed set of entries to a strict enumeration. Beyond that the `.janno` file can include any number and type of additional columns to hold project- and context-specific variables.
+A `.janno` file is a tabular, tab-separated (`.tsv`) file. A base set of `.janno` file columns are specified in the Poseidon package specification [here](https://github.com/poseidon-framework/poseidon-schema/blob/master/janno_columns.tsv), including information on which columns are mandatory, which ones are list columns that can hold multiple entries, and which ones limit the allowed set of entries to a strict enumeration. Beyond that the `.janno` file can include any number and type of additional columns to hold project- and context-specific variables. These arbitrary additional columns should be named in a way so that they do not conflict with the base set. They are not validated (assumed to free-form text) by the Poseidon tooling, but they will be preserved in the Poseidon package, and propagated in operations like `trident forge`.
 
 The following documentation includes additional background information ob the base set. This should make it more easy to understand and use the columns for both published and unpublished data. A `.pdf` version of the latest version of this document is available for download [here](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/janno_details.pdf).
 
@@ -30,7 +30,7 @@ The column `Alternative_IDs` provides a way to list other IDs used for the respe
 
 To document the context of such an `Alternative_IDs` entry, the column `Alternative_IDs_Context` (introduced in Poseidon v3.0.0) allows to provide the necessary context. It is a list column with the same length and order as the `Alternative_IDs` list column, where the name of the respectice source database, e.g. `AADRv62`, must be entered. For common non-scientific names used in media and public discussion, the term `popular` can be entered.
 
-The `Collection_ID` column stores additional, secondary identifiers used by collaboration partners (archaeologists, museums, collections) that provide the specimen for archaeogenetic research. These identifiers can have a very heterogenous structure and may not be unique across different projects or institutions. The `Collection_ID` column is therefore a free-form text list column.
+The `Collection_ID` column stores additional, secondary identifiers used by collaboration partners (archaeologists, museums, collections) that provide the specimen for archaeogenetic research (see also `Custodian_Institution` below). These identifiers can have a very heterogenous structure and may not be unique across different projects or institutions. The `Collection_ID` column is therefore a free-form text list column.
 
 The `Group_Name` column contains one or multiple group or population names for each sample, separated by `;`. The first entry must be identical to the one used in the genotype data for the respective sample in a Poseidon package. Especially for the first entry it is recommended to only use the ASCII characters `A-Za-z0-9_-.`. Whitespaces are not allowed in any of the entries. The names can follow the geographic-temporal nomenclature proposed by [@Eisenmann2018](https://doi.org/10.1038/s41598-018-31123-z), or communicate additional categories that are meaningful for groupings in specific analyses, such as cultural labels, outlier status or relatedness to other samples
 
@@ -69,15 +69,15 @@ For each entry in `Relation_To` there must be a corresponding entry in `Relation
 
 Unlike `Relation_Degree`, `Relation_Type` can be left empty even if there are entries in `Relation_To`. But if it is filled, then the number of values must be equal to the number of entries in both `Relation_To` and `Relation_Degree`.
 
-## Archaeological context
+## Cultural and archaeological context
 
-Cultural_Era
+Poseidon v3.0.0 introduced the following four columns to add archaeological context information for a given sample -- at least on the level of era- and archaeological culture-attribution. Given the nature of human behaviour and archaeological inference these attributions must not be understood as absolute, objective classifications, but rather as preliminary model assumptions and interpretative tool.
 
-Cultural_Era_URL
+The `Cultural_Era` column serves to list one or multiple cultural eras approximating the period in which the sampled individual lived. These can be classes like, for example "Danish Bronze Age" or "Pre-Pottery Neolithic A". If possible these classes should be taken from an established space-time gazetteer like ChronOntology (https://chronontology.dainst.org) or PeriodO (https://perio.do) to link relevant background information about the referenced phenomena, so their spatiotemporal extend and research history.
 
-Archaeological_Culture
+The `Cultural_Era_URL` column allows to complement the human-readable era terms give in `Cultural_Era` with persistent URLs pointing to definitions of said entities. Length and order of both columns must therefore match. https://n2t.net/ark:/99152/p0zj6g8ks9s, for example, points to an entry for "Danish Bronze Age", and https://chronontology.dainst.org/period/Gx4uxaeTCbbg to one for "Pre-Pottery Neolithic A". Note how the entries in said gazetters go back to an authoritative source, e.g. in the form of an archaeological publication presenting a typo-chronological scheme. Most archaeological and archaeogenetic publications implicitly or explicitly adopt such a scheme for the spatio-temporal context they work on. Ideally the scheme referenced in the Poseidon package and the one in the publication should match, but in practice this may be difficult to ascertain.
 
-Archaeological_Culture_URL
+The column pair `Archaeological_Culture` and `Archaeological_Culture_URL` functions just as the cultural era pair, but now on a more fine-grained level. It allows to attribute a given ancient individual to specific archaeological cultures, technocomplexes, pottery styles or political entities, for example the "Hallstatt culture in Hungary" (https://n2t.net/ark:/99152/p0nxc78fxgt), or the "Neo-Assyrian Empire" (https://chronontology.dainst.org/period/bvLwqFcGyoaL).
 
 ## Spatial position
 
@@ -210,6 +210,8 @@ The `Genetic_Source_Accession_IDs` column was introduced to link the derived gen
 
 The `Primary_Contact` column is a free-form text field that stores the name of the main or the corresponding author of the respective paper for published data.
 
+The `Custodian_Institution` column (introduced in Poseidon v3.0.0) allows to document one or multiple institutions that curated the sampled remains at the time of sampling. Each institution should be given with name, city and country. The `Collection_ID` column may allow to link to the internal bookkeeping of this institutions.
+
 The `Publication` column holds either the value `unpublished` for (yet) unpublished samples or -- for published data -- one or multiple citation-keys of the form `AuthorJournalYear` without any spaces or special characters. These keys have to be identical to the [BibTeX](http://www.bibtex.org) citation-keys identifying the respective entries in the `.bib` file of the package. BibTeX is a file format to store bibliographic information, where each entry (article, book, website, ...) is defined by a series of parameters (authors, year of publication, journal, ...). Here's an example `.bib` file with two entries for [@Cassidy2015](https://doi.org/10.1073/pnas.1518445113) and [@Feldman2019](https://doi.org/10.1126/sciadv.aax0061):
 
 ```default
@@ -252,10 +254,8 @@ The string `CassidyPNAS2015` is the citation-key of the first entry. To cite bot
 
 When creating a new Poseidon package the `.bib` file should be filled together with the `Publication` column. One of the most simple ways to obtain the BibTeX entries may be to request them with the doi from the [doi2bib](https://doi2bib.org) wep app. It could be necessary to adjust the result manually, though. The citation-key, for example, has to be replaced by the one used in the `Publication` column.
 
-The `Note` column is a free-form text field that can contain small amounts of additional information that is not yet expressed in a more systematic form in the the other `.janno` file columns.
+The `Note` column is a free-form text field that can contain small amounts of additional information that is not yet expressed in a more systematic form in the other `.janno` file columns.
 
 The `Keywords` column was introduced to allow for tagging individuals with arbitrary keywords. This should simplify sorting and filtering in personal Poseidon package repositories. Each keyword is a string and multiple keywords can be separated with `;`.
-
-Arbitrary additional columns can be included in a `.janno` file, but they should be named in a way that they do not conflict with the Poseidon package specification. These columns will not be validated (assumed free-form text), but they will be preserved in the Poseidon package, and propagated during operations with `trident forge`.
 
 ---
