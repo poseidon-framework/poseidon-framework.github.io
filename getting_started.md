@@ -2,7 +2,7 @@
 
 This is a short tutorial that runs you through some basic functionality of the poseidon framework and tooling.
 
-Please also see the slides [A short introduction to the Poseidon framework](https://nevrome.github.io/uni.tuebingen.poseidon.intro.2h.2024/) by Clemens Schmid, which showcases many key aspects of the framework, as well as our [preprint on biorxiv](https://www.biorxiv.org/content/10.1101/2024.04.12.589180).
+Please also see the slides [A short introduction to the Poseidon framework](https://nevrome.github.io/uni.tuebingen.poseidon.intro.2h.2024/) by Clemens Schmid, which showcases many key aspects of the framework, as well as our [reviewed preprint on eLife](https://doi.org/10.7554/eLife.98317.1).
 
 ## Preparation
 You will need to install our two command-line tools `trident` and `xerxes`. They are available as pre-compiled binaries for MacOS and Linux, and in case of trident also for Windows: 

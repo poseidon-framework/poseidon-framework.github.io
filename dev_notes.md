@@ -24,11 +24,8 @@ flowchart TD
     ssfDef[".ssf"]
     packageDef -- defines --> ssfDef
 
-    poseidonAnalysisHS["poseidon-analysis-hs library"]
-    poseidonHS --> poseidonAnalysisHS
-
     xerxes["xerxes"]
-    poseidonAnalysisHS --> xerxes
+    poseidonHS --> xerxes
 
     poseidonHS["poseidon-hs library"]
     poseidonYMLDef --> poseidonHS
