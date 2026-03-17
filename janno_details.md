@@ -1,16 +1,20 @@
 # .janno file details
 
-## Background
+## Overview
 
-The `.janno` file columns are specified in the Poseidon package specification [here](https://github.com/poseidon-framework/poseidon-schema/blob/master/janno_columns.tsv). The following documentation includes additional background information for many of the variables. This should make it more easy to compile the necessary information for both published and unpublished data. The `.pdf` version of the latest version of this document is available [here](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/janno_details.pdf).
+A `.janno` file is a tabular, tab-separated (`.tsv`) file. A base set of `.janno` file columns are specified in the Poseidon package specification [here](https://github.com/poseidon-framework/poseidon-schema/blob/master/janno_columns.tsv), including information on which columns are mandatory, which ones are list columns that can hold multiple entries, and which ones limit the allowed set of entries to a strict enumeration. Beyond that the `.janno` file can include any number and type of additional columns to hold project- and context-specific variables.
 
-### The `Poseidon_ID`
+The following documentation includes additional background information ob the base set. This should make it more easy to understand and use the columns for both published and unpublished data. A `.pdf` version of the latest version of this document is available for download [here](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/janno_details.pdf).
+
+While previous versions of the `.janno` base set included various explicit `_Note` columns to add free form information to specific columns or column blocks, from Poseidon v3.0.0 onwards these explicit columns were removed. The schema supports arbitrary additional columns, so the user can add ANY `_Note` column they deem relevant or useful. The Poseidon tooling, e.g. the `trident` CLI software, still gives special considerations to columns with the `_Note` suffix when sorting columns. For example a column `Relation_Note` will be appended after all other `Relation_*` columns, but a more specific `Relation_Degree_Note` right after `Relation_Degree`.
+
+## The `Poseidon_ID`
 
 The `Poseidon_ID` column assigns each entity in a Poseidon package (so one row of the .janno file) a unique identifier string. It links the `.janno` file entries to the genetic data in a Poseidon package.
 
 Often the `Poseidon_ID` can be readily taken from the respective accompanying publication introducing a given sample. If there are multiple samples from one ancient human individual, then they may share this identifier in the publication. For the Poseidon package they have to be clearly distinguished with relevant suffixes, though, added to the `Poseidon_ID`. For good compatibility with Poseidon tooling, e.g. `trident`'s subsetting-and merging language, it is recommended to only use the ASCII characters `A-Za-z0-9_-.` for `Poseidon_ID`s.
 
-#### What does the `Poseidon_ID` represent exactly?
+### What does the `Poseidon_ID` represent exactly?
 
 Generally, archaeogenetics operates on burial contexts, e.g. graves, with one or multiple ancient human individuals. Usually, though not always, it is possible to attribute the skeletal remains within these graves to individuals based on the archaeological context and physical-anthropological analysis. Each individual can get sampled one or multiple times, either by directly probing their preserved tissue, mostly bones, or by sampling any reagent that contains their DNA (through whatever pathway or taphonomic process). From one such sample one or multiple extracts can be derived, which can be transformed into one or multiple libraries, which may or may not be subjected to a DNA capture protocol and then sequenced one or multiple times. The raw sequencing data can undergo various different forms of computational processing and eventually genotyping to produce the data relevant for most derived analyses and thus stored in Poseidon.
 
@@ -18,49 +22,52 @@ While the wetlab-processes can be understood as a relatively predictable tree of
 
 A `Poseidon_ID`, and therefore the identifier for the main singular entity in a Poseidon package, could approximately be described as representing one end-point in the data preparation graph laid out above. Typically this end-point corresponds to an optimal result, consciously selected for a given individual, research question and publication. Unfortunately, in reality a `Poseidon_ID` is not suited to uniquely identify exactly one such end-point. The reality in the Poseidon ecosystem is rather that slightly different end-points can have the same `Poseidon_ID`, e.g. across package versions or public Poseidon archives. A single endpoint can only be uniquely identified from a combination of `Poseidon_ID`, Poseidon package and package version.
 
-### Other identifiers
+## Other identifiers
 
-The `Individual_ID` column (introduced in Poseidon v3.0.0) acts as an identifier on the level of (human/animal) individuals in a Poseidon package. That means multiple `Poseidon_ID`s can share an `Individual_ID`. In practice these IDs are often identical for a given sample, or only differ in additional suffixes appended to the `Poseidon_ID`. The distinction of an individual- and analysis endpoint-level ID also exists in the AADR dataset [@Mallick2024](https://doi.org/10.1038/s41597-024-03031-7), e.g. in v62.0, with the `Master ID` and `Genetic ID` columns.
+The `Individual_ID` column (introduced in Poseidon v3.0.0) acts as an identifier on the level of (human/animal) individuals in a Poseidon package. That means multiple `Poseidon_ID`s can share an `Individual_ID`. In practice these IDs are often identical for a given sample, or only differ in additional suffixes appended to the `Poseidon_ID`. The distinction of an individual- and analysis endpoint-level ID also exists in the AADR dataset [@Mallick2024](https://doi.org/10.1038/s41597-024-03031-7), e.g. in v62.0, with the `Master ID` and `Genetic ID` columns. It is recommended to only use the ASCII characters `A-Za-z0-9_-.` for `Individual_ID`s.
 
-The column `Alternative_IDs` provides a way to list other IDs used for the respective individual. These might for example be names used in different publications or popular names like "Iceman", "Ötzi", "Girl of the Uchter Moor", "Tollund Man", etc.. But these can also be formal identifiers in datasets beyond Poseidon, e.g. `Master ID`s in specific AADR releases.
+The column `Alternative_IDs` provides a way to list other IDs used for the respective individual. These might be formal identifiers in datasets beyond Poseidon, e.g. `Master ID`s in specific AADR releases, or identifiers used in different publications, or even just popular names like ["Iceman"/"Ötzi"](https://en.wikipedia.org/wiki/%C3%96tzi), ["Girl of the Uchter Moor"](https://en.wikipedia.org/wiki/Girl_of_the_Uchter_Moor), or ["Tollund Man"](https://en.wikipedia.org/wiki/Tollund_Man).
 
 To document the context of such an `Alternative_IDs` entry, the column `Alternative_IDs_Context` (introduced in Poseidon v3.0.0) allows to provide the necessary context. It is a list column with the same length and order as the `Alternative_IDs` list column, where the name of the respectice source database, e.g. `AADRv62`, must be entered. For common non-scientific names used in media and public discussion, the term `popular` can be entered.
 
 The `Collection_ID` column stores an additional, secondary identifier as it is often provided by collaboration partners (archaeologists, museums, collections) that provide the specimen for archaeogenetic research. These identifiers can have a very heterogenous structure and may not be unique across different projects or institutions. The `Collection_ID` column is therefore a free-form text field.
 
-The `Group_Name` column contains one or multiple group or population names for each individual, separated by `;`. The first entry must be identical to the one used in the genotype data for the respective sample in a Poseidon package, and whitespace is not allowed in any of the entries. Assigning group and population names is a hard problem in archeogenetics [@Eisenmann2018](https://doi.org/10.1038/s41598-018-31123-z), so the `.janno` file allows for more than one identifier.
+The `Group_Name` column contains one or multiple group or population names for each sample, separated by `;`. The first entry must be identical to the one used in the genotype data for the respective sample in a Poseidon package. Especially for the first entry it is recommended to only use the ASCII characters `A-Za-z0-9_-.`. Whitespaces are not allowed in any of the entries. The names can follow the geographic-temporal nomenclature proposed by [@Eisenmann2018](https://doi.org/10.1038/s41598-018-31123-z), or communicate additional categories that are meaningful for groupings in specific analyses, such as cultural labels, outlier status or relatedness to other samples
+
+## The species
+
+The `Species` column (introduced in Poseidon v3.0.0) should contain the species of the respective sample. The entry should follow binomial nomenclature as standard in Biology, e.g. `Homo sapiens`.
+
+Poseidon is geared towards human data, but is to a large extent species-agnostic and can be used to track archaeogenetic data also of non-human species. If it is used for non-human data, then various other `.janno` file columns of the base set may not be applicable or may not include the required choice options. As non of these columns are mandatory they can just be left out in this case.
 
 ## Relations among samples/individuals
 
-To systematically document biological relationships uncovered among samples/individuals in one or multiple Poseidon datasets (e.g. with software like READ [@MonroyKuhn2018](https://doi.org/10.1371/journal.pone.0195491) or BREADR [@Rohrlach2023](https://doi.org/10.1101/2023.04.17.537144)), the `.janno` file can be fit with a set of columns featuring the `Relation_*` prefix. Across these columns it should be possible to encode all kinds of pairwise, biological relationships an individual might have.
+To systematically document biological relationships uncovered among individuals in one or multiple Poseidon datasets (e.g. with software like READ [@MonroyKuhn2018](https://doi.org/10.1371/journal.pone.0195491) or BREADR [@Rohrlach2023](https://doi.org/10.1101/2023.04.17.537144)), the `.janno` file can be fit with a set of columns featuring the `Relation_*` prefix. Across these columns it should be possible to encode all kinds of pairwise, biological relationships an individual might have.
 
-`Relation_To` is a string list column (so: multiple values are possible if separated by `;`) that stores the `Poseidon_ID`s of other samples/individuals to which the current individual has some relationship.
+`Relation_To` is a string list column (so: multiple values are possible if separated by `;`) that stores the `Individual_ID`s of other individuals to which the current individual has some relationship.
 
 `Relation_Degree` stores a formal description of the closeness of this relationship as measured purely from aDNA data. It is therefore also a list column that can hold the following values for each relationship:
 
-- `identical`: The two samples are from the same individual or from identical twins
-- `first`: The two individuals are closely related -- a first degree relationship (e.g. siblings, parent-offspring)
-- `second`: A second degree relationship (e.g. cousins, grandparent to grandchild)
-- `thirdToFifth`: A third to fifth degree relationship (e.g. great-grandparent to great-grandchild)
-- `sixthToTenth`: A sixth to tenth degree relationship
-- `unrelated`: Unrelated -- this is the default state among all individuals, which does not have to be expressed explicitly. This category will therefore probably never be used
-- `other`: Any other kind of relationship not covered by the aforementioned categories
+- `identical`: The two samples are from identical twins.
+- `first`: The two individuals are closely related -- a first degree relationship (e.g. siblings, parent-offspring).
+- `second`: A second degree relationship (e.g. cousins, grandparent to grandchild).
+- `thirdToFifth`: A third to fifth degree relationship (e.g. great-grandparent to great-grandchild).
+- `sixthToTenth`: A sixth to tenth degree relationship.
+- `unrelated`: Unrelated -- this is the default state among all individuals, which does not have to be expressed explicitly.
+- `other`: Any other kind of relationship not covered by the aforementioned categories.
 
 For each entry in `Relation_To` there must be a corresponding entry in `Relation_Degree`.
 
 `Relation_Type` allows to add more verbose details about the relationship type, if it was possible to reconstruct that from the archaeological or historical context. Because there are too many possible permutations, there is no pre-defined set of values for what can and cannot be entered here. It is advisable, though, to stick to a general scheme like the following, which describes a given relationship from the point of view of the current individual:
 
-- `same_as`: This sample is from the same inividual as another sample
-- `identical_twin_of`: This individual is likely an identical twin of another individual
-- `father_of`: This individual is likely the father of the partner individual
-- `grandchild_of`: This individual is likely the grandchild of the partner individual
-- `mother_or_daughter_of`: This individual is likely either the mother or daughter of the partner individual (which might be unclear, in case of imprecise archaeological dating)
+- `identical_twin_of`: This individual is likely an identical twin of another individual.
+- `father_of`: This individual is likely the father of the partner individual.
+- `grandchild_of`: This individual is likely the grandchild of the partner individual.
+- `mother_or_daughter_of`: This individual is likely either the mother or daughter of the partner individual (which might be unclear, in case of imprecise archaeological dating).
 - `unknown`: The relationship is unclear or not yet determined. This is the default state and does not have to be expressed, unless multiple relationships are present and some but not all are known.
 - `...`
 
 Unlike `Relation_Degree`, `Relation_Type` can be left empty even if there are entries in `Relation_To`. But if it is filled, then the number of values must be equal to the number of entries in both `Relation_To` and `Relation_Degree`.
-
-The `Relation_Note` column allows to add free-form text information about the relationships of this individual. This might also include information about the method used to infer the degree and type.
 
 ## Spatial position
 
@@ -103,8 +110,6 @@ In the columns `Date_BC_AD_Median`, `Date_BC_AD_Start`, `Date_BC_AD_Stop` ages a
 - If radiocarbon dates are available (`Date_Type = C14`): `Date_BC_AD_Median` should report the median age after calibration. With multiple dates this can be determined either with sum calibration or more complex (e.g. bayesian) age modelling. `Date_BC_AD_Start` and `Date_BC_AD_Stop` should report the starting/ending age of a 95% probability window around the age median.
 - If only contextual (e.g. from archaeological typology) age information is available (`Date_Type = contextual`): `Date_BC_AD_Start` and `Date_BC_AD_Stop` should simply report the approximate start and end date determined by the respective source of scientific authority (e.g. an archaeologist knowledgable about the relevant typological sequences). In this case `Date_BC_AD_Median` should be calculated as the mean of `Date_BC_AD_Start` and `Date_BC_AD_Stop` rounded to an integer value.
 - If the sample is a modern reference sample (`Date_Type = modern`): `Date_BC_AD_Median`, `Date_BC_AD_Start`, `Date_BC_AD_Stop` should all be set to the value 2000, for 2000 AD.
-
-The column `Date_Note` stores arbitrary free-form text information about the dating of a sample.
 
 ## Genetic summary data
 
@@ -185,9 +190,9 @@ Some tools for contamination estimation do not return a mean plus a standard err
 - `hapCon v0.4a1`
 - `custom script`
 
-This setup has the consequence that the columns `Contamination`, `Contamination_Err`, `Contamination_Meas` always have to have the same number of `;`-separated values.
+More specific information about which parameters were chosen can be added in a `Contamination_Note` column.
 
-The `Contamination_Note` column is a free text field to add additional information about the contamination estimates, e.g. which parameters where used with the respective software tools.
+This setup has the consequence that the columns `Contamination`, `Contamination_Err`, `Contamination_Meas` always have to have the same number of `;`-separated values.
 
 ## Context information
 
