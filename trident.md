@@ -864,7 +864,8 @@ A most basic run may just include two arguments:
 ```bash
 trident jannocoalesce \
   --sourceFile path/to/source.janno \
-  --targetFile path/to/target.janno
+  --targetFile path/to/target.janno \
+  --outFile path/to/coalesced.janno
 ```
 
 `jannocoalesce` generally works by reading a source `.janno` file with `-s|--sourceFile` (or all `.janno` files in a `-d|--baseDir`) and a target `.janno` file with `-t|--targetFile`.
@@ -872,6 +873,14 @@ trident jannocoalesce \
 It then merges these files by a key column, which can be selected with `--sourceKey` and `--targetKey`. The default for both of these key columns is the `Poseidon_ID`. In case the entries in the key columns slightly and systematically differ, e.g. because the `Poseidon_ID`s in either have a special suffix (for example `_SG`), then the `--stripIdRegex` option allows to strip these with a regular expression to thus match the keys.
 
 `jannocoalesce` generally attempts to fill **all** empty cells in the target `.janno` file with information from the source. `--includeColumns` and `--excludeColumns` allow to select specific columns for which this should be done. In some cases it may be desirable to not just fill empty fields in the target, but overwrite the information already there with the `-f|--force` option. If the target file should be preserved, then the output can be directed to a new output `.janno` file with `-o|--outFile`.
+
+Note that all three files, the source, the target, and the outfile, are mandatory. The roles are:
+
+- `targetFile` -> This is the file which is taken as the starting point for the new janno file.
+- `sourceFile` -> This is the file from which to read additional columns that might be missing in the target.
+- `outFile` -> This is the file that will contain the coalesced result.
+
+In addition to these three files, you can choose a Poseidon Version for both the source (`--pvSource`) and the target (`--pvTarget`), which is useful for backwards compatibility, in case you have Janno files in older Poseidon versions. **_But_**: Note that the output file will _always_ be written in the newest Poseidon version. Note that you _can_ choose the outFile to be the targetFile, which will then overwrite the target file. This can be useful if you know what you are doing. Otherwise it is of course safer to choose a new filename for the output. 
 
 ## Rectify command
 
