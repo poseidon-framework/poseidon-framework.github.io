@@ -2,3 +2,4 @@ _site/
 .jekyll-cache/
 .Rhistory
 node_modules/
+.DS_Store
