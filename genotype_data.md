@@ -14,7 +14,7 @@ The PLINK file format is a well specified, storage efficient data type compatibl
 
 To make VCF files fully convertible to PLINK and EIGENSTRAT, they MUST be biallelic and contain only genotypes coded as `0/0`, `0/1`, `1/1`, `./.`. Furthermore, they CAN encode group names and genetic sex for all samples through special header fields `##group_names=name1,name2,...` and `##genetic_sex=F,U,M,...`, respectively. If these fields are not present, then group names are assumed to be "unknown" and genetic sex "U" (unknown) for all samples.
 
-For all of these formats the large genotype data files to store SNP definitions and values can be stored in gzipped form (`*.gz`).
+For all of these formats the genotype and SNP-definition files can be stored in gzipped form (`*.gz`), i.e.: `*.bed.gz`, `*.geno.gz`, `*.bim.gz`, `*.snp.gz`, `*.vcf.gz`, but note that `*.fam` and `*.ind` files always must remain unzipped.
 
 The `genotypeData` field in the `POSEIDON.yml` file documents in which format the data for a package is stored and the relative paths to the respective files.
 
