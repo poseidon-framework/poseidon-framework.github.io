@@ -141,7 +141,7 @@ The `Chromosomal_Anomalies` column (introduced with Poseidon v3.0.0) allows to n
 
 ### Library properties
 
-The `Source_Material` column (formerly `Source_Tissue`, before Poseidon v3.0.0) documents the skeletal, soft tissue or other elements from which source material for DNA library preparation was extracted. The following entries are allowed: `petrous`, `bone`, `tooth`, `hair`, `soft`, `sediment`, and `other`. `soft` encompasses (archaeologically rarely preserved) soft tissues like muscle, tendons, or fat. If multiple DNA libraries have been prepared from different sampled elements, then these can be listed separated by `;` as in other list columns. Further details, e.g. specific bone names, can be reported in a `Source_Material_Note` column.
+The `Source_Material` column (formerly `Source_Tissue`, before Poseidon v3.0.0) documents the skeletal, soft tissue or other elements from which source material for DNA library preparation was extracted. The following entries are allowed: `petrous`, `bone`, `tooth`, `hair`, `soft`, `sediment`, and `other`. `soft` encompasses (archaeologically rarely preserved) soft tissues like skin, muscle, tendons, or fat. If multiple DNA libraries have been prepared from different sampled elements, then these can be listed separated by `;` as in other list columns. Further details, e.g. specific bone names, can be reported in a `Source_Material_Note` column.
 
 The `Nr_Libraries` column holds a simple integer value of the number of libraries that have been prepared for an individual.
 
