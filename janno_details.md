@@ -12,7 +12,7 @@ While previous versions of the `.janno` base set included various explicit `_Not
 
 The `Poseidon_ID` column assigns each entity in a Poseidon package (so one row of the `.janno` file) a unique identifier string. It links the `.janno` file entries to the genetic data in a Poseidon package.
 
-Often the `Poseidon_ID` can be readily taken from the respective accompanying publication introducing a given sample. If there are multiple samples from one ancient human individual, then they may share this identifier in the publication. For the Poseidon package they have to be clearly distinguished with relevant suffixes, though, added to the `Poseidon_ID`. For good compatibility with Poseidon tooling, e.g. `trident`'s subsetting-and merging language, it is recommended to only use the ASCII characters `A-Za-z0-9_-.` for `Poseidon_ID`s.
+Often the `Poseidon_ID` can be readily taken from the respective accompanying publication introducing a given sample or analysis-version of a sample. If there are multiple samples from one ancient human individual, or multiple versions of the same dataset resulting from different filtering or bioinformatic treatment, then they may share this identifier in the publication. For the Poseidon package they have to be clearly distinguished with relevant suffixes, though, added to the `Poseidon_ID`. For good compatibility with Poseidon tooling, e.g. `trident`'s subsetting-and merging language, it is recommended to only use the ASCII characters `A-Za-z0-9_-.` for `Poseidon_ID`s.
 
 ### What does the `Poseidon_ID` represent exactly?
 
