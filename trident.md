@@ -880,7 +880,7 @@ Note that all three files, the source, the target, and the outfile, are mandator
 - `sourceFile` -> This is the file from which to read additional columns that might be missing in the target.
 - `outFile` -> This is the file that will contain the coalesced result.
 
-In addition to these three files, you can choose a Poseidon Version for both the source (`--pvSource`) and the target (`--pvTarget`), which is useful for backwards compatibility, in case you have Janno files in older Poseidon versions. **_But_**: Note that the output file will _always_ be written in the newest Poseidon version. Note that you _can_ choose the outFile to be the targetFile, which will then overwrite the target file. This can be useful if you know what you are doing. Otherwise it is of course safer to choose a new filename for the output. 
+In addition to these three files, you can choose a Poseidon Version for both the source (`--pvSource`) and the target (`--pvTarget`), which is useful for backwards compatibility, in case you have `.janno` files in older Poseidon versions. **_But_**: Note that the output file will _always_ be written in the newest Poseidon version. Note that you _can_ choose the outFile to be the targetFile, which will then overwrite the target file. This can be useful if you know what you are doing. Otherwise it is of course safer to choose a new filename for the output. 
 
 ## Rectify command
 
