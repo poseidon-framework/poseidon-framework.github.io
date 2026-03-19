@@ -2,6 +2,8 @@
 
 The following table documents which versions of the Poseidon standard are compatible with which versions of the software tools.
 
+✓ indicates full support, ⚠ partial or imperfect support.
+
 <script>
   Vue.createApp({
     data () {
@@ -57,6 +59,15 @@ The following table documents which versions of the Poseidon standard are compat
       exists(versionTableRows,t,v,pV) {
         var fittingRows = versionTableRows.filter((row) => row.tool == t && row.version == v && row.poseidonVersion == pV);
         return fittingRows.length > 0;
+      },
+      getSupportLevel(versionTableRows,t,v,pV) {
+        const row = versionTableRows.find(
+          (row) =>
+            row.tool === t &&
+            row.version === v &&
+            row.poseidonVersion === pV
+        );
+        return row ? row.support : "none";
       }
     }
   }).mount('#versionFileViewer');
@@ -93,8 +104,15 @@ The following table documents which versions of the Poseidon standard are compat
               <tr v-for="version in versionsPerTool[tools.findIndex((t) => t == tool)]">
                 <td style="border-right: 1px dotted #d3d3d3;"><b>{{version}}</b></td>
                 <td v-for="poseidonVersion in poseidonVersions">
-                  <div v-if="exists(versionTableRows,tool,version,poseidonVersion)">✅</div>
-                  <div v-else>☐</div>
+                  <div v-if="getSupportLevel(versionTableRows,tool,version,poseidonVersion) === 'full'">
+                    ✓
+                  </div>
+                  <div v-else-if="getSupportLevel(versionTableRows,tool,version,poseidonVersion) === 'partial'">
+                    ⚠
+                  </div>
+                  <div v-else>
+                    _
+                  </div>
                 </td>
               </tr>
             </tbody>
