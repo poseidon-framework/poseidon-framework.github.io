@@ -2,7 +2,7 @@
 
 The following table documents which versions of the Poseidon standard are compatible with which versions of the software tools.
 
-✓ indicates full support, ⚠ partial or imperfect support.
+**✓** indicates full support and **⚠** marks partial or imperfect support, but usually still to a well usable level. **`_`** means the tool may or may not work or break in unexpected ways depending on the input data.
 
 <script>
   Vue.createApp({
