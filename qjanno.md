@@ -29,7 +29,7 @@ The guide below explains the inner workings of qjanno and gives some examples fo
 - [🗎 Guide for qjanno v1.0.0.0 to v1.0.0.1](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/qjanno.pdf) (shown below)
 - [🗎 Guide for qjanno v1.0.0](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/qjanno_guide_archive/qjanno_guide_1.0.0.pdf)
 
-# Guide for qjanno v1.0.0.0 to v1.0.0.1
+# Guide for qjanno v1.0.0.0 to v1.0.1.0
 
 ## Background
 
