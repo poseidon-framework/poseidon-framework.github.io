@@ -40,6 +40,11 @@ trident	2.0.0.0	2.7.1	partial
 trident	2.0.0.0	2.7.0	partial
 trident	2.0.0.0	2.6.0	partial
 trident	2.0.0.0	2.5.0	partial
+trident	1.7.0.0	3.0.0	full
+trident	1.7.0.0	2.7.1	partial
+trident	1.7.0.0	2.7.0	partial
+trident	1.7.0.0	2.6.0	partial
+trident	1.7.0.0	2.5.0	partial
 trident	1.6.7.3	2.7.1	full
 trident	1.6.7.3	2.7.0	partial
 trident	1.6.7.3	2.6.0	partial
