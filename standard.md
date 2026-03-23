@@ -201,28 +201,40 @@ See the machine-readable table with precise data type definitions here: [ssf_col
 
 <!-- tabs:start -->
 
-#### **v2.7.1**
+#### **v3.0.0**
 
-# The Poseidon Standard
+Poseidon is a solution for archaeogenetic genotype data organisation. It is geared towards human data, but is to a large extent species-agnostic and can be used to track archaeogenetic data also of non-human species.
 
-Poseidon is a solution for archaeogenetic genotype data organisation. This standard defines the core components of the Poseidon package.
+This standard defines a data structure: the **Poseidon package**. A Poseidon package stores genotype data with meta- and context information.
 
 A .pdf version of the latest instance of this document can be downloaded [here](https://github.com/poseidon-framework/poseidon-schema/blob/master/poseidon_package_specification.pdf).
 
 Further details on [genotype data](https://poseidon-framework.github.io/#/genotype_data), the [.janno file](https://poseidon-framework.github.io/#/janno_details) and the [.ssf file](https://poseidon-framework.github.io/#/ssf_details) are documented on the Poseidon website.
 
-The website also features a changelog documenting the changes across different schema versions [here](https://poseidon-framework.github.io/#/changelog).
+A changelog documents the changes across different schema versions [here](https://github.com/poseidon-framework/poseidon-schema/blob/master/changelog.md).
 
 The key words *MUST*, *MUST NOT*, *REQUIRED*, *SHALL*, *SHALL NOT*, *SHOULD*, *SHOULD NOT*, *RECOMMENDED*, *MAY*, and *OPTIONAL* in this document are to be interpreted as described in [RFC 2119](https://datatracker.ietf.org/doc/html/rfc2119).
 
+### Primary entities of a Poseidon package
+
+The main operational entities in a Poseidon package are discrete sets of genotype data attributed to a single human or non-human individual, scientifically generated for archaeogenetic research questions. Within a Poseidon package each of these sets gets attributed a unique identifier: the `Poseidon_ID`.
+
+Generally, archaeogenetics operates on depositional contexts, e.g. graves, with one or multiple (ancient) human or non-human individuals. Usually, it is possible to attribute the (skeletal) remains within these contexts to individuals based on archaeological evidence and physical-anthropological analysis. Each individual can get sampled one or multiple times, either by directly probing their preserved tissue, or by sampling any reagent that contains their DNA (through whatever pathway or taphonomic process). From one such sample one or multiple extracts can be derived, which can be transformed into one or multiple libraries, which may or may not be subjected to a DNA capture protocol and then sequenced one or multiple times. The raw sequencing data can undergo various different forms of computational processing and eventually genotyping to produce the data relevant for most derived analyses and thus stored in a Poseidon package.
+
+While the wetlab-processes yield a relatively predictable tree of separate physical and digital products for any given sample, the computational data-processing breaks the conceptual tree-ness by allowing for arbitrary conflation of sequencing data obtained through potentially separate means: Data from different libraries, for example, may be merged if they are from the same individual, even if they are not from the same sample.
+
+`Poseidon_ID`s therefore represent one consciously selected end-point in the complex data preparation graph laid out above. Typically this end-point corresponds to an optimal result for a given individual, research question and publication.
+
+For the sake of convenience and despite the lack of conceptual clarity, below we sometimes use the term *sample* to denote `Poseidon_ID` entities. Data aggregation on the level of physical samples is often sensible, and the term is conventionally used for analysis endpoints in the community of practice.
+
 ### The Poseidon package structure
 
-A Poseidon package stores genotype data with context information for DNA samples from (ancient) (human) individuals. Packages are defined by the POSEIDON.yml file, which holds relative paths to all other files in a package.
+A Poseidon package is defined by the POSEIDON.yml file, which holds relative paths to all other files in the package.
 
 A package therefore MUST contain:
 
 - A `POSEIDON.yml` file to formally define the package
-- Genotype data in PLINK or EIGENSTRAT format
+- Genotype data in PLINK, EIGENSTRAT or VCF format
 
 It SHOULD additionally contain:
 
@@ -237,7 +249,7 @@ It MAY also contain:
 
 Here is an example of a package `Switzerland_LNBA_Roswita` in one directory:
 
-```
+```default
 Switzerland_LNBA_Roswita/POSEIDON.yml
 Switzerland_LNBA_Roswita/Switzerland_LNBA.bed
 Switzerland_LNBA_Roswita/Switzerland_LNBA.bim
@@ -249,7 +261,11 @@ Switzerland_LNBA_Roswita/README.md
 Switzerland_LNBA_Roswita/CHANGELOG.md
 ```
 
-All text files in the package MUST be UTF-8 encoded.
+### Text encoding
+
+All text files in the package MUST be UTF-8 encoded. They SHOULD use Unix-style line endings, so a single Line Feed (LF, `\n`) character, NOT a Carriage Return and Line Feed (CRLF) pair (`\r\n`) as in MS DOS and Windows.
+
+`Poseidon_ID`s and `Group_Name`s, so the primary sample and group identifiers across `.janno`, `.ssf`, and genotype data files, SHOULD contain only characters of a subset of the 7-bit ASCII code set. Specifically the alphanumeric characters `A-Z`, `a-z`, `0-9`, and the symbols `_` (underscore), `-` (hyphen-minus), and `.` (period, dot or full stop).
 
 ### The `POSEIDON.yml` file
 
@@ -260,7 +276,7 @@ The `POSEIDON.yml` file defines Poseidon packages by listing metainformation and
 
 Here is an example for a `POSEIDON.yml` file:
 
-```
+```yml
 poseidonVersion: 2.7.1
 title: Switzerland_LNBA_Roswita
 description: LNBA Switzerland genetic data not yet published
@@ -272,6 +288,10 @@ contributor:
     email: paul.panther@example.edu
 packageVersion: 1.1.2
 lastModified: 2021-01-28
+license:
+  name: CC BY 4.0
+  url: https://creativecommons.org/licenses/by/4.0/
+  file: license.md
 genotypeData:
   format: PLINK
   genoFile: Switzerland_LNBA_Roswita.bed
@@ -322,17 +342,33 @@ When the `packageVersion` is changed, then the `lastModified` date MUST be updat
 
 Packages SHOULD start at `packageVersion` `0.1.0`.
 
+### Data licensing and the license.md file
+
+Data licences are a common way to grant the public permission to use a dataset under copyright law.
+
+Poseidon packages MAY specify a license, and if so, SHOULD use [Creative Commons licences](https://creativecommons.org/share-your-work/cclicenses).
+
+Licences are documented in the `POSEIDON.yml` file in the `license` section, either with just the `name`, or with a license `file`, or with both the `name` and a `file`. `name` SHOULD include a short string with name and version of the license, e.g. `CC BY 4.0`. The `file`, typically named `license.md`, MAY include the full text of a license, or a short notifier further contextualizing the entry in the `name` field. For example:
+
+```default
+The Poseidon package Switzerland_LNBA_Roswita © 2021 by Roswita Malone is licensed under Creative Commons Attribution 4.0 International. To view a copy of this license, visit https://creativecommons.org/licenses/by/4.0/
+```
+
 ### Genotype data
 
-Genotype data in Poseidon packages is stored either in (binary) PLINK or EIGENSTRAT format.
+Genotype data in Poseidon packages is stored either in (binary) PLINK, EIGENSTRAT or Variant Call Format (VCF).
 
-|   | PLINK (binary) | EIGENSTRAT |
-|---|---|---|
-| genotype file | [`.bed` (binary biallelic genotype table)](https://www.cog-genomics.org/plink/1.9/formats#bed) | [`.geno` (genotype file)](https://github.com/DReichLab/EIG/blob/fb4fb59065055d3622e0f97f0149588eae630a3e/CONVERTF/README#L67)
-| SNP file  | [`.bim` (extended MAP file)](https://www.cog-genomics.org/plink/1.9/formats#bim) | [`.snp` (snp file)](https://github.com/DReichLab/EIG/blob/fb4fb59065055d3622e0f97f0149588eae630a3e/CONVERTF/README#L67) |
-| individual file  | [`.fam` (sample information)](https://www.cog-genomics.org/plink/1.9/formats#fam) | [`.ind` (indiv file)](https://github.com/DReichLab/EIG/blob/fb4fb59065055d3622e0f97f0149588eae630a3e/CONVERTF/README#L67) |
+|   | PLINK (binary) | EIGENSTRAT | VCF |
+|---|---|---|---|
+| genotype file | [`.bed` (binary biallelic genotype table) or `.bed.gz`](https://www.cog-genomics.org/plink/1.9/formats#bed) | [`.geno` (genotype file) or `.geno.gz`](https://github.com/DReichLab/EIG/blob/fb4fb59065055d3622e0f97f0149588eae630a3e/CONVERTF/README#L67) | [`.vcf` or `.vcf.gz`](https://samtools.github.io/hts-specs/VCFv4.2.pdf) |
+| SNP file  | [`.bim` (extended MAP file) or `.bim.gz`](https://www.cog-genomics.org/plink/1.9/formats#bim) | [`.snp` (snp file) or `.snp.gz`](https://github.com/DReichLab/EIG/blob/fb4fb59065055d3622e0f97f0149588eae630a3e/CONVERTF/README#L67) |  |
+| individual file  | [`.fam` (sample information)](https://www.cog-genomics.org/plink/1.9/formats#fam) | [`.ind` (indiv file)](https://github.com/DReichLab/EIG/blob/fb4fb59065055d3622e0f97f0149588eae630a3e/CONVERTF/README#L67) |  |
 
-In addition to these files (and optionally their checksums), the POSEIDON.yml file SHOULD also provide a `snpSet` entry which determines the shape of the genotype file.
+Both PLINK and EIGENSTRAT formats require three files to be specified. In PLINK, the genotype file is binary (with 2 bits per genotype), while in Eigenstrat, the genotype file is text-based (with 8 bits per genotype). The SNP and individual files are text-based for both formats (see links behind the file endings in the table above). The EIGENSTRAT format specifically is common within archaeogenetics, compatible with many important tools, e.g. [EIGENSOFT](https://github.com/DReichLab/EIG) and [ADMIXTOOLS](https://github.com/DReichLab/AdmixTools). Finally, the VCF format is the most formally specified format, with properly versioned specifications being released regularly. VCF is well established in the wider genetics community and the de-facto standard to store variants in the field of medical genetics.
+
+VCF files, as well as genotype and SNP files in PLINK and EIGENSTRAT can be stored in gzipped form, signifified by an additional file ending (`*.gz`).
+
+To make VCF files fully convertible to PLINK and EIGENSTRAT, they MUST be biallelic and contain only genotypes coded as `0/0`, `0/1`, `1/1`, `./.`. Furthermore, they CAN encode group names and genetic sex for all samples through special header fields `##group_names=name1,name2,...` and `##genetic_sex=F,U,M,...`, respectively. If these fields are not present, then group names are assumed to be "unknown" and genetic sex "U" (unknown) for all samples.
 
 ###  The `.janno` file
 
@@ -340,9 +376,10 @@ The `.janno` file is a tab-separated text file with a header line. It holds cont
 
 - A set of strictly defined core variables (defined by column name) and their possible content are documented here: [janno_columns.tsv](https://github.com/poseidon-framework/poseidon-schema/blob/master/janno_columns.tsv)
 - A `.janno` file MAY have all of these core variables, or only a subset of them.
-- Only three columns MUST be present to make the file valid: **Poseidon_ID**, **Group_Name** and **Genetic_Sex**
+- Only three columns MUST be present to make the file valid: **Poseidon_ID**, **Group_Name** and **Genetic_Sex**.
 - Arbitrary columns not defined here MAY be added as long as their column names do not clash with the defined ones.
-- The column order is irrelevant.
+- Arbitrary, additional free-text information directly related to a column **<Column_Name>** from the set of specified core variables in [janno_columns.tsv](https://github.com/poseidon-framework/poseidon-schema/blob/master/janno_columns.tsv) SHOULD be added in a column whose name has the form **<Column_Name>_Note**. Example: `Contamination_Note`.
+- The column order is not fixed, but MAY follow the order in [janno_columns.tsv](https://github.com/poseidon-framework/poseidon-schema/blob/master/janno_columns.tsv). **<Column_Name>_Note** columns SHOULD be placed directly after the respective column they are refering to.
 - If information is unknown or a variable does not apply for a certain sample, then the respective cell(s) MAY be filled with `n/a` or simply an empty string.
 - The order of the samples (rows) in the `.janno` file MUST be equal to the order in the genetic data files (`.ind`, `.fam`) in the package.
 - The values in the columns **Poseidon_ID**, **Group_Name** and **Genetic_Sex** MUST be equal to the terms used in the genetic data files (`.ind`, `.fam`).
@@ -355,7 +392,7 @@ A [BibTeX](http://www.bibtex.org/) file with all references listed in the `.jann
 
 Example:
 
-```
+```default
 @article{CassidyPNAS2015,
     doi = {10.1073/pnas.1518445113},
     url = {https://doi.org/10.1073%2Fpnas.1518445113},
@@ -379,7 +416,7 @@ A simple [markdown](https://daringfireball.net/projects/markdown) file with info
 
 Example:
 
-```
+```default
 This package contains a rather interesting set of samples relevant for the peopling of the Territory of Christmas Island in the Indian Ocean. We consider this especially relevant, because ...
 ```
 
@@ -389,7 +426,7 @@ A markdown file to document changes in the history of a package.
 
 Example:
 
-```
+```default
 - V 1.1.1: Fixed a spelling mistake in one site name: "Hosenacker" -> "Rosenacker"
 - V 1.1.0: Added mtDNA contamination estimation to the .janno file
 - V 1.0.0: Added spatial coordinates and age information to the .janno file and finalized a first stable version of the package
@@ -412,6 +449,22 @@ The `.ssf` file is another tab-separated text file with a header line. It stores
 - Multiple predefined columns of the `.ssf` file are list columns that can hold multiple values (either strings or numerics) separated by `;`.
 - The decimal separator for all floating point numbers MUST be `.`.
 
+### Details
+
+#### The `Capture_Type` .janno column
+
+The following protocols are specified:
+
+- `Shotgun`: Sequencing without any enrichment (whole genome sequencing, screening etc.).
+- `1240K`: Target enrichment with hybridization capture optimised for sequences covering the 1240k SNP array, see [@Fu2015](https://doi.org/10.1038/nature14558), [@Haak2015](https://doi.org/10.1038/nature14317), [@Mathieson2015](https://doi.org/10.1038/nature16152).
+- `ArborComplete`, `ArborPrimePlus`, `ArborAncestralPlus`: Target enrichment with hybridization capture as provided by Arbor Biosciences in three different kits branded [myBaits Expert Human Affinities](https://arborbiosci.com/genomics/targeted-sequencing/mybaits/mybaits-expert/mybaits-expert-human-affinities).
+- `TwistAncientDNA`: Target enrichment with hybridization capture as provided by Twist Bioscience [@Rohland2022](https://doi.org/10.1101/gr.276728.122).
+- `WISC2013`: Whole genome capture as described by [@Carpenter2013](10.1016/j.ajhg.2013.10.002).
+- `OtherCapture`: Target enrichment with hybridization capture for any other set of sequences.
+
+#### **v2.7.1**
+
+[filename](https://raw.githubusercontent.com/poseidon-framework/poseidon-schema/v2.7.1/README.md ':include')
 
 #### **v2.7.0**
 
