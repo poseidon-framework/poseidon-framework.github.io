@@ -13,9 +13,9 @@ remotes::install_github('poseidon-framework/janno')
 
 The guide below explains the main functions in the package. It is available in .pdf format here:
 
-- [🗎 Guide for the janno R package v1.0.0](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/janno_r_package.pdf) (shown below)
+- [🗎 Guide for the janno R package v1.0.0 to v1.1.0](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/janno_r_package.pdf) (shown below)
 
-# Guide for the janno R package v1.0.0
+# Guide for the janno R package v1.0.0 to v1.1.0
 
 ## Installation
 
@@ -39,6 +39,8 @@ Before loading the `.janno` files they are validated with `janno::validate_janno
 
 Usually the `.janno` files are first loaded as normal `.tsv` files with every column type set to `character` and then the columns are transformed to the specified types. This transformation can be turned off with `to_janno = FALSE`.
 
+Note that the transformation is always done according to the specific Poseidon schema version a given janno R package version supports. `read_janno()` is not aware of the schema version a `.janno` file was intended to follow. See the [version table](version_table.md) for a lookup table which janno version supports which schema version. The package also reports this upon loading in its start-up message.
+
 `read_janno()` returns an object of class `janno`. This class is derived from the [`tibble`](https://tibble.tidyverse.org/) class, which integrates well with the tidyverse [@Wickham2019](https://doi.org/10.21105/joss.01686) and its packages, e.g. `dplyr` or `ggplot2`.
 
 ## Validate `.janno` files
@@ -50,6 +52,8 @@ my_janno_issues <- janno::validate_janno("path/to/my/janno_file.janno")
 ```
 
 `validate_janno` returns a `tibble` with issues in the respective `.janno` files. For edge cases this validation may yield slightly different results than `trident validate`.
+
+Note that the validation is always done against the specific Poseidon schema version a given janno R package version supports. `validate_janno()` is not aware of the schema version a `.janno` file was intended to follow.
 
 ## Write `janno` objects back to `.janno` files
 

@@ -8,7 +8,8 @@
 
 To download the latest stable release version of `qjanno` click here:
 [📥 Linux](https://github.com/poseidon-framework/qjanno/releases/latest/download/qjanno-Linux) |
-[📥 macOS](https://github.com/poseidon-framework/qjanno/releases/latest/download/qjanno-macOS) |
+[📥 macOS (ARM64)](https://github.com/poseidon-framework/qjanno/releases/latest/download/qjanno-macOS-ARM64) |
+[📥 macOS (X64)](https://github.com/poseidon-framework/qjanno/releases/latest/download/qjanno-macOS-X64) |
 [📥 Windows](https://github.com/poseidon-framework/qjanno/releases/latest/download/qjanno-Windows.exe)
 
 So in Linux you can run the following commands to get started:
@@ -29,7 +30,7 @@ The guide below explains the inner workings of qjanno and gives some examples fo
 - [🗎 Guide for qjanno v1.0.0.0 to v1.0.0.1](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/qjanno.pdf) (shown below)
 - [🗎 Guide for qjanno v1.0.0](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/qjanno_guide_archive/qjanno_guide_1.0.0.pdf)
 
-# Guide for qjanno v1.0.0.0 to v1.0.0.1
+# Guide for qjanno v1.0.0.0 to v1.0.1.0
 
 ## Background
 

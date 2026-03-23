@@ -1,54 +1,4 @@
-<popup :custom-text="`<p><a href='https://nevrome.github.io/uni.tuebingen.poseidon.intro.2h.2024'>A short introduction to the Poseidon genotype data management framework</a> by Clemens Schmid: A Poseidon tutorial showcasing the <a href='https://nevrome.github.io/uni.tuebingen.poseidon.intro.2h.2024/ref_pca.html'>main features of trident</a> among other things</p>`"></popup>
-
-<h1>trident CLI software</h1>
-
-`trident` is a command line software tool to work with Poseidon packages and handle various data management tasks. It is written in Haskell and openly available on [GitHub](https://github.com/poseidon-framework/poseidon-hs/).
-
-[![CI](https://github.com/poseidon-framework/poseidon-hs/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/poseidon-framework/poseidon-hs/actions/workflows/main.yml)
-[![Coverage Status](https://img.shields.io/codecov/c/github/poseidon-framework/poseidon-hs/master.svg)](https://codecov.io/github/poseidon-framework/poseidon-hs?branch=master)
-[![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/poseidon-framework/poseidon-hs?include_prereleases) ![GitHub all releases](https://img.shields.io/github/downloads/poseidon-framework/poseidon-hs/total)](https://github.com/poseidon-framework/poseidon-hs/releases)
-[![Install with Bioconda](https://anaconda.org/bioconda/poseidon-trident/badges/version.svg)](https://anaconda.org/bioconda/poseidon-trident) [![Anaconda-Server Badge](https://anaconda.org/bioconda/poseidon-trident/badges/downloads.svg)](https://anaconda.org/bioconda/poseidon-trident)
-
-To download the latest stable release version of `trident` click here:
-[📥 Linux](https://github.com/poseidon-framework/poseidon-hs/releases/latest/download/trident-Linux) |
-[📥 macOS (ARM64)](https://github.com/poseidon-framework/poseidon-hs/releases/latest/download/trident-macOS-ARM64) |
-[📥 macOS (X64)](https://github.com/poseidon-framework/poseidon-hs/releases/latest/download/trident-macOS-X64) |
-[📥 Windows](https://github.com/poseidon-framework/poseidon-hs/releases/latest/download/trident-Windows.exe)
-
-So in Linux you can run the following commands to get started:
-
-```bash
-# download the current stable release binary
-wget https://github.com/poseidon-framework/poseidon-hs/releases/latest/download/trident-Linux
-# make it executable
-chmod +x trident-Linux
-# run it
-./trident-Linux -h
-```
-
-On GitHub you will also find [older release versions](https://github.com/poseidon-framework/poseidon-hs/releases) and [instructions to build `trident` from source](https://github.com/poseidon-framework/poseidon-hs#for-haskell-developers). The relevant changes from one version to the next are documented in this [changelog](https://github.com/poseidon-framework/poseidon-hs/blob/master/CHANGELOGRELEASE.md).
-
-With `trident --help` and `trident <subcommand> --help` you can get information about each subcommand and parameter directly on the command line. The guide below explains the subcommands in more detail. It is available in .pdf format for the current and previous versions here:
-
-- [🗎 Guide for trident v1.7.0.0](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident.pdf) (shown below)
-- [🗎 Guide for trident v1.6.7.1 to v1.6.7.3](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident_guid_1.6.7.1_to_1.6.7.3.pdf)
-- [🗎 Guide for trident v1.6.2.1](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident_guide_archive/trident_guide_1.6.2.1.pdf)
-- [🗎 Guide for trident v1.5.7.0 to v1.5.7.3](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident_guide_archive/trident_guide_1.5.7.0_to_1.5.7.3.pdf)
-- [🗎 Guide for trident v1.5.4.0](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident_guide_archive/trident_guide_1.5.4.0.pdf)
-- [🗎 Guide for trident v1.4.1.0 to v1.5.0.1](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident_guide_archive/trident_guide_1.4.1.0_to_1.5.0.1.pdf)
-- [🗎 Guide for trident v1.4.0.2 to v1.4.0.3](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident_guide_archive/trident_guide_1.4.0.2_to_1.4.0.3.pdf)
-- [🗎 Guide for trident v1.3.0.4](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident_guide_archive/trident_guide_1.3.0.4.pdf)
-- [🗎 Guide for trident v1.2.0.0 to v1.2.1.0](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident_guide_archive/trident_guide_1.2.0.0_to_1.2.1.0.pdf)
-- [🗎 Guide for trident v1.1.11.0 to v1.1.12.0](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident_guide_archive/trident_guide_1.1.11.0_to_1.1.12.0.pdf)
-- [🗎 Guide for trident v1.1.10.2](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident_guide_archive/trident_guide_1.1.10.2.pdf)
-- [🗎 Guide for trident v1.1.7.0](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident_guide_archive/trident_guide_1.1.7.0.pdf)
-- [🗎 Guide for trident v1.1.6.0](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident_guide_archive/trident_guide_1.1.6.0.pdf)
-- [🗎 Guide for trident v1.1.0.0 to v1.1.4.2](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident_guide_archive/trident_guide_1.1.0.0_to_1.1.4.2.pdf)
-- [🗎 Guide for trident v1.0.0.0](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident_guide_archive/trident_guide_1.0.0.0.pdf)
-- [🗎 Guide for trident v0.29.0](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident_guide_archive/trident_guide_0.29.0.pdf)
-- [🗎 Guide for trident v0.28.0](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident_guide_archive/trident_guide_0.28.0.pdf)
-
-# Guide for trident v1.7.0.0
+# Guide for trident v1.6.7.1 to v1.6.7.3
 
 ## Installation
 
@@ -59,7 +9,7 @@ See the Poseidon website (<https://www.poseidon-adna.org/#/trident>) or the GitH
 Trident is a command line software tool structured in multiple subcommands. If you installed it properly you can call it on the command line by typing `trident`. This will show an overview of the general options and all subcommands, which are explained in detail below.
 
 ```default
-Usage: trident [--version] [--logMode MODE | --debug] [--errLength INT] 
+Usage: trident [--version] [--logMode MODE | --debug] [--errLength INT]
                [--inPlinkPopName MODE] (COMMAND | COMMAND)
 
   trident is a management and analysis tool for Poseidon packages. Report issues
@@ -816,27 +766,22 @@ With `-z|--zip` the genotype data output can be wrapped in gzipped archives with
  <summary><i class="fas fa-search"></i> <i class="fas fa-terminal"></i> <b>Command line details</b></summary>
 
 ```default
-Usage: trident jannocoalesce ([--pvSource VERSION] (-s|--sourceFile FILE) | 
-                               (-d|--baseDir DIR)) [--pvTarget VERSION]
-                             (-t|--targetFile FILE) (-o|--outFile FILE) 
-                             [--includeColumns ARG | --excludeColumns ARG] 
-                             [-f|--force] [--sourceKey ARG] [--targetKey ARG] 
+Usage: trident jannocoalesce ((-s|--sourceFile FILE) | (-d|--baseDir DIR))
+                             (-t|--targetFile FILE) [-o|--outFile FILE]
+                             [--includeColumns ARG | --excludeColumns ARG]
+                             [-f|--force] [--sourceKey ARG] [--targetKey ARG]
                              [--stripIdRegex ARG]
 
   Coalesce information from one or multiple janno files to another one
 
 Available options:
   -h,--help                Show this help text
-  --pvSource VERSION       Poseidon version (e.g. 2.7.1). (default: 3.0.0)
   -s,--sourceFile FILE     The source .janno file.
   -d,--baseDir DIR         A base directory to search for Poseidon packages.
-  --pvTarget VERSION       Poseidon version (e.g. 2.7.1). (default: 3.0.0)
   -t,--targetFile FILE     The target .janno file to fill.
-  -o,--outFile FILE        File path to write the result to. Can be identical to
-                           --targetFile to overwrite the target file in place.
-                           Note that trident only writes .janno files in the
-                           latest Poseidon version it supports, so in this case
-                           v3.0.0.
+  -o,--outFile FILE        An optional file to write the results to. If not
+                           specified, change the target file in place.
+                           (default: Nothing)
   --includeColumns ARG     A comma-separated list of .janno column names to
                            coalesce. If not specified, all columns that can be
                            found in the source and target will get filled.
@@ -864,8 +809,7 @@ A most basic run may just include two arguments:
 ```bash
 trident jannocoalesce \
   --sourceFile path/to/source.janno \
-  --targetFile path/to/target.janno \
-  --outFile path/to/coalesced.janno
+  --targetFile path/to/target.janno
 ```
 
 `jannocoalesce` generally works by reading a source `.janno` file with `-s|--sourceFile` (or all `.janno` files in a `-d|--baseDir`) and a target `.janno` file with `-t|--targetFile`.
@@ -873,14 +817,6 @@ trident jannocoalesce \
 It then merges these files by a key column, which can be selected with `--sourceKey` and `--targetKey`. The default for both of these key columns is the `Poseidon_ID`. In case the entries in the key columns slightly and systematically differ, e.g. because the `Poseidon_ID`s in either have a special suffix (for example `_SG`), then the `--stripIdRegex` option allows to strip these with a regular expression to thus match the keys.
 
 `jannocoalesce` generally attempts to fill **all** empty cells in the target `.janno` file with information from the source. `--includeColumns` and `--excludeColumns` allow to select specific columns for which this should be done. In some cases it may be desirable to not just fill empty fields in the target, but overwrite the information already there with the `-f|--force` option. If the target file should be preserved, then the output can be directed to a new output `.janno` file with `-o|--outFile`.
-
-Note that all three files, the source, the target, and the outfile, are mandatory. The roles are:
-
-- `targetFile` -> This is the file which is taken as the starting point for the new janno file.
-- `sourceFile` -> This is the file from which to read additional columns that might be missing in the target.
-- `outFile` -> This is the file that will contain the coalesced result.
-
-In addition to these three files, you can choose a Poseidon Version for both the source (`--pvSource`) and the target (`--pvTarget`), which is useful for backwards compatibility, in case you have `.janno` files in older Poseidon versions. **_But_**: Note that the output file will _always_ be written in the newest Poseidon version. Note that you _can_ choose the outFile to be the targetFile, which will then overwrite the target file. This can be useful if you know what you are doing. Otherwise it is of course safer to choose a new filename for the output. 
 
 ## Rectify command
 
@@ -1109,17 +1045,14 @@ Again you can use the `--raw` option to output the survey table in a tab-delimit
  <summary><i class="fas fa-search"></i> <i class="fas fa-terminal"></i> <b>Command line details</b></summary>
 
 ```default
-Usage: trident validate ((-d|--baseDir DIR) [--ignoreGeno] [--fullGeno] 
-                          [--ignoreDuplicates] [-c|--ignoreChecksums] 
+Usage: trident validate ((-d|--baseDir DIR) [--ignoreGeno] [--fullGeno]
+                          [--ignoreDuplicates] [-c|--ignoreChecksums]
                           [--ignorePoseidonVersion] |
                           --pyml FILE | (-p|--genoOne FILE) | --genoFile FILE
                           --snpFile FILE --indFile FILE |
-                          --bedFile FILE --bimFile FILE --famFile FILE | 
-                          --vcfFile FILE | [--pvJanno VERSION] --janno FILE | 
-                          [--pvSSF VERSION] --ssf FILE |
-                          --bib FILE) [-j|--mandatoryJannoColumn COLNAME] 
-                        [-s|--mandatorySSFColumn COLNAME] [--noExitCode] 
-                        [--onlyLatest]
+                          --bedFile FILE --bimFile FILE --famFile FILE |
+                          --vcfFile FILE | --janno FILE | --ssf FILE |
+                          --bib FILE) [--noExitCode] [--onlyLatest]
 
   Check Poseidon packages or package components for structural correctness
 
@@ -1160,19 +1093,9 @@ Available options:
   --famFile FILE           Plink individual file. Accepted file endings are .fam
   --vcfFile FILE           VCF (Variant Call Format) file, optionall gzipped.
                            Accepted file endings are .vcf, .vcf.gz
-  --pvJanno VERSION        Poseidon version (e.g. 2.7.1). (default: 3.0.0)
   --janno FILE             Path to a .janno file.
-  --pvSSF VERSION          Poseidon version (e.g. 2.7.1). (default: 3.0.0)
   --ssf FILE               Path to a .ssf file.
   --bib FILE               Path to a .bib file.
-  -j,--mandatoryJannoColumn COLNAME
-                           Usually optional .janno file column that should be
-                           treated as mandatory, such as e.g. Individual_ID. Can
-                           be given multiple times.
-  -s,--mandatorySSFColumn COLNAME
-                           Usually optional .ssf file column that should be
-                           treated as mandatory, such as e.g. poseidon_IDs. Can
-                           be given multiple times.
   --noExitCode             Do not produce an explicit exit code.
   --onlyLatest             Consider only the latest versions of packages, or the
                            groups and individuals within the latest versions of
