@@ -31,7 +31,7 @@ On GitHub you will also find [older release versions](https://github.com/poseido
 With `trident --help` and `trident <subcommand> --help` you can get information about each subcommand and parameter directly on the command line. The guide below explains the subcommands in more detail. It is available in .pdf format for the current and previous versions here:
 
 - [🗎 Guide for trident v1.7.0.0](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident.pdf) (shown below)
-- [🗎 Guide for trident v1.6.7.1 to v1.6.7.3](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident_guid_1.6.7.1_to_1.6.7.3.pdf)
+- [🗎 Guide for trident v1.6.7.1 to v1.6.7.3](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident_guide_archive/trident_guide_1.6.7.1_to_1.6.7.3.pdf)
 - [🗎 Guide for trident v1.6.2.1](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident_guide_archive/trident_guide_1.6.2.1.pdf)
 - [🗎 Guide for trident v1.5.7.0 to v1.5.7.3](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident_guide_archive/trident_guide_1.5.7.0_to_1.5.7.3.pdf)
 - [🗎 Guide for trident v1.5.4.0](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident_guide_archive/trident_guide_1.5.4.0.pdf)
