@@ -2,32 +2,33 @@
 
 <h1>xerxes CLI software</h1>
 
-`xerxes` is a command line software tool for population genetic analyses of Poseidon packages. It is written in Haskell and openly available on [GitHub](https://github.com/poseidon-framework/poseidon-analysis-hs/).
+`xerxes` is a command line software tool for population genetic analyses of Poseidon packages. It is written in Haskell and openly available on [GitHub](https://github.com/poseidon-framework/poseidon-hs/).
 
-[![CI](https://github.com/poseidon-framework/poseidon-analysis-hs/actions/workflows/main.yml/badge.svg)](https://github.com/poseidon-framework/poseidon-analysis-hs/actions/workflows/main.yml)
-[![Coverage Status](https://img.shields.io/codecov/c/github/poseidon-framework/poseidon-analysis-hs/main.svg)](https://codecov.io/github/poseidon-framework/poseidon-analysis-hs?branch=main)
-[![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/poseidon-framework/poseidon-analysis-hs?include_prereleases) ![GitHub all releases](https://img.shields.io/github/downloads/poseidon-framework/poseidon-analysis-hs/total)](https://github.com/poseidon-framework/poseidon-analysis-hs/releases)
-[![Install with Bioconda](https://anaconda.org/bioconda/poseidon-xerxes/badges/version.svg)](https://anaconda.org/bioconda/poseidon-xerxes)
-[![Anaconda-Server Badge](https://anaconda.org/bioconda/poseidon-xerxes/badges/downloads.svg)](https://anaconda.org/bioconda/poseidon-xerxes)
+!> Before April 2026 xerxes was developed in a repository [here](https://github.com/poseidon-framework/poseidon-analysis-hs), so legacy releases can be found there.
+
+[![CI](https://github.com/poseidon-framework/poseidon-hs/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/poseidon-framework/poseidon-hs/actions/workflows/main.yml)
+[![Coverage Status](https://img.shields.io/codecov/c/github/poseidon-framework/poseidon-hs/master.svg)](https://codecov.io/github/poseidon-framework/poseidon-hs?branch=master)
+[![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/poseidon-framework/poseidon-hs?include_prereleases) ![GitHub all releases](https://img.shields.io/github/downloads/poseidon-framework/poseidon-hs/total)](https://github.com/poseidon-framework/poseidon-hs/releases)
+[![Install with Bioconda](https://anaconda.org/bioconda/poseidon-xerxes/badges/version.svg)](https://anaconda.org/bioconda/poseidon-xerxes) [![Anaconda-Server Badge](https://anaconda.org/bioconda/poseidon-xerxes/badges/downloads.svg)](https://anaconda.org/bioconda/poseidon-xerxes)
 
 To download the latest stable release version of `xerxes` click here:
-[📥 Linux](https://github.com/poseidon-framework/poseidon-analysis-hs/releases/latest/download/xerxes-Linux) |
-[📥 macOS (ARM64)](https://github.com/poseidon-framework/poseidon-analysis-hs/releases/latest/download/xerxes-macOS-ARM64) |
-[📥 macOS (X64)](https://github.com/poseidon-framework/poseidon-analysis-hs/releases/latest/download/xerxes-macOS-X64) |
-[📥 Windows](https://github.com/poseidon-framework/poseidon-analysis-hs/releases/latest/download/xerxes-Windows.exe)
+[📥 Linux](https://github.com/poseidon-framework/poseidon-hs/releases/latest/download/xerxes-Linux) |
+[📥 macOS (ARM64)](https://github.com/poseidon-framework/poseidon-hs/releases/latest/download/xerxes-macOS-ARM64) |
+[📥 macOS (X64)](https://github.com/poseidon-framework/poseidon-hs/releases/latest/download/xerxes-macOS-X64) |
+[📥 Windows](https://github.com/poseidon-framework/poseidon-hs/releases/latest/download/xerxes-Windows.exe)
 
 So in Linux you can run the following commands to get started:
 
 ```bash
 # download the current stable release binary
-wget https://github.com/poseidon-framework/poseidon-analysis-hs/releases/latest/download/xerxes-Linux
+wget https://github.com/poseidon-framework/poseidon-hs/releases/latest/download/xerxes-Linux
 # make it executable
 chmod +x xerxes-Linux
 # run it
 ./xerxes-Linux -h
 ```
 
-On GitHub you will also find [older release versions](https://github.com/poseidon-framework/poseidon-analysis-hs/releases) and [instructions to build xerxes from source](https://github.com/poseidon-framework/poseidon-analysis-hs#for-haskell-developers). The relevant changes from one version to the next are documented in this [changelog](https://github.com/poseidon-framework/poseidon-analysis-hs/blob/main/CHANGELOGRELEASE.md).
+On GitHub you will also find [older release versions](https://github.com/poseidon-framework/poseidon-hs/releases) and [instructions to build xerxes from source](https://github.com/poseidon-framework/poseidon-hs#for-haskell-developers). The relevant changes from one version to the next are documented in this [changelog](https://github.com/poseidon-framework/poseidon-hs/blob/master/CHANGELOGRELEASE.md).
 
 With `xerxes --help` and `xerxes <subcommand> --help` you can get information about each subcommand and parameter directly on the command line. The guide below explains the subcommands in more detail. It is available in .pdf format for the current and previous versions here:
 
@@ -35,11 +36,11 @@ With `xerxes --help` and `xerxes <subcommand> --help` you can get information ab
 - [🗎 Guide for xerxes v1.0.0.2](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/xerxes_guide_archive/xerxes_guide_1.0.0.2.pdf)
 - [🗎 Guide for xerxes v0.2.0.0](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/xerxes_guide_archive/xerxes_guide_0.2.0.0.pdf)
 
-# Guide for xerxes v1.0.1.0 to v1.0.1.1
+# Guide for xerxes v1.0.1.0 to v2.0.0.0
 
 ## Installation
 
-See the Poseidon website (<https://www.poseidon-adna.org/#/xerxes>) or the GitHub repository (<https://github.com/poseidon-framework/poseidon-analysis-hs>) for up-to-date installation instructions.
+See the Poseidon website (<https://www.poseidon-adna.org/#/xerxes>) or the GitHub repository (<https://github.com/poseidon-framework/poseidon-hs>) for up-to-date installation instructions.
 
 ## Fstats command
 
@@ -269,7 +270,7 @@ These cases are detected and an error is thrown. For `F2`, `F3` and `FST` you ca
 
 ### Whitepaper
 
-The repository comes with a [detailed whitepaper](https://github.com/poseidon-framework/poseidon-analysis-hs/blob/main/docs/xerxes_whitepaper.pdf) that describes some more mathematical details of the methods implemented here.
+The repository comes with a [detailed whitepaper](https://github.com/poseidon-framework/poseidon-hs/blob/master/xerxes_whitepaper/Xerxes_whitepaper.pdf) that describes some more mathematical details of the methods implemented here.
 
 ## RAS command (in development)
 
