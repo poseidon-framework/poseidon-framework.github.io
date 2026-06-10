@@ -35,6 +35,11 @@ qjanno	1.0.0.0	2.7.0	partial
 qjanno	1.0.0.0	2.6.0	partial
 qjanno	1.0.0.0	2.5.0	partial
 qjanno	1.0.0.0	2.4.0	partial
+trident	2.1.0.0	3.0.0	full
+trident	2.1.0.0	2.7.1	partial
+trident	2.1.0.0	2.7.0	partial
+trident	2.1.0.0	2.6.0	partial
+trident	2.1.0.0	2.5.0	partial
 trident	2.0.0.0	3.0.0	full
 trident	2.0.0.0	2.7.1	partial
 trident	2.0.0.0	2.7.0	partial
@@ -139,6 +144,11 @@ trident	0.18.1	2.4.0	full
 trident	0.18.0	2.4.0	full
 trident	0.17.4	2.4.0	full
 trident	0.17.1	2.4.0	full
+xerxes	2.1.0.0	3.0.0	full
+xerxes	2.1.0.0	2.7.1	partial
+xerxes	2.1.0.0	2.7.0	partial
+xerxes	2.1.0.0	2.6.0	partial
+xerxes	2.1.0.0	2.5.0	partial
 xerxes	2.0.0.0	3.0.0	full
 xerxes	2.0.0.0	2.7.1	partial
 xerxes	2.0.0.0	2.7.0	partial

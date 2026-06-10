@@ -1,43 +1,4 @@
-<popup :custom-text="`<p><a href='https://mpi-eva-archaeogenetics.github.io/comp_human_adna_book/9_fstats/fstats.html'>Introduction to F3- and F4-Statistics</a> by Stephan Schiffels: An explanation of F-Statistics and how to run them with xerxes</p>`"></popup>
-
-<h1>xerxes CLI software</h1>
-
-`xerxes` is a command line software tool for population genetic analyses of Poseidon packages. It is written in Haskell and openly available on [GitHub](https://github.com/poseidon-framework/poseidon-hs/).
-
-!> Before April 2026 xerxes was developed in a repository [here](https://github.com/poseidon-framework/poseidon-analysis-hs), so legacy releases can be found there.
-
-[![CI](https://github.com/poseidon-framework/poseidon-hs/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/poseidon-framework/poseidon-hs/actions/workflows/main.yml)
-[![Coverage Status](https://img.shields.io/codecov/c/github/poseidon-framework/poseidon-hs/master.svg)](https://codecov.io/github/poseidon-framework/poseidon-hs?branch=master)
-[![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/poseidon-framework/poseidon-hs?include_prereleases) ![GitHub all releases](https://img.shields.io/github/downloads/poseidon-framework/poseidon-hs/total)](https://github.com/poseidon-framework/poseidon-hs/releases)
-[![Install with Bioconda](https://anaconda.org/bioconda/poseidon-xerxes/badges/version.svg)](https://anaconda.org/bioconda/poseidon-xerxes) [![Anaconda-Server Badge](https://anaconda.org/bioconda/poseidon-xerxes/badges/downloads.svg)](https://anaconda.org/bioconda/poseidon-xerxes)
-
-To download the latest stable release version of `xerxes` click here:
-[📥 Linux](https://github.com/poseidon-framework/poseidon-hs/releases/latest/download/xerxes-Linux) |
-[📥 macOS (ARM64)](https://github.com/poseidon-framework/poseidon-hs/releases/latest/download/xerxes-macOS-ARM64) |
-[📥 macOS (X64)](https://github.com/poseidon-framework/poseidon-hs/releases/latest/download/xerxes-macOS-X64) |
-[📥 Windows](https://github.com/poseidon-framework/poseidon-hs/releases/latest/download/xerxes-Windows.exe)
-
-So in Linux you can run the following commands to get started:
-
-```bash
-# download the current stable release binary
-wget https://github.com/poseidon-framework/poseidon-hs/releases/latest/download/xerxes-Linux
-# make it executable
-chmod +x xerxes-Linux
-# run it
-./xerxes-Linux -h
-```
-
-On GitHub you will also find [older release versions](https://github.com/poseidon-framework/poseidon-hs/releases) and [instructions to build xerxes from source](https://github.com/poseidon-framework/poseidon-hs#for-haskell-developers). The relevant changes from one version to the next are documented in this [changelog](https://github.com/poseidon-framework/poseidon-hs/blob/master/CHANGELOGRELEASE.md).
-
-With `xerxes --help` and `xerxes <subcommand> --help` you can get information about each subcommand and parameter directly on the command line. The guide below explains the subcommands in more detail. It is available in .pdf format for the current and previous versions here:
-
-- [🗎 Guide for xerxes v2.1.0.0 and higher](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/xerxes.pdf) (shown below)
-- [🗎 Guide for xerxes v1.0.1.0 to v2.0.0.0](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/xerxes_guide_archive/xerxes_guide_1.0.1.0_to_2.0.0.0.pdf)
-- [🗎 Guide for xerxes v1.0.0.2](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/xerxes_guide_archive/xerxes_guide_1.0.0.2.pdf)
-- [🗎 Guide for xerxes v0.2.0.0](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/xerxes_guide_archive/xerxes_guide_0.2.0.0.pdf)
-
-# Guide for xerxes v2.1.0.0 and higher
+# Guide for xerxes v1.0.1.0 to v2.0.0.0
 
 ## Installation
 
@@ -74,11 +35,11 @@ Last, the option `-f` can be used to write the output table into a tab-separated
 xerxes v1.0.1.2 for poseidon v2.5.0, v2.6.0, v2.7.0, v2.7.1
 https://poseidon-framework.github.io
 
-Usage: xerxes fstats (-d|--baseDir DIR) [-j|--jackknife ARG]
-                     [-e|--excludeChroms ARG]
-                     (--stat ARG | --statConfig ARG | --statFile ARG)
-                     [--noTransitions] [--strandCheck] [--skipIncongruentSNPs]
-                     [-f|--tableOutFile ARG] [--blockTableFile ARG]
+Usage: xerxes fstats (-d|--baseDir DIR) [-j|--jackknife ARG] 
+                     [-e|--excludeChroms ARG] 
+                     (--stat ARG | --statConfig ARG | --statFile ARG) 
+                     [--noTransitions] [-f|--tableOutFile ARG] 
+                     [--blockTableFile ARG]
 
   Compute f-statistics on groups and invidiuals within and across Poseidon
   packages
@@ -116,11 +77,6 @@ Available options:
   --maxSnps ARG            Stop after a maximum nr of snps has been processed.
                            Useful for short test runs
   --noTransitions          Skip transition SNPs and use only transversions
-  --strandCheck            Whether to allow strand flips in the genotype data.
-                           Note that this will remove any A/T and G/C SNPs from
-                           the data, as for those we cannot determine the
-                           correct strand orientation.
-  --skipIncongruentSNPs    Whether to skip SNPs with incongruent alleles.
   -f,--tableOutFile ARG    a file to which results are written as tab-separated
                            file
   --blockTableFile ARG     a file to which the per-Block results are written as
@@ -311,8 +267,7 @@ Usage: xerxes ras (-d|--baseDir DIR) [-j|--jackknife ARG]
                   [-e|--excludeChroms ARG] --popConfigFile ARG
                   (--minAC ARG | --minFreq ARG | --noMinFreq)
                   (--maxAC ARG | --maxFreq ARG | --noMaxFreq)
-                  [-m|--maxMissingness ARG] [--strandCheck]
-                  [--skipIncongruentSNPs] [--blockTableFile ARG]
+                  [-m|--maxMissingness ARG] [--blockTableFile ARG]
                   [--f4TableOutFile ARG] [--noTransitions] [--bedFile ARG]
 
   Compute RAS statistics on groups and individuals within and across Poseidon
@@ -342,11 +297,6 @@ Available options:
                            cam help mimic Outgroup-F3
   -m,--maxMissingness ARG  define a maximal missingness for the right
                            populations in the RAS statistics. (default: 0.1)
-  --strandCheck            Whether to allow strand flips in the genotype data.
-                           Note that this will remove any A/T and G/C SNPs from
-                           the data, as for those we cannot determine the
-                           correct strand orientation.
-  --skipIncongruentSNPs    Whether to skip SNPs with incongruent alleles.
   --blockTableFile ARG     a file to which the per-Block results are written as
                            tab-separated file
   --f4TableOutFile ARG     a file to which F4 computations are written as

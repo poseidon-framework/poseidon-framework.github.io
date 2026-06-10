@@ -1,55 +1,4 @@
-<popup :custom-text="`<p><a href='https://nevrome.github.io/uni.tuebingen.poseidon.intro.2h.2024'>A short introduction to the Poseidon genotype data management framework</a> by Clemens Schmid: A Poseidon tutorial showcasing the <a href='https://nevrome.github.io/uni.tuebingen.poseidon.intro.2h.2024/ref_pca.html'>main features of trident</a> among other things</p>`"></popup>
-
-<h1>trident CLI software</h1>
-
-`trident` is a command line software tool to work with Poseidon packages and handle various data management tasks. It is written in Haskell and openly available on [GitHub](https://github.com/poseidon-framework/poseidon-hs/).
-
-[![CI](https://github.com/poseidon-framework/poseidon-hs/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/poseidon-framework/poseidon-hs/actions/workflows/main.yml)
-[![Coverage Status](https://img.shields.io/codecov/c/github/poseidon-framework/poseidon-hs/master.svg)](https://codecov.io/github/poseidon-framework/poseidon-hs?branch=master)
-[![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/poseidon-framework/poseidon-hs?include_prereleases) ![GitHub all releases](https://img.shields.io/github/downloads/poseidon-framework/poseidon-hs/total)](https://github.com/poseidon-framework/poseidon-hs/releases)
-[![Install with Bioconda](https://anaconda.org/bioconda/poseidon-trident/badges/version.svg)](https://anaconda.org/bioconda/poseidon-trident) [![Anaconda-Server Badge](https://anaconda.org/bioconda/poseidon-trident/badges/downloads.svg)](https://anaconda.org/bioconda/poseidon-trident)
-
-To download the latest stable release version of `trident` click here:
-[📥 Linux](https://github.com/poseidon-framework/poseidon-hs/releases/latest/download/trident-Linux) |
-[📥 macOS (ARM64)](https://github.com/poseidon-framework/poseidon-hs/releases/latest/download/trident-macOS-ARM64) |
-[📥 macOS (X64)](https://github.com/poseidon-framework/poseidon-hs/releases/latest/download/trident-macOS-X64) |
-[📥 Windows](https://github.com/poseidon-framework/poseidon-hs/releases/latest/download/trident-Windows.exe)
-
-So in Linux you can run the following commands to get started:
-
-```bash
-# download the current stable release binary
-wget https://github.com/poseidon-framework/poseidon-hs/releases/latest/download/trident-Linux
-# make it executable
-chmod +x trident-Linux
-# run it
-./trident-Linux -h
-```
-
-On GitHub you will also find [older release versions](https://github.com/poseidon-framework/poseidon-hs/releases) and [instructions to build `trident` from source](https://github.com/poseidon-framework/poseidon-hs#for-haskell-developers). The relevant changes from one version to the next are documented in this [changelog](https://github.com/poseidon-framework/poseidon-hs/blob/master/CHANGELOGRELEASE.md).
-
-With `trident --help` and `trident <subcommand> --help` you can get information about each subcommand and parameter directly on the command line. The guide below explains the subcommands in more detail. It is available in .pdf format for the current and previous versions here:
-
-- [🗎 Guide for trident v2.1.0.0 and higher](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident.pdf) (shown below)
-- [🗎 Guide for trident v1.7.0.0 to v2.0.0.0](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident_guide_archive/trident_guide_1.7.0.0_to_2.0.0.0.pdf)
-- [🗎 Guide for trident v1.6.7.1 to v1.6.7.3](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident_guide_archive/trident_guide_1.6.7.1_to_1.6.7.3.pdf)
-- [🗎 Guide for trident v1.6.2.1](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident_guide_archive/trident_guide_1.6.2.1.pdf)
-- [🗎 Guide for trident v1.5.7.0 to v1.5.7.3](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident_guide_archive/trident_guide_1.5.7.0_to_1.5.7.3.pdf)
-- [🗎 Guide for trident v1.5.4.0](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident_guide_archive/trident_guide_1.5.4.0.pdf)
-- [🗎 Guide for trident v1.4.1.0 to v1.5.0.1](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident_guide_archive/trident_guide_1.4.1.0_to_1.5.0.1.pdf)
-- [🗎 Guide for trident v1.4.0.2 to v1.4.0.3](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident_guide_archive/trident_guide_1.4.0.2_to_1.4.0.3.pdf)
-- [🗎 Guide for trident v1.3.0.4](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident_guide_archive/trident_guide_1.3.0.4.pdf)
-- [🗎 Guide for trident v1.2.0.0 to v1.2.1.0](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident_guide_archive/trident_guide_1.2.0.0_to_1.2.1.0.pdf)
-- [🗎 Guide for trident v1.1.11.0 to v1.1.12.0](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident_guide_archive/trident_guide_1.1.11.0_to_1.1.12.0.pdf)
-- [🗎 Guide for trident v1.1.10.2](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident_guide_archive/trident_guide_1.1.10.2.pdf)
-- [🗎 Guide for trident v1.1.7.0](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident_guide_archive/trident_guide_1.1.7.0.pdf)
-- [🗎 Guide for trident v1.1.6.0](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident_guide_archive/trident_guide_1.1.6.0.pdf)
-- [🗎 Guide for trident v1.1.0.0 to v1.1.4.2](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident_guide_archive/trident_guide_1.1.0.0_to_1.1.4.2.pdf)
-- [🗎 Guide for trident v1.0.0.0](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident_guide_archive/trident_guide_1.0.0.0.pdf)
-- [🗎 Guide for trident v0.29.0](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident_guide_archive/trident_guide_0.29.0.pdf)
-- [🗎 Guide for trident v0.28.0](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident_guide_archive/trident_guide_0.28.0.pdf)
-
-# Guide for trident v2.1.0.0 and higher
+# Guide for trident v1.7.0.0 to v2.0.0.0
 
 ## Installation
 
@@ -60,8 +9,8 @@ See the Poseidon website (<https://www.poseidon-adna.org/#/trident>) or the GitH
 Trident is a command line software tool structured in multiple subcommands. If you installed it properly you can call it on the command line by typing `trident`. This will show an overview of the general options and all subcommands, which are explained in detail below.
 
 ```default
-Usage: trident [--version] [--logMode MODE | --debug | --noWarn]
-               [--errLength INT] [--inPlinkPopName MODE] (COMMAND | COMMAND)
+Usage: trident [--version] [--logMode MODE | --debug] [--errLength INT] 
+               [--inPlinkPopName MODE] (COMMAND | COMMAND)
 
   trident is a management and analysis tool for Poseidon packages. Report issues
   here: https://github.com/poseidon-framework/poseidon-hs/issues
@@ -73,7 +22,6 @@ Available options:
                            DefaultLog, ServerLog or VerboseLog.
                            (default: DefaultLog)
   --debug                  Short for --logMode VerboseLog.
-  --noWarn                 Short for --logMode NoWarnLog.
   --errLength INT          After how many characters should a potential genotype
                            data parsing error message be truncated. "Inf" for no
                            truncation. (default: CharCount 1500)
@@ -132,7 +80,7 @@ This structure then allows to select only the level of packages you are interest
 Then you can transform that into a skeleton Poseidon package with the `init` command. You can also do it manually by simply adding a POSEIDON.yml file, with, for example, the following content:
 
 ```yml
-poseidonVersion: 3.0.0
+poseidonVersion: 2.7.1
 title: My_awesome_project
 description: Unpublished genetic data from my awesome project
 contributor:
@@ -145,9 +93,6 @@ genotypeData:
   genoFile: my_project.geno
   snpFile: my_project.snp
   indFile: my_project.ind
-  snpSet: 1240K
-  referenceGenomeAssembly: GRCh37
-  referenceGenomeAssemblyURL: https://www.ncbi.nlm.nih.gov/datasets/genome/GCA_000001405.14
 jannoFile: my_project.janno
 bibFile: sources.bib
 ```
@@ -170,11 +115,10 @@ For all subcommands the general argument `--logMode` defines how `trident` repor
 - *NoLog*: Hides all messages.
 - *SimpleLog*: Plain and simple output.
 - *DefaultLog*: Adds the severity indicators (log levels) `Info`, `Warning` and `Error` before each message. This is the default setting.
-- *NoWarnLog*: As DefaultLog, but omits messages on the `Warning` log level.
 - *ServerLog*: Additionally adds timestamps before each message.
 - *VerboseLog*: Shows not just messages on the log levels `Info`, `Warning` and `Error` like the other modes, but also on the more verbose level `Debug`. Use this mostly relevant for debugging.
 
-`--debug` is short for `--logMode VerboseLog` to activate this important log level more easily. And `--noWarn` is short for `--logMode NoWarnLog`.
+`--debug` is short for `--logMode VerboseLog` to activate this important log level more easily.
 
 ### Package duplicates and versions
 
@@ -366,8 +310,7 @@ Usage: trident forge ((-d|--baseDir DIR) |
                          --bedFile FILE --bimFile FILE --famFile FILE |
                          --vcfFile FILE) [--snpSet SET])
                      [--forgeFile FILE | (-f|--forgeString DSL)]
-                     [--selectSnps FILE] [--intersect] [--strandCheck]
-                     [--skipIncongruentSNPs] [--outFormat FORMAT]
+                     [--selectSnps FILE] [--intersect] [--outFormat FORMAT]
                      [--onlyGeno | --minimal | --preservePyml] [-z|--zip]
                      (-o|--outPackagePath DIR) [-n|--outPackageName STRING]
                      [--packagewise] [--outPlinkPopName MODE] [--ordered]
@@ -454,11 +397,6 @@ Available options:
                            do not have a SNP that is present in another package.
                            With this option set, the forged dataset will
                            typically have fewer SNPs, but less missingness.
-  --strandCheck            Whether to allow strand flips in the genotype data.
-                           Note that this will remove any A/T and G/C SNPs from
-                           the data, as for those we cannot determine the
-                           correct strand orientation.
-  --skipIncongruentSNPs    Whether to skip SNPs with incongruent alleles.
   --outFormat FORMAT       The format of the output genotype data: EIGENSTRAT,
                            PLINK or VCF. (default: PLINK)
   --onlyGeno               Should only the resulting genotype data be returned?
@@ -624,10 +562,6 @@ Forge performs a series of steps to merge the genotype data of multiple source f
 3. All source genotype data is then read and recoded in terms of the two chosen consensus alleles. This will make sure that source data with flipped reference and alternative allele gets correctly merged in.
 4. SNP IDs, as part of PLINK `.bim` and `.vcf` files are checked across the source files. If all SNP IDs for a given SNP are missing, then the result will also be missing. If there is only one SNP ID present in some or all source packages, that ID gets forwarded to the output. In the (unusual) case that there are multiple different non-missing SNP IDs (of the form "rs" followed by a number), then a debug warning is output (which gets printed to the screen when `--debug` is selected), and simply the first value is chosen to be output into the forged `.bim` file. We decided not to throw an error in that case, because we consider the physical position of the SNP (specified by Chromosome and position) to be definitive, and the SNP ID to be of secondary importance.
 5. Genetic positions, as part of PLINK `.bim` files are checked in a similar manner, with "0.0" being interpreted as missing.
-
-#### Strand flips
-
-By default, if incongruent pairs of SNPs are found, an error is thrown, with a message reporting the offending SNPs in all involved packages. The `--strandCheck` option allows trident to detect and automatically correct strand flips. Even with `--strandCheck` on there may be cases of pairs that are still un-mergeable, such as A/T and A/G. `--skipIncongruentSNPs` allows to remove any such SNPs from the output.
 
 ### Treatment of the `.janno` file while merging
 
@@ -1125,16 +1059,16 @@ Again you can use the `--raw` option to output the survey table in a tab-delimit
  <summary><i class="fas fa-search"></i> <i class="fas fa-terminal"></i> <b>Command line details</b></summary>
 
 ```default
-Usage: trident validate ((-d|--baseDir DIR) [--ignoreGeno] [--fullGeno]
-                          [--forgeTest] [--strandCheck] [--ignoreDuplicates]
-                          [-c|--ignoreChecksums] [--ignorePoseidonVersion] |
+Usage: trident validate ((-d|--baseDir DIR) [--ignoreGeno] [--fullGeno] 
+                          [--ignoreDuplicates] [-c|--ignoreChecksums] 
+                          [--ignorePoseidonVersion] |
                           --pyml FILE | (-p|--genoOne FILE) | --genoFile FILE
                           --snpFile FILE --indFile FILE |
-                          --bedFile FILE --bimFile FILE --famFile FILE |
-                          --vcfFile FILE | [--pvJanno VERSION] --janno FILE |
+                          --bedFile FILE --bimFile FILE --famFile FILE | 
+                          --vcfFile FILE | [--pvJanno VERSION] --janno FILE | 
                           [--pvSSF VERSION] --ssf FILE |
-                          --bib FILE) [-j|--mandatoryJannoColumn COLNAME]
-                        [-s|--mandatorySSFColumn COLNAME] [--noExitCode]
+                          --bib FILE) [-j|--mandatoryJannoColumn COLNAME] 
+                        [-s|--mandatorySSFColumn COLNAME] [--noExitCode] 
                         [--onlyLatest]
 
   Check Poseidon packages or package components for structural correctness
@@ -1143,16 +1077,8 @@ Available options:
   -h,--help                Show this help text
   -d,--baseDir DIR         A base directory to search for Poseidon packages.
   --ignoreGeno             Ignore snp and geno file.
-  --fullGeno               Test parsing of all SNPs in each package (by default
-                           only the first 100 SNPs are probed).
-  --forgeTest              Even more extensive than --fullGeno: Test forging the
-                           entire dataset. This will detect incongruent SNPs
-                           between the packages. Can be called with
-                           --strandCheck.
-  --strandCheck            Whether to allow strand flips in the genotype data.
-                           Note that this will remove any A/T and G/C SNPs from
-                           the data, as for those we cannot determine the
-                           correct strand orientation.
+  --fullGeno               Test parsing of all SNPs (by default only the first
+                           100 SNPs are probed).
   --ignoreDuplicates       Do not stop on duplicated individual names in the
                            package collection.
   -c,--ignoreChecksums     Whether to ignore checksums. Useful for speedup in
@@ -1220,7 +1146,7 @@ When applied to packages, `validate` tries to ensure that each package adheres t
 - Structural correctness of the POSEIDON.yml file.
 - Presence of all files references in the POSEIDON.yml file.
 - Full structural correctness of .janno, `.ssf` and `.bib` file.
-- Superficial correctness of genotype data files by parsing the first 100 SNPs. A full check that parses all SNPs can be triggered with the `--fullGeno` option. The `--forgeTest` option goes even further and simulates a full merge of all data across packages to detect incongruent SNPs. `--ignoreGeno`, on the other hand, causes `validate` to ignore the genotype data entirely, which speeds up the validation significantly.
+- Superficial correctness of genotype data files by parsing the first 100 SNPs. A full check that parses all SNPs can be triggered with the `--fullGeno` option. `--ignoreGeno`, on the other hand, causes `validate` to ignore the genotype data entirely, which speeds up the validation significantly.
 - Correspondence of BibTeX keys in `.bib` and .janno
 - Correspondence of sample IDs in `.janno` and .ssf.
 - Correspondence of sample and group IDs in `.janno` and genotype data files.
