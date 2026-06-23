@@ -95,12 +95,20 @@ You should now copy your package including the full genotype data into the clone
 ```
 git add <pathToNewPackageDirectory>
 git commit -m "added new package named <packageName>"
-git push
 ```
 
-If you accidentally pushed the large files as normal files, for example if your LFS setup was incomplete, you can fix this with `git lfs migrate import --no-rewrite path/to/file.bed` (see [here](https://github.com/git-lfs/git-lfs/blob/main/docs/man/git-lfs-migrate.adoc#import-without-rewriting-history)).
+If you accidentally committed the large files as normal files, for example if your LFS setup was incomplete, you can fix this with `git lfs migrate import --no-rewrite path/to/file.bed` (see [here](https://github.com/git-lfs/git-lfs/blob/main/docs/man/git-lfs-migrate.adoc#import-without-rewriting-history)).
 
-**4. Submit a pull request from your fork to merge your updates into our repository.**
+
+**4. Push your changes to your fork**
+
+After you have committed your new package, you need to `git push` the changes. But in order to so, you need to take care of authentication. There are two basic workflows:
+
+Workflow 1: Ask us for repository access: If we know who you are, or you are already in contact with us and we trust you, we can grant you access onto our LFS server via github. For this to work, you need to ask us to add you to the contributors list on github, and you need to create a Personal Access Token within github. You can do this in github, clicking on your name avatar (top right), then Settings -> Developer Settings -> Personal Access Tokens. You can then click "Generate new token". Choose "classic". In the checkboxes, click the summary checkbox on "repo", and leave the default Expiration. Then click the green button "Generate token". You will see the token exactly then for one time, so copy it somewhere. This will be your authenatication password for our LFS server. You can then run `git push` and when asked for username and password, use your github user name, and the generated access token as password. 
+
+Workflow 2: Delete the file `.lfsconfig` from your local clone (but do not commit the delete), and just run `git push`. This will then simply use github's LFS server for the time being, and we can then get the data from there once your Pull Request goes through, see below.
+
+**5. Submit a pull request from your fork to merge your updates into our repository.**
 
 Having successfully pushed your branch to your fork on github, you need to now tell github to propose your branch as a submission to our master repository. This is done through [github Pull Requests](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests).
 
