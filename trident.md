@@ -369,9 +369,10 @@ Usage: trident forge ((-d|--baseDir DIR) |
                      [--forgeFile FILE | (-f|--forgeString DSL)]
                      [--selectSnps FILE] [--intersect] [--strandCheck]
                      [--skipIncongruentSNPs] [--outFormat FORMAT]
-                     [--onlyGeno | --minimal | --preservePyml] [-z|--zip]
+                     [--onlyGeno | --minimal | --preserve] [-z|--zip]
                      (-o|--outPackagePath DIR) [-n|--outPackageName STRING]
                      [--packagewise] [--outPlinkPopName MODE] [--ordered]
+                     [--addTrace]
 
   Select packages, groups or individuals and create a new Poseidon package from
   them
@@ -466,12 +467,13 @@ Available options:
                            This means the output will not be a Poseidon package.
   --minimal                Should the output Poseidon package be reduced to a
                            necessary minimum?
-  --preservePyml           Should the output Poseidon package mimic the input
-                           package? With this option some fields of the source
-                           package's POSEIDON.yml file, its README file and its
-                           CHANGELOG file (if available) are copied to the
-                           output package. Only works for a singular source
-                           package.
+  --preserve               Should the output Poseidon package mimic the input
+                           package? Only works for a singular source package!
+                           With this option some fields of the source package's
+                           POSEIDON.yml file, its README file and its CHANGELOG
+                           file (if available) are copied to the output package.
+                           The order of .janno file columns and .bib file
+                           entries are also preserved.
   -z,--zip                 Should the resulting genotype- and snp-files be
                            gzipped?
   -o,--outPackagePath DIR  Path to the output package directory.
@@ -501,6 +503,11 @@ Available options:
                            --inPlinkPopName.
   --ordered                With this option, the output of forge is ordered
                            according to the entities given.
+  --addTrace               This option will add a field named Source_Package to
+                           the .janno file, containing the source package from
+                           which a given sample was derived. If the field
+                           already exists, it will be extended with the new
+                           source package using semicolons as separators.
 ```
 
 </details>
@@ -541,6 +548,8 @@ In general a `--forgeString` query consists of multiple entities, separated by `
 - Individuals/samples are surrounded by `<` and `>`: `<individual>`. `ALA026` therefore becomes `<ALA026>`. A second way to denote individuals is with the more verbose and specific syntax `<package:group:individual>`. Such defined individuals take precedence over differently defined ones (so directly with `<individual>` or as a subset of `*package*` or `group`). This allows to resolve duplication issues precisely -- at least in cases where the duplicated individuals differ in source package or primary group.
 - Package versions can be appended to package names, such as `*package-1.2.3*`.
 - This also works with the verbose individual syntax: `<package-1.2.3:group:individual>`.
+
+Note that this syntax introduces a number of reserved characters with special meaning (`':', ',', '<', '>', '*'`). If the name of a package, individual, or group contains any of these, `trident` may fail to parse the entities correctly. To solve this entity names can be quoted, so wrapped in `"`s (or `'`s). That makes it possible to include group names like e.g. `"Belgium_<1000BC"` or individual names like `<"Individual3,4">`. The quotes must be placed directly around the name, not around the entity term. That means `<"...">` will work, but not `"<...>"`.
 
 In the `--forgeFile` each line is treated as a separate forgeString, empty lines are ignored and `#` symbols start comments. So this is a valid example of a forgeFile:
 
@@ -601,10 +610,10 @@ qjanno "SELECT '<'||Poseidon_ID||'>' FROM d(MyPac) ORDER BY Poseidon_ID" \
   --raw --noOutHeader > myOrder.txt
 ```
 
-2. Use `trident forge` with `--ordered` and `--preservePyml` (see below) to create the package with the specified order:
+2. Use `trident forge` with `--ordered` and `--preserve` (see below) to create the package with the specified order:
 
 ```bash
-trident forge -d MyPac --forgeFile myOrder.txt -o MyPac2 --ordered --preservePyml
+trident forge -d MyPac --forgeFile myOrder.txt -o MyPac2 --ordered --preserve
 ```
 
 3. Apply `trident rectify` to increment the package version number and document the reordering:
@@ -693,13 +702,13 @@ Only the genotype data is returned without any Poseidon package wrapping around 
 
 A minimal output package without `.janno`, `.bib` and `.ssf`. This wraps the genotype data in a very basic Poseidon package.
 
-**`--preservePyml`:**
+**`--preserve`:**
 
 A full Poseidon package just as the default, but with various settings copied from the source package. This only works in case of a single source package.
 
-For the specific task of sub-setting or reordering (see above) a singular, existing Poseidon package it can be useful to preserve some fields of the `POSEIDON.yml` file of this input package, as well as supplementary information in the `README.md` and the `CHANGELOG.md` file. These are typically discarded by `forge`, but can be copied over to the output package with the new `--preservePyml` output mode.
+For the specific task of sub-setting or reordering (see above) a singular, existing Poseidon package, it can be useful to preserve some fields of the `POSEIDON.yml` file of this input package, as well as the supplementary information in the `README.md` and the `CHANGELOG.md` file. These are typically discarded by `forge`, but can be copied over to the output package with `--preserve`.
 
-`--preservePyml` specifically preserves the following `POSEIDON.yml` fields:
+`--preserve` specifically copies the following `POSEIDON.yml` fields:
 
 - `description`
 - `contributor`
@@ -710,7 +719,11 @@ For the specific task of sub-setting or reordering (see above) a singular, exist
 
 This does not include the package `title`, which can be easily set to be identical to the source with `-n` or `-o` if it is desired. The `poseidonVersion` field is also not copied, because `trident` can only ever produce output packages with the latest Poseidon schema version.
 
-With `-z|--zip` the genotype data output (independent of the selected output mode) can be wrapped in gzipped archives with the additional file extension `.gz`. `trident` can seamlessly interact with genotype data in this format.
+To keep the diff between in- and output package minimal, `--preserve` finally also causes `trident` to keep the input's order of columns in the `.janno` file, and maintain the input's order of bibtex entries in the `.bib` file.
+
+**`-z|--zip`**
+
+With `-z` the genotype data output (independent of the selected output mode) can be wrapped in gzipped archives with the additional file extension `.gz`. `trident` can seamlessly interact with genotype data in this format.
 
 ### Other options
 
@@ -934,7 +947,8 @@ Available options:
   --checksumSSF            Update .ssf file checksum
   --checksumBib            Update .bib file checksum.
   --newContributors DSL    Contributors to add to the POSEIDON.yml file in the
-                           form "[Firstname Lastname](Email address);...".
+                           form "[Firstname Lastname](Email
+                           address)<ORCID>;...". The ORCIDs are optional.
   --jannoRemoveEmpty       Reorder the .janno file and remove empty colums.
                            Remember to pair this option with --checksumJanno to
                            also update the checksum.
@@ -953,7 +967,7 @@ trident rectify -d ... -d ... \
   --packageVersion Major|Minor|Patch \
   --logText "short description of the update" \
   --checksumAll \
-  --newContributors "[Firstname Lastname](Email address);..." \
+  --newContributors "[Firstname Lastname](Email address)<ORCID>;..." \
   --jannoRemoveEmpty
 ```
 
