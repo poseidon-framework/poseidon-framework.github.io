@@ -741,6 +741,8 @@ With `-z` the genotype data output (independent of the selected output mode) can
 
 With `--packagewise` the within-package selection step in forge can be skipped. This will result in outputting all individuals in the relevant packages, and hence a superset of the requested individuals/groups. It may result in better performance in cases where one wants to forge entire packages.
 
+Forged packages can optionally contain a `.janno` column `Source_Package`, which records which original package (and version) each sample originally came from. This makes it possible to trace a sample back to its origin even after it has passed through one or more rounds of `forge`. This tracking mechanism is opt-in and can be activated with the `--addTrace` option.
+
 ## Genoconvert command
 
 `genoconvert` converts the genotype data in a Poseidon package to a different file format. The respective entries in the POSEIDON.yml file are changed accordingly. 
