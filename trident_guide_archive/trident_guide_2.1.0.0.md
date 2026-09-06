@@ -1,56 +1,4 @@
-<popup :custom-text="`<p><a href='https://nevrome.github.io/uni.tuebingen.poseidon.intro.2h.2024'>A short introduction to the Poseidon genotype data management framework</a> by Clemens Schmid: A Poseidon tutorial showcasing the <a href='https://nevrome.github.io/uni.tuebingen.poseidon.intro.2h.2024/ref_pca.html'>main features of trident</a> among other things</p>`"></popup>
-
-<h1>trident CLI software</h1>
-
-`trident` is a command line software tool to work with Poseidon packages and handle various data management tasks. It is written in Haskell and openly available on [GitHub](https://github.com/poseidon-framework/poseidon-hs/).
-
-[![CI](https://github.com/poseidon-framework/poseidon-hs/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/poseidon-framework/poseidon-hs/actions/workflows/main.yml)
-[![Coverage Status](https://img.shields.io/codecov/c/github/poseidon-framework/poseidon-hs/master.svg)](https://codecov.io/github/poseidon-framework/poseidon-hs?branch=master)
-[![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/poseidon-framework/poseidon-hs?include_prereleases) ![GitHub all releases](https://img.shields.io/github/downloads/poseidon-framework/poseidon-hs/total)](https://github.com/poseidon-framework/poseidon-hs/releases)
-[![Install with Bioconda](https://anaconda.org/bioconda/poseidon-trident/badges/version.svg)](https://anaconda.org/bioconda/poseidon-trident) [![Anaconda-Server Badge](https://anaconda.org/bioconda/poseidon-trident/badges/downloads.svg)](https://anaconda.org/bioconda/poseidon-trident)
-
-To download the latest stable release version of `trident` click here:
-[📥 Linux](https://github.com/poseidon-framework/poseidon-hs/releases/latest/download/trident-Linux) |
-[📥 macOS (ARM64)](https://github.com/poseidon-framework/poseidon-hs/releases/latest/download/trident-macOS-ARM64) |
-[📥 macOS (X64)](https://github.com/poseidon-framework/poseidon-hs/releases/latest/download/trident-macOS-X64) |
-[📥 Windows](https://github.com/poseidon-framework/poseidon-hs/releases/latest/download/trident-Windows.exe)
-
-So in Linux you can run the following commands to get started:
-
-```bash
-# download the current stable release binary
-wget https://github.com/poseidon-framework/poseidon-hs/releases/latest/download/trident-Linux
-# make it executable
-chmod +x trident-Linux
-# run it
-./trident-Linux -h
-```
-
-On GitHub you will also find [older release versions](https://github.com/poseidon-framework/poseidon-hs/releases) and [instructions to build `trident` from source](https://github.com/poseidon-framework/poseidon-hs#for-haskell-developers). The relevant changes from one version to the next are documented in this [changelog](https://github.com/poseidon-framework/poseidon-hs/blob/master/CHANGELOGRELEASE.md).
-
-With `trident --help` and `trident <subcommand> --help` you can get information about each subcommand and parameter directly on the command line. The guide below explains the subcommands in more detail. It is available in .pdf format for the current and previous versions here:
-
-- [🗎 Guide for trident v2.2.2.0 and higher](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident.pdf) (shown below)
-- [🗎 Guide for trident v2.1.0.0](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident_guide_archive/trident_guide_2.1.0.0.pdf)
-- [🗎 Guide for trident v1.7.0.0 to v2.0.0.0](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident_guide_archive/trident_guide_1.7.0.0_to_2.0.0.0.pdf)
-- [🗎 Guide for trident v1.6.7.1 to v1.6.7.3](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident_guide_archive/trident_guide_1.6.7.1_to_1.6.7.3.pdf)
-- [🗎 Guide for trident v1.6.2.1](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident_guide_archive/trident_guide_1.6.2.1.pdf)
-- [🗎 Guide for trident v1.5.7.0 to v1.5.7.3](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident_guide_archive/trident_guide_1.5.7.0_to_1.5.7.3.pdf)
-- [🗎 Guide for trident v1.5.4.0](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident_guide_archive/trident_guide_1.5.4.0.pdf)
-- [🗎 Guide for trident v1.4.1.0 to v1.5.0.1](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident_guide_archive/trident_guide_1.4.1.0_to_1.5.0.1.pdf)
-- [🗎 Guide for trident v1.4.0.2 to v1.4.0.3](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident_guide_archive/trident_guide_1.4.0.2_to_1.4.0.3.pdf)
-- [🗎 Guide for trident v1.3.0.4](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident_guide_archive/trident_guide_1.3.0.4.pdf)
-- [🗎 Guide for trident v1.2.0.0 to v1.2.1.0](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident_guide_archive/trident_guide_1.2.0.0_to_1.2.1.0.pdf)
-- [🗎 Guide for trident v1.1.11.0 to v1.1.12.0](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident_guide_archive/trident_guide_1.1.11.0_to_1.1.12.0.pdf)
-- [🗎 Guide for trident v1.1.10.2](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident_guide_archive/trident_guide_1.1.10.2.pdf)
-- [🗎 Guide for trident v1.1.7.0](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident_guide_archive/trident_guide_1.1.7.0.pdf)
-- [🗎 Guide for trident v1.1.6.0](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident_guide_archive/trident_guide_1.1.6.0.pdf)
-- [🗎 Guide for trident v1.1.0.0 to v1.1.4.2](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident_guide_archive/trident_guide_1.1.0.0_to_1.1.4.2.pdf)
-- [🗎 Guide for trident v1.0.0.0](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident_guide_archive/trident_guide_1.0.0.0.pdf)
-- [🗎 Guide for trident v0.29.0](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident_guide_archive/trident_guide_0.29.0.pdf)
-- [🗎 Guide for trident v0.28.0](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident_guide_archive/trident_guide_0.28.0.pdf)
-
-# Guide for trident v2.2.2.0 and higher
+# Guide for trident v2.1.0.0
 
 ## Installation
 
@@ -369,10 +317,9 @@ Usage: trident forge ((-d|--baseDir DIR) |
                      [--forgeFile FILE | (-f|--forgeString DSL)]
                      [--selectSnps FILE] [--intersect] [--strandCheck]
                      [--skipIncongruentSNPs] [--outFormat FORMAT]
-                     [--onlyGeno | --minimal | --preserve] [-z|--zip]
+                     [--onlyGeno | --minimal | --preservePyml] [-z|--zip]
                      (-o|--outPackagePath DIR) [-n|--outPackageName STRING]
                      [--packagewise] [--outPlinkPopName MODE] [--ordered]
-                     [--addTrace]
 
   Select packages, groups or individuals and create a new Poseidon package from
   them
@@ -467,13 +414,12 @@ Available options:
                            This means the output will not be a Poseidon package.
   --minimal                Should the output Poseidon package be reduced to a
                            necessary minimum?
-  --preserve               Should the output Poseidon package mimic the input
-                           package? Only works for a singular source package!
-                           With this option some fields of the source package's
-                           POSEIDON.yml file, its README file and its CHANGELOG
-                           file (if available) are copied to the output package.
-                           The order of .janno file columns and .bib file
-                           entries are also preserved.
+  --preservePyml           Should the output Poseidon package mimic the input
+                           package? With this option some fields of the source
+                           package's POSEIDON.yml file, its README file and its
+                           CHANGELOG file (if available) are copied to the
+                           output package. Only works for a singular source
+                           package.
   -z,--zip                 Should the resulting genotype- and snp-files be
                            gzipped?
   -o,--outPackagePath DIR  Path to the output package directory.
@@ -503,11 +449,6 @@ Available options:
                            --inPlinkPopName.
   --ordered                With this option, the output of forge is ordered
                            according to the entities given.
-  --addTrace               This option will add a field named Source_Package to
-                           the .janno file, containing the source package from
-                           which a given sample was derived. If the field
-                           already exists, it will be extended with the new
-                           source package using semicolons as separators.
 ```
 
 </details>
@@ -548,8 +489,6 @@ In general a `--forgeString` query consists of multiple entities, separated by `
 - Individuals/samples are surrounded by `<` and `>`: `<individual>`. `ALA026` therefore becomes `<ALA026>`. A second way to denote individuals is with the more verbose and specific syntax `<package:group:individual>`. Such defined individuals take precedence over differently defined ones (so directly with `<individual>` or as a subset of `*package*` or `group`). This allows to resolve duplication issues precisely -- at least in cases where the duplicated individuals differ in source package or primary group.
 - Package versions can be appended to package names, such as `*package-1.2.3*`.
 - This also works with the verbose individual syntax: `<package-1.2.3:group:individual>`.
-
-Note that this syntax introduces a number of reserved characters with special meaning (`':', ',', '<', '>', '*'`). If the name of a package, individual, or group contains any of these, `trident` may fail to parse the entities correctly. To solve this entity names can be quoted, so wrapped in `"`s (or `'`s). That makes it possible to include group names like e.g. `"Belgium_<1000BC"` or individual names like `<"Individual3,4">`. The quotes must be placed directly around the name, not around the entity term. That means `<"...">` will work, but not `"<...>"`.
 
 In the `--forgeFile` each line is treated as a separate forgeString, empty lines are ignored and `#` symbols start comments. So this is a valid example of a forgeFile:
 
@@ -610,10 +549,10 @@ qjanno "SELECT '<'||Poseidon_ID||'>' FROM d(MyPac) ORDER BY Poseidon_ID" \
   --raw --noOutHeader > myOrder.txt
 ```
 
-2. Use `trident forge` with `--ordered` and `--preserve` (see below) to create the package with the specified order:
+2. Use `trident forge` with `--ordered` and `--preservePyml` (see below) to create the package with the specified order:
 
 ```bash
-trident forge -d MyPac --forgeFile myOrder.txt -o MyPac2 --ordered --preserve
+trident forge -d MyPac --forgeFile myOrder.txt -o MyPac2 --ordered --preservePyml
 ```
 
 3. Apply `trident rectify` to increment the package version number and document the reordering:
@@ -702,13 +641,13 @@ Only the genotype data is returned without any Poseidon package wrapping around 
 
 A minimal output package without `.janno`, `.bib` and `.ssf`. This wraps the genotype data in a very basic Poseidon package.
 
-**`--preserve`:**
+**`--preservePyml`:**
 
 A full Poseidon package just as the default, but with various settings copied from the source package. This only works in case of a single source package.
 
-For the specific task of sub-setting or reordering (see above) a singular, existing Poseidon package, it can be useful to preserve some fields of the `POSEIDON.yml` file of this input package, as well as the supplementary information in the `README.md` and the `CHANGELOG.md` file. These are typically discarded by `forge`, but can be copied over to the output package with `--preserve`.
+For the specific task of sub-setting or reordering (see above) a singular, existing Poseidon package it can be useful to preserve some fields of the `POSEIDON.yml` file of this input package, as well as supplementary information in the `README.md` and the `CHANGELOG.md` file. These are typically discarded by `forge`, but can be copied over to the output package with the new `--preservePyml` output mode.
 
-`--preserve` specifically copies the following `POSEIDON.yml` fields:
+`--preservePyml` specifically preserves the following `POSEIDON.yml` fields:
 
 - `description`
 - `contributor`
@@ -719,11 +658,7 @@ For the specific task of sub-setting or reordering (see above) a singular, exist
 
 This does not include the package `title`, which can be easily set to be identical to the source with `-n` or `-o` if it is desired. The `poseidonVersion` field is also not copied, because `trident` can only ever produce output packages with the latest Poseidon schema version.
 
-To keep the diff between in- and output package minimal, `--preserve` finally also causes `trident` to keep the input's order of columns in the `.janno` file, and maintain the input's order of bibtex entries in the `.bib` file.
-
-**`-z|--zip`**
-
-With `-z` the genotype data output (independent of the selected output mode) can be wrapped in gzipped archives with the additional file extension `.gz`. `trident` can seamlessly interact with genotype data in this format.
+With `-z|--zip` the genotype data output (independent of the selected output mode) can be wrapped in gzipped archives with the additional file extension `.gz`. `trident` can seamlessly interact with genotype data in this format.
 
 ### Other options
 
@@ -740,8 +675,6 @@ With `-z` the genotype data output (independent of the selected output mode) can
 `--selectSnps` allows to provide `forge` with a SNP file in EIGENSTRAT (`.snp`) or PLINK (`.bim`) format to create a package with a specific selection. When this option is set, the output package will have exactly the SNPs listed in this file. Any SNP not listed in the file will be excluded. If `--intersect` is also set, only the SNPs overlapping between the SNP file and the forged packages are output.
 
 With `--packagewise` the within-package selection step in forge can be skipped. This will result in outputting all individuals in the relevant packages, and hence a superset of the requested individuals/groups. It may result in better performance in cases where one wants to forge entire packages.
-
-Forged packages can optionally contain a `.janno` column `Source_Package`, which records which original package (and version) each sample originally came from. This makes it possible to trace a sample back to its origin even after it has passed through one or more rounds of `forge`. This tracking mechanism is opt-in and can be activated with the `--addTrace` option.
 
 ## Genoconvert command
 
@@ -949,8 +882,7 @@ Available options:
   --checksumSSF            Update .ssf file checksum
   --checksumBib            Update .bib file checksum.
   --newContributors DSL    Contributors to add to the POSEIDON.yml file in the
-                           form "[Firstname Lastname](Email
-                           address)<ORCID>;...". The ORCIDs are optional.
+                           form "[Firstname Lastname](Email address);...".
   --jannoRemoveEmpty       Reorder the .janno file and remove empty colums.
                            Remember to pair this option with --checksumJanno to
                            also update the checksum.
@@ -969,7 +901,7 @@ trident rectify -d ... -d ... \
   --packageVersion Major|Minor|Patch \
   --logText "short description of the update" \
   --checksumAll \
-  --newContributors "[Firstname Lastname](Email address)<ORCID>;..." \
+  --newContributors "[Firstname Lastname](Email address);..." \
   --jannoRemoveEmpty
 ```
 
