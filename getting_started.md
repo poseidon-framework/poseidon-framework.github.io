@@ -5,9 +5,7 @@ This is a short tutorial that runs you through some basic functionality of the p
 Please also see the slides [A short introduction to the Poseidon framework](https://nevrome.github.io/uni.tuebingen.poseidon.intro.2h.2024/) by Clemens Schmid, which showcases many key aspects of the framework, as well as our [reviewed preprint on eLife](https://doi.org/10.7554/eLife.98317.1).
 
 ## Preparation
-You will need to install our two command-line tools `trident` and `xerxes`. They are available as pre-compiled binaries for MacOS and Linux, and in case of trident also for Windows: 
-* `trident`: https://github.com/poseidon-framework/poseidon-hs/releases/latest
-* `xerxes`: https://github.com/poseidon-framework/poseidon-analysis-hs/releases/latest
+You will need to install our two command-line tools `trident` and `xerxes`. They are available [here](https://github.com/poseidon-framework/poseidon-hs/releases/latest) as pre-compiled binaries for MacOS, Linux, and Windows.
 
 You can also install both tools from bioconda: [trident](https://anaconda.org/bioconda/poseidon-trident), [xerxes](https://anaconda.org/bioconda/poseidon-xerxes)
 
