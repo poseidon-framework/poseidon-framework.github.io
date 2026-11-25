@@ -133,7 +133,6 @@ Remember to also i. update the md5 checksums in the POSEIDON.yml file, ii. incre
 	trident rectify \
 	  --packageVersion "Patch" \
 	  --logText "Added radiocarbon date AAA-1234 for sample I99362" \
-	  --checksumJanno \
 	  --newContributors "[Firstname Lastname](email@address.com)"
 	```
 
@@ -142,7 +141,6 @@ Remember to also i. update the md5 checksums in the POSEIDON.yml file, ii. incre
 	trident rectify \
 	  --packageVersion "Minor" \
 	  --logText "Added sample I99363" \
-	  --checksumAll \
 	  --newContributors "[Firstname Lastname](email@address.com)"
 	```
 
@@ -151,7 +149,6 @@ Remember to also i. update the md5 checksums in the POSEIDON.yml file, ii. incre
 	trident rectify \
 	  --packageVersion "Major" \
 	  --logText "Removed sample I99363, because ..." \
-	  --checksumAll \
 	  --newContributors "[Firstname Lastname](email@address.com)"
 	```
 
