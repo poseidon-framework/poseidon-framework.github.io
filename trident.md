@@ -30,7 +30,8 @@ On GitHub you will also find [older release versions](https://github.com/poseido
 
 With `trident --help` and `trident <subcommand> --help` you can get information about each subcommand and parameter directly on the command line. The guide below explains the subcommands in more detail. It is available in .pdf format for the current and previous versions here:
 
-- [🗎 Guide for trident v2.2.2.0 and higher](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident.pdf) (shown below)
+- [🗎 Guide for trident v2.3.1.0](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident.pdf) (shown below)
+- [🗎 Guide for trident v2.2.2.1](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident_guide_archive/trident_guide_2.2.2.1.pdf)
 - [🗎 Guide for trident v2.1.0.0](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident_guide_archive/trident_guide_2.1.0.0.pdf)
 - [🗎 Guide for trident v1.7.0.0 to v2.0.0.0](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident_guide_archive/trident_guide_1.7.0.0_to_2.0.0.0.pdf)
 - [🗎 Guide for trident v1.6.7.1 to v1.6.7.3](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident_guide_archive/trident_guide_1.6.7.1_to_1.6.7.3.pdf)
@@ -50,7 +51,7 @@ With `trident --help` and `trident <subcommand> --help` you can get information 
 - [🗎 Guide for trident v0.29.0](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident_guide_archive/trident_guide_0.29.0.pdf)
 - [🗎 Guide for trident v0.28.0](https://github.com/poseidon-framework/poseidon-framework.github.io/blob/master/trident_guide_archive/trident_guide_0.28.0.pdf)
 
-# Guide for trident v2.2.2.0 and higher
+# Guide for trident v2.3.1.0
 
 ## Installation
 
@@ -93,6 +94,7 @@ Package creation and manipulation commands:
                            to another one
   rectify                  Adjust POSEIDON.yml files automatically to package
                            changes
+  modify                   Modify certain elements of Poseidon packages
 
 Inspection commands:
   list                     List packages, groups or individuals from local or
@@ -180,7 +182,7 @@ For all subcommands the general argument `--logMode` defines how `trident` repor
 ### Package duplicates and versions
 
 - For `trident` multiple packages in a set of base directories can share the same `title`, if they have different `packageVersion` numbers. If the version numbers are also identical or missing, then `trident` stops with an exception.
-- The `trident` subcommands `genoconvert`, `list`, `rectify`, `survey` and `validate` by default consider all versions of each Poseidon package in the given base directories. The `--onlyLatest` flag causes them to instead only consider the latest versions.
+- The `trident` subcommands `genoconvert`, `list`, `modify`, `survey` and `validate` by default consider all versions of each Poseidon package in the given base directories. The `--onlyLatest` flag causes them to instead only consider the latest versions.
 - `fetch` and `forge` generally consider all package versions. Their selection language (see below) allows for detailed version handling.
 - `summarize` and `jannocoalesce` consider always only the latest package versions.
 
@@ -616,10 +618,10 @@ qjanno "SELECT '<'||Poseidon_ID||'>' FROM d(MyPac) ORDER BY Poseidon_ID" \
 trident forge -d MyPac --forgeFile myOrder.txt -o MyPac2 --ordered --preserve
 ```
 
-3. Apply `trident rectify` to increment the package version number and document the reordering:
+3. Apply `trident modify` to increment the package version number and document the reordering:
 
 ```bash
-trident rectify -d MyPac2 --packageVersion Minor \
+trident modify -d MyPac2 --packageVersion Minor \
   --logText "reordered the samples alphabetically by Poseidon_ID"
 ```
 
@@ -914,23 +916,25 @@ Note that all three files, the source, the target, and the outfile, are mandator
 
 In addition to these three files, you can choose a Poseidon Version for both the source (`--pvSource`) and the target (`--pvTarget`), which is useful for backwards compatibility, in case you have `.janno` files in older Poseidon versions. **_But_**: Note that the output file will _always_ be written in the newest Poseidon version. Note that you _can_ choose the outFile to be the targetFile, which will then overwrite the target file. This can be useful if you know what you are doing. Otherwise it is of course safer to choose a new filename for the output. 
 
-## Rectify command
+## Modify command
 
-`rectify` automatically harmonizes POSEIDON.yml files of one or multiple packages. This is not an automatic update from one Poseidon version to the next, but rather a clean-up wizard after manual modifications. It also includes additional, automatic package editing features.
+`modify` applies explicit, opt-in edits to one or more Poseidon packages. It is the successor of the former `rectify` command (from trident v2.3.1.0 onward), which was renamed and extended. To keep the risk of accidental, destructive changes low, `modify` by default refuses to edit more than one package at once -- this can be overridden with `--force` (see below).
 
 <details>
  <summary><i class="fas fa-search"></i> <i class="fas fa-terminal"></i> <b>Command line details</b></summary>
 
 ```default
-Usage: trident rectify (-d|--baseDir DIR) [--ignorePoseidonVersion]
-                       [--poseidonVersion ?.?.?]
-                       [--packageVersion VPART [--logText STRING]]
-                       [--checksumAll | [--checksumGeno] [--checksumJanno]
-                         [--checksumSSF] [--checksumBib]]
-                       [--newContributors DSL] [--jannoRemoveEmpty]
-                       [--onlyLatest]
+Usage: trident modify (-d|--baseDir DIR) [--ignorePoseidonVersion]
+                      [--poseidonVersion ?.?.?]
+                      [--packageVersion VPART [--logText STRING]]
+                      [--checksumAll | [--checksumGeno] [--checksumJanno]
+                        [--checksumSSF] [--checksumBib]] [--newContributors DSL]
+                      [--referenceGenomeAssembly STRING]
+                      [--referenceGenomeAssemblyURL STRING] [--addJanno]
+                      [--jannoRemoveEmpty] [--updateNrSNPs] [--onlyLatest]
+                      [--force]
 
-  Adjust POSEIDON.yml files automatically to package changes
+  Modify certain elements of Poseidon packages
 
 Available options:
   -h,--help                Show this help text
@@ -951,38 +955,101 @@ Available options:
   --newContributors DSL    Contributors to add to the POSEIDON.yml file in the
                            form "[Firstname Lastname](Email
                            address)<ORCID>;...". The ORCIDs are optional.
+  --referenceGenomeAssembly STRING
+                           Name of a reference genome assembly that should be
+                           attached to the genotype data.
+  --referenceGenomeAssemblyURL STRING
+                           URL to a reference genome assembly
+                           dataset/specification that should be attached to the
+                           genotype data.
+  --addJanno               Add and populate a .janno file if none exists
+                           already. The file is created in the directory where
+                           the POSEIDON.yml file is stored and named
+                           <package_title>.janno.
   --jannoRemoveEmpty       Reorder the .janno file and remove empty colums.
-                           Remember to pair this option with --checksumJanno to
-                           also update the checksum.
+  --updateNrSNPs           Count the non-missing SNPs per sample and
+                           overwrite/fill the Nr_SNPs column in the .janno file.
   --onlyLatest             Consider only the latest versions of packages, or the
                            groups and individuals within the latest versions of
                            packages, respectively.
+  --force                  To prevent accidental changes to many packages,
+                           modify does not run when it is applied to more than
+                           one package. --force allows to overwrite this
+                           safeguard.
 ```
 
 </details>
 
-It can be called with a lot of optional arguments. Note that `rectify` by default does **not** apply any changes if none of these arguments are set. Each change requires explicit opt-in.
+Every edit requires an explicit opt-in: `modify` by default does **not** apply any changes unless it is told to do so. Call it with any combination of the options below to trigger the respective modifications:
 
 ```bash
-trident rectify -d ... -d ... \
-  --poseidonVersion "X.X.X" \
-  --packageVersion Major|Minor|Patch \
-  --logText "short description of the update" \
-  --checksumAll \
-  --newContributors "[Firstname Lastname](Email address)<ORCID>;..." \
-  --jannoRemoveEmpty
+trident modify -d MyPac \
+  --packageVersion Minor \
+  --logText "updated the Nr_SNPs column and the reference assembly" \
+  --updateNrSNPs \
+  --referenceGenomeAssembly "GRCh37" \
+  --referenceGenomeAssemblyURL "https://..." \
+  --checksumJanno
 ```
 
-The following arguments determine which fields of the POSEIDON.yml file should be modified:
+The following arguments determine which elements of the package should be modified:
 
 - `--poseidonVersion` allows a simple change of the `poseidonVersion` field in the POSEIDON.yml file.
-- `--packageVersion` increments the package version number in the first, the second or the third position. It can optionally be called with `--logText`, which appends an entry to the CHANGELOG file for the respecitve package version update. `--logText` also creates a new CHANGELOG.md file if it does not exist yet.
+- `--packageVersion` increments the package version number in the first, the second or the third position. It can optionally be called with `--logText`, which appends an entry to the CHANGELOG file for the respective package version update. `--logText` also creates a new CHANGELOG.md file if it does not exist yet.
 - `--checksumGeno`, `--checksumJanno`, `--checksumSSF` and `--checksumBib` add or modify the respective checksum fields in the POSEIDON.yml file. `--checksumAll` is a wrapper to call all of them at once.
-- `--newContributors` adds new contributors.
+- `--newContributors` adds new contributors, optionally with ORCIDs.
+- `--referenceGenomeAssembly` and `--referenceGenomeAssemblyURL` allow to set or change the reference genome assembly information attached to the genotype data of a package.
+- `--jannoRemoveEmpty` reorders the `.janno` file and removes empty columns, so columns that only feature empty strings or `n/a` values.
+- `--addJanno` creates a `.janno` file for a package that does not have one. It is stored next to the POSEIDON.yml file and named after the package title (`<package_title>.janno`). Note that the resulting file only contains the genotype-derived sample rows with standard columns, so it may need manual post-processing.
+- `--updateNrSNPs` counts the number of non-missing SNPs per sample in the genotype data and overwrites/fills the `Nr_SNPs` column in the `.janno` file. If the column does not exist yet, it is appended.
+- `--onlyLatest` restricts the operation to the latest versions of the input packages.
 
-As `rectify` reads and rewrites POSEIDON.yml files, it may change their inner order, layout or even content (e.g. if they have fields which are not in the POSEIDON.yml specification). Create a backup of the POSEIDON.yml file before running `rectify` if you are uncertain if this might affect you negatively.
+As `modify` reads and rewrites POSEIDON.yml files, it may change their inner order, layout or even content (e.g. if they have fields which are not in the POSEIDON.yml specification). Create a backup of the POSEIDON.yml file before running `modify` if you are uncertain if this might affect you negatively.
 
-`--jannoRemoveEmpty` is the first option that does not edit POSEIDON.yml, but .janno files. It allows to remove empty columns from .janno files, so columns that only feature empty strings or `n/a` values. As part of this process it reorders the columns of the .janno file. Remember to pair this option with `--checksumJanno` or `checksumAll` to automatically update the .janno checksum in the POSEIDON.yml file afterwards.
+Please note that `modify` deliberately avoids any side effects: it never does anything that was not explicitly requested. In particular, if you edit a file that is covered by a checksum (e.g. with `--jannoRemoveEmpty` or `--updateNrSNPs`), then the respective checksum in the POSEIDON.yml file is **not** updated automatically. Pair the file-editing option with `--checksumJanno`, `--checksumAll`, or similar to keep the package valid.
+
+## Rectify command
+
+`rectify` harmonizes POSEIDON.yml files of one or multiple packages. It is not an automatic update from one Poseidon version to the next, but rather a tool to fix packages that fail validation, e.g. because a file in the package was modified externally and the checksums in the POSEIDON.yml file are therefore outdated or missing.
+
+<details>
+ <summary><i class="fas fa-search"></i> <i class="fas fa-terminal"></i> <b>Command line details</b></summary>
+
+```default
+Usage: trident rectify (-d|--baseDir DIR)
+                       [--packageVersion VPART [--logText STRING]]
+                       [--newContributors DSL]
+
+  Adjust POSEIDON.yml files automatically to package changes
+
+Available options:
+  -h,--help                Show this help text
+  -d,--baseDir DIR         A base directory to search for Poseidon packages.
+  --packageVersion VPART   Part of the package version number in the
+                           POSEIDON.yml file that should be updated: Major,
+                           Minor or Patch (see https://semver.org).
+  --logText STRING         Log text for this version in the CHANGELOG file.
+  --newContributors DSL    Contributors to add to the POSEIDON.yml file in the
+                           form "[Firstname Lastname](Email
+                           address)<ORCID>;...". The ORCIDs are optional.
+```
+
+</details>
+
+When it runs, `rectify` scans all packages in the `-d` base directories and identifies those with missing or incorrect checksums -- the usual sign that a package needs to be rectified after its files have been changed. It prints a status line for every package (`CHANGED` vs. `OK`) and then automatically adds or updates all checksums in the POSEIDON.yml files of the affected packages, so that they pass validation again. Note that checksums are always updated: they are added if they are missing and corrected if they are wrong.
+
+```bash
+trident rectify -d MyPac -d MyOtherPac \
+  --packageVersion Patch \
+  --logText "applied change XY to the package"
+```
+
+Two more optional arguments round out the interface:
+
+- `--packageVersion` (optionally together with `--logText`) increments the package version number in the first, the second or the third position, and appends a corresponding entry to the CHANGELOG file.
+- `--newContributors` adds new contributors, optionally with ORCIDs.
+
+The two commands `modify` and `rectify` complement each other: use `modify` to purposefully edit individual elements of a package, and `rectify` to make sure a manually edited package is valid again.
 
 ## List command
 
